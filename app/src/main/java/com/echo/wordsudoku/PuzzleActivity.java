@@ -5,12 +5,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.Toast;
 
-public class MainActivity extends AppCompatActivity {
+public class PuzzleActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        Toast.makeText(this, "Hello World!", Toast.LENGTH_SHORT).show();
+        setContentView(R.layout.activity_puzzle);
+        Toast.makeText(this, "Puzzle Activity", Toast.LENGTH_SHORT).show();
     }
 }
