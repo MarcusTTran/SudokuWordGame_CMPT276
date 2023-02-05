@@ -7,27 +7,27 @@
 
 
     <Button
-        android:id="@+id/button5"
+        android:id="@+id/exit_button"
         android:layout_width="202dp"
         android:layout_height="64dp"
         android:layout_marginStart="104dp"
         android:layout_marginTop="44dp"
         android:text="@string/exit_btn"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button4" />
+        app:layout_constraintTop_toBottomOf="@+id/load_game_button" />
 
     <Button
-        android:id="@+id/button4"
+        android:id="@+id/load_game_button"
         android:layout_width="202dp"
         android:layout_height="64dp"
         android:layout_marginStart="104dp"
         android:layout_marginTop="40dp"
-        android:text="@string/save_game_btn"
+        android:text="@string/load_game_btn"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button2" />
+        app:layout_constraintTop_toBottomOf="@+id/new_game_button" />
 
     <Button
-        android:id="@+id/button2"
+        android:id="@+id/new_game_button"
         android:layout_width="202dp"
         android:layout_height="64dp"
         android:layout_marginStart="104dp"
