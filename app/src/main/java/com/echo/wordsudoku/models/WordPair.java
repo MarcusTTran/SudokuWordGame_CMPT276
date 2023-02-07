@@ -4,14 +4,27 @@ public class WordPair {
 
     String eng; // english word
     String fre; // french word
-    int id; // used to do comparison of translation (still unsure to keep it)
 
     // constructor
-    // EFFECTS: assigns the eng and fre translation of a word with a specific id
-    public WordPair(String eng, String fre, int id) {
+    // EFFECTS: assigns the eng and fre translation of a word
+    public WordPair(String eng, String fre) {
         this.eng = eng;
         this.fre = fre;
-        this.id = id; //
     }
 
+    public String getEnglish() {
+        return eng;
+    }
+
+    public String getFrench() {
+        return fre;
+    }
+
+    public void setEnglish(String eng) {
+        this.eng = eng;
+    }
+
+    public void setFrench(String fre) {
+        this.fre = fre;
+    }
 }
