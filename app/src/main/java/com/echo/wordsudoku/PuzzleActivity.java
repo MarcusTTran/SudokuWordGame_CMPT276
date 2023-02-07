@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -14,7 +15,7 @@ public class PuzzleActivity extends AppCompatActivity {
 
     // Action text view shows whether a new game is being started or a previous game is being loaded
     // This is just for testing purposes
-    private TextView mActionTextView;
+    private Spinner mWordListSpinner;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,15 +23,8 @@ public class PuzzleActivity extends AppCompatActivity {
         setContentView(R.layout.activity_puzzle);
         Toast.makeText(this, "Puzzle Activity being Created (Load previous game!)", Toast.LENGTH_LONG).show();
 
-        // get the ui reference
-        mActionTextView = findViewById(R.id.action_text_view);
+        mWordListSpinner = findViewById(R.id.word_list_spinner);
 
-        // set the text based on the boolean passed in as an extra in the intent
-        if (getIntent().getBooleanExtra(LOAD_PREVIOUS_GAME, false)) {
-            mActionTextView.setText("Loading previous game...");
-        } else {
-            mActionTextView.setText("Starting new game...");
-        }
     }
 
 

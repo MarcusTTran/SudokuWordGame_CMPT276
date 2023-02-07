@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="SudokuBoard">
+        <attr name="cellFillColor" format="color" />
+        <attr name="cellsHighlightColor" format="color" />
+        <attr name="boardSize" format="integer" />
+        <attr name="boardColor" format="color" />
+    </declare-styleable>
+</resources>
