@@ -62,8 +62,20 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         custom:layout_constraintBottom_toBottomOf="parent"
+        custom:layout_constraintEnd_toEndOf="parent"
         custom:layout_constraintStart_toStartOf="parent"
         custom:layout_constraintTop_toBottomOf="@id/sudoku_board" />
+
+    <Button
+        android:id="@+id/enter_word_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Enter"
+        custom:layout_constraintBottom_toBottomOf="parent"
+        custom:layout_constraintEnd_toEndOf="parent"
+        custom:layout_constraintHorizontal_bias="0.505"
+        custom:layout_constraintStart_toEndOf="@+id/word_list_spinner"
+        custom:layout_constraintTop_toBottomOf="@+id/sudoku_board" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

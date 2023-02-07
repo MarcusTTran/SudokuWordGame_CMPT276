@@ -3,13 +3,4 @@
     <string name="new_game_btn">NEW GAME</string>
     <string name="load_game_btn">LOAD GAME</string>
     <string name="exit_btn">EXIT</string>
-    <string name="hello">Hello</string>
-    <string name="banana">banana</string>
-    <string name="apple">apple</string>
-    <string name="orange">orange</string>
-    <string name="grape">grape</string>
-    <string name="pear">pear</string>
-    <string name="strawberry">strawberry</string>
-    <string name="watermelon">watermelon</string>
-    <string name="mango">mango</string>
 </resources>
