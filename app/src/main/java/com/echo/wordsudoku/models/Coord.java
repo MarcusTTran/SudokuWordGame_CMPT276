@@ -4,12 +4,14 @@ import java.util.Objects;
 
 public class Coord {
 
+    WordPair wordPair;
     int x;
     int y;
 
-    public Coord(int x, int y) {
+    public Coord(int x, int y, WordPair wordPair) {
         this.x = x;
         this.y = y;
+        this.wordPair = wordPair;
     }
 
     public int getX() {
@@ -19,6 +21,9 @@ public class Coord {
     public void setX(int x) {
         this.x = x;
     }
+
+    public WordPair getWordPair() { return wordPair; }
+    public void setWordPair(WordPair wordPair) { this.wordPair = wordPair; }
 
     public int getY() {
         return y;

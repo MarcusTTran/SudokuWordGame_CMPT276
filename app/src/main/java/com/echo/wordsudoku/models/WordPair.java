@@ -1,15 +1,16 @@
 package com.echo.wordsudoku.models;
 
 public class WordPair {
-
+    int id;
     String eng; // english word
     String fre; // french word
 
     // constructor
     // EFFECTS: assigns the eng and fre translation of a word
-    public WordPair(String eng, String fre) {
+    public WordPair(String eng, String fre, int id) {
         this.eng = eng;
         this.fre = fre;
+        this.id = id;
     }
 
     public String getEnglish() {
@@ -20,6 +21,12 @@ public class WordPair {
         return fre;
     }
 
+    public int getId() { return id; }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
     public void setEnglish(String eng) {
         this.eng = eng;
     }
@@ -27,4 +34,5 @@ public class WordPair {
     public void setFrench(String fre) {
         this.fre = fre;
     }
+
 }
