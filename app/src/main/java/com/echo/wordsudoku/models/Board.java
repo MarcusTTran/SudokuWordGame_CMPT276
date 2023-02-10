@@ -1,9 +1,10 @@
 package com.echo.wordsudoku.models;
 
 /**
+ *  ========================================= BOARD =========================================
  *  DESCRIPTION OF FIELDS AND FEATURES
     -   the Board class contains 4 parallel arrays 2 of them contain the numerical
-        representation [1-9]
+        representation [1-N]
         of each word. the board array displays the unsolved puzzle. A similarly structure array will
         contain the solution of the puzzle.
     -   the 2 other array will contain the unsolved word puzzle and the other contain the
@@ -14,6 +15,7 @@ package com.echo.wordsudoku.models;
         The opposite of user's chosen language will appear as input for the remaining cells.
     -   according to the difficulty of the game the number of empty cells at the beginning of the
         game can be assigned while the class is being instantiated.
+     ========================================= BOARD =========================================
 */
 
 public class Board {
@@ -24,17 +26,19 @@ public class Board {
 
     // change to enum later
     String board_language, input_language;
-    private int difficulty_k;
+    private int numToRemove;
     private int mistakes;
-    private final int N = 9;
+    private int N = 9;
     private final String ENGLISH = "English";
     private final String FRENCH = "French";
 
-    private final int BOX_LENGTH = 3;
+    private int BOX_LENGTH = 3;
 
-    // constructor
-    // EFFECTS: makes a 2D array list and adds empty string to each location on list
-    public Board(WordPair[] wordPairs, String board_language, int difficulty_k) {
+    // CONSTRUCTOR
+    // EFFECT: makes a 2D array list and adds empty string to each location on list
+    public Board(int N, WordPair[] wordPairs, String board_language, int numToRemove) {
+        this.N = N;
+        this.BOX_LENGTH = (int)Math.sqrt(N);
         this.board = new int[N][N];
         this.solutions = new int[N][N];
         this.displayBoard = new String[N][N];
@@ -42,7 +46,7 @@ public class Board {
         this.wordPairs = wordPairs;
         this.board_language = board_language;
         this.input_language = this.board_language.equals(ENGLISH) ? FRENCH : ENGLISH;
-        this.difficulty_k = difficulty_k;
+        this.numToRemove = numToRemove;
         this.mistakes = 0;
 
         // generate the board and displayed board values
@@ -50,7 +54,6 @@ public class Board {
         this.GenerateWordPuzzle();
 
         // UNCOMMENT FOR TESTING THE BOARD LAYOUT ON CONSOLE
-
 //        this.printSudoku_int(this.getUnSolvedBoard());
 //        this.printSudoku_int(this.getSolvedBoard());
     }
@@ -71,7 +74,7 @@ public class Board {
         return mistakes;
     }
 
-    // EFFECTS: adds a the fre or eng word to the location on the board array
+    // EFFECT: adds a the fre or eng word to the location on the board array
     public void insertWord(int x, int y, int id) {
         int input = id;
         board[x][y] = input;
@@ -82,7 +85,7 @@ public class Board {
             mistakes++;
     }
 
-    // EFFECTS: checks for wins
+    // EFFECT: checks for wins
     public boolean checkWin() {
 
         for (int x = 0; x < N; x++) {
@@ -101,17 +104,19 @@ public class Board {
 //        return false;  // stub
 //    }
 
-    // EFFECTS: prepare a List of Coordinates where the initial positions of the words are
+    // EFFECT: prepare a List of Coordinates where the initial positions of the words are
     public void generateGame() {
         // Algorithm
         // 1. Fills the diagonal 3x3 matrices
         // 2. recursively fill the rest of the non-diagonal
-        //    for each cell fill them by trying every possible value until it's SAFE
-        // 3. once everything is filled remove k elements randomely to generate a game
+        //    for each cell fill them by trying every possible value until
+        //    it's valid within (row, col, box)
+        // 3. once everything is filled remove n elements randomly to generate a game
+        //    based on numToRemove
 
-        arrangeDiagonal();
+        completeDiagonal();
 
-        arrangeRemaining(0, BOX_LENGTH);
+        completeRemaining(0, BOX_LENGTH);
 
         solutions = takeCopy(board, solutions);
 
@@ -119,15 +124,15 @@ public class Board {
     }
 
     // EFFECT: fill the diagonal line in the board
-    private void arrangeDiagonal() {
+    private void completeDiagonal() {
         for (int k = 0; k < N; k = k + BOX_LENGTH) {
-            fillBox(k, k); // to only fill the diagonal cells (k, k)
+            completeBox(k, k); // to only fill the diagonal cells (k, k)
         }
     }
 
     // EFFECT: fill the remaining cells when all diagonals are filled check if the position is safe
     //            before inserting the randomly generated value
-    private boolean arrangeRemaining(int i, int j) {
+    private boolean completeRemaining(int i, int j) {
 
         if (j >= N && i < N - 1)
         {
@@ -162,7 +167,7 @@ public class Board {
         {
             if (checkValidity(i, j, num)) {
                 board[i][j] = num;
-                if (arrangeRemaining(i, j + 1)) {
+                if (completeRemaining(i, j + 1)) {
                     return true;
                 }
 
@@ -182,16 +187,15 @@ public class Board {
     }
 
     // EFFECT: fill a 3x3 matrix
-    private void fillBox(int row, int col) { ///!!!!!!!!!!!!
-        int val;
+    private void completeBox(int row, int col) { ///!!!!!!!!!!!!
+        int val = generateRandomValue(N);
 
         for (int x = 0; x < BOX_LENGTH; x++) {
             for (int y = 0; y < BOX_LENGTH; y++) {
 
-                do {
+                while (!isNotInBox(row, col, val)) {
                     val = generateRandomValue(N);
                 }
-                while (!isNotInBox(row, col, val));
 
                 board[row + x][col + y] = val;
             }
@@ -233,9 +237,9 @@ public class Board {
     }
 
     // EFFECT: remove n digits from the board where n = k_difficulty
-    private void removeCellsByDifficulty() { ///!!!!!!!!!!!!
+    private void removeCellsByDifficulty() {
 
-        int num = difficulty_k;
+        int num = numToRemove;
 
         while (num != 0) {
             int loc = generateRandomValue(N * N) - 1;
@@ -275,17 +279,17 @@ public class Board {
     // EFFECT: prints the displayed sudoku containing french and english words
     public void printSudoku_String(String [][] print_board) {
         System.out.println("PRINTING: ");
-        for (int i = 0; i < N; i++)
+        for (int x = 0; x < N; x++)
         {
-            for (int j = 0; j < N; j++)
-                System.out.print(print_board[i][j] + " ");
+            for (int y = 0; y < N; y++)
+                System.out.print(print_board[x][y] + " ");
             System.out.println();
         }
         System.out.println();
     }
 
 
-    //EFFECT: take copy of an array without taking a reference
+    // EFFECT: take copy of an array without taking a reference
     private int [][] takeCopy(int [][] copiedFrom, int [][] copiedInto) {
         for (int i = 0; i < N; i++) {
             for(int j = 0; j < N; j++) {
@@ -318,8 +322,8 @@ public class Board {
         }
 
         // UNCOMMENT FOR TESTING THE BOARD LAYOUT
-//         printSudoku_String(displayBoard);
-//         printSudoku_String(displayBoard_Solved);
+         printSudoku_String(displayBoard);
+         printSudoku_String(displayBoard_Solved);
     }
 
 }
