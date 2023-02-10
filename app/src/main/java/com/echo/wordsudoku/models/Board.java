@@ -28,7 +28,7 @@ public class Board {
     String board_language, input_language;
     private int numToRemove;
     private int mistakes;
-    private int N = 9;
+    private int dim;
     private final String ENGLISH = "English";
     private final String FRENCH = "French";
 
@@ -36,13 +36,13 @@ public class Board {
 
     // CONSTRUCTOR
     // EFFECT: makes a 2D array list and adds empty string to each location on list
-    public Board(int N, WordPair[] wordPairs, String board_language, int numToRemove) {
-        this.N = N;
-        this.BOX_LENGTH = (int)Math.sqrt(N);
-        this.board = new int[N][N];
-        this.solutions = new int[N][N];
-        this.displayBoard = new String[N][N];
-        this.displayBoard_Solved = new String[N][N];
+    public Board(int dim, WordPair[] wordPairs, String board_language, int numToRemove) {
+        this.dim = dim;
+        this.BOX_LENGTH = (int)Math.sqrt(dim);
+        this.board = new int[dim][dim];
+        this.solutions = new int[dim][dim];
+        this.displayBoard = new String[dim][dim];
+        this.displayBoard_Solved = new String[dim][dim];
         this.wordPairs = wordPairs;
         this.board_language = board_language;
         this.input_language = this.board_language.equals(ENGLISH) ? FRENCH : ENGLISH;
@@ -88,8 +88,8 @@ public class Board {
     // EFFECT: checks for wins
     public boolean checkWin() {
 
-        for (int x = 0; x < N; x++) {
-            for (int y = 0; y < N; y++) {
+        for (int x = 0; x < dim; x++) {
+            for (int y = 0; y < dim; y++) {
                 if (board[x][y] != solutions[x][y])
                     return false;
             }
@@ -125,7 +125,7 @@ public class Board {
 
     // EFFECT: fill the diagonal line in the board
     private void completeDiagonal() {
-        for (int k = 0; k < N; k = k + BOX_LENGTH) {
+        for (int k = 0; k < dim; k = k + BOX_LENGTH) {
             completeBox(k, k); // to only fill the diagonal cells (k, k)
         }
     }
@@ -134,12 +134,12 @@ public class Board {
     //            before inserting the randomly generated value
     private boolean completeRemaining(int i, int j) {
 
-        if (j >= N && i < N - 1)
+        if (j >= dim && i < dim - 1)
         {
             i = i + 1;
             j = 0;
         }
-        if (j >= N && i >= N)
+        if (j >= dim && i >= dim)
             return true;
 
         if (i < BOX_LENGTH) {
@@ -147,7 +147,7 @@ public class Board {
                 j = BOX_LENGTH;
             }
 
-        } else if (i < N - BOX_LENGTH) {
+        } else if (i < dim - BOX_LENGTH) {
 
             if (j == (int) (i/ BOX_LENGTH) * BOX_LENGTH) {
                 j = j + BOX_LENGTH;
@@ -155,15 +155,15 @@ public class Board {
         }
         else
         {
-            if (j == N - BOX_LENGTH) {
+            if (j == dim - BOX_LENGTH) {
                 i = i + 1;
                 j = 0;
-                if (i >= N)
+                if (i >= dim)
                     return true;
             }
         }
 
-        for (int num = 1; num <= N; num++)
+        for (int num = 1; num <= dim; num++)
         {
             if (checkValidity(i, j, num)) {
                 board[i][j] = num;
@@ -188,13 +188,13 @@ public class Board {
 
     // EFFECT: fill a 3x3 matrix
     private void completeBox(int row, int col) { ///!!!!!!!!!!!!
-        int val = generateRandomValue(N);
+        int val = generateRandomValue(dim);
 
         for (int x = 0; x < BOX_LENGTH; x++) {
             for (int y = 0; y < BOX_LENGTH; y++) {
 
                 while (!isNotInBox(row, col, val)) {
-                    val = generateRandomValue(N);
+                    val = generateRandomValue(dim);
                 }
 
                 board[row + x][col + y] = val;
@@ -219,7 +219,7 @@ public class Board {
     //         return false if it does, true otherwise
     private boolean isNotInCol(int y, int val) {
 
-        for (int i = 0; i < N; i++) {
+        for (int i = 0; i < dim; i++) {
             if (board[i][y] == val)
                 return false;
         }
@@ -229,7 +229,7 @@ public class Board {
 
     // EFFECT: check if the same value exists in the given row
     private boolean isNotInRow(int x, int val) {
-        for (int j = 0; j < N; j++) {
+        for (int j = 0; j < dim; j++) {
             if (board[x][j] == val)
                 return false;
         }
@@ -242,10 +242,10 @@ public class Board {
         int num = numToRemove;
 
         while (num != 0) {
-            int loc = generateRandomValue(N * N) - 1;
+            int loc = generateRandomValue(dim * dim) - 1;
 
-            int x = loc / N;
-            int y = loc % N;
+            int x = loc / dim;
+            int y = loc % dim;
 
             if (y != 0) {
                 y = y - 1;
@@ -267,9 +267,9 @@ public class Board {
     //EFFECT: prints the board board on console given the array
     public void printSudoku_int(int [][] print_board) {
         System.out.println("PRINTING: ");
-        for (int i = 0; i < N; i++)
+        for (int i = 0; i < dim; i++)
         {
-            for (int j = 0; j < N; j++)
+            for (int j = 0; j < dim; j++)
                 System.out.print(print_board[i][j] + " ");
             System.out.println();
         }
@@ -279,9 +279,9 @@ public class Board {
     // EFFECT: prints the displayed sudoku containing french and english words
     public void printSudoku_String(String [][] print_board) {
         System.out.println("PRINTING: ");
-        for (int x = 0; x < N; x++)
+        for (int x = 0; x < dim; x++)
         {
-            for (int y = 0; y < N; y++)
+            for (int y = 0; y < dim; y++)
                 System.out.print(print_board[x][y] + " ");
             System.out.println();
         }
@@ -291,8 +291,8 @@ public class Board {
 
     // EFFECT: take copy of an array without taking a reference
     private int [][] takeCopy(int [][] copiedFrom, int [][] copiedInto) {
-        for (int i = 0; i < N; i++) {
-            for(int j = 0; j < N; j++) {
+        for (int i = 0; i < dim; i++) {
+            for(int j = 0; j < dim; j++) {
                 copiedInto[i][j] = copiedFrom[i][j];
             }
         }
@@ -303,8 +303,8 @@ public class Board {
     // EFFECT: generates the word puzzle according to the selected board language
     private void GenerateWordPuzzle() {
 
-        for (int x = 0; x < N; x++) {
-            for (int y = 0; y < N; y++) {
+        for (int x = 0; x < dim; x++) {
+            for (int y = 0; y < dim; y++) {
 
                 if (board[x][y] == 0) {
                     displayBoard[x][y] = "  +  ";
@@ -322,8 +322,8 @@ public class Board {
         }
 
         // UNCOMMENT FOR TESTING THE BOARD LAYOUT
-         printSudoku_String(displayBoard);
-         printSudoku_String(displayBoard_Solved);
+//         printSudoku_String(displayBoard);
+//         printSudoku_String(displayBoard_Solved);
     }
 
 }
