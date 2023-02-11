@@ -59,12 +59,12 @@ public class Board {
     }
 
 
-    // EFFECT: returns the solved numerical board
+    // EFFECT: returns the unsolved numerical board
     public int[][] getUnSolvedBoard() {
         return board;
     }
 
-    // EFFECT: returns the unsolved numerical Board
+    // EFFECT: returns the solved numerical Board
     public int[][] getSolvedBoard() {
         return solutions;
     }
