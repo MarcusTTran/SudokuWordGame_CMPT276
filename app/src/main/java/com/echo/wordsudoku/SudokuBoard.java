@@ -12,6 +12,8 @@ import android.view.View;
 
 import androidx.annotation.Nullable;
 
+import java.util.Arrays;
+
 public class SudokuBoard extends View {
 
     // The size of the board
@@ -228,6 +230,7 @@ public class SudokuBoard extends View {
 
     // This method is used to draw the board using thick and thin lines
     // This draws all of the inner lines of the board
+    // @param: canvas is the canvas on which the board is drawn
     //TODO: Draw the board with custom sizes. Currently only draws a 9x9 board
     private void drawBoard(Canvas canvas) {
         // Draw the column lines
@@ -316,6 +319,27 @@ public class SudokuBoard extends View {
         else {
             return false;
         }
+    }
+
+    // Method to set the board layout of the view to a custom board
+    // It is called externally from PuzzleActivity
+    // It will load the board initially when the user opens the puzzle using the unsolved puzzle from Board model.
+    // Also used for testing purposes
+    public void setBoard(String[][] board) {
+        for (int r=0; r<9; r++) {
+            for (int c=0; c<9; c++) {
+                this.board[r][c] = board[r][c];
+            }
+        }
+    }
+
+
+    // Methods to get the current selected cell's position (row and column)
+    public int getCurrentCellRow() {
+        return currentCellRow;
+    }
+    public int getCurrentCellColumn() {
+        return currentCellColumn;
     }
 
 }
