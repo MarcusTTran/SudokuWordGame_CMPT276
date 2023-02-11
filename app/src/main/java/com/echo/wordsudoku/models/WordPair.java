@@ -13,17 +13,14 @@ package com.echo.wordsudoku.models;
 
 public class WordPair {
 
-    String eng; // english word
-    String fre; // french word
-
-    int id;
+    private String eng; // english word
+    private String fre; // french word
 
     // constructor
     // EFFECTS: assigns the eng and fre translation of a word
-    public WordPair(String eng, String fre, int id) {
-        this.eng = eng;
-        this.fre = fre;
-        this.id = id;
+    public WordPair(String eng, String fre) {
+        setEnglish(eng);
+        setFrench(fre);
     }
 
     // EFFECT: returns the English translation
@@ -38,16 +35,27 @@ public class WordPair {
 
     // EFFECT: returns the desired language translation based on the given language name
     public String getEnglishOrFrench(String language) {
-        if (language == "English") {
+        if (language == "English" || language == "english" || language =="en" || language == "EN" || language == "eng") {
             return this.getEnglish();
-        } else {
+        } else if (language == "French" || language == "french" || language =="fr" || language == "FR" || language == "fre") {
             return this.getFrench();
+        } else {
+            throw new IllegalArgumentException("Invalid language name");
         }
     }
 
-    // EFFECT: returns the id
-    public int getId() {
-        return id;
+    public String getEnglishOrFrench(String language, boolean getOther) {
+        if (!getOther) {
+            return this.getEnglishOrFrench(language);
+        } else {
+            if (language == "English" || language == "english" || language == "en" || language == "EN" || language == "eng") {
+                return this.getFrench();
+            } else if (language == "French" || language == "french" || language == "fr" || language == "FR" || language == "fre") {
+                return this.getEnglish();
+            } else {
+                throw new IllegalArgumentException("Invalid language name");
+            }
+        }
     }
 
     // EFFECT: sets/changes the English translation
@@ -59,11 +67,5 @@ public class WordPair {
     public void setFrench(String fre) {
         this.fre = fre;
     }
-
-    // EFFECT: sets/changes the WordPair Id
-    public void setId(int id) {
-        this.id = id;
-    }
-
 
 }
