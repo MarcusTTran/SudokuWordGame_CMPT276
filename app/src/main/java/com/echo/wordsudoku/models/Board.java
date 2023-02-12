@@ -85,12 +85,6 @@ public class Board {
         return insertTable;
     }
 
-    public void insertDebugBoard(int[][] debugBoard, int[][] debugBoardSolutions) {
-        this.board = debugBoard;
-        this.solutions = debugBoardSolutions;
-        GenerateWordPuzzle();
-    }
-
 
     // @eakbarib
     // Utility methods for converting the numbers in board int array (which contain sudoku numbers [1-9] (inclusive)) to array-compatible indices [0-8] (inclusive)  and vice versa
