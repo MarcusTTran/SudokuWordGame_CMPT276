@@ -78,6 +78,8 @@ public class Board {
     }
 
 
+
+
     // This utility method is used to return a 2D array of boolean values which indicate whether a cell is filled or not
     private boolean[][] getInsertTable(int[][] board, int xDimension, int yDimension) {
         boolean[][] insertTable = new boolean[xDimension][yDimension];
