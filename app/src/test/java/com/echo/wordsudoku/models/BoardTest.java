@@ -248,19 +248,84 @@ class BoardTest {
         assertEquals(1, emptyCells);
     }
 
-    //Insert word to invalid spot to test incrementation of mistakes
+    //Insert word to invalid cell to test incrementation of mistakes
+    //Purposefully induce a mistake, I don't think this is possible
     @org.junit.jupiter.api.Test
     public void testInsertWordInvalidCell() {
-        Board testBoard = new Board(9, wordPairs, "French", 1);
+        Board testBoard = new Board(9, wordPairs, "French", 43);
         String[][] testStringBoard = testBoard.getUnSolvedBoard();
         //Find non-empty space
         int empties = 0;
         for (int i = 0; i < 9; i++) {
             for (int k = 0; k < 9; k++) {
                 if (testStringBoard[i][k] != null) {
+
                 }
             }
         }
+
+        String[][] duplicateStringBoard = new String[9][9];
+
+        //Make copy of unsolved board to compare to detect for word insertions
+        for (int i = 0; i < 9; i++) {
+            for (int k = 0; k < 9; k++) {
+                duplicateStringBoard[i][k] = testBoard.getUnSolvedBoard()[i][k];
+            }
+        }
+
+        if (deepEquals(testBoard.getUnSolvedBoard(), duplicateStringBoard)) {
+            System.out.println("The same");
+        } else {
+            System.out.println("NOT same");
+        }
+
+//        int x = 0;
+//        int y = 0;
+//        int emptyCells = 0;
+//        for (int i = 0; i < 9; i++) {
+//            for (int k = 0; k < 9; k++) {
+//                if (testStringBoard[i][k] == null) {
+//                    x = i;
+//                    y = k;
+//                }
+//            }
+//        }
+
+        int min = 0;
+        int max = 8;
+        int x_value = 0;
+        int y_value = 0;
+
+        int countMistakes = 0;
+
+        boolean searchingEmpty = true;
+        while(searchingEmpty) {
+            x_value = new Random().nextInt(max - min + 1) + min;
+            y_value = new Random().nextInt(max - min + 1) + min;
+            if (testBoard.getUnSolvedBoard()[x_value][y_value] == null) {
+                System.out.println("Found empty cell: ");
+                System.out.println("x: " + x_value + "y: " + y_value);
+                searchingEmpty = false;
+                for (int i = 0; i < wordPairs.length; i++) {
+                    testBoard.insertWord(x_value, y_value, wordPairs[i].getEnglish());
+                    countMistakes++;
+                }
+            }
+        }
+
+        if (deepEquals(testBoard.getUnSolvedBoard(), duplicateStringBoard)) {
+            System.out.println("The same");
+        } else {
+            System.out.println("NOT same");
+        }
+
+        testBoard.getUnSolvedBoard();
+
+
+        System.out.println(testBoard.getMistakes());
+
+        assertEquals(countMistakes, testBoard.getMistakes());
+
     }
 
 
@@ -316,21 +381,39 @@ class BoardTest {
 //    }
 
     @Test
-    public void testCreateBoard() {
+    public void testGenerateGame() {
+
     }
 
+    //Call checkWin on an unfilled board
     @Test
-    public void testCheckWinFalse() {
+    public void testCheckWinUnfilledBoard() {
         //checkWin on a puzzle with 1 empty cell
         Board testBoard = new Board(9, wordPairs, "French", 1);
         assertEquals(false, testBoard.checkWin());
     }
 
+    //Call checkWin on a completely full board
     @Test
-    public void testCheckWinTrue() {
+    public void testCheckWinFullBoard() {
         //checkWin on a puzzle with no empty cells
         Board testBoard = new Board(9, wordPairs, "French", 0);
         assertEquals(true, testBoard.checkWin());
+    }
+
+    //Call checkWin on a completely full INCORRECT board
+    @Test
+    public void testCheckWinIncorrectFullBoard() {
+        Board testBoard = new Board(9, wordPairs, "French", 30);
+        String[][] testStringBoard = testBoard.getUnSolvedBoard();
+        for (int i = 0; i < 9; i++) {
+            for (int k = 0; k < 9; k++) {
+                if (testStringBoard == null) {
+                    testBoard.insertWord(i, k, wordPairs[i].getEnglish());
+                }
+            }
+        }
+        assertEquals(false, testBoard.checkWin());
     }
 
     @org.junit.jupiter.api.Test
@@ -341,20 +424,12 @@ class BoardTest {
     }
 
     @Test
-    void getUnSolvedBoard() {
-
-    }
-
-    @Test
-    void getSolvedBoard() {
-    }
-
-    @Test
-    void getMistakes() {
-    }
-
-    @Test
-    void insertWord() {
+    public void testConstructorDimensions() {
+        int dimensions = 9;
+        Board testBoard = new Board(dimensions, wordPairs, "French", 0);
+//        for (int i = 0; i < )
+//
+//        assertEquals(0, testBoard.getMistakes());
     }
 
 
