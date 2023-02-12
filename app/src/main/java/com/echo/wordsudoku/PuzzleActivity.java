@@ -13,6 +13,9 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.echo.wordsudoku.models.Board;
+import com.echo.wordsudoku.models.WordPair;
+
 import java.util.Arrays;
 import java.util.List;
 
@@ -28,7 +31,11 @@ public class PuzzleActivity extends AppCompatActivity {
     // The word list for the spinner to choose from
     // This is just for testing purposes
     // TODO: Replace this with a list of words from the database
-    private String[] mWordList = {"Apple","Banana","Grape","Orange","Peach","Pear","Strawberry","Watermelon","Coconut"};
+    private String[] mWordList = new String[9];
+
+    private WordPair[] mWordPairs = {new WordPair("Apple","pomme"), new WordPair("Banana","banane"), new WordPair("Grape","raisin"), new WordPair("Orange","orange"), new WordPair("Peach","pêche"), new WordPair("Pear","poire"), new WordPair("Strawberry","fraise"), new WordPair("Watermelon","pastèque"), new WordPair("Coconut","noix de coco")};
+
+    private Board mBoard;
 
 
     private int selected_word = 0;
@@ -37,6 +44,8 @@ public class PuzzleActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_puzzle);
+
+        mBoard = new Board(9,mWordPairs,"english",64);
 
         // We need to check if the user wants to load a previous game or start a new game
         // It is done by checking the boolean extra in the intent
@@ -54,12 +63,18 @@ public class PuzzleActivity extends AppCompatActivity {
 
         // Get the SudokuBoardView reference from XML layout
         // this is the view that will display the Sudoku board
-        mSudokuBoardView = (SudokuBoard) findViewById(R.id.sudoku_board);
+        mSudokuBoardView = findViewById(R.id.sudoku_board);
+        // Setting the initial board to UI
+        mSudokuBoardView.setBoard(mBoard.getUnSolvedBoard());
+
+
 
 
         // Get the Spinner reference from XML layout
         // And populate the spinner with the word list
         mWordListSpinner = findViewById(R.id.word_list_spinner);
+        // fill the spinner words
+        fillWordList();
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, mWordList);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         mWordListSpinner.setAdapter(adapter);
@@ -94,11 +109,18 @@ public class PuzzleActivity extends AppCompatActivity {
             public void onClick(View v) {
                 // When the user clicks the enter button, get the selected word from the spinner
                 // and display it in a toast
+                String result = "";
                 String selectedWord = mWordList[selected_word];
-                if(!mSudokuBoardView.fillWord(selectedWord))
-                {
-                    Toast.makeText(PuzzleActivity.this, "An error occurred! Make sure you have selected a cell", Toast.LENGTH_SHORT).show();
+                try {
+                    mBoard.insertWord(mSudokuBoardView.getCurrentCellRow() - 1, mSudokuBoardView.getCurrentCellColumn() - 1, selectedWord);
+                    if (!mSudokuBoardView.fillWord(selectedWord)) {
+                       result = "An error occurred! Make sure you have selected a cell";
+                    }
                 }
+                catch (Exception e) {
+                    result = "You can not write in the puzzle initial cells";
+                }
+                Toast.makeText(PuzzleActivity.this, result, Toast.LENGTH_LONG).show();
             }
         });
 
@@ -121,5 +143,13 @@ public class PuzzleActivity extends AppCompatActivity {
         Intent intent = new Intent(packageContext, PuzzleActivity.class);
         intent.putExtra(LOAD_PREVIOUS_GAME, loadPreviousGame);
         return intent;
+    }
+
+    private void fillWordList()
+    {
+        for(int i = 0; i < mWordPairs.length; i++)
+        {
+            mWordList[i] = mWordPairs[i].getEnglishOrFrench("fr");
+        }
     }
 }

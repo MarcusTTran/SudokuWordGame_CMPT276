@@ -23,6 +23,7 @@ public class Board {
     private int [][] solutions;
     private String[][] displayBoard, displayBoard_Solved;
     private WordPair[] wordPairs;
+    private final boolean[][] insertibility;
 
     // change to enum later
     String board_language, input_language;
@@ -38,19 +39,29 @@ public class Board {
     // EFFECT: makes a 2D array list and adds empty string to each location on list
     public Board(int dim, WordPair[] wordPairs, String board_language, int numToRemove) {
         this.dim = dim;
+
+        // TODO : change this part because later on we want to generate a board of 6x6 or 12x12 we can't use
         this.BOX_LENGTH = (int)Math.sqrt(dim);
+        // end TODO
+
         this.board = new int[dim][dim];
         this.solutions = new int[dim][dim];
         this.displayBoard = new String[dim][dim];
         this.displayBoard_Solved = new String[dim][dim];
         this.wordPairs = wordPairs;
         this.board_language = board_language;
+        // Sets the input language to the opposite of the board language
         this.input_language = this.board_language.equals(ENGLISH) ? FRENCH : ENGLISH;
+
+
+        // Remove the number of cells based on the difficulty
         this.numToRemove = numToRemove;
+
         this.mistakes = 0;
 
         // generate the board and displayed board values
         this.generateGame();
+        this.insertibility = getInsertTable(this.board,dim,dim);
         this.GenerateWordPuzzle();
 
         // UNCOMMENT FOR TESTING THE BOARD LAYOUT ON CONSOLE
@@ -58,35 +69,79 @@ public class Board {
 //        this.printSudoku_int(this.getSolvedBoard());
     }
 
-    public void insertDebugBoard(int[][] testBoard, int[][] testSolutions) {
-        this.board = testBoard;
-        this.solutions = testSolutions;
+
+    // This utility method is used to return a 2D array of boolean values which indicate whether a cell is filled or not
+    private boolean[][] getInsertTable(int[][] board, int xDimension, int yDimension) {
+        boolean[][] insertTable = new boolean[xDimension][yDimension];
+        for (int i = 0; i < xDimension; i++) {
+            for (int j = 0; j < yDimension; j++) {
+                if (board[i][j] != 0) {
+                    insertTable[i][j] = false;
+                } else {
+                    insertTable[i][j] = true;
+                }
+            }
+        }
+        return insertTable;
+    }
+
+    public void insertDebugBoard(int[][] debugBoard, int[][] debugBoardSolutions) {
+        this.board = debugBoard;
+        this.solutions = debugBoardSolutions;
         GenerateWordPuzzle();
     }
 
 
-
-    // EFFECT: returns the unsolved numerical board
-    public int[][] getUnSolvedBoard() {
-        return board;
+    // @eakbarib
+    // Utility methods for converting the numbers in board int array (which contain sudoku numbers [1-9] (inclusive)) to array-compatible indices [0-8] (inclusive)  and vice versa
+    private int convertSudokuNumberToIndex(int x) {
+        return x - 1;
     }
 
-    // EFFECT: returns the solved numerical Board
-    public int[][] getSolvedBoard() {
-        return solutions;
+    private int convertIndexToSudokuNumber(int x) {
+        return x + 1;
     }
+
+    // @eakbarib
+    // Utility method for finding the index of a word in the wordPairs array
+    private int getAssociatedWordPairIndex(String word) {
+        for (int i = 0; i < wordPairs.length; i++) {
+            if (wordPairs[i].getEnglishOrFrench(board_language,true).equals(word)) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
 
     // EFFECT: returns the number of mistakes made in the game by the player
     public int getMistakes() {
         return mistakes;
     }
 
+    //@eakbarib
+    // Returns the latest board filled with initial words and user-input words
+    // Could be used for updating the Sudoku board in the UI
+    public String[][] getUnSolvedBoard() {
+        return displayBoard;
+    }
+
+
     // EFFECT: adds a the fre or eng word to the location on the board array
-    public void insertWord(int x, int y, int id) {
-        int input = id;
+    public void insertWord(int x, int y, String word) {
+        if(!insertibility[x][y]) {
+            throw new RuntimeException("Cannot insert word in a non-empty cell");
+        }
+        int input = convertIndexToSudokuNumber(getAssociatedWordPairIndex(word));
+        // if the word is not found in the list of word pairs (should never happen)
+        if (input == 0) {
+            throw new RuntimeException("Word not found in the list of word pairs");
+        }
+        // set the corresponding board value to the word's index
         board[x][y] = input;
-        displayBoard[x][y] = wordPairs[id - 1].getEnglishOrFrench(input_language);
-        boolean isSafe = checkValidity(x, y, id);
+        // set the corresponding display board value to the word
+        displayBoard[x][y] = wordPairs[convertSudokuNumberToIndex(input)].getEnglishOrFrench(input_language);
+        boolean isSafe = checkValidity(x, y, input);
 
         if (!isSafe)
             mistakes++;
@@ -130,7 +185,20 @@ public class Board {
         removeCellsByDifficulty(); //after we know the solution
     }
 
-
+    // EFFECT: generates the word puzzle according to the selected board language
+    private void GenerateWordPuzzle() {
+        // Simply fill the display board with the corresponding word in the word pair. It is mapping the board int array to the string array
+        for (int x = 0; x < dim; x++) {
+            for (int y = 0; y < dim; y++) {
+                if (board[x][y] != 0) {
+                    displayBoard[x][y] =
+                            wordPairs[convertSudokuNumberToIndex(board[x][y])].getEnglishOrFrench(board_language);
+                }
+                displayBoard_Solved[x][y] =
+                        wordPairs[convertSudokuNumberToIndex(solutions[x][y])].getEnglishOrFrench(input_language);
+            }
+        }
+    }
 
     // EFFECT: fill the diagonal line in the board
     private void completeDiagonal() {
@@ -309,30 +377,9 @@ public class Board {
         return copiedInto;
     }
 
-    // EFFECT: generates the word puzzle according to the selected board language
-    private void GenerateWordPuzzle() {
 
-        for (int x = 0; x < dim; x++) {
-            for (int y = 0; y < dim; y++) {
-
-                if (board[x][y] == 0) {
-                    displayBoard[x][y] = "  +  ";
-                    displayBoard_Solved[x][y] =
-                            wordPairs[solutions[x][y] - 1].getEnglishOrFrench(input_language);
-                }
-
-                if (board[x][y] != 0) {
-                    displayBoard[x][y] =
-                            wordPairs[board[x][y] - 1].getEnglishOrFrench(board_language);
-                    displayBoard_Solved[x][y] =
-                            wordPairs[solutions[x][y] - 1].getEnglishOrFrench(board_language);
-                }
-            }
-        }
 
         // UNCOMMENT FOR TESTING THE BOARD LAYOUT
 //         printSudoku_String(displayBoard);
 //         printSudoku_String(displayBoard_Solved);
-    }
-
 }
