@@ -87,7 +87,9 @@ public class Board {
 
 
     // @eakbarib
-    // Utility methods for converting the numbers in board int array (which contain sudoku numbers [1-9] (inclusive)) to array-compatible indices [0-8] (inclusive)  and vice versa
+    // Utility methods for converting the numbers in board int array
+    // (which contain sudoku numbers [1-9] (inclusive)) to array-compatible
+    // indices [0-8] (inclusive)  and vice versa
     private int convertSudokuNumberToIndex(int x) {
         return x - 1;
     }
@@ -113,7 +115,7 @@ public class Board {
         return mistakes;
     }
 
-    //@eakbarib
+    // @eakbarib
     // Returns the latest board filled with initial words and user-input words
     // Could be used for updating the Sudoku board in the UI
     public String[][] getUnSolvedBoard() {
@@ -181,15 +183,18 @@ public class Board {
 
     // EFFECT: generates the word puzzle according to the selected board language
     private void GenerateWordPuzzle() {
-        // Simply fill the display board with the corresponding word in the word pair. It is mapping the board int array to the string array
+        // Simply fill the display board with the corresponding word in the word pair.
+        // It is mapping the board int array to the string array
         for (int x = 0; x < dim; x++) {
             for (int y = 0; y < dim; y++) {
                 if (board[x][y] != 0) {
                     displayBoard[x][y] =
-                            wordPairs[convertSudokuNumberToIndex(board[x][y])].getEnglishOrFrench(board_language);
+                            wordPairs[convertSudokuNumberToIndex(board[x][y])]
+                                    .getEnglishOrFrench(board_language);
                 }
                 displayBoard_Solved[x][y] =
-                        wordPairs[convertSudokuNumberToIndex(solutions[x][y])].getEnglishOrFrench(input_language);
+                        wordPairs[convertSudokuNumberToIndex(solutions[x][y])]
+                                .getEnglishOrFrench(input_language);
             }
         }
     }
@@ -203,46 +208,47 @@ public class Board {
 
     // EFFECT: fill the remaining cells when all diagonals are filled check if the position is safe
     //            before inserting the randomly generated value
-    private boolean completeRemaining(int i, int j) {
+    private boolean completeRemaining(int x, int y) {
 
-        if (j >= dim && i < dim - 1)
-        {
-            i = i + 1;
-            j = 0;
+        if (y >= dim && x < dim - 1) {
+            x = x + 1;
+            y = 0;
         }
-        if (j >= dim && i >= dim)
-            return true;
 
-        if (i < BOX_LENGTH) {
-            if (j < BOX_LENGTH) {
-                j = BOX_LENGTH;
+        if (y >= dim && x >= dim) {
+            return true;
+        }
+
+        if (x < BOX_LENGTH) {
+            if (y < BOX_LENGTH) {
+                y = BOX_LENGTH;
             }
 
-        } else if (i < dim - BOX_LENGTH) {
+        } else if (x < dim - BOX_LENGTH) {
 
-            if (j == (int) (i/ BOX_LENGTH) * BOX_LENGTH) {
-                j = j + BOX_LENGTH;
+            if (y == (int) (x/ BOX_LENGTH) * BOX_LENGTH) {
+                y = y + BOX_LENGTH;
             }
         }
         else
         {
-            if (j == dim - BOX_LENGTH) {
-                i = i + 1;
-                j = 0;
-                if (i >= dim)
+            if (y == dim - BOX_LENGTH) {
+                x = x + 1;
+                y = 0;
+                if (x >= dim)
                     return true;
             }
         }
 
         for (int num = 1; num <= dim; num++)
         {
-            if (checkValidity(i, j, num)) {
-                board[i][j] = num;
-                if (completeRemaining(i, j + 1)) {
+            if (checkValidity(x, y, num)) {
+                board[x][y] = num;
+                if (completeRemaining(x, y + 1)) {
                     return true;
                 }
 
-                board[i][j] = 0;
+                board[x][y] = 0;
             }
         }
         return false;
@@ -258,7 +264,7 @@ public class Board {
     }
 
     // EFFECT: fill a 3x3 matrix
-    private void completeBox(int row, int col) { ///!!!!!!!!!!!!
+    private void completeBox(int row, int col) {
         int val = generateRandomValue(dim);
 
         for (int x = 0; x < BOX_LENGTH; x++) {
@@ -318,12 +324,9 @@ public class Board {
             int x = loc / dim;
             int y = loc % dim;
 
-            if (y != 0) {
-                y = y - 1;
-            }
 
             if (board[x][y] != 0) {
-                num--;
+                num-=1;
                 board[x][y] = 0;
             }
         }
