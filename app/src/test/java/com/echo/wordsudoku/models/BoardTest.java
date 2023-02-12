@@ -15,15 +15,15 @@ class BoardTest {
 
     //Sample set of wordPairs to use, use ONLY for 9x9 Sudokus
     private final WordPair[] wordPairs9x9 = {
-            new WordPair("water", "aqua"),
-            new WordPair("red", "rouge"),
-            new WordPair("black", "noire"),
-            new WordPair("yellow", "jaune"),
-            new WordPair("yes", "oui"),
-            new WordPair("no", "non"),
-            new WordPair("he", "il"),
-            new WordPair("she", "elle"),
-            new WordPair("they", "ils")
+            new WordPair("Water", "Aqua"),
+            new WordPair("Red", "Rouge"),
+            new WordPair("Black", "Noire"),
+            new WordPair("Yellow", "Jaune"),
+            new WordPair("Yes", "Oui"),
+            new WordPair("No", "Non"),
+            new WordPair("He", "Il"),
+            new WordPair("She", "Elle"),
+            new WordPair("They", "Ils")
     };
 
     //Try to insert word not included in wordPair list (should throw exception)
@@ -57,33 +57,37 @@ class BoardTest {
     @org.junit.jupiter.api.Test
     public void testInsertWordNonEmptyCell() {
         RuntimeException thrownException = Assertions.assertThrows(RuntimeException.class, () -> {
+            int max = 8;
+            int min = 0;
             Board testBoard = new Board(9, wordPairs9x9, "French", 20);
             String[][] stringBoard = testBoard.getUnSolvedBoard();
-            //Variables to save coords
-            int x = 0;
-            int y = 0;
 
-            //Find non-empty cell
-            for (int i = 0; i < 9; i++) {
-                for (int k = 0; k < 9; k++) {
-                    if (stringBoard[i][k] != null) {
-                        x = i;
-                        y = k;
-                    }
+            int x_value = 0;
+            int y_value = 0;
+            boolean searchingEmpty = true;
+            while(searchingEmpty) {
+                x_value = new Random().nextInt(9);
+                y_value = new Random().nextInt(9);
+                if (testBoard.getUnSolvedBoard()[x_value][y_value] != null) {
+                    System.out.println("found empty cell");
+                    searchingEmpty = false;
                 }
             }
 
-            testBoard.insertWord(x, y, "water");
+            //testBoard.insertWord(x, y, "water");
+            testBoard.insertWord(x_value, y_value, "water");
         });
     }
 
     //Try to enter a word into ALL non-empty cells (should throw N total RuntimeExceptions)
     @org.junit.jupiter.api.Test
     public void testInsertWordNonEmptyCellRepeated() {
-        int numberOfCellsToRemove = 20;
+        int max = 60;
+        int min = 30;
+        int numberOfCellsToRemove = new Random().nextInt(max - min + 1) + min;
         int totalCellsIn9x9Board = 81;
 
-        Board testBoard = new Board(9, wordPairs9x9, "French", 20);
+        Board testBoard = new Board(9, wordPairs9x9, "French", numberOfCellsToRemove);
         String[][] stringBoard = testBoard.getUnSolvedBoard();
         //Variables to save coords
         int x = 0;
@@ -112,9 +116,6 @@ class BoardTest {
     @org.junit.jupiter.api.Test
     public void testInsertWordCorrectString() {
         //Generate random number, N, between 81-20
-        int max = 8;
-        int min = 0;
-
         int x_value = 0;
         int y_value = 0;
 
@@ -135,8 +136,8 @@ class BoardTest {
         //Once detected save the index of the word that was inserted
         boolean searchingEmpty = true;
         while(searchingEmpty) {
-            x_value = new Random().nextInt(max - min + 1) + min;
-            y_value = new Random().nextInt(max - min + 1) + min;
+            x_value = new Random().nextInt(9);
+            y_value = new Random().nextInt(9);
             if (testBoard.getUnSolvedBoard()[x_value][y_value] == null) {
                 searchingEmpty = false;
                 for (int i = 0; i < wordPairs9x9.length; i++) {
@@ -330,10 +331,11 @@ class BoardTest {
         for (int i = 0; i < 9; i++) {
             for (int k = 0; k < 9; k++) {
                 if (testStringBoard == null) {
-                    testBoard.insertWord(i, k, wordPairs9x9[i].getEnglish());
+                    testBoard.insertWord(i, k, wordPairs9x9[0].getEnglish());
                 }
             }
         }
+
         assertEquals(false, testBoard.checkWin());
     }
 
