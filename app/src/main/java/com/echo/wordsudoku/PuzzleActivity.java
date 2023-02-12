@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -25,6 +26,8 @@ public class PuzzleActivity extends AppCompatActivity {
     // This is the key for the boolean extra in the intent
     private static final String LOAD_PREVIOUS_GAME = "com.echo.wordsudoku.load_previous_game";
 
+    private static final String TAG = "PuzzleActivity";
+
     private Spinner mWordListSpinner;
     private Button mEnterWordButton;
     private SudokuBoard mSudokuBoardView;
@@ -34,12 +37,11 @@ public class PuzzleActivity extends AppCompatActivity {
     // TODO: Replace this with a list of words from the database
     private String[] mWordList = new String[9];
 
-    private WordPair[] mWordPairs = {new WordPair("Apple","pomme"), new WordPair("Banana","banane"), new WordPair("Grape","raisin"), new WordPair("Orange","orange"), new WordPair("Peach","pêche"), new WordPair("Pear","poire"), new WordPair("Strawberry","fraise"), new WordPair("Watermelon","pastèque"), new WordPair("Coconut","noix de coco")};
+    private WordPair[] mWordPairs = {new WordPair("Apple","pomme"), new WordPair("Banana","banane"), new WordPair("Grape","raisin"), new WordPair("Orange","orange"), new WordPair("Peach","pêche"), new WordPair("Pear","poire"), new WordPair("Strawberry","fraise"), new WordPair("Watermelon","pastèque"), new WordPair("Coconut","coco")};
 
     private Board mBoard;
 
 
-    private int selected_word = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,7 +60,9 @@ public class PuzzleActivity extends AppCompatActivity {
             // A toast to make sure the activity is being created
             Toast.makeText(this, "Puzzle Activity being Created (Load previous game!)", Toast.LENGTH_LONG).show();
             */
-
+        View[] buttons = {findViewById(R.id.button1),findViewById(R.id.button2),findViewById(R.id.button3),findViewById(R.id.button4),findViewById(R.id.button5),findViewById(R.id.button6),findViewById(R.id.button7),findViewById(R.id.button8),findViewById(R.id.button9)};
+        fillWordList();
+        setButtonLabels(buttons);
 
         // For testing purposes only, to make sure the activity is being created
         // TODO: Remove this
@@ -71,63 +75,33 @@ public class PuzzleActivity extends AppCompatActivity {
         // Setting the initial board to UI
         mSudokuBoardView.setBoard(mBoard.getUnSolvedBoard());
 
+    }
 
 
-
-        // Get the Spinner reference from XML layout
-        // And populate the spinner with the word list
-        mWordListSpinner = findViewById(R.id.word_list_spinner);
-        // fill the spinner words
-        fillWordList();
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, mWordList);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        mWordListSpinner.setAdapter(adapter);
-
-        // Set the listener for the spinner
-        // When the user selects an item, the selected_word member variable will be set to the position of the item
-        // This keeps track of which word the user has selected
-        mWordListSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                // When the user selects an item, change the selection member variable to the position of the item
-                selected_word = position;
+    // This method enters a word in the board
+    // It returns true if the word was entered successfully
+    // It returns false if the word was not entered successfully
+    // @param word The word to be entered
+    // @return true if the word was entered successfully, false otherwise
+    // msg is the message to be displayed in the Logcat
+    private boolean enterWord(String word) {
+        String msg = "Word entered successfully!";
+        boolean result = true;
+        try {
+            mBoard.insertWord(mSudokuBoardView.getCurrentCellRow() - 1, mSudokuBoardView.getCurrentCellColumn() - 1, word);
+            if (!mSudokuBoardView.fillWord(word)) {
+                msg = "An error occurred! Make sure you have selected a cell";
+                result = false;
             }
-
-            // This is required for the interface
-            // We don't need to do anything when the user selects nothing
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-                // When the user selects nothing, do nothing
-            }
-        });
-
-
-        // Get the Enter button reference from XML layout
-        mEnterWordButton = findViewById(R.id.enter_word_button);
-
-        // Set the listener for the enter button
-        // When the user clicks the button, we will call the fillWord method in the SudokuBoardView
-        // with the selected word from the spinner
-        mEnterWordButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // When the user clicks the enter button, get the selected word from the spinner
-                // and display it in a toast
-                String result = "";
-                String selectedWord = mWordList[selected_word];
-                try {
-                    mBoard.insertWord(mSudokuBoardView.getCurrentCellRow() - 1, mSudokuBoardView.getCurrentCellColumn() - 1, selectedWord);
-                    if (!mSudokuBoardView.fillWord(selectedWord)) {
-                       result = "An error occurred! Make sure you have selected a cell";
-                    }
-                }
-                catch (Exception e) {
-                    result = "You can not write in the puzzle initial cells";
-                }
-                Toast.makeText(PuzzleActivity.this, result, Toast.LENGTH_LONG).show();
-            }
-        });
-
+        }
+        catch (Exception e) {
+            msg = "You can not write in the puzzle initial cells";
+            result = false;
+        }
+        finally {
+            Log.d(TAG, msg);
+            return result;
+        }
     }
 
 
@@ -156,4 +130,18 @@ public class PuzzleActivity extends AppCompatActivity {
             mWordList[i] = mWordPairs[i].getEnglishOrFrench(BoardLanguage.FRENCH);
         }
     }
+
+    private void setButtonLabels(View[] buttons)
+    {
+        for(int i = 0; i < mWordPairs.length; i++)
+        {
+            ((Button)buttons[i]).setText(mWordPairs[i].getEnglishOrFrench(BoardLanguage.FRENCH));
+        }
+    }
+
+    public void wordButtonPressed(View view) {
+        enterWord(((Button)view).getText().toString());
+    }
+
+
 }
