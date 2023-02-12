@@ -23,10 +23,15 @@ public class Board {
     private int [][] solutions;
     private String[][] displayBoard, displayBoard_Solved;
     private WordPair[] wordPairs;
-    private final boolean[][] insertibility;
+
+    // This 2D array is a constant which holds the values of the cells which are allowed to be filled.
+    // Cells which are not allowed to be filled are marked as false.
+    // The cells that are initially filled when the game is started cannot be changed and this
+    // 2D array is used to keep track of those.
+    private final boolean[][] insertAllowedInBoard;
 
     // change to enum later
-    String board_language, input_language;
+    private int board_language, input_language;
     private int numToRemove;
     private int mistakes;
     private int dim;
@@ -37,7 +42,7 @@ public class Board {
 
     // CONSTRUCTOR
     // EFFECT: makes a 2D array list and adds empty string to each location on list
-    public Board(int dim, WordPair[] wordPairs, String board_language, int numToRemove) {
+    public Board(int dim, WordPair[] wordPairs, int board_language, int numToRemove) {
         this.dim = dim;
 
         // TODO : change this part because later on we want to generate a board of 6x6 or 12x12 we can't use
@@ -51,7 +56,7 @@ public class Board {
         this.wordPairs = wordPairs;
         this.board_language = board_language;
         // Sets the input language to the opposite of the board language
-        this.input_language = this.board_language.equals(ENGLISH) ? FRENCH : ENGLISH;
+        this.input_language = BoardLanguage.getOtherLanguage(board_language);
 
 
         // Remove the number of cells based on the difficulty
@@ -61,7 +66,10 @@ public class Board {
 
         // generate the board and displayed board values
         this.generateGame();
-        this.insertibility = getInsertTable(this.board,dim,dim);
+
+        // At this stage we fill the 2d array of boolean values which indicate whether a cell is filled initially or not.
+        // it is used to keep track of the cells which are not allowed to be filled (the cells which are initially filled).
+        this.insertAllowedInBoard = getInsertTable(this.board,dim,dim);
         this.GenerateWordPuzzle();
 
         // UNCOMMENT FOR TESTING THE BOARD LAYOUT ON CONSOLE
@@ -89,7 +97,9 @@ public class Board {
 
 
     // @eakbarib
-    // Utility methods for converting the numbers in board int array (which contain sudoku numbers [1-9] (inclusive)) to array-compatible indices [0-8] (inclusive)  and vice versa
+    // Utility methods for converting the numbers in board int array
+    // (which contain sudoku numbers [1-9] (inclusive)) to array-compatible
+    // indices [0-8] (inclusive)  and vice versa
     private int convertSudokuNumberToIndex(int x) {
         return x - 1;
     }
@@ -102,7 +112,7 @@ public class Board {
     // Utility method for finding the index of a word in the wordPairs array
     private int getAssociatedWordPairIndex(String word) {
         for (int i = 0; i < wordPairs.length; i++) {
-            if (wordPairs[i].getEnglishOrFrench(board_language,true).equals(word)) {
+            if (wordPairs[i].getEnglishOrFrench(input_language).equals(word)) {
                 return i;
             }
         }
@@ -115,7 +125,7 @@ public class Board {
         return mistakes;
     }
 
-    //@eakbarib
+    // @eakbarib
     // Returns the latest board filled with initial words and user-input words
     // Could be used for updating the Sudoku board in the UI
     public String[][] getUnSolvedBoard() {
@@ -125,7 +135,7 @@ public class Board {
 
     // EFFECT: adds a the fre or eng word to the location on the board array
     public void insertWord(int x, int y, String word) {
-        if(!insertibility[x][y]) {
+        if(!insertAllowedInBoard[x][y]) {
             throw new RuntimeException("Cannot insert word in a non-empty cell");
         }
         int input = convertIndexToSudokuNumber(getAssociatedWordPairIndex(word));
@@ -183,15 +193,18 @@ public class Board {
 
     // EFFECT: generates the word puzzle according to the selected board language
     private void GenerateWordPuzzle() {
-        // Simply fill the display board with the corresponding word in the word pair. It is mapping the board int array to the string array
+        // Simply fill the display board with the corresponding word in the word pair.
+        // It is mapping the board int array to the string array
         for (int x = 0; x < dim; x++) {
             for (int y = 0; y < dim; y++) {
                 if (board[x][y] != 0) {
                     displayBoard[x][y] =
-                            wordPairs[convertSudokuNumberToIndex(board[x][y])].getEnglishOrFrench(board_language);
+                            wordPairs[convertSudokuNumberToIndex(board[x][y])]
+                                    .getEnglishOrFrench(board_language);
                 }
                 displayBoard_Solved[x][y] =
-                        wordPairs[convertSudokuNumberToIndex(solutions[x][y])].getEnglishOrFrench(input_language);
+                        wordPairs[convertSudokuNumberToIndex(solutions[x][y])]
+                                .getEnglishOrFrench(input_language);
             }
         }
     }
@@ -205,46 +218,47 @@ public class Board {
 
     // EFFECT: fill the remaining cells when all diagonals are filled check if the position is safe
     //            before inserting the randomly generated value
-    private boolean completeRemaining(int i, int j) {
+    private boolean completeRemaining(int x, int y) {
 
-        if (j >= dim && i < dim - 1)
-        {
-            i = i + 1;
-            j = 0;
+        if (y >= dim && x < dim - 1) {
+            x = x + 1;
+            y = 0;
         }
-        if (j >= dim && i >= dim)
-            return true;
 
-        if (i < BOX_LENGTH) {
-            if (j < BOX_LENGTH) {
-                j = BOX_LENGTH;
+        if (y >= dim && x >= dim) {
+            return true;
+        }
+
+        if (x < BOX_LENGTH) {
+            if (y < BOX_LENGTH) {
+                y = BOX_LENGTH;
             }
 
-        } else if (i < dim - BOX_LENGTH) {
+        } else if (x < dim - BOX_LENGTH) {
 
-            if (j == (int) (i/ BOX_LENGTH) * BOX_LENGTH) {
-                j = j + BOX_LENGTH;
+            if (y == (int) (x/ BOX_LENGTH) * BOX_LENGTH) {
+                y = y + BOX_LENGTH;
             }
         }
         else
         {
-            if (j == dim - BOX_LENGTH) {
-                i = i + 1;
-                j = 0;
-                if (i >= dim)
+            if (y == dim - BOX_LENGTH) {
+                x = x + 1;
+                y = 0;
+                if (x >= dim)
                     return true;
             }
         }
 
         for (int num = 1; num <= dim; num++)
         {
-            if (checkValidity(i, j, num)) {
-                board[i][j] = num;
-                if (completeRemaining(i, j + 1)) {
+            if (checkValidity(x, y, num)) {
+                board[x][y] = num;
+                if (completeRemaining(x, y + 1)) {
                     return true;
                 }
 
-                board[i][j] = 0;
+                board[x][y] = 0;
             }
         }
         return false;
@@ -260,7 +274,7 @@ public class Board {
     }
 
     // EFFECT: fill a 3x3 matrix
-    private void completeBox(int row, int col) { ///!!!!!!!!!!!!
+    private void completeBox(int row, int col) {
         int val = generateRandomValue(dim);
 
         for (int x = 0; x < BOX_LENGTH; x++) {
@@ -320,12 +334,8 @@ public class Board {
             int x = loc / dim;
             int y = loc % dim;
 
-            if (y != 0) {
-                y = y - 1;
-            }
-
             if (board[x][y] != 0) {
-                num--;
+                num-=1;
                 board[x][y] = 0;
             }
         }
