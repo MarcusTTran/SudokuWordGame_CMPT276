@@ -49,11 +49,16 @@ public class WordPair {
 
     // EFFECT: returns the desired language translation based on the given language name
     public String getEnglishOrFrench(int language) {
+        // if language is English
         if (language == BoardLanguage.ENGLISH) {
+            // get English word
             return this.getEnglish();
+        // else if language is English
         } else if (language == BoardLanguage.FRENCH) {
+            // get the french word
             return this.getFrench();
         } else {
+            // else if language is invalid throw invalid language exception
             throw new IllegalArgumentException("Invalid language name");
         }
     }
