@@ -58,6 +58,13 @@ public class Board {
 //        this.printSudoku_int(this.getSolvedBoard());
     }
 
+    public void insertDebugBoard(int[][] testBoard, int[][] testSolutions) {
+        this.board = testBoard;
+        this.solutions = testSolutions;
+        GenerateWordPuzzle();
+    }
+
+
 
     // EFFECT: returns the unsolved numerical board
     public int[][] getUnSolvedBoard() {
@@ -122,6 +129,8 @@ public class Board {
 
         removeCellsByDifficulty(); //after we know the solution
     }
+
+
 
     // EFFECT: fill the diagonal line in the board
     private void completeDiagonal() {

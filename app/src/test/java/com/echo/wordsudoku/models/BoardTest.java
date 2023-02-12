@@ -21,6 +21,46 @@ class BoardTest {
             new WordPair("they", "ils", 9)
     };
 
+    //Boards to use for debugging
+    private int[][] debugBoard = {
+            {6,0,0,4,0,0,3,0,8},
+            {7,3,0,0,2,8,5,0,0},
+            {8,0,5,0,0,0,4,2,9},
+            {0,8,0,0,4,9,6,1,3},
+            {4,0,0,0,0,0,0,0,0},
+            {0,5,1,6,0,0,0,8,0},
+            {9,4,6,1,0,0,8,3,0},
+            {0,2,0,3,0,6,7,0,0},
+            {0,7,0,0,0,0,1,0,0}
+    };
+
+    private int[][] debugBoardSolutions = {
+            {6,9,2,4,1,5,3,7,8},
+            {7,3,4,9,2,8,5,6,1},
+            {8,1,5,7,6,3,4,2,9},
+            {2,8,7,5,4,9,6,1,3},
+            {4,6,9,8,3,1,2,5,7},
+            {3,5,1,6,7,2,9,8,4},
+            {9,4,6,1,5,7,8,3,2},
+            {1,2,8,3,9,6,7,4,5},
+            {5,7,3,2,8,4,1,9,6}
+    };
+
+
+    @org.junit.jupiter.api.Test
+    public void testGetUnsolved() {
+        Board testBoard = new Board(9, wordPairs, "French", 0);
+        testBoard.insertDebugBoard(debugBoard, debugBoardSolutions);
+        assertEquals(debugBoard, testBoard.getUnSolvedBoard());
+    }
+
+    @org.junit.jupiter.api.Test
+    public void testGetSolved() {
+        Board testBoard = new Board(9, wordPairs, "French", 0);
+        testBoard.insertDebugBoard(debugBoard, debugBoardSolutions);
+        assertEquals(debugBoardSolutions, testBoard.getSolvedBoard());
+    }
+
     @org.junit.jupiter.api.Test
     public void testBlankCellsGeneration() {
         //Generate random number, N, with value between dim * dim
@@ -50,7 +90,7 @@ class BoardTest {
     @Test
     public void testCompletelyBlankPuzzleGeneration() {
         //Test if Puzzle can generate completely blank puzzle
-        //Is this even possible?
+        //This is not possible
         //Tests removeCellsByDifficulty()
 
         //Not working for some reason
