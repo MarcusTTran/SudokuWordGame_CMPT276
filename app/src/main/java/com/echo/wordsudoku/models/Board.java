@@ -324,7 +324,6 @@ public class Board {
             int x = loc / dim;
             int y = loc % dim;
 
-
             if (board[x][y] != 0) {
                 num-=1;
                 board[x][y] = 0;
