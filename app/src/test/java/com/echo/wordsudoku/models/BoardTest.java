@@ -24,7 +24,7 @@ class BoardTest {
             new WordPair("they", "ils")
     };
 
-    //Try to insert word not included in wordPair list
+    //Try to insert word not included in wordPair list (should throw exception)
     @org.junit.jupiter.api.Test
     public void testInsertWordMissingWord() {
 
@@ -54,7 +54,7 @@ class BoardTest {
 
     }
 
-    //Try to insert word in non-empty cell
+    //Try to insert word in non-empty cell (should throw exception)
     @org.junit.jupiter.api.Test
     public void testInsertWordNonEmptyCell() {
         RuntimeException thrown = Assertions.assertThrows(RuntimeException.class, () -> {
@@ -78,7 +78,7 @@ class BoardTest {
         });
     }
 
-    //Test that trying to enter a word into all non-empty cells correctly throws a RuntimeException
+    //Try to enter a word into ALL non-empty cells (should throw N total RuntimeExceptions)
     @org.junit.jupiter.api.Test
     public void testInsertWordNonEmptyCellRepeated() {
         int numberOfCellsToRemove = 20;
@@ -108,7 +108,7 @@ class BoardTest {
         assertEquals(numberOfExpectedExceptions, totalExceptions);
     }
 
-    
+
     //Test if the word selected to be inserted by user is correctly inserted into the board
     @org.junit.jupiter.api.Test
     public void testInsertWordCorrectString() {
@@ -122,16 +122,18 @@ class BoardTest {
         Board testBoard = new Board(9, wordPairs, "French", 45);
         String[][] duplicateStringBoard = new String[9][9];
 
-        //Make copy of unsolved board
+        //Make copy of unsolved board to compare to detect for word insertions
         for (int i = 0; i < 9; i++) {
             for (int k = 0; k < 9; k++) {
                 duplicateStringBoard[i][k] = testBoard.getUnSolvedBoard()[i][k];
             }
         }
 
-
+        //Index to save which word we inserted into the board
         int index = 0;
 
+        //Search for some empty cell, try to all possible words in wordPair list until insertion is successful, if statement compares duplicate and board to detect that insertion was made since after insertion the board will differs from the original duplicate
+        //Once detected save the index of the word that was inserted
         boolean searchingEmpty = true;
         while(searchingEmpty) {
             x_value = new Random().nextInt(max - min + 1) + min;
@@ -141,24 +143,17 @@ class BoardTest {
                 for (int i = 0; i < wordPairs.length; i++) {
                     testBoard.insertWord(x_value, y_value, wordPairs[i].getEnglish());
                     if (!deepEquals(testBoard.getUnSolvedBoard(), duplicateStringBoard)) {
-                        System.out.println("Word inserted");
                         index = i;
                     }
                 }
             }
         }
 
-        System.out.println("Index of word inserted: " + index);
-        if (deepEquals(testBoard.getUnSolvedBoard(), duplicateStringBoard)) {
-            System.out.println("Boards are the same");
-        } else {
-            System.out.println("Boards are NOT the same");
-        }
-
+        //If the word stored at the empty cell coordinates match that of the index of the wordPair we inserted then the insertion of the correct word was successful
         assertEquals(wordPairs[index].getEnglish(), testBoard.getUnSolvedBoard()[x_value][y_value]);
     }
 
-    //Check number of mistakes in newly created board
+    //Check number of mistakes in newly created board (should be 0)
     @org.junit.jupiter.api.Test
     public void testGetMistakesNewBoard() {
         Board testBoard = new Board(9, wordPairs, "French", 20);
@@ -166,7 +161,7 @@ class BoardTest {
         assertEquals(0, totalMistakes);
     }
 
-    //Test that board can produce correct number of blank cells
+    //Test that board can produces correct number of blank cells with random number
     @org.junit.jupiter.api.Test
     public void testBlankCellGenerationRandom() {
         //Generate random number, N, between 81-20
@@ -177,9 +172,8 @@ class BoardTest {
         //Generate board with that N empty spaces
         Board testBoard = new Board(9, wordPairs, "French", randomNumber);
         String[][] testStringBoard = testBoard.getUnSolvedBoard();
-        String[][] duplicateStringBoard = new String[9][9];
 
-        //Find some empty cell
+        //Find empty cells
         int totalEmptyCells = 0;
         for (int i = 0; i < 9; i++) {
             for (int k = 0; k < 9; k++) {
@@ -193,11 +187,8 @@ class BoardTest {
     }
 
 
-
-
-
-
-    //Not sure about this one, 72 is the maximum largest number acceptable
+    // Try to create the largest possible board
+    // Not sure about this test, 72 is the maximum largest number acceptable
     @org.junit.jupiter.api.Test
     public void testBlankCellGenerationMaximum() {
 
@@ -217,8 +208,29 @@ class BoardTest {
         assertEquals(72, emptyCells);
     }
 
+    // Try to create board with no empty cells
     @org.junit.jupiter.api.Test
-    public void testBlankCellGenerationMinimum() {
+    public void testBlankCellGenerationNone() {
+
+        //Generate board with that N empty spaces
+        Board testBoard = new Board(9, wordPairs, "French", 0);
+        String[][] testStringBoard = testBoard.getUnSolvedBoard();
+
+        //Count up empty spaces
+        int emptyCells = 0;
+        for (int i = 0; i < 9; i++) {
+            for (int k = 0; k < 9; k++) {
+                if (testStringBoard[i][k] == null) {
+                    emptyCells++;
+                }
+            }
+        }
+        assertEquals(0, emptyCells);
+    }
+
+    // Try to create board with single empty cell
+    @org.junit.jupiter.api.Test
+    public void testBlankCellGenerationOne() {
 
         //Generate board with that N empty spaces
         Board testBoard = new Board(9, wordPairs, "French", 1);
@@ -345,19 +357,10 @@ class BoardTest {
     void insertWord() {
     }
 
-    @Test
-    void checkWin() {
-    }
 
     @Test
     void generateGame() {
     }
 
-    @Test
-    void printSudoku_int() {
-    }
 
-    @Test
-    void printSudoku_String() {
-    }
 }
