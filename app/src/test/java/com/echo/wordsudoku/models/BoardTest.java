@@ -31,7 +31,7 @@ class BoardTest {
     public void testInsertWordMissingWord() {
 
         RuntimeException thrownException = Assertions.assertThrows(RuntimeException.class, () -> {
-            Board testBoard = new Board(9, wordPairs9x9, "French", 20);
+            Board testBoard = new Board(9, wordPairs9x9, 1, 20);
             String[][] stringBoard = testBoard.getUnSolvedBoard();
             //Variables to save coords
             int x = 0;
@@ -59,7 +59,7 @@ class BoardTest {
         RuntimeException thrownException = Assertions.assertThrows(RuntimeException.class, () -> {
             int max = 8;
             int min = 0;
-            Board testBoard = new Board(9, wordPairs9x9, "French", 20);
+            Board testBoard = new Board(9, wordPairs9x9, 1, 20);
             String[][] stringBoard = testBoard.getUnSolvedBoard();
 
             int x_value = 0;
@@ -87,11 +87,9 @@ class BoardTest {
         int numberOfCellsToRemove = new Random().nextInt(max - min + 1) + min;
         int totalCellsIn9x9Board = 81;
 
-        Board testBoard = new Board(9, wordPairs9x9, "French", numberOfCellsToRemove);
+        Board testBoard = new Board(9, wordPairs9x9, 1, numberOfCellsToRemove);
         String[][] stringBoard = testBoard.getUnSolvedBoard();
         //Variables to save coords
-        int x = 0;
-        int y = 0;
 
         //Find some non=empty cell
         int totalExceptions = 0;
@@ -119,7 +117,7 @@ class BoardTest {
         int x_value = 0;
         int y_value = 0;
 
-        Board testBoard = new Board(9, wordPairs9x9, "French", 45);
+        Board testBoard = new Board(9, wordPairs9x9, 1, 45);
         String[][] duplicateStringBoard = new String[9][9];
 
         //Make copy of unsolved board to compare to detect for word insertions
@@ -156,7 +154,7 @@ class BoardTest {
     //Check number of mistakes in newly created board (should be 0)
     @org.junit.jupiter.api.Test
     public void testGetMistakesNewBoard() {
-        Board testBoard = new Board(9, wordPairs9x9, "French", 20);
+        Board testBoard = new Board(9, wordPairs9x9, 1, 20);
         int totalMistakes = testBoard.getMistakes();
         assertEquals(0, totalMistakes);
     }
@@ -170,7 +168,7 @@ class BoardTest {
         int randomNumber = new Random().nextInt(max - min + 1) + min;
 
         //Generate board with that N empty spaces
-        Board testBoard = new Board(9, wordPairs9x9, "French", randomNumber);
+        Board testBoard = new Board(9, wordPairs9x9, 1, randomNumber);
         String[][] testStringBoard = testBoard.getUnSolvedBoard();
 
         //Find empty cells
@@ -193,7 +191,7 @@ class BoardTest {
     public void testBlankCellGenerationMaximum() {
 
         //Generate board with that N empty spaces
-        Board testBoard = new Board(9, wordPairs9x9, "French", 72);
+        Board testBoard = new Board(9, wordPairs9x9, 1, 72);
         String[][] testStringBoard = testBoard.getUnSolvedBoard();
 
         //Count up empty spaces
@@ -213,7 +211,7 @@ class BoardTest {
     public void testBlankCellGenerationNone() {
 
         //Generate board with that N empty spaces
-        Board testBoard = new Board(9, wordPairs9x9, "French", 0);
+        Board testBoard = new Board(9, wordPairs9x9, 1, 0);
         String[][] testStringBoard = testBoard.getUnSolvedBoard();
 
         //Count up empty spaces
@@ -233,7 +231,7 @@ class BoardTest {
     public void testBlankCellGenerationOne() {
 
         //Generate board with that N empty spaces
-        Board testBoard = new Board(9, wordPairs9x9, "French", 1);
+        Board testBoard = new Board(9, wordPairs9x9, 1, 1);
         String[][] testStringBoard = testBoard.getUnSolvedBoard();
 
         //Count up empty spaces
@@ -248,7 +246,7 @@ class BoardTest {
         assertEquals(1, emptyCells);
     }
 
-    //Insert word to invalid cell to test incrementation of mistakes
+    //TODO: Insert word into invalid cell to test incrementation of mistakes
     //Purposefully induce a mistake, not currently possible without getSolutionBoard
 //    @org.junit.jupiter.api.Test
 //    public void testInsertWordInvalidCell() {
@@ -311,7 +309,7 @@ class BoardTest {
     @org.junit.jupiter.api.Test
     public void testCheckWinUnfilledBoard() {
         //checkWin on a puzzle with 1 empty cell
-        Board testBoard = new Board(9, wordPairs9x9, "French", 1);
+        Board testBoard = new Board(9, wordPairs9x9, 1, 1);
         assertEquals(false, testBoard.checkWin());
     }
 
@@ -319,14 +317,14 @@ class BoardTest {
     @org.junit.jupiter.api.Test
     public void testCheckWinFullBoard() {
         //checkWin on a puzzle with no empty cells
-        Board testBoard = new Board(9, wordPairs9x9, "French", 0);
+        Board testBoard = new Board(9, wordPairs9x9, 1, 0);
         assertEquals(true, testBoard.checkWin());
     }
 
     //Call checkWin on a completely full INCORRECT board
     @org.junit.jupiter.api.Test
     public void testCheckWinIncorrectFullBoard() {
-        Board testBoard = new Board(9, wordPairs9x9, "French", 30);
+        Board testBoard = new Board(9, wordPairs9x9, 1, 30);
         String[][] testStringBoard = testBoard.getUnSolvedBoard();
         for (int i = 0; i < 9; i++) {
             for (int k = 0; k < 9; k++) {
@@ -342,7 +340,7 @@ class BoardTest {
     @org.junit.jupiter.api.Test
     public void testGetMistakesFullBoard() {
         //test getMistakes on an newly created puzzle
-        Board testBoard = new Board(9, wordPairs9x9, "French", 0);
+        Board testBoard = new Board(9, wordPairs9x9, 1, 0);
         assertEquals(0, testBoard.getMistakes());
     }
 
@@ -351,7 +349,7 @@ class BoardTest {
     @org.junit.jupiter.api.Test
     public void testConstructorDimensions() {
         int dimensions = 9;
-        Board testBoard = new Board(dimensions, wordPairs9x9, "French", 0);
+        Board testBoard = new Board(dimensions, wordPairs9x9, 1, 0);
 
         assertEquals(dimensions, testBoard.getUnSolvedBoard()[0].length);
     }
@@ -359,7 +357,7 @@ class BoardTest {
     //Test the constructor correctly produces board with English words
     @org.junit.jupiter.api.Test
     public void testConstructorEnglishLanguage() {
-        Board testBoard = new Board(9, wordPairs9x9, "English", 0);
+        Board testBoard = new Board(9, wordPairs9x9, 0, 0);
         String[][] stringTestBoard = testBoard.getUnSolvedBoard();
         String someEnglishWord = stringTestBoard[0][0];
         boolean languageCheck = false;
@@ -375,7 +373,7 @@ class BoardTest {
     //Test the constructor correctly produces board with French words
     @org.junit.jupiter.api.Test
     public void testConstructorFrenchLanguage() {
-        Board testBoard = new Board(9, wordPairs9x9, "French", 0);
+        Board testBoard = new Board(9, wordPairs9x9, 1, 0);
         String[][] stringTestBoard = testBoard.getUnSolvedBoard();
         String someFrenchWord = stringTestBoard[0][0];
         boolean languageCheck = false;
@@ -393,7 +391,7 @@ class BoardTest {
     @org.junit.jupiter.api.Test
     public void testAllFrenchWordsIncluded() {
         List<String> allFrenchPairs = new ArrayList<>();
-        Board testBoard = new Board(9, wordPairs9x9, "French", 0);
+        Board testBoard = new Board(9, wordPairs9x9, 1, 0);
         String[][] stringTestBoard = testBoard.getUnSolvedBoard();
 
         for (int i = 0; i < 9; i++) {
@@ -413,7 +411,7 @@ class BoardTest {
     @org.junit.jupiter.api.Test
     public void testAllEnglishWordsIncluded() {
         List<String> allFrenchPairs = new ArrayList<>();
-        Board testBoard = new Board(9, wordPairs9x9, "French", 0);
+        Board testBoard = new Board(9, wordPairs9x9, 1, 0);
         String[][] stringTestBoard = testBoard.getUnSolvedBoard();
 
         for (int i = 0; i < 9; i++) {

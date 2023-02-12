@@ -25,14 +25,14 @@ class WordPairTest {
     void getEnglishOrFrenchEnglish() {
         String englishWord = "Black";
         WordPair testWordPair = new WordPair(englishWord, "Noire");
-        assertEquals(englishWord, testWordPair.getEnglishOrFrench("English"));
+        assertEquals(englishWord, testWordPair.getEnglishOrFrench(0));
     }
 
     @Test
     void getEnglishOrFrenchFrench() {
         String frenchWord = "Jaune";
         WordPair testWordPair = new WordPair("Yellow", frenchWord);
-        assertEquals(frenchWord, testWordPair.getEnglishOrFrench("French"));
+        assertEquals(frenchWord, testWordPair.getEnglishOrFrench(1));
     }
 
     //Test for IllegalArgumentException thrown when requesting translation in non support language
@@ -40,42 +40,8 @@ class WordPairTest {
     void getEnglishOrFrenchException() {
         IllegalArgumentException thrownException = Assertions.assertThrows(IllegalArgumentException.class, () -> {
             WordPair testWordPair = new WordPair("Yellow", "Jaune");
-            testWordPair.getEnglishOrFrench("Spanish");
+            testWordPair.getEnglishOrFrench(2);
         });
-    }
-
-    //Test for getEnglishOrFrench with String value of French and boolean value of true
-    @Test
-    void getEnglishOrFrenchBoolTrueEnglish() {
-        String englishWord = "Yellow";
-        WordPair testWordPair = new WordPair(englishWord, "Jaune");
-        assertEquals(englishWord, testWordPair.getEnglishOrFrench("French", true));
-    }
-
-    //Test for getEnglishOrFrench with String value of English and boolean value of true
-    @Test
-    void getEnglishOrFrenchBoolTrueFrench() {
-        String frenchWord = "Jaune";
-        WordPair testWordPair = new WordPair("Yellow", frenchWord);
-        assertEquals(frenchWord, testWordPair.getEnglishOrFrench("English", true));
-    }
-
-    //Test for IllegalArgumentException thrown when non-support language is passed and boolean value true is passed
-    @Test
-    void getEnglishOrFrenchBooleanException() {
-
-        IllegalArgumentException thrownException = Assertions.assertThrows(IllegalArgumentException.class, () -> {
-            WordPair testWordPair = new WordPair("Yellow", "Jaune");
-            testWordPair.getEnglishOrFrench("Spanish", true);
-        });
-    }
-
-    //Test for getEnglishOrFrench with boolean value of false
-    @Test
-    void getEnglishOrFrenchBooleanFalse() {
-        String frenchWord = "Jaune";
-        WordPair testWordPair = new WordPair("Yellow", frenchWord);
-        assertEquals(frenchWord, testWordPair.getEnglishOrFrench("French", false));
     }
 
     @Test
