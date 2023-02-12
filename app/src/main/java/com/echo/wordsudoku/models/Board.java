@@ -23,10 +23,15 @@ public class Board {
     private int [][] solutions;
     private String[][] displayBoard, displayBoard_Solved;
     private WordPair[] wordPairs;
-    private final boolean[][] insertibility;
+
+    // This 2D array is a constant which holds the values of the cells which are allowed to be filled.
+    // Cells which are not allowed to be filled are marked as false.
+    // The cells that are initially filled when the game is started cannot be changed and this
+    // 2D array is used to keep track of those.
+    private final boolean[][] insertAllowedInBoard;
 
     // change to enum later
-    String board_language, input_language;
+    private int board_language, input_language;
     private int numToRemove;
     private int mistakes;
     private int dim;
@@ -37,7 +42,7 @@ public class Board {
 
     // CONSTRUCTOR
     // EFFECT: makes a 2D array list and adds empty string to each location on list
-    public Board(int dim, WordPair[] wordPairs, String board_language, int numToRemove) {
+    public Board(int dim, WordPair[] wordPairs, int board_language, int numToRemove) {
         this.dim = dim;
 
         // TODO : change this part because later on we want to generate a board of 6x6 or 12x12 we can't use
@@ -51,7 +56,7 @@ public class Board {
         this.wordPairs = wordPairs;
         this.board_language = board_language;
         // Sets the input language to the opposite of the board language
-        this.input_language = this.board_language.equals(ENGLISH) ? FRENCH : ENGLISH;
+        this.input_language = BoardLanguage.getOtherLanguage(board_language);
 
 
         // Remove the number of cells based on the difficulty
@@ -61,7 +66,10 @@ public class Board {
 
         // generate the board and displayed board values
         this.generateGame();
-        this.insertibility = getInsertTable(this.board,dim,dim);
+
+        // At this stage we fill the 2d array of boolean values which indicate whether a cell is filled initially or not.
+        // it is used to keep track of the cells which are not allowed to be filled (the cells which are initially filled).
+        this.insertAllowedInBoard = getInsertTable(this.board,dim,dim);
         this.GenerateWordPuzzle();
 
         // UNCOMMENT FOR TESTING THE BOARD LAYOUT ON CONSOLE
@@ -100,7 +108,7 @@ public class Board {
     // Utility method for finding the index of a word in the wordPairs array
     private int getAssociatedWordPairIndex(String word) {
         for (int i = 0; i < wordPairs.length; i++) {
-            if (wordPairs[i].getEnglishOrFrench(board_language,true).equals(word)) {
+            if (wordPairs[i].getEnglishOrFrench(input_language).equals(word)) {
                 return i;
             }
         }
@@ -123,7 +131,7 @@ public class Board {
 
     // EFFECT: adds a the fre or eng word to the location on the board array
     public void insertWord(int x, int y, String word) {
-        if(!insertibility[x][y]) {
+        if(!insertAllowedInBoard[x][y]) {
             throw new RuntimeException("Cannot insert word in a non-empty cell");
         }
         int input = convertIndexToSudokuNumber(getAssociatedWordPairIndex(word));

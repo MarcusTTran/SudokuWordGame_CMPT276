@@ -14,6 +14,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.echo.wordsudoku.models.Board;
+import com.echo.wordsudoku.models.BoardLanguage;
 import com.echo.wordsudoku.models.WordPair;
 
 import java.util.Arrays;
@@ -45,7 +46,10 @@ public class PuzzleActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_puzzle);
 
-        mBoard = new Board(9,mWordPairs,"english",64);
+        int numberOfInitialWords = 17;
+        int puzzleDimension = 9;
+
+        mBoard = new Board(puzzleDimension,mWordPairs,BoardLanguage.ENGLISH,puzzleDimension*puzzleDimension - numberOfInitialWords);
 
         // We need to check if the user wants to load a previous game or start a new game
         // It is done by checking the boolean extra in the intent
@@ -149,7 +153,7 @@ public class PuzzleActivity extends AppCompatActivity {
     {
         for(int i = 0; i < mWordPairs.length; i++)
         {
-            mWordList[i] = mWordPairs[i].getEnglishOrFrench("fr");
+            mWordList[i] = mWordPairs[i].getEnglishOrFrench(BoardLanguage.FRENCH);
         }
     }
 }
