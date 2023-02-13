@@ -2,6 +2,7 @@ package com.echo.wordsudoku.models;
 
 public class BoardLanguage {
     // The language names
+    // SUGGESTION: Use enums instead of integer constants? Maybe iteration 3?
     public static final int ENGLISH = 0;
     public static final int FRENCH = 1;
 
