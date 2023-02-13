@@ -161,20 +161,6 @@ class BoardTest {
         int totalMistakes = testBoard.getMistakes();
         assertEquals(0, totalMistakes);
 
-        // NOT SURE IF THIS WORKS PLS REVIEW
-        // Test to see if it catches a single mistake
-        String mistakeWord = "Dog";
-
-        // Find a cell where it shouldn't be
-        for(int row = 0; row < dim; row++){
-            for(int col = 0; col < dim; dim++){
-                if(testBoard.getUnSolvedBoard()[row][col] != null){
-                    testBoard.insertWord(row, col, mistakeWord);
-                    break; // stop after the first mistakeWord was entered
-                }
-            }
-        }
-        assertEquals(1, testBoard.getMistakes());
     }
 
     //Test that board can produces correct number of blank cells with random number

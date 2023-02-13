@@ -33,7 +33,7 @@ class WordPairTest {
         String frenchWord = "Jaune";
         WordPair testWordPair = new WordPair("Yellow", frenchWord);
         assertEquals(frenchWord, testWordPair.getEnglishOrFrench(1));
-        assertEquals("Yellow", testWordPair.getEnglishOrFrench(2));
+        assertEquals("Yellow", testWordPair.getEnglishOrFrench(0));
     }
 
     //Test for IllegalArgumentException thrown when requesting translation in non support language
