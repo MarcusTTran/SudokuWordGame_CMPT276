@@ -130,7 +130,9 @@ class BoardTest {
         //Index to save which word we inserted into the board
         int index = 0;
 
-        //Search for some empty cell, try to all possible words in wordPair list until insertion is successful, if statement compares duplicate and board to detect that insertion was made since after insertion the board will differs from the original duplicate
+        //Search for some empty cell, try to all possible words in wordPair list until insertion
+        // is successful, if statement compares duplicate and board to detect that insertion was made
+        // since after insertion the board will differs from the original duplicate
         //Once detected save the index of the word that was inserted
         boolean searchingEmpty = true;
         while(searchingEmpty) {
@@ -154,9 +156,25 @@ class BoardTest {
     //Check number of mistakes in newly created board (should be 0)
     @org.junit.jupiter.api.Test
     public void testGetMistakesNewBoard() {
-        Board testBoard = new Board(9, wordPairs9x9, 1, 20);
+        int dim = 9;
+        Board testBoard = new Board(dim, wordPairs9x9, 1, 20);
         int totalMistakes = testBoard.getMistakes();
         assertEquals(0, totalMistakes);
+
+        // NOT SURE IF THIS WORKS PLS REVIEW
+        // Test to see if it catches a single mistake
+        String mistakeWord = "Dog";
+
+        // Find a cell where it shouldn't be
+        for(int row = 0; row < dim; row++){
+            for(int col = 0; col < dim; dim++){
+                if(testBoard.getUnSolvedBoard()[row][col] != null){
+                    testBoard.insertWord(row, col, mistakeWord);
+                    break; // stop after the first mistakeWord was entered
+                }
+            }
+        }
+        assertEquals(1, testBoard.getMistakes());
     }
 
     //Test that board can produces correct number of blank cells with random number
@@ -310,7 +328,7 @@ class BoardTest {
     public void testCheckWinUnfilledBoard() {
         //checkWin on a puzzle with 1 empty cell
         Board testBoard = new Board(9, wordPairs9x9, 1, 1);
-        assertEquals(false, testBoard.checkWin());
+        assertFalse(testBoard.checkWin());
     }
 
     //Call checkWin on a completely full board
@@ -318,7 +336,7 @@ class BoardTest {
     public void testCheckWinFullBoard() {
         //checkWin on a puzzle with no empty cells
         Board testBoard = new Board(9, wordPairs9x9, 1, 0);
-        assertEquals(true, testBoard.checkWin());
+        assertTrue(testBoard.checkWin());
     }
 
     //Call checkWin on a completely full INCORRECT board
@@ -334,7 +352,7 @@ class BoardTest {
             }
         }
 
-        assertEquals(false, testBoard.checkWin());
+        assertFalse(testBoard.checkWin());
     }
 
     @org.junit.jupiter.api.Test
@@ -367,7 +385,7 @@ class BoardTest {
                 break;
             }
         }
-        assertEquals(true, languageCheck);
+        assertTrue(languageCheck);
     }
 
     //Test the constructor correctly produces board with French words
@@ -383,7 +401,7 @@ class BoardTest {
                 break;
             }
         }
-        assertEquals(true, languageCheck);
+        assertTrue(languageCheck);
     }
 
 
@@ -397,14 +415,17 @@ class BoardTest {
         for (int i = 0; i < 9; i++) {
             for (int k = 0; k < 9; k++) {
                 for (int g = 0; g < wordPairs9x9.length; g++) {
-                    if (stringTestBoard[i][k].equals(wordPairs9x9[i].getFrench()) && !allFrenchPairs.contains(wordPairs9x9[i].getFrench())) {
+                    if (stringTestBoard[i][k].equals(wordPairs9x9[i].getFrench()) && // French word is same as in solution boar
+                            !allFrenchPairs.contains(wordPairs9x9[i].getFrench())) // Not already in allFrenchPairs list
+                    {
+                        // Add to list of french words
                         allFrenchPairs.add(wordPairs9x9[i].getFrench());
                     }
                 }
             }
         }
+        // Expected: 9 french words in allFrenchPairs
         assertEquals(wordPairs9x9.length, allFrenchPairs.size());
-
     }
 
     //Test the constructor correctly produces board with ALL English words

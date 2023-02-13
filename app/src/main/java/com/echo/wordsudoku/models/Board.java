@@ -28,6 +28,7 @@ public class Board {
     // Cells which are not allowed to be filled are marked as false.
     // The cells that are initially filled when the game is started cannot be changed and this
     // 2D array is used to keep track of those.
+        // Marcus' Comment: Maybe in the future iterations, we could make this an enum (filled, open, filled_at_start)
     private final boolean[][] insertAllowedInBoard;
 
     // change to enum later
@@ -213,6 +214,7 @@ public class Board {
     }
 
     // EFFECT: generates the word puzzle according to the selected board language
+    //          in string form
     private void GenerateWordPuzzle() {
         // Simply fill the display board with the corresponding word in the word pair.
         // It is mapping the board int array to the string array
@@ -426,6 +428,24 @@ public class Board {
         return (int) Math.floor(((Math.random() * i) + 1));
     }
 
+
+
+
+    // EFFECT: take copy of an array without taking a reference
+    private int [][] takeCopy(int [][] copiedFrom, int [][] copiedInto) {
+        for (int i = 0; i < dim; i++) {
+            for(int j = 0; j < dim; j++) {
+                //set every index of the new array to the index of the copied array
+                copiedInto[i][j] = copiedFrom[i][j];
+            }
+        }
+
+        // return the new copy of the array
+        return copiedInto;
+    }
+
+        // DEBUG METHODS BELOW !!!
+
     //EFFECT: prints the board board on console given the array
     public void printSudoku_int(int [][] print_board) {
         // print int [][] board for testing on console
@@ -451,22 +471,6 @@ public class Board {
         }
         System.out.println();
     }
-
-
-    // EFFECT: take copy of an array without taking a reference
-    private int [][] takeCopy(int [][] copiedFrom, int [][] copiedInto) {
-        for (int i = 0; i < dim; i++) {
-            for(int j = 0; j < dim; j++) {
-                //set every index of the new array to the index of the copied array
-                copiedInto[i][j] = copiedFrom[i][j];
-            }
-        }
-
-        // return the new copy of the array
-        return copiedInto;
-    }
-
-
 
         // UNCOMMENT FOR TESTING THE BOARD LAYOUT
 //         printSudoku_String(displayBoard);

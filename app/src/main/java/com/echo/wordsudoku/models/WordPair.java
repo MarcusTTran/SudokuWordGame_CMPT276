@@ -44,9 +44,6 @@ public class WordPair {
         this.fre = fre;
     }
 
-
-
-
     // EFFECT: returns the desired language translation based on the given language name
     public String getEnglishOrFrench(int language) {
         // if language is English
