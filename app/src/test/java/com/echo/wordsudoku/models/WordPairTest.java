@@ -36,10 +36,10 @@ class WordPairTest {
         assertEquals("Yellow", testWordPair.getEnglishOrFrench(0));
     }
 
-    //Test for IllegalArgumentException thrown when requesting translation in non support language
+    //Test for IllegalArgumentException thrown when requesting translation in non-supported language
     @Test
     void getEnglishOrFrenchException() {
-        IllegalArgumentException thrownException = Assertions.assertThrows(IllegalArgumentException.class, () -> {
+        Assertions.assertThrows(IllegalArgumentException.class, () -> {
             WordPair testWordPair = new WordPair("Yellow", "Jaune");
             testWordPair.getEnglishOrFrench(2);
         });

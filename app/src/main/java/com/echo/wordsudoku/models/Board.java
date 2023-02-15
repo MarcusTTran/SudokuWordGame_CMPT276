@@ -37,7 +37,7 @@ public class Board {
     private int numToRemove;
     // count the number of mistakes made in solving the puzzle
     private int mistakes;
-    // dimenstion of the boarm is terms of dim x dim
+    // dimension of the board is terms of dim x dim
     private int dim;
     // board operates on too fixed languages ENGLISH and FRENCH
     private final String ENGLISH = "English";
@@ -48,7 +48,18 @@ public class Board {
     // CONSTRUCTOR
     // EFFECT: makes a 2D array list and adds empty string to each location on list
     public Board(int dim, WordPair[] wordPairs, int board_language, int numToRemove) {
+
+        // Prevent user from making 9x9 board that is unsolvable
+        // 17 cells are the minimum number of cells needed for a solvable 9x9 board
+        //TODO: Change this to separate method to deal with 6x6 4x4 and 12x12 cases later
+        if (dim == 9 && numToRemove > 64 ) {
+            throw new IllegalArgumentException("Number of cells to remove on a 9x9 board cannot exceed 64");
+        }
+
+
         this.dim = dim;
+
+        //All Sudoku with unique solutions must have at least 17 clues
 
         // TODO : change this part because later on we want to generate a
         //  board of 6x6 or 12x12 we can't use
@@ -70,11 +81,11 @@ public class Board {
 
         this.mistakes = 0;
 
-        // generate the board and displayed board values
+        // Generate the board and displayed board values
         this.generateGame();
 
-        // At this stage we fill the 2d array of boolean values which indicate whether a cell is filled initially or not.
-        // it is used to keep track of the cells which are not allowed to be filled (the cells which are initially filled).
+        // Fill a 2d array of boolean values which indicates whether a cell is permanently filled or not
+        // It is used to keep track of which cells are able to be filled and which are not (the cells which are initially filled are not allowed to be filled).
         this.insertAllowedInBoard = getInsertTable(this.board,dim,dim);
         this.GenerateWordPuzzle();
 
@@ -84,6 +95,61 @@ public class Board {
     }
 
 
+    //TODO: Not sure if there is a better way to implement this
+    // This is only necessary because insertAllowedInBoard is final, therefore regardless of changing board and
+    // solution with a test board, the insertAllowedInBoard cannot be changed when we create the object, and therefore
+    // affects where we can insert or not
+    //Debug constructor to create dummy board to test logic
+    public static Board createDebugBoard(WordPair[] wordPairs, int[][] testBoard, int[][]testBoardSolutions) {
+        Board debugBoard = new Board(9, wordPairs, 1, 30, testBoard, testBoardSolutions);
+        return debugBoard;
+    }
+    //private constructor used for debugging
+    //Contains no generateGame()
+    //testBoard and testBoardSolutions are immediately given to Board
+    private Board(int dim, WordPair[] wordPairs, int board_language, int numToRemove, int[][] testBoard, int[][] testBoardSolutions) {
+
+        // Prevent user from making 9x9 board that is unsolvable
+        // 17 cells are the minimum number of cells needed for a solvable 9x9 board
+        //TODO: Change this to separate method to deal with 6x6 4x4 and 12x12 cases later
+        if (dim == 9 && numToRemove > 64 ) {
+            throw new IllegalArgumentException("Number of cells to remove on a 9x9 board cannot exceed 64");
+        }
+
+        this.dim = dim;
+
+        this.BOX_LENGTH = (int)Math.sqrt(dim);
+        // end TODO
+
+        this.board = testBoard;
+        this.solutions = testBoardSolutions;
+        this.displayBoard = new String[dim][dim];
+        this.displayBoard_Solved = new String[dim][dim];
+        this.wordPairs = wordPairs;
+        this.board_language = board_language;
+        // Sets the input language to the opposite of the board language
+        this.input_language = BoardLanguage.getOtherLanguage(board_language);
+
+        this.numToRemove = numToRemove;
+
+        this.mistakes = 0;
+
+        this.insertAllowedInBoard = getInsertTable(this.board,dim,dim);
+        this.GenerateWordPuzzle();
+    }
+
+
+    //Returns copy of the Board
+    public int[][] getBoard() {
+        int[][] boardCopy = new int[dim][dim];
+        return takeCopy(board, boardCopy);
+    }
+
+    //Returns copy of the solutions
+    public int[][] getBoardSolutions() {
+        int[][] solutionCopy = new int[dim][dim];
+        return takeCopy(solutions, solutionCopy);
+    }
 
 
     // This utility method is used to return a 2D array of boolean values which indicate whether a cell is filled or not
@@ -200,10 +266,10 @@ public class Board {
         // 3. once everything is filled remove n elements randomly to generate a game
         //    based on numToRemove
 
-        // 1. fill the diagonal cells from top left to bottom righ
+        // 1. fill the diagonal sub-boxes from top left to bottom right
         completeDiagonal();
 
-        // 2. complete the remaining non-diagonal  cells
+        // 2. complete the remaining non-diagonal sub-boxes
         completeRemaining(0, BOX_LENGTH);
 
         // take a copy of the board of int before modifying for game generation
@@ -246,8 +312,8 @@ public class Board {
         }
     }
 
-    // EFFECT: fill the remaining cells when all diagonals are filled check if the position is safe
-    //            before inserting the randomly generated value
+    // EFFECT: Recursively fill the remaining cells when all diagonals are filled check if the
+    //         position is safe before inserting the randomly generated value
     private boolean completeRemaining(int x, int y) {
 
         // if the last cell at the column is complete and x is not at the cell in the row
