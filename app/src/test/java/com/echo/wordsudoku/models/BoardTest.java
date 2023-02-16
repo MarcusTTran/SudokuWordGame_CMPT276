@@ -26,6 +26,30 @@ class BoardTest {
             new WordPair("They", "Ils")
     };
 
+    private final WordPair[] wordPairs12x12 = {
+            new WordPair("Water", "Aqua"),
+            new WordPair("Red", "Rouge"),
+            new WordPair("Black", "Noire"),
+            new WordPair("Yellow", "Jaune"),
+            new WordPair("Yes", "Oui"),
+            new WordPair("No", "Non"),
+            new WordPair("He", "Il"),
+            new WordPair("She", "Elle"),
+            new WordPair("They", "Ils"),
+            new WordPair("Fish", "Peche"),
+            new WordPair("Dog", "Chien"),
+            new WordPair("Cat", "Chat")
+    };
+    private final WordPair[] wordPairs6x6 = {
+            new WordPair("Water", "Aqua"),
+            new WordPair("Red", "Rouge"),
+            new WordPair("Black", "Noire"),
+            new WordPair("Yellow", "Jaune"),
+            new WordPair("Yes", "Oui"),
+            new WordPair("No", "Non"),
+    };
+
+
     //9x9 test board used for debugging to validate Board class logic (checkValidity)
     private final int[][] testBoard9x9 = {
             {0,7,0,0,2,0,0,4,6},
@@ -51,6 +75,32 @@ class BoardTest {
              {4,3,2,5,8,6,9,7,1}
     };
 
+    //Test creating a board given too many word pairs
+    @org.junit.jupiter.api.Test
+    public void testBoardWithTooManyWordPairs() {
+        int dimensions = 9;
+        Assertions.assertThrows(IllegalArgumentException.class, () -> {
+            new Board(dimensions, wordPairs12x12, 1, 0);
+        });
+    }
+
+    //Test creating a board with too few word pairs
+    @org.junit.jupiter.api.Test
+    public void testBoardWithTooFewWordPairs() {
+        int dimensions = 9;
+        Assertions.assertThrows(IllegalArgumentException.class, () -> {
+            new Board(dimensions, wordPairs6x6, 1, 0);
+        });
+    }
+
+    //Test creating a board in a Non-supported language
+    @org.junit.jupiter.api.Test
+    public void testBoardNonSupportedLanguage() {
+        int dimensions = 9;
+        Assertions.assertThrows(IllegalArgumentException.class, () -> {
+            new Board(dimensions, wordPairs9x9, 10, 0);
+        });
+    }
 
     //Tests that Board's constructor correctly produces Board with specified dimensions
     @org.junit.jupiter.api.Test
@@ -89,11 +139,9 @@ class BoardTest {
     // Test that Board throws exception when trying to produce board with less than 17 cells
     @org.junit.jupiter.api.Test
     public void testBlankCellGenerationException() {
-
         Assertions.assertThrows(IllegalArgumentException.class, () -> {
-            new Board(9, wordPairs9x9, 1, 81);
+            new Board(9, wordPairs9x9, 1, 80);
         });
-
     }
 
 

@@ -37,6 +37,8 @@ public class PuzzleActivity extends AppCompatActivity {
     // TODO: Replace this with a list of words from the database
     private String[] mWordList = new String[9];
 
+    //TODO: App when given wordPairs > than dimensions: crashes
+    //TODO: App when given wordPairs < than dimensions: crashes
     private WordPair[] mWordPairs = {new WordPair("Apple","pomme"), new WordPair("Banana","banane"), new WordPair("Grape","raisin"), new WordPair("Orange","orange"), new WordPair("Peach","pêche"), new WordPair("Pear","poire"), new WordPair("Strawberry","fraise"), new WordPair("Watermelon","pastèque"), new WordPair("Coconut","coco")};
 
     private Board mBoard;

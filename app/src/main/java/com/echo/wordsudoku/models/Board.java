@@ -1,5 +1,7 @@
 package com.echo.wordsudoku.models;
 
+import android.util.Log;
+
 /**
  *  ========================================= BOARD =========================================
  *  DESCRIPTION OF FIELDS AND FEATURES
@@ -19,6 +21,10 @@ package com.echo.wordsudoku.models;
 */
 
 public class Board {
+
+    //LogCat tag used for debugging
+    private static final String TAG = "Board";
+
     private int[][] board;
     private int [][] solutions;
     private String[][] displayBoard, displayBoard_Solved;
@@ -49,18 +55,19 @@ public class Board {
     // EFFECT: makes a 2D array list and adds empty string to each location on list
     public Board(int dim, WordPair[] wordPairs, int board_language, int numToRemove) {
 
-        // Prevent user from making 9x9 board that is unsolvable
-        // 17 cells are the minimum number of cells needed for a solvable 9x9 board
-        //TODO: Change this to separate method to deal with 6x6 4x4 and 12x12 cases later
-        if (dim == 9 && numToRemove > 64 ) {
-            throw new IllegalArgumentException("Number of cells to remove on a 9x9 board cannot exceed 64");
-        }
+        //TODO: Prevent user from making 9x9 board that is unsolvable
+        // 17 cells is the minimum number of cells needed to produce board with valid solution
+        // Change this to separate method to deal with 6x6 4x4 and 12x12 cases later
+        checkMinNumberCellsValid(dim, numToRemove);
+
+        //TODO: Prevent users from making a board where dimensions do not match length of wordPair list
+        // Feeding wordPair list that does not match dimensions crashes app right now
+        checkWordPairDimension(dim, wordPairs);
 
 
         this.dim = dim;
 
         //All Sudoku with unique solutions must have at least 17 clues
-
         // TODO : change this part because later on we want to generate a
         //  board of 6x6 or 12x12 we can't use
         this.BOX_LENGTH = (int)Math.sqrt(dim);
@@ -94,27 +101,29 @@ public class Board {
 //        this.printSudoku_int(this.getSolvedBoard());
     }
 
-
-    //TODO: Not sure if there is a better way to implement this
-    // This is only necessary because insertAllowedInBoard is final, therefore regardless of changing board and
-    // solution with a test board, the insertAllowedInBoard cannot be changed when we create the object, and therefore
-    // affects where we can insert or not
-    //Debug constructor to create dummy board to test logic
+    //Debug constructor to create and insert dummy board to test internal logic
+    //TODO: Not sure if there is a better way to implement this, may be removed in final copy
+    // This is only necessary because insertAllowedInBoard is final, therefore regardless of switching board and
+    // board solution with some test board, the insertAllowedInBoard cannot be changed after we create the Board,
+    // and therefore affects where we can insert or not
     public static Board createDebugBoard(WordPair[] wordPairs, int[][] testBoard, int[][]testBoardSolutions) {
         Board debugBoard = new Board(9, wordPairs, 1, 30, testBoard, testBoardSolutions);
         return debugBoard;
     }
-    //private constructor used for debugging
-    //Contains no generateGame()
-    //testBoard and testBoardSolutions are immediately given to Board
+    // private constructor used for debugging
+    // Contains no generateGame()
+    // Since values for testBoard and testBoardSolutions are immediately assigned to Board's board and solution
     private Board(int dim, WordPair[] wordPairs, int board_language, int numToRemove, int[][] testBoard, int[][] testBoardSolutions) {
 
-        // Prevent user from making 9x9 board that is unsolvable
-        // 17 cells are the minimum number of cells needed for a solvable 9x9 board
-        //TODO: Change this to separate method to deal with 6x6 4x4 and 12x12 cases later
-        if (dim == 9 && numToRemove > 64 ) {
-            throw new IllegalArgumentException("Number of cells to remove on a 9x9 board cannot exceed 64");
-        }
+        //TODO: Prevent user from making 9x9 board that is unsolvable
+        // 17 cells is the minimum number of cells needed to produce board with valid solution
+        // Change this to separate method to deal with 6x6 4x4 and 12x12 cases later
+        checkMinNumberCellsValid(dim, numToRemove);
+
+        //TODO: Prevent users from making a board where dimensions do not match length of wordPair list
+        // Feeding wordPair list that does not match dimensions crashes app right now
+        checkWordPairDimension(dim, wordPairs);
+
 
         this.dim = dim;
 
@@ -138,6 +147,19 @@ public class Board {
         this.GenerateWordPuzzle();
     }
 
+    //Checks if numToRemove does not exceed maximum minimum number of cells (prevents creating invalid boards)
+    public void checkMinNumberCellsValid(int dim, int numToRemove) {
+        if (dim == 9 && numToRemove > 64 ) {
+            throw new IllegalArgumentException("Number of cells to remove on a 9x9 board cannot exceed 64");
+        }
+    }
+
+    //Checks if length of wordPair list matches given dimension
+    public void checkWordPairDimension(int dim, WordPair[] wordPairs) {
+        if (wordPairs.length != dim) {
+            throw new IllegalArgumentException("WordPair list given must match dimension given");
+        }
+    }
 
     //Returns copy of the Board
     public int[][] getBoard() {
