@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.media.MediaParser;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -16,10 +17,17 @@ import android.widget.Toast;
 
 import com.echo.wordsudoku.models.Board;
 import com.echo.wordsudoku.models.BoardLanguage;
+import com.echo.wordsudoku.models.CSVReader;
 import com.echo.wordsudoku.models.WordPair;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.nio.charset.Charset;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Random;
 
 public class PuzzleActivity extends AppCompatActivity {
 
@@ -37,7 +45,17 @@ public class PuzzleActivity extends AppCompatActivity {
     // TODO: Replace this with a list of words from the database
     private String[] mWordList = new String[9];
 
-    private WordPair[] mWordPairs = {new WordPair("Apple","pomme"), new WordPair("Banana","banane"), new WordPair("Grape","raisin"), new WordPair("Orange","orange"), new WordPair("Peach","pêche"), new WordPair("Pear","poire"), new WordPair("Strawberry","fraise"), new WordPair("Watermelon","pastèque"), new WordPair("Coconut","coco")};
+//    private WordPair[] mWordPairs = {new WordPair("Apple","pomme"),
+//            new WordPair("Banana","banane"),
+//            new WordPair("Grape","raisin"),
+//            new WordPair("Orange","orange"),
+//            new WordPair("Peach","pêche"),
+//            new WordPair("Pear","poire"),
+//            new WordPair("Strawberry","fraise"),
+//            new WordPair("Watermelon","pastèque"),
+//            new WordPair("Coconut","coco")};
+
+    private WordPair[] mWordPairs;
 
     private Board mBoard;
 
@@ -51,6 +69,9 @@ public class PuzzleActivity extends AppCompatActivity {
         int numberOfInitialWords = 17;
         int puzzleDimension = 9;
 
+        mWordPairs = getWords(puzzleDimension);
+
+
         mBoard = new Board(puzzleDimension,mWordPairs,BoardLanguage.ENGLISH,puzzleDimension*puzzleDimension - numberOfInitialWords);
 
         // We need to check if the user wants to load a previous game or start a new game
@@ -60,7 +81,15 @@ public class PuzzleActivity extends AppCompatActivity {
             // A toast to make sure the activity is being created
             Toast.makeText(this, "Puzzle Activity being Created (Load previous game!)", Toast.LENGTH_LONG).show();
             */
-        View[] buttons = {findViewById(R.id.button1),findViewById(R.id.button2),findViewById(R.id.button3),findViewById(R.id.button4),findViewById(R.id.button5),findViewById(R.id.button6),findViewById(R.id.button7),findViewById(R.id.button8),findViewById(R.id.button9)};
+        View[] buttons = {findViewById(R.id.button1),
+                findViewById(R.id.button2),
+                findViewById(R.id.button3),
+                findViewById(R.id.button4),
+                findViewById(R.id.button5),
+                findViewById(R.id.button6),
+                findViewById(R.id.button7),
+                findViewById(R.id.button8),
+                findViewById(R.id.button9)};
         fillWordList();
         setButtonLabels(buttons);
 
@@ -139,9 +168,22 @@ public class PuzzleActivity extends AppCompatActivity {
         }
     }
 
+
+
     public void wordButtonPressed(View view) {
         enterWord(((Button)view).getText().toString());
     }
+
+
+    // gets a list of word pairs based on the number of dimension given
+    // calls the csv reader
+    private WordPair[] getWords(int puzzleDimension) {
+        InputStream is = getResources().openRawResource(R.raw.dictionary);
+        CSVReader csvReader = new CSVReader(is, puzzleDimension);
+        csvReader.collectWords();
+        return csvReader.getWords();
+    }
+
 
 
 }
