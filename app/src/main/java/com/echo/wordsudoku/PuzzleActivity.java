@@ -28,8 +28,6 @@ public class PuzzleActivity extends AppCompatActivity {
 
     private static final String TAG = "PuzzleActivity";
 
-    private Spinner mWordListSpinner;
-    private Button mEnterWordButton;
     private SudokuBoard mSudokuBoardView;
 
     // The word list for the spinner to choose from
@@ -48,8 +46,13 @@ public class PuzzleActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_puzzle);
 
-        int numberOfInitialWords = 17;
-        int puzzleDimension = 9;
+
+        // CONSTANTS
+
+        final int numberOfInitialWords = 75;
+        final int puzzleDimension = 9;
+
+        // END CONSTANTS
 
         mBoard = new Board(puzzleDimension,mWordPairs,BoardLanguage.ENGLISH,puzzleDimension*puzzleDimension - numberOfInitialWords);
 
@@ -123,6 +126,8 @@ public class PuzzleActivity extends AppCompatActivity {
         return intent;
     }
 
+    // This method fills the word list
+    // It is used to label the buttons
     private void fillWordList()
     {
         for(int i = 0; i < mWordPairs.length; i++)
@@ -131,6 +136,8 @@ public class PuzzleActivity extends AppCompatActivity {
         }
     }
 
+    // This method sets the labels of the buttons
+    // @param buttons The array of buttons
     private void setButtonLabels(View[] buttons)
     {
         for(int i = 0; i < mWordPairs.length; i++)
@@ -139,9 +146,33 @@ public class PuzzleActivity extends AppCompatActivity {
         }
     }
 
+    // This method is called when a button is pressed
+    // It enters the word in the board
+    // @param view The view that was pressed (the button)
     public void wordButtonPressed(View view) {
         enterWord(((Button)view).getText().toString());
     }
 
+    // This method is called when the finish button is pressed
+    // It checks if the user has filled the board
+    // If the user has filled the board, it checks if the user has solved the puzzle
+    // @param view The view that was pressed (the button)
+    // TODO: Add a dialog to ask the user if he wants to finish the puzzle
+    public void finishButtonPressed(View view) {
+        if (!mBoard.hasUserFilled()) {
+            Toast.makeText(this, "You have not filled the puzzle!", Toast.LENGTH_LONG).show();
+            return;
+        }
+        // TODO: show a dialog to ask the user if he wants to finish the puzzle
+
+        if(mBoard.checkWin())
+        {
+            Toast.makeText(this, "Congratulations! You solved the puzzle!", Toast.LENGTH_LONG).show();
+        }
+        else
+        {
+            Toast.makeText(this, "You did not solve the puzzle!", Toast.LENGTH_LONG).show();
+        }
+    }
 
 }

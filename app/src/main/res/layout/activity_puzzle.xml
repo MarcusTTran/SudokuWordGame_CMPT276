@@ -196,6 +196,7 @@
         android:id="@+id/finish_game_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:onClick="finishButtonPressed"
         android:text="Finish Game"
         custom:layout_constraintBottom_toTopOf="@+id/sudoku_board"
         custom:layout_constraintEnd_toStartOf="@+id/timer_text_view"
