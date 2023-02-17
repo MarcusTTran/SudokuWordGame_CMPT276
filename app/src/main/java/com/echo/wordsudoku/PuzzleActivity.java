@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -40,7 +41,8 @@ public class PuzzleActivity extends AppCompatActivity {
 
     private Board mBoard;
 
-
+    // This is used for accessing the shared preferences associated with this app
+    private SharedPreferences mPreferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,7 +57,14 @@ public class PuzzleActivity extends AppCompatActivity {
 
         // END CONSTANTS
 
-        mBoard = new Board(puzzleDimension,mWordPairs,BoardLanguage.ENGLISH,puzzleDimension*puzzleDimension - numberOfInitialWords);
+
+        // Get the shared preferences
+        mPreferences = getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE);
+        // Get the puzzle language from the shared preferences
+        int puzzleLanguage = mPreferences.getInt(getString(R.string.puzzle_language_key), BoardLanguage.ENGLISH);
+
+        // Create a new board
+        mBoard = new Board(puzzleDimension,mWordPairs,puzzleLanguage,puzzleDimension*puzzleDimension - numberOfInitialWords);
 
         // We need to check if the user wants to load a previous game or start a new game
         // It is done by checking the boolean extra in the intent
@@ -66,7 +75,8 @@ public class PuzzleActivity extends AppCompatActivity {
             */
         View[] buttons = {findViewById(R.id.button1),findViewById(R.id.button2),findViewById(R.id.button3),findViewById(R.id.button4),findViewById(R.id.button5),findViewById(R.id.button6),findViewById(R.id.button7),findViewById(R.id.button8),findViewById(R.id.button9)};
         fillWordList();
-        setButtonLabels(buttons);
+        // Set button labels with the other language
+        setButtonLabels(buttons, BoardLanguage.getOtherLanguage(puzzleLanguage));
 
         // For testing purposes only, to make sure the activity is being created
         // TODO: Remove this
@@ -141,11 +151,12 @@ public class PuzzleActivity extends AppCompatActivity {
 
     // This method sets the labels of the buttons
     // @param buttons The array of buttons
-    private void setButtonLabels(View[] buttons)
+    // @param language The language to be used for the button labels
+    private void setButtonLabels(View[] buttons, int language)
     {
         for(int i = 0; i < mWordPairs.length; i++)
         {
-            ((Button)buttons[i]).setText(mWordPairs[i].getEnglishOrFrench(BoardLanguage.FRENCH));
+            ((Button)buttons[i]).setText(mWordPairs[i].getEnglishOrFrench(language));
         }
     }
 
