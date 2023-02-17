@@ -21,20 +21,22 @@
         android:id="@+id/timer_text_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Timer"
+        android:text="02:48"
         custom:layout_constraintBottom_toTopOf="@id/sudoku_board"
-        custom:layout_constraintEnd_toStartOf="@id/preference_button"
+        custom:layout_constraintEnd_toEndOf="parent"
         custom:layout_constraintStart_toStartOf="parent"
         custom:layout_constraintTop_toTopOf="parent"
-        tools:layout_editor_absoluteY="34dp" />
+        custom:layout_constraintVertical_bias="0.59000003" />
 
     <ImageButton
         android:id="@+id/preference_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         custom:layout_constraintBottom_toTopOf="@id/sudoku_board"
-        custom:layout_constraintEnd_toEndOf="@id/sudoku_board"
-        custom:layout_constraintHorizontal_bias="0.0"
+        custom:layout_constraintEnd_toEndOf="parent"
+        custom:layout_constraintHorizontal_bias="0.5"
+        custom:layout_constraintStart_toEndOf="@+id/help_button"
+        custom:layout_constraintTop_toTopOf="parent"
         custom:srcCompat="@android:drawable/ic_menu_preferences" />
 
     <ImageButton
@@ -42,19 +44,23 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         custom:layout_constraintBottom_toTopOf="@id/sudoku_board"
-        custom:layout_constraintRight_toLeftOf="@id/preference_button"
-        custom:srcCompat="@android:drawable/ic_menu_help"
-        tools:layout_editor_absoluteX="290dp" />
+        custom:layout_constraintEnd_toStartOf="@+id/preference_button"
+        custom:layout_constraintHorizontal_bias="0.5"
+        custom:layout_constraintStart_toEndOf="@+id/dictionary_help_button"
+        custom:layout_constraintTop_toTopOf="parent"
+        custom:srcCompat="@android:drawable/ic_menu_help" />
 
     <ImageButton
         android:id="@+id/dictionary_help_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        custom:layout_constraintBottom_toTopOf="@id/sudoku_board"
-        custom:layout_constraintRight_toLeftOf="@id/help_button"
+        custom:layout_constraintBottom_toTopOf="@+id/sudoku_board"
+        custom:layout_constraintEnd_toStartOf="@+id/help_button"
+        custom:layout_constraintHorizontal_bias="0.5"
+        custom:layout_constraintHorizontal_chainStyle="packed"
+        custom:layout_constraintStart_toEndOf="@+id/timer_text_view"
         custom:layout_constraintTop_toTopOf="parent"
-        custom:srcCompat="@android:drawable/ic_menu_myplaces"
-        tools:layout_editor_absoluteX="233dp" />
+        custom:srcCompat="@android:drawable/ic_menu_myplaces" />
 
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -185,6 +191,16 @@
             custom:layout_constraintTop_toBottomOf="@+id/button6" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <Button
+        android:id="@+id/finish_game_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Finish Game"
+        custom:layout_constraintBottom_toTopOf="@+id/sudoku_board"
+        custom:layout_constraintEnd_toStartOf="@+id/timer_text_view"
+        custom:layout_constraintStart_toStartOf="parent"
+        custom:layout_constraintTop_toTopOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
