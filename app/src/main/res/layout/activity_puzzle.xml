@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:custom="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -9,7 +8,7 @@
 
     <com.echo.wordsudoku.SudokuBoard
         android:id="@+id/sudoku_board"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         custom:boardColor="#000000"
         custom:cellFillColor="#036507"
@@ -23,10 +22,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Timer"
-        custom:layout_constraintEnd_toStartOf="@id/preference_button"
-        custom:layout_constraintTop_toTopOf="parent"
         custom:layout_constraintBottom_toTopOf="@id/sudoku_board"
+        custom:layout_constraintEnd_toStartOf="@id/preference_button"
         custom:layout_constraintStart_toStartOf="parent"
+        custom:layout_constraintTop_toTopOf="parent"
         tools:layout_editor_absoluteY="34dp" />
 
     <ImageButton
@@ -52,18 +51,19 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         custom:layout_constraintBottom_toTopOf="@id/sudoku_board"
-        custom:layout_constraintTop_toTopOf="parent"
         custom:layout_constraintRight_toLeftOf="@id/help_button"
+        custom:layout_constraintTop_toTopOf="parent"
         custom:srcCompat="@android:drawable/ic_menu_myplaces"
         tools:layout_editor_absoluteX="233dp" />
 
 
-
-    <LinearLayout
-        android:id="@+id/word_board_row1"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/word_board"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
+        android:paddingVertical="10dp"
+        custom:layout_constraintBottom_toBottomOf="parent"
         custom:layout_constraintStart_toStartOf="parent"
         custom:layout_constraintTop_toBottomOf="@+id/sudoku_board">
 
@@ -71,116 +71,120 @@
             android:id="@+id/button1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginVertical="10dp"
-            android:layout_marginLeft="20dp"
-            android:layout_weight="1"
-            android:padding="0dp"
             android:onClick="wordButtonPressed"
-            android:text="Button" />
+            android:padding="0dp"
+            android:text="Button"
+            custom:layout_constraintBottom_toTopOf="@+id/button4"
+            custom:layout_constraintEnd_toStartOf="@+id/button2"
+            custom:layout_constraintHorizontal_bias="0.5"
+            custom:layout_constraintStart_toStartOf="parent"
+            custom:layout_constraintTop_toTopOf="parent" />
 
         <Button
             android:id="@+id/button2"
-            android:layout_marginHorizontal="10dp"
-            android:layout_marginVertical="10dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:padding="0dp"
             android:onClick="wordButtonPressed"
-            android:text="Button" />
+            android:padding="0dp"
+            android:text="Button"
+            custom:layout_constraintBottom_toTopOf="@+id/button5"
+            custom:layout_constraintEnd_toStartOf="@+id/button3"
+            custom:layout_constraintHorizontal_bias="0.5"
+            custom:layout_constraintStart_toEndOf="@+id/button1"
+            custom:layout_constraintTop_toTopOf="parent" />
 
         <Button
             android:id="@+id/button3"
-            android:layout_marginRight="20dp"
-            android:layout_marginVertical="10dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:padding="0dp"
             android:onClick="wordButtonPressed"
-            android:text="Button" />
-    </LinearLayout>
+            android:padding="0dp"
+            android:text="Button"
+            custom:layout_constraintBottom_toTopOf="@+id/button6"
+            custom:layout_constraintEnd_toEndOf="parent"
+            custom:layout_constraintHorizontal_bias="0.5"
+            custom:layout_constraintStart_toEndOf="@+id/button2"
+            custom:layout_constraintTop_toTopOf="parent" />
 
-    <LinearLayout
-        android:id="@+id/word_board_row2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        custom:layout_constraintStart_toStartOf="parent"
-        custom:layout_constraintTop_toBottomOf="@+id/word_board_row1">
         <Button
-            android:layout_marginLeft="20dp"
-            android:layout_marginVertical="10dp"
             android:id="@+id/button4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:padding="0dp"
             android:onClick="wordButtonPressed"
-            android:text="Button" />
+            android:padding="0dp"
+            android:text="Button"
+            custom:layout_constraintBottom_toTopOf="@+id/button7"
+            custom:layout_constraintEnd_toStartOf="@+id/button5"
+            custom:layout_constraintHorizontal_bias="0.5"
+            custom:layout_constraintStart_toStartOf="parent"
+            custom:layout_constraintTop_toBottomOf="@+id/button1" />
 
         <Button
-            android:layout_marginHorizontal="10dp"
-            android:layout_marginVertical="10dp"
             android:id="@+id/button5"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:padding="0dp"
             android:onClick="wordButtonPressed"
-            android:text="Button" />
+            android:padding="0dp"
+            android:text="Button"
+            custom:layout_constraintBottom_toTopOf="@+id/button8"
+            custom:layout_constraintEnd_toStartOf="@+id/button6"
+            custom:layout_constraintHorizontal_bias="0.5"
+            custom:layout_constraintStart_toEndOf="@+id/button4"
+            custom:layout_constraintTop_toBottomOf="@+id/button2" />
 
         <Button
-            android:layout_marginRight="20dp"
-            android:layout_marginVertical="10dp"
             android:id="@+id/button6"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:padding="0dp"
             android:onClick="wordButtonPressed"
-            android:text="Button" />
-    </LinearLayout>
-    <LinearLayout
-        android:id="@+id/word_board_row3"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        custom:layout_constraintStart_toStartOf="parent"
-        custom:layout_constraintTop_toBottomOf="@+id/word_board_row2">
+            android:padding="0dp"
+            android:text="Button"
+            custom:layout_constraintBottom_toTopOf="@+id/button9"
+            custom:layout_constraintEnd_toEndOf="parent"
+            custom:layout_constraintHorizontal_bias="0.5"
+            custom:layout_constraintStart_toEndOf="@+id/button5"
+            custom:layout_constraintTop_toBottomOf="@+id/button3" />
+
         <Button
             android:id="@+id/button7"
-            android:layout_marginLeft="20dp"
-            android:layout_marginVertical="10dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:padding="0dp"
             android:onClick="wordButtonPressed"
-            android:text="Button" />
+            android:padding="0dp"
+            android:text="Button"
+            custom:layout_constraintBottom_toBottomOf="parent"
+            custom:layout_constraintEnd_toStartOf="@+id/button8"
+            custom:layout_constraintHorizontal_bias="0.5"
+            custom:layout_constraintStart_toStartOf="parent"
+            custom:layout_constraintTop_toBottomOf="@+id/button4" />
 
         <Button
             android:id="@+id/button8"
-            android:layout_marginHorizontal="10dp"
-            android:layout_marginVertical="10dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:padding="0dp"
             android:onClick="wordButtonPressed"
-            android:text="Button" />
+            android:padding="0dp"
+            android:text="Button"
+            custom:layout_constraintBottom_toBottomOf="parent"
+            custom:layout_constraintEnd_toStartOf="@+id/button9"
+            custom:layout_constraintHorizontal_bias="0.5"
+            custom:layout_constraintStart_toEndOf="@+id/button7"
+            custom:layout_constraintTop_toBottomOf="@+id/button5" />
 
         <Button
-            android:layout_marginRight="20dp"
-            android:layout_marginVertical="10dp"
             android:id="@+id/button9"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
             android:onClick="wordButtonPressed"
             android:padding="0dp"
-            android:text="Button" />
-    </LinearLayout>
+            android:text="Button"
+            custom:layout_constraintBottom_toBottomOf="parent"
+            custom:layout_constraintEnd_toEndOf="parent"
+            custom:layout_constraintHorizontal_bias="0.5"
+            custom:layout_constraintStart_toEndOf="@+id/button8"
+            custom:layout_constraintTop_toBottomOf="@+id/button6" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
