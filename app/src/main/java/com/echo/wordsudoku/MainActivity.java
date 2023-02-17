@@ -2,6 +2,7 @@ package com.echo.wordsudoku;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -12,7 +13,7 @@ public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = "MainActivity";
 
-
+    private static final String LOAD_MAIN_MENU = "com.echo.wordsudoku.load_main_menu";
 
     // UI references.
     private Button mNewGameButton;
@@ -78,5 +79,12 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    public static Intent newIntent(Context packageContext) {
+        Intent intent = new Intent(packageContext, MainActivity.class);
+        // This flag is used to clear the activity stack
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        return intent;
     }
 }

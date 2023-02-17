@@ -16,6 +16,7 @@ import android.widget.Toast;
 
 import com.echo.wordsudoku.models.Board;
 import com.echo.wordsudoku.models.BoardLanguage;
+import com.echo.wordsudoku.models.GameResult;
 import com.echo.wordsudoku.models.WordPair;
 
 import java.util.Arrays;
@@ -49,7 +50,7 @@ public class PuzzleActivity extends AppCompatActivity {
 
         // CONSTANTS
 
-        final int numberOfInitialWords = 75;
+        final int numberOfInitialWords = 80;
         final int puzzleDimension = 9;
 
         // END CONSTANTS
@@ -123,6 +124,8 @@ public class PuzzleActivity extends AppCompatActivity {
     public static Intent newIntent (Context packageContext, boolean loadPreviousGame) {
         Intent intent = new Intent(packageContext, PuzzleActivity.class);
         intent.putExtra(LOAD_PREVIOUS_GAME, loadPreviousGame);
+        // Makes this current activity the root of the back stack
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         return intent;
     }
 
@@ -165,14 +168,20 @@ public class PuzzleActivity extends AppCompatActivity {
         }
         // TODO: show a dialog to ask the user if he wants to finish the puzzle
 
+        GameResult gameResult = new GameResult();
+        // Intent to start the ResultActivity
+        Intent intent;
         if(mBoard.checkWin())
         {
-            Toast.makeText(this, "Congratulations! You solved the puzzle!", Toast.LENGTH_LONG).show();
+            // Default constructor of GameResult sets the result to true so nothing to do here
         }
         else
         {
-            Toast.makeText(this, "You did not solve the puzzle!", Toast.LENGTH_LONG).show();
+            gameResult.setResult(false);
+            gameResult.setMistakes(mBoard.getMistakes());
         }
+        intent = ResultActivity.newIntent(PuzzleActivity.this,gameResult);
+        startActivity(intent);
     }
 
 }
