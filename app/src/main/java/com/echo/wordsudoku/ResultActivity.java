@@ -35,7 +35,10 @@ public class ResultActivity extends AppCompatActivity {
             imageResource = R.drawable.success;
         }
         else {
-            message = "You lost! You made " + mGameResult.getMistakes() + " mistakes.";
+            if (mGameResult.getMistakes() == 1)
+                message = "You lost! You made " + mGameResult.getMistakes() + " mistake.";
+            else
+                message = "You lost! You made " + mGameResult.getMistakes() + " mistakes.";
             imageResource = R.drawable.fail;
         }
 
