@@ -70,7 +70,7 @@ public class PuzzleActivity extends AppCompatActivity {
 
         // For testing purposes only, to make sure the activity is being created
         // TODO: Remove this
-        Toast.makeText(this, "Puzzle Activity being Created (Load previous game!)", Toast.LENGTH_LONG).show();
+//        Toast.makeText(this, "Puzzle Activity being Created (Load previous game!)", Toast.LENGTH_LONG).show();
 
 
         // Get the SudokuBoardView reference from XML layout
@@ -112,13 +112,13 @@ public class PuzzleActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        Toast.makeText(this, "Puzzle Activity Started (Load previous game!)", Toast.LENGTH_LONG).show();
+//        Toast.makeText(this, "Puzzle Activity Started (Load previous game!)", Toast.LENGTH_LONG).show();
     }
 
     @Override
     protected void onStop() {
         super.onStop();
-        Toast.makeText(this, "Puzzle Activity Stopped (Save game progress now!)", Toast.LENGTH_LONG).show();
+//        Toast.makeText(this, "Puzzle Activity Stopped (Save game progress now!)", Toast.LENGTH_LONG).show();
     }
 
     public static Intent newIntent (Context packageContext, boolean loadPreviousGame) {
