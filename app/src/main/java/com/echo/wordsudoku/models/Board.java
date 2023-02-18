@@ -434,6 +434,8 @@ public class Board {
                 // set the ell to 0 for gam
                 board[x][y] = 0;
             }
+
+
         }
     }
 
