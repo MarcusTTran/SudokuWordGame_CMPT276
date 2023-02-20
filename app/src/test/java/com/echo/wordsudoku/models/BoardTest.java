@@ -13,7 +13,7 @@ import java.util.Random;
 
 class BoardTest {
 
-    //Sample set of wordPairs to use, use ONLY for 9x9 Sudoku
+    //Sample set of wordPairs to use
     private final WordPair[] wordPairs9x9 = {
             new WordPair("Water", "Aqua"),
             new WordPair("Red", "Rouge"),
@@ -422,8 +422,9 @@ class BoardTest {
     //Create a board, feed it in a test board along with solutions using createDebugBoard
     //Then make 3 mistakes to make sure getMistakes is correctly incremented
     @org.junit.jupiter.api.Test
-    public void testIncrementOfMistakes() {
-        Board testBoard = Board.createDebugBoard(wordPairs9x9, testBoard9x9, testBoard9x9Solution);
+    public void testIncrementationOfMistakes() {
+        Board testBoard = new Board(9, wordPairs9x9, 1, 30);
+        testBoard.insertDummyBoard(9, testBoard9x9, testBoard9x9Solution);
         testBoard.insertWord(0,0, wordPairs9x9[1].getEnglish());
         testBoard.insertWord(0,2, wordPairs9x9[6].getEnglish());
         testBoard.insertWord(1,0, wordPairs9x9[5].getEnglish());
@@ -433,7 +434,8 @@ class BoardTest {
     //Test checkValidity and getMistakes are working correctly when trying to enter a number already in the row
     @org.junit.jupiter.api.Test
     public void testCheckValidityRowInvalid() {
-        Board testBoard = Board.createDebugBoard(wordPairs9x9, testBoard9x9, testBoard9x9Solution);
+        Board testBoard = new Board(9, wordPairs9x9, 1, 30);
+        testBoard.insertDummyBoard(9, testBoard9x9, testBoard9x9Solution);
         testBoard.insertWord(0,6, wordPairs9x9[1].getEnglish());
         assertEquals(1, testBoard.getMistakes());
     }
@@ -441,7 +443,8 @@ class BoardTest {
     //Test checkValidity and getMistakes are working correctly when trying to enter a number already in the column
     @org.junit.jupiter.api.Test
     public void testCheckValidityColInvalid() {
-        Board testBoard = Board.createDebugBoard(wordPairs9x9, testBoard9x9, testBoard9x9Solution);
+        Board testBoard = new Board(9, wordPairs9x9, 1, 30);
+        testBoard.insertDummyBoard(9, testBoard9x9, testBoard9x9Solution);
         testBoard.insertWord(8,3, wordPairs9x9[3].getEnglish());
         assertEquals(1, testBoard.getMistakes());
     }
@@ -449,7 +452,8 @@ class BoardTest {
     //Test  checkValidity and getMistakes are working correctly when trying to enter a number already in the sub-box
     @org.junit.jupiter.api.Test
     public void testCheckValiditySubBoxInvalid() {
-        Board testBoard = Board.createDebugBoard(wordPairs9x9, testBoard9x9, testBoard9x9Solution);
+        Board testBoard = new Board(9, wordPairs9x9, 1, 30);
+        testBoard.insertDummyBoard(9, testBoard9x9, testBoard9x9Solution);
         testBoard.insertWord(3,6, wordPairs9x9[4].getEnglish());
         assertEquals(1, testBoard.getMistakes());
     }
@@ -457,11 +461,20 @@ class BoardTest {
     //Test the method that allows for creation of a debug board
     @org.junit.jupiter.api.Test
     public void testDebugBoardInsert() {
-        Board testBoard = Board.createDebugBoard(wordPairs9x9, testBoard9x9, testBoard9x9Solution);
+        Board testBoard = new Board(9, wordPairs9x9, 1, 30);
+        testBoard.insertDummyBoard(9, testBoard9x9, testBoard9x9Solution);
         //Compare that the board the Board uses is the same as the testBoard
         assertTrue(deepEquals(testBoard.getBoard(), testBoard9x9));
     }
 
+    //Test the getBoardSolution method
+    @org.junit.jupiter.api.Test
+    public void testGetBoardSolutions() {
+        Board testBoard = new Board(9, wordPairs9x9, 1, 30);
+        testBoard.insertDummyBoard(9, testBoard9x9, testBoard9x9Solution);
+        //Compare that the board the Board uses is the same as the testBoard
+        assertTrue(deepEquals(testBoard.getBoardSolutions(), testBoard9x9Solution));
+    }
 
 
     //Test getMistakes on a Board that is generated with no empty cells

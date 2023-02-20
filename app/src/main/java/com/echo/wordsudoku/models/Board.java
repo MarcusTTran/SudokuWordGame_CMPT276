@@ -35,7 +35,9 @@ public class Board {
     // The cells that are initially filled when the game is started cannot be changed and this
     // 2D array is used to keep track of those.
         // Marcus' Comment: Maybe in the future iterations, we could make this an enum (filled, open, filled_at_start)
-    private final boolean[][] insertAllowedInBoard;
+    // insertAllowedInBoard is non-final to allow insertion of dummy-
+    //insertAllowedInBoard to test Sudoku generation logic
+    private boolean[][] insertAllowedInBoard;
 
     // change to enum later
     private int board_language, input_language;
@@ -55,13 +57,11 @@ public class Board {
     // EFFECT: makes a 2D array list and adds empty string to each location on list
     public Board(int dim, WordPair[] wordPairs, int board_language, int numToRemove) {
 
-        //TODO: Prevent user from making 9x9 board that is unsolvable
-        // 17 cells is the minimum number of cells needed to produce board with valid solution
-        // Change this to separate method to deal with 6x6 4x4 and 12x12 cases later
+        //Prevent user from making 9x9 board that is unsolvable
+        // 17 cells is the minimum num of cells needed for 9x9
         checkMinNumberCellsValid(dim, numToRemove);
 
-        //TODO: Prevent users from making a board where dimensions do not match length of wordPair list
-        // Feeding wordPair list that does not match dimensions crashes app right now
+        //Prevent users from making a board where dimensions do not match length of wordPair list
         checkWordPairDimension(dim, wordPairs);
 
 
@@ -101,50 +101,12 @@ public class Board {
 //        this.printSudoku_int(this.getSolvedBoard());
     }
 
-    //Debug constructor to create and insert dummy board to test internal logic
-    //TODO: Not sure if there is a better way to implement this, may be removed in final copy
-    // This is only necessary because insertAllowedInBoard is final, therefore regardless of switching board and
-    // board solution with some test board, the insertAllowedInBoard cannot be changed after we create the Board,
-    // and therefore affects where we can insert or not
-    public static Board createDebugBoard(WordPair[] wordPairs, int[][] testBoard, int[][]testBoardSolutions) {
-        Board debugBoard = new Board(9, wordPairs, 1, 30, testBoard, testBoardSolutions);
-        return debugBoard;
-    }
-    // private constructor used for debugging
-    // Contains no generateGame()
-    // Since values for testBoard and testBoardSolutions are immediately assigned to Board's board and solution
-    private Board(int dim, WordPair[] wordPairs, int board_language, int numToRemove, int[][] testBoard, int[][] testBoardSolutions) {
 
-        //TODO: Prevent user from making 9x9 board that is unsolvable
-        // 17 cells is the minimum number of cells needed to produce board with valid solution
-        // Change this to separate method to deal with 6x6 4x4 and 12x12 cases later
-        checkMinNumberCellsValid(dim, numToRemove);
-
-        //TODO: Prevent users from making a board where dimensions do not match length of wordPair list
-        // Feeding wordPair list that does not match dimensions crashes app right now
-        checkWordPairDimension(dim, wordPairs);
-
-
-        this.dim = dim;
-
-        this.BOX_LENGTH = (int)Math.sqrt(dim);
-        // end TODO
-
+    //Allows for insertion of dummy board; used to test Sudoku logic
+    public void insertDummyBoard(int dim, int[][] testBoard, int[][] testBoardSolutions) {
         this.board = testBoard;
         this.solutions = testBoardSolutions;
-        this.displayBoard = new String[dim][dim];
-        this.displayBoard_Solved = new String[dim][dim];
-        this.wordPairs = wordPairs;
-        this.board_language = board_language;
-        // Sets the input language to the opposite of the board language
-        this.input_language = BoardLanguage.getOtherLanguage(board_language);
-
-        this.numToRemove = numToRemove;
-
-        this.mistakes = 0;
-
         this.insertAllowedInBoard = getInsertTable(this.board,dim,dim);
-        this.GenerateWordPuzzle();
     }
 
     //Checks if numToRemove does not exceed maximum minimum number of cells (prevents creating invalid boards)
@@ -257,8 +219,6 @@ public class Board {
 
     // EFFECT: checks for wins
     public boolean checkWin() {
-
-
         for (int x = 0; x < dim; x++) {
             for (int y = 0; y < dim; y++) {
                 // if there is at least one different cell that is not equal
