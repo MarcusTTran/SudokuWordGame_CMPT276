@@ -111,6 +111,8 @@ class BoardTest {
     }
 
 
+
+
     //Create 50 boards and test that they are all unique
     @org.junit.jupiter.api.Test
     public void testBoardUniqueness() {
@@ -417,7 +419,19 @@ class BoardTest {
 
     }
 
+    @org.junit.jupiter.api.Test
+    public void testHasUserFilledUntrue() {
+        int dimensions = 9;
+        Board testBoard = new Board(dimensions, wordPairs9x9, 1, 40);
+        assertFalse(testBoard.hasUserFilled());
+    }
 
+    @org.junit.jupiter.api.Test
+    public void testHasUserFilledTrue() {
+        int dimensions = 9;
+        Board testBoard = new Board(dimensions, wordPairs9x9, 1, 0);
+        assertTrue(testBoard.hasUserFilled());
+    }
 
     //Create a board, feed it in a test board along with solutions using createDebugBoard
     //Then make 3 mistakes to make sure getMistakes is correctly incremented
