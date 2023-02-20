@@ -4,22 +4,19 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.echo.wordsudoku.models.Board;
 import com.echo.wordsudoku.models.BoardLanguage;
+import com.echo.wordsudoku.models.CSVReader;
+import com.echo.wordsudoku.models.GameResult;
 import com.echo.wordsudoku.models.WordPair;
-
-import java.util.Arrays;
-import java.util.List;
+import java.io.InputStream;
 
 public class PuzzleActivity extends AppCompatActivity {
 
@@ -28,8 +25,6 @@ public class PuzzleActivity extends AppCompatActivity {
 
     private static final String TAG = "PuzzleActivity";
 
-    private Spinner mWordListSpinner;
-    private Button mEnterWordButton;
     private SudokuBoard mSudokuBoardView;
 
     // The word list for the spinner to choose from
@@ -37,23 +32,33 @@ public class PuzzleActivity extends AppCompatActivity {
     // TODO: Replace this with a list of words from the database
     private String[] mWordList = new String[9];
 
-    //TODO: App when given wordPairs > than dimensions: crashes
-    //TODO: App when given wordPairs < than dimensions: crashes
-    private WordPair[] mWordPairs = {new WordPair("Apple","pomme"), new WordPair("Banana","banane"), new WordPair("Grape","raisin"), new WordPair("Orange","orange"), new WordPair("Peach","pêche"), new WordPair("Pear","poire"), new WordPair("Strawberry","fraise"), new WordPair("Watermelon","pastèque"), new WordPair("Coconut","coco")};
-
+    private WordPair[] mWordPairs = new WordPair[9];
     private Board mBoard;
 
-
+    // This is used for accessing the shared preferences associated with this app
+    private SharedPreferences mPreferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_puzzle);
 
-        int numberOfInitialWords = 17;
-        int puzzleDimension = 9;
 
-        mBoard = new Board(puzzleDimension,mWordPairs,BoardLanguage.ENGLISH,puzzleDimension*puzzleDimension - numberOfInitialWords);
+        // CONSTANTS
+        final int numberOfInitialWords = 17;
+        final int puzzleDimension = 9;
+        // END CONSTANTS
+
+        mWordPairs = getWords(puzzleDimension);
+
+
+        // Get the shared preferences
+        mPreferences = getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE);
+        // Get the puzzle language from the shared preferences
+        int puzzleLanguage = mPreferences.getInt(getString(R.string.puzzle_language_key), BoardLanguage.ENGLISH);
+
+        // Create a new board
+        mBoard = new Board(puzzleDimension,mWordPairs,puzzleLanguage,puzzleDimension*puzzleDimension - numberOfInitialWords);
 
         // We need to check if the user wants to load a previous game or start a new game
         // It is done by checking the boolean extra in the intent
@@ -62,13 +67,21 @@ public class PuzzleActivity extends AppCompatActivity {
             // A toast to make sure the activity is being created
             Toast.makeText(this, "Puzzle Activity being Created (Load previous game!)", Toast.LENGTH_LONG).show();
             */
-        View[] buttons = {findViewById(R.id.button1),findViewById(R.id.button2),findViewById(R.id.button3),findViewById(R.id.button4),findViewById(R.id.button5),findViewById(R.id.button6),findViewById(R.id.button7),findViewById(R.id.button8),findViewById(R.id.button9)};
+        View[] buttons = {findViewById(R.id.button1),
+                findViewById(R.id.button2),
+                findViewById(R.id.button3),
+                findViewById(R.id.button4),
+                findViewById(R.id.button5),
+                findViewById(R.id.button6),
+                findViewById(R.id.button7),
+                findViewById(R.id.button8),
+                findViewById(R.id.button9)};
         fillWordList();
-        setButtonLabels(buttons);
+        // Set button labels with the other language
+        setButtonLabels(buttons, BoardLanguage.getOtherLanguage(puzzleLanguage));
 
         // For testing purposes only, to make sure the activity is being created
-        // TODO: Remove this
-        Toast.makeText(this, "Puzzle Activity being Created (Load previous game!)", Toast.LENGTH_LONG).show();
+//        Toast.makeText(this, "Puzzle Activity being Created (Load previous game!)", Toast.LENGTH_LONG).show();
 
 
         // Get the SudokuBoardView reference from XML layout
@@ -110,21 +123,25 @@ public class PuzzleActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        Toast.makeText(this, "Puzzle Activity Started (Load previous game!)", Toast.LENGTH_LONG).show();
+//        Toast.makeText(this, "Puzzle Activity Started (Load previous game!)", Toast.LENGTH_LONG).show();
     }
 
     @Override
     protected void onStop() {
         super.onStop();
-        Toast.makeText(this, "Puzzle Activity Stopped (Save game progress now!)", Toast.LENGTH_LONG).show();
+//        Toast.makeText(this, "Puzzle Activity Stopped (Save game progress now!)", Toast.LENGTH_LONG).show();
     }
 
     public static Intent newIntent (Context packageContext, boolean loadPreviousGame) {
         Intent intent = new Intent(packageContext, PuzzleActivity.class);
         intent.putExtra(LOAD_PREVIOUS_GAME, loadPreviousGame);
+        // Makes this current activity the root of the back stack
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         return intent;
     }
 
+    // This method fills the word list
+    // It is used to label the buttons
     private void fillWordList()
     {
         for(int i = 0; i < mWordPairs.length; i++)
@@ -133,17 +150,63 @@ public class PuzzleActivity extends AppCompatActivity {
         }
     }
 
-    private void setButtonLabels(View[] buttons)
+    // This method sets the labels of the buttons
+    // @param buttons The array of buttons
+    // @param language The language to be used for the button labels
+    private void setButtonLabels(View[] buttons, int language)
     {
         for(int i = 0; i < mWordPairs.length; i++)
         {
-            ((Button)buttons[i]).setText(mWordPairs[i].getEnglishOrFrench(BoardLanguage.FRENCH));
+            ((Button)buttons[i]).setText(mWordPairs[i].getEnglishOrFrench(language));
         }
     }
+
+    // This method is called when a button is pressed
+    // It enters the word in the board
+    // @param view The view that was pressed (the button)
+
 
     public void wordButtonPressed(View view) {
         enterWord(((Button)view).getText().toString());
     }
+
+    // This method is called when the finish button is pressed
+    // It checks if the user has filled the board
+    // If the user has filled the board, it checks if the user has solved the puzzle
+    // @param view The view that was pressed (the button)
+    // TODO: Add a dialog to ask the user if he wants to finish the puzzle
+    public void finishButtonPressed(View view) {
+        if (!mBoard.hasUserFilled()) {
+            Toast.makeText(this, "You have not filled the puzzle!", Toast.LENGTH_LONG).show();
+            return;
+        }
+        // TODO: show a dialog to ask the user if he wants to finish the puzzle
+
+        GameResult gameResult = new GameResult();
+        // Intent to start the ResultActivity
+        Intent intent;
+        if(mBoard.checkWin())
+        {
+            // Default constructor of GameResult sets the result to true so nothing to do here
+        }
+        else
+        {
+            gameResult.setResult(false);
+            gameResult.setMistakes(mBoard.getMistakes());
+        }
+        intent = ResultActivity.newIntent(PuzzleActivity.this,gameResult);
+        startActivity(intent);
+    }
+
+    // gets a list of word pairs based on the number of dimension given
+    // calls the csv reader
+    private WordPair[] getWords(int puzzleDimension) {
+        InputStream is = getResources().openRawResource(R.raw.dictionary);
+        CSVReader csvReader = new CSVReader(is, puzzleDimension);
+        csvReader.collectWords();
+        return csvReader.getWords();
+    }
+
 
 
 }

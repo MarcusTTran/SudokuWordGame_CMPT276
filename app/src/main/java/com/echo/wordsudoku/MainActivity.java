@@ -2,27 +2,39 @@ package com.echo.wordsudoku;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.echo.wordsudoku.models.BoardLanguage;
+
 public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = "MainActivity";
 
-
+    private static final String LOAD_MAIN_MENU = "com.echo.wordsudoku.load_main_menu";
 
     // UI references.
     private Button mNewGameButton;
     private Button mLoadGameButton;
     private Button mExitButton;
 
+    private Button mChangeLanguageButton;
+
+    private int mPuzzleLanguage = BoardLanguage.ENGLISH;
+    private SharedPreferences mPreferences;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        mPreferences = getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE);
+        SharedPreferences.Editor preferencesEditor = mPreferences.edit();
 
         // A toast to make sure the activity is being created
         Toast.makeText(this, "Main Menu Activity", Toast.LENGTH_SHORT).show();
@@ -78,5 +90,32 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+
+
+        mChangeLanguageButton = findViewById(R.id.change_language_button);
+        String changeLanguageButtonText = "Puzzle Language : " + BoardLanguage.getLanguageName(mPuzzleLanguage);
+        mChangeLanguageButton.setText(changeLanguageButtonText);
+        mChangeLanguageButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                try {
+                    mPuzzleLanguage = BoardLanguage.getOtherLanguage(mPuzzleLanguage);
+                    preferencesEditor.putInt(getString(R.string.puzzle_language_key), mPuzzleLanguage);
+                    preferencesEditor.apply();
+                    String changeLanguageButtonText = "Puzzle Language : " + BoardLanguage.getLanguageName(mPuzzleLanguage);
+                    mChangeLanguageButton.setText(changeLanguageButtonText);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
     }
+
+    public static Intent newIntent(Context packageContext) {
+        Intent intent = new Intent(packageContext, MainActivity.class);
+        // This flag is used to clear the activity stack
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        return intent;
+    }
+
 }

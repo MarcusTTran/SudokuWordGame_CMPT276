@@ -3,4 +3,10 @@
     <string name="new_game_btn">NEW GAME</string>
     <string name="load_game_btn">LOAD GAME</string>
     <string name="exit_btn">EXIT</string>
+    <string name="options_btn">OPTIONS</string>
+    <string name="main_menu_btn">MAIN MENU</string>
+    <string name="fail_msg">You Failed!</string>
+    <string name="finish_btn">FINISH</string>
+    <string name="preference_file_key">com.echo.wordsudoku.gameOptions</string>
+    <string name="puzzle_language_key">com.echo.wordsudoku.puzzleLanguageKey</string>
 </resources>

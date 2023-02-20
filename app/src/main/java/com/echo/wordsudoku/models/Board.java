@@ -159,6 +159,21 @@ public class Board {
 
 
     // @eakbarib
+    // EFFECT: checks if the user has filled all of the cells in the board
+    // @return true if all cells are filled, false otherwise
+    public boolean hasUserFilled() {
+        for (int i = 0; i < dim; i++) {
+            for (int j = 0; j < dim; j++) {
+                if (board[i][j]==0) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+
+    // @eakbarib
     // Utility methods for converting the numbers in board int array
     // (which contain sudoku numbers [1-9] (inclusive)) to array-compatible
     // indices [0-8] (inclusive)  and vice versa
@@ -467,6 +482,8 @@ public class Board {
                 // set the ell to 0 for gam
                 board[x][y] = 0;
             }
+
+
         }
     }
 
@@ -491,6 +508,8 @@ public class Board {
         // return the new copy of the array
         return copiedInto;
     }
+
+    //  <For Testing Purposes Only>
 
         // DEBUG METHODS BELOW !!!
 
@@ -523,4 +542,6 @@ public class Board {
         // UNCOMMENT FOR TESTING THE BOARD LAYOUT
 //         printSudoku_String(displayBoard);
 //         printSudoku_String(displayBoard_Solved);
+
+    // </For Testing Purposes Only>
 }
