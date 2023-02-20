@@ -13,9 +13,13 @@ import android.widget.Toast;
 
 import com.echo.wordsudoku.models.Board;
 import com.echo.wordsudoku.models.BoardLanguage;
-import com.echo.wordsudoku.models.CSVReader;
 import com.echo.wordsudoku.models.GameResult;
 import com.echo.wordsudoku.models.WordPair;
+import com.echo.wordsudoku.models.WordPairReader;
+
+import org.json.JSONException;
+
+import java.io.IOException;
 import java.io.InputStream;
 
 public class PuzzleActivity extends AppCompatActivity {
@@ -30,9 +34,12 @@ public class PuzzleActivity extends AppCompatActivity {
     // The word list for the spinner to choose from
     // This is just for testing purposes
     // TODO: Replace this with a list of words from the database
+
+    private InputStream jsonFile;
+
     private String[] mWordList = new String[9];
 
-    private WordPair[] mWordPairs = new WordPair[9];
+    private WordPair[] mWordPairs;
     private Board mBoard;
 
     // This is used for accessing the shared preferences associated with this app
@@ -49,7 +56,16 @@ public class PuzzleActivity extends AppCompatActivity {
         final int puzzleDimension = 9;
         // END CONSTANTS
 
-        mWordPairs = getWords(puzzleDimension);
+
+        try {
+            jsonFile = getAssets().open("words.json");
+            mWordPairs = getWords(jsonFile,9);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        catch (JSONException e) {
+            throw new RuntimeException(e);
+        }
 
 
         // Get the shared preferences
@@ -76,6 +92,7 @@ public class PuzzleActivity extends AppCompatActivity {
                 findViewById(R.id.button7),
                 findViewById(R.id.button8),
                 findViewById(R.id.button9)};
+
         fillWordList();
         // Set button labels with the other language
         setButtonLabels(buttons, BoardLanguage.getOtherLanguage(puzzleLanguage));
@@ -167,7 +184,8 @@ public class PuzzleActivity extends AppCompatActivity {
 
 
     public void wordButtonPressed(View view) {
-        enterWord(((Button)view).getText().toString());
+        String word = ((Button)view).getText().toString();
+        enterWord(word);
     }
 
     // This method is called when the finish button is pressed
@@ -200,13 +218,9 @@ public class PuzzleActivity extends AppCompatActivity {
 
     // gets a list of word pairs based on the number of dimension given
     // calls the csv reader
-    private WordPair[] getWords(int puzzleDimension) {
-        InputStream is = getResources().openRawResource(R.raw.dictionary);
-        CSVReader csvReader = new CSVReader(is, puzzleDimension);
-        csvReader.collectWords();
-        return csvReader.getWords();
+    private WordPair[] getWords(InputStream is,int puzzleDimension) throws JSONException, IOException {
+        WordPairReader reader = new WordPairReader(is,puzzleDimension);
+        return reader.getWords();
     }
-
-
 
 }
