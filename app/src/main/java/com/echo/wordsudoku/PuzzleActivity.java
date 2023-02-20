@@ -35,9 +35,11 @@ public class PuzzleActivity extends AppCompatActivity {
     // This is just for testing purposes
     // TODO: Replace this with a list of words from the database
 
+    // This member variable is used to store the input stream for the json file
+    // If later on we want to use a remote database, we can just change this to a String and
+    // use HttpHandler to get the json file from the database and store it in a String
     private InputStream jsonFile;
 
-    private String[] mWordList = new String[9];
 
     private WordPair[] mWordPairs;
     private Board mBoard;
@@ -55,7 +57,6 @@ public class PuzzleActivity extends AppCompatActivity {
         final int numberOfInitialWords = 17;
         final int puzzleDimension = 9;
         // END CONSTANTS
-
 
         try {
             jsonFile = getAssets().open("words.json");
@@ -92,8 +93,6 @@ public class PuzzleActivity extends AppCompatActivity {
                 findViewById(R.id.button7),
                 findViewById(R.id.button8),
                 findViewById(R.id.button9)};
-
-        fillWordList();
         // Set button labels with the other language
         setButtonLabels(buttons, BoardLanguage.getOtherLanguage(puzzleLanguage));
 
@@ -157,15 +156,6 @@ public class PuzzleActivity extends AppCompatActivity {
         return intent;
     }
 
-    // This method fills the word list
-    // It is used to label the buttons
-    private void fillWordList()
-    {
-        for(int i = 0; i < mWordPairs.length; i++)
-        {
-            mWordList[i] = mWordPairs[i].getEnglishOrFrench(BoardLanguage.FRENCH);
-        }
-    }
 
     // This method sets the labels of the buttons
     // @param buttons The array of buttons
