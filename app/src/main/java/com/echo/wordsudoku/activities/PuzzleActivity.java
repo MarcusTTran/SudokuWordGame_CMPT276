@@ -1,4 +1,4 @@
-package com.echo.wordsudoku;
+package com.echo.wordsudoku.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -11,6 +11,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.echo.wordsudoku.R;
+import com.echo.wordsudoku.fragments.DictionaryFragment;
+import com.echo.wordsudoku.fragments.RulesFragment;
 import com.echo.wordsudoku.models.Board;
 import com.echo.wordsudoku.models.BoardLanguage;
 import com.echo.wordsudoku.models.GameResult;
@@ -47,6 +50,12 @@ public class PuzzleActivity extends AppCompatActivity {
 
     // This is used for accessing the shared preferences associated with this app
     private SharedPreferences mPreferences;
+
+
+    //Used to hold English and French words to pass to DictionaryFragment
+    String[] LanguageList1;
+    String[] LanguageList2;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -109,6 +118,11 @@ public class PuzzleActivity extends AppCompatActivity {
         // Setting the initial board to UI
         mSudokuBoardView.setBoard(mBoard.getUnSolvedBoard());
 
+
+        //Used to hold English and French word that we pass to DictionaryFragment
+        LanguageList1 = new String[mWordPairs.length];
+        LanguageList2 = new String[mWordPairs.length];
+
     }
 
 
@@ -137,6 +151,8 @@ public class PuzzleActivity extends AppCompatActivity {
             return result;
         }
     }
+
+
 
 
     @Override
@@ -180,6 +196,33 @@ public class PuzzleActivity extends AppCompatActivity {
         String word = ((Button)view).getText().toString();
         enterWord(word);
     }
+
+    //When the user presses the rules button
+    public void rulesButtonPressed(View view) {
+        //Toast.makeText(this, "Help Button pressed", Toast.LENGTH_LONG).show();
+        //Create new instance of RulesFragment
+        RulesFragment rulesFragment = new RulesFragment();
+        rulesFragment.show(getSupportFragmentManager(), "RulesFragment");
+    }
+
+    //When the user presses the dictionary button
+    public void dictionaryButtonPressed(View view) {
+        //Toast.makeText(this, "Dictionary Button pressed", Toast.LENGTH_LONG).show();
+
+        for (int i = 0; i < mWordPairs.length; i++) {
+            LanguageList1[i] = mWordPairs[i].getEnglish();
+        }
+        for (int i = 0; i < mWordPairs.length; i++) {
+            LanguageList2[i] = mWordPairs[i].getFrench();
+        }
+
+        //Create new instance of RulesFragment
+        DictionaryFragment dictionaryFragment = DictionaryFragment.newInstance(LanguageList1, LanguageList2);
+        dictionaryFragment.show(getSupportFragmentManager(), "DictionaryFragment");
+
+    }
+
+
 
     // This method is called when the finish button is pressed
     // It checks if the user has filled the board

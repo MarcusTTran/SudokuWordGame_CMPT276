@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".activities.MainActivity">
 
     <com.echo.wordsudoku.views.SudokuBoard
         android:id="@+id/sudoku_board"
@@ -43,6 +43,7 @@
         android:id="@+id/help_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:onClick="rulesButtonPressed"
         custom:layout_constraintBottom_toTopOf="@id/sudoku_board"
         custom:layout_constraintEnd_toStartOf="@+id/preference_button"
         custom:layout_constraintHorizontal_bias="0.5"
@@ -54,6 +55,7 @@
         android:id="@+id/dictionary_help_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:onClick="dictionaryButtonPressed"
         custom:layout_constraintBottom_toTopOf="@+id/sudoku_board"
         custom:layout_constraintEnd_toStartOf="@+id/help_button"
         custom:layout_constraintHorizontal_bias="0.5"
@@ -203,6 +205,8 @@
         custom:layout_constraintStart_toStartOf="parent"
         custom:layout_constraintTop_toTopOf="parent"
         custom:layout_constraintVertical_bias="0.0" />
+
+
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
