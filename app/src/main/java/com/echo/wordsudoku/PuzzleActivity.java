@@ -48,6 +48,8 @@ public class PuzzleActivity extends AppCompatActivity {
     // This is used for accessing the shared preferences associated with this app
     private SharedPreferences mPreferences;
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -108,6 +110,9 @@ public class PuzzleActivity extends AppCompatActivity {
         mSudokuBoardView = findViewById(R.id.sudoku_board);
         // Setting the initial board to UI
         mSudokuBoardView.setBoard(mBoard.getUnSolvedBoard());
+
+
+
 
     }
 
@@ -186,7 +191,7 @@ public class PuzzleActivity extends AppCompatActivity {
     //When the user presses the rules button
     public void rulesButtonPressed(View view) {
         //Toast.makeText(this, "Help Button pressed", Toast.LENGTH_LONG).show();
-
+        //Create new instance of RulesFragment
         RulesFragment rulesFragment = new RulesFragment();
         rulesFragment.show(getSupportFragmentManager(), "RulesFragment");
     }
@@ -204,6 +209,8 @@ public class PuzzleActivity extends AppCompatActivity {
         for (int i = 0; i < mWordPairs.length; i++) {
             LanguageList2[i] = mWordPairs[i].getFrench();
         }
+
+        //Create new instance of RulesFragment
         DictionaryFragment dictionaryFragment = DictionaryFragment.newInstance(LanguageList1, LanguageList2);
         dictionaryFragment.show(getSupportFragmentManager(), "DictionaryFragment");
 
