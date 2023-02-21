@@ -16,6 +16,7 @@ import com.echo.wordsudoku.models.BoardLanguage;
 import com.echo.wordsudoku.models.GameResult;
 import com.echo.wordsudoku.models.WordPair;
 import com.echo.wordsudoku.models.WordPairReader;
+import com.echo.wordsudoku.views.SudokuBoard;
 
 import org.json.JSONException;
 
@@ -41,7 +42,7 @@ public class PuzzleActivity extends AppCompatActivity {
     private InputStream jsonFile;
 
 
-    private WordPair[] mWordPairs;
+    private WordPair[] mWordPairs = {new WordPair("He","Il"), new WordPair("She","Ella"), new WordPair("It","Eso"), new WordPair("They","Ellos"), new WordPair("We","Nosotros"), new WordPair("You","Tú"), new WordPair("I","Yo"), new WordPair("The","El"), new WordPair("A","Un")};
     private Board mBoard;
 
     // This is used for accessing the shared preferences associated with this app
@@ -58,15 +59,17 @@ public class PuzzleActivity extends AppCompatActivity {
         final int puzzleDimension = 9;
         // END CONSTANTS
 
-        try {
-            jsonFile = getAssets().open("words.json");
-            mWordPairs = getWords(jsonFile,9);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-        catch (JSONException e) {
-            throw new RuntimeException(e);
-        }
+//        try {
+//            jsonFile = getAssets().open("words.json");
+//            mWordPairs = getWords(jsonFile,9);
+//        } catch (IOException e) {
+//            throw new RuntimeException(e);
+//        }
+//        catch (JSONException e) {
+//            throw new RuntimeException(e);
+//        }
+
+
 
 
         // Get the shared preferences
