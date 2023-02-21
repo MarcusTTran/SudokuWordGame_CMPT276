@@ -49,6 +49,10 @@ public class PuzzleActivity extends AppCompatActivity {
     private SharedPreferences mPreferences;
 
 
+    //Used to hold English and French words to pass to DictionaryFragment
+    String[] LanguageList1;
+    String[] LanguageList2;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -112,7 +116,9 @@ public class PuzzleActivity extends AppCompatActivity {
         mSudokuBoardView.setBoard(mBoard.getUnSolvedBoard());
 
 
-
+        //Used to hold English and French word that we pass to DictionaryFragment
+        LanguageList1 = new String[mWordPairs.length];
+        LanguageList2 = new String[mWordPairs.length];
 
     }
 
@@ -199,9 +205,6 @@ public class PuzzleActivity extends AppCompatActivity {
     //When the user presses the dictionary button
     public void dictionaryButtonPressed(View view) {
         //Toast.makeText(this, "Dictionary Button pressed", Toast.LENGTH_LONG).show();
-        //Used to hold English and French strings to pass to DictionaryFragment
-        String[] LanguageList1 = new String[mWordPairs.length];
-        String[] LanguageList2 = new String[mWordPairs.length];
 
         for (int i = 0; i < mWordPairs.length; i++) {
             LanguageList1[i] = mWordPairs[i].getEnglish();
