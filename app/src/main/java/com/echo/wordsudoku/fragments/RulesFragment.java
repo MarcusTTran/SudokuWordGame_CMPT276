@@ -1,15 +1,16 @@
-package com.echo.wordsudoku;
+package com.echo.wordsudoku.fragments;
 
 import android.os.Bundle;
 
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+
+import com.echo.wordsudoku.R;
 
 /**
  * A simple {@link Fragment} subclass.

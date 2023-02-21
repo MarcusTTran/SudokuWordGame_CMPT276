@@ -1,4 +1,4 @@
-package com.echo.wordsudoku;
+package com.echo.wordsudoku.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.echo.wordsudoku.R;
 import com.echo.wordsudoku.models.GameResult;
 
 public class ResultActivity extends AppCompatActivity {

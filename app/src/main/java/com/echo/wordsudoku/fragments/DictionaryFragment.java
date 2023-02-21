@@ -1,4 +1,4 @@
-package com.echo.wordsudoku;
+package com.echo.wordsudoku.fragments;
 
 import android.os.Bundle;
 
@@ -11,6 +11,8 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import com.echo.wordsudoku.R;
 
 /**
  * A simple {@link Fragment} subclass.

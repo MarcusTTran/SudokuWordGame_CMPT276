@@ -1,4 +1,4 @@
-package com.echo.wordsudoku;
+package com.echo.wordsudoku.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -11,6 +11,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.echo.wordsudoku.R;
+import com.echo.wordsudoku.fragments.DictionaryFragment;
+import com.echo.wordsudoku.fragments.RulesFragment;
 import com.echo.wordsudoku.models.Board;
 import com.echo.wordsudoku.models.BoardLanguage;
 import com.echo.wordsudoku.models.GameResult;
