@@ -1,0 +1,444 @@
+{
+  "words": [
+    {
+      "word": "bonjour",
+      "translation": "hello"
+    },
+    {
+      "word": "au revoir",
+      "translation": "goodbye"
+    },
+    {
+      "word": "chat",
+      "translation": "cat"
+    },
+    {
+      "word": "chien",
+      "translation": "dog"
+    },
+    {
+      "word": "maison",
+      "translation": "house"
+    },
+    {
+      "word": "arbre",
+      "translation": "tree"
+    },
+    {
+      "word": "livre",
+      "translation": "book"
+    },
+    {
+      "word": "ordinateur",
+      "translation": "computer"
+    },
+    {
+      "word": "téléphone",
+      "translation": "phone"
+    },
+    {
+      "word": "eau",
+      "translation": "water"
+    },
+    {
+      "word": "nourriture",
+      "translation": "food"
+    },
+    {
+      "word": "ami(e)",
+      "translation": "friend"
+    },
+    {
+      "word": "famille",
+      "translation": "family"
+    },
+    {
+      "word": "amour",
+      "translation": "love"
+    },
+    {
+      "word": "argent",
+      "translation": "money"
+    },
+    {
+      "word": "musique",
+      "translation": "music"
+    },
+    {
+      "word": "temps",
+      "translation": "time"
+    },
+    {
+      "word": "travail",
+      "translation": "work"
+    },
+    {
+      "word": "jouer",
+      "translation": "play"
+    },
+    {
+      "word": "étudier",
+      "translation": "study"
+    },
+    {
+      "word": "écrire",
+      "translation": "write"
+    },
+    {
+      "word": "parler",
+      "translation": "speak"
+    },
+    {
+      "word": "écouter",
+      "translation": "listen"
+    },
+    {
+      "word": "regarder",
+      "translation": "watch"
+    },
+    {
+      "word": "manger",
+      "translation": "eat"
+    },
+    {
+      "word": "boire",
+      "translation": "drink"
+    },
+    {
+      "word": "dormir",
+      "translation": "sleep"
+    },
+    {
+      "word": "chanter",
+      "translation": "sing"
+    },
+    {
+      "word": "crier",
+      "translation": "scream"
+    },
+    {
+      "word": "rire",
+      "translation": "laugh"
+    },
+    {
+      "word": "pleurer",
+      "translation": "cry"
+    },
+    {
+      "word": "jouer",
+      "translation": "play"
+    },
+    {
+      "word": "courir",
+      "translation": "run"
+    },
+    {
+      "word": "marcher",
+      "translation": "walk"
+    },
+    {
+      "word": "nager",
+      "translation": "swim"
+    },
+    {
+      "word": "voler",
+      "translation": "fly"
+    },
+    {
+      "word": "dessiner",
+      "translation": "draw"
+    },
+    {
+      "word": "peindre",
+      "translation": "paint"
+    },
+    {
+      "word": "lire",
+      "translation": "read"
+    },
+    {
+      "word": "regretter",
+      "translation": "regret"
+    },
+    {
+      "word": "admirer",
+      "translation": "admire"
+    },
+    {
+      "word": "aimer",
+      "translation": "like/love"
+    },
+    {
+      "word": "détester",
+      "translation": "hate"
+    },
+    {
+      "word": "vouloir",
+      "translation": "want"
+    },
+    {
+      "word": "pouvoir",
+      "translation": "can"
+    },
+    {
+      "word": "devoir",
+      "translation": "must"
+    },
+    {
+      "word": "aller",
+      "translation": "go"
+    },
+    {
+      "word": "venir",
+      "translation": "come"
+    },
+    {
+      "word": "partir",
+      "translation": "leave"
+    },
+    {
+      "word": "arriver",
+      "translation": "arrive"
+    },
+    {
+      "word": "rester",
+      "translation": "stay"
+    },
+    {
+      "word": "revenir",
+      "translation": "return"
+    },
+    {
+      "word": "entrer",
+      "translation": "enter"
+    },
+    {
+      "word": "sortir",
+      "translation": "exit"
+    },
+    {
+      "word": "ouvrir",
+      "translation": "open"
+    },
+    {
+      "word": "fermer",
+      "translation": "close"
+    },
+    {
+      "word": "montrer",
+      "translation": "show"
+    },
+    {
+      "word": "cacher",
+      "translation": "hide"
+    },
+    {
+      "word": "chercher",
+      "translation": "search"
+    },
+    {
+      "word": "trouver",
+      "translation": "find"
+    },
+    {
+      "word": "perdre",
+      "translation": "lose"
+    },
+    {
+      "word": "gagner",
+      "translation": "win"
+    },
+    {
+      "word": "acheter",
+      "translation": "buy"
+    },
+    {
+      "word": "vendre",
+      "translation": "sell"
+    },
+    {
+      "word": "donner",
+      "translation": "give"
+    },
+    {
+      "word": "recevoir",
+      "translation": "receive"
+    },
+    {
+      "word": "demander",
+      "translation": "ask"
+    },
+    {
+      "word": "répondre",
+      "translation": "answer"
+    },
+    {
+      "word": "dire",
+      "translation": "say"
+    },
+    {
+      "word": "parler",
+      "translation": "speak"
+    },
+    {
+      "word": "écouter",
+      "translation": "listen"
+    },
+    {
+      "word": "appeler",
+      "translation": "call"
+    },
+    {
+      "word": "envoyer",
+      "translation": "send"
+    },
+    {
+      "word": "recevoir",
+      "translation": "receive"
+    },
+    {
+      "word": "attendre",
+      "translation": "wait"
+    },
+    {
+      "word": "terminer",
+      "translation": "finish"
+    },
+    {
+      "word": "commencer",
+      "translation": "start"
+    },
+    {
+      "word": "arrêter",
+      "translation": "stop"
+    },
+    {
+      "word": "continuer",
+      "translation": "continue"
+    },
+    {
+      "word": "recommencer",
+      "translation": "restart"
+    },
+    {
+      "word": "forêt",
+      "translation": "forest"
+    },
+    {
+      "word": "lac",
+      "translation": "lake"
+    },
+    {
+      "word": "plage",
+      "translation": "beach"
+    },
+    {
+      "word": "ciel",
+      "translation": "sky"
+    },
+    {
+      "word": "terre",
+      "translation": "earth"
+    },
+    {
+      "word": "mer",
+      "translation": "sea"
+    },
+    {
+      "word": "vent",
+      "translation": "wind"
+    },
+    {
+      "word": "soleil",
+      "translation": "sun"
+    },
+    {
+      "word": "montagne",
+      "translation": "mountain"
+    },
+    {
+      "word": "rivière",
+      "translation": "river"
+    },
+    {
+      "word": "nuage",
+      "translation": "cloud"
+    },
+    {
+      "word": "étoile",
+      "translation": "star"
+    },
+    {
+      "word": "lune",
+      "translation": "moon"
+    },
+    {
+      "word": "herbe",
+      "translation": "grass"
+    },
+    {
+      "word": "fleur",
+      "translation": "flower"
+    },
+    {
+      "word": "arbre",
+      "translation": "tree"
+    },
+    {
+      "word": "pierre",
+      "translation": "stone"
+    },
+    {
+      "word": "terre",
+      "translation": "soil"
+    },
+    {
+      "word": "paysage",
+      "translation": "landscape"
+    },
+    {
+      "word": "nuageux",
+      "translation": "cloudy"
+    },
+    {
+      "word": "pluvieux",
+      "translation": "rainy"
+    },
+    {
+      "word": "ensoleillé",
+      "translation": "sunny"
+    },
+    {
+      "word": "neigeux",
+      "translation": "snowy"
+    },
+    {
+      "word": "orage",
+      "translation": "thunderstorm"
+    },
+    {
+      "word": "éclair",
+      "translation": "lightning"
+    },
+    {
+      "word": "tempête",
+      "translation": "storm"
+    },
+    {
+      "word": "brume",
+      "translation": "fog"
+    },
+    {
+      "word": "arc-en-ciel",
+      "translation": "rainbow"
+    },
+    {
+      "word": "tornade",
+      "translation": "tornado"
+    },
+    {
+      "word": "avalanche",
+      "translation": "avalanche"
+    }
+  ]
+}

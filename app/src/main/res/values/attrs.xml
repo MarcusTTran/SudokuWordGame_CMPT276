@@ -5,7 +5,8 @@
         <attr name="cellsHighlightColor" format="color" />
         <attr name="boardSize" format="integer" />
         <attr name="boardColor" format="color" />
-        <attr name="letterColor" format="color" />
-        <attr name="letterColorSolve" format="color" />
+        <attr name="cellVerticalPadding" format="integer" />
+        <attr name="cellHorizontalPadding" format="integer" />
+        <attr name="cellMaxFontSize" format="integer" />
     </declare-styleable>
 </resources>
