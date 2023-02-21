@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <com.echo.wordsudoku.SudokuBoard
+    <com.echo.wordsudoku.views.SudokuBoard
         android:id="@+id/sudoku_board"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -15,7 +15,7 @@
         custom:cellsHighlightColor="#2C00FF00"
         custom:layout_constraintEnd_toEndOf="parent"
         custom:layout_constraintStart_toStartOf="parent"
-        custom:layout_constraintTop_toBottomOf="@id/timer_text_view"></com.echo.wordsudoku.SudokuBoard>
+        custom:layout_constraintTop_toBottomOf="@id/timer_text_view"></com.echo.wordsudoku.views.SudokuBoard>
 
     <TextView
         android:id="@+id/timer_text_view"
