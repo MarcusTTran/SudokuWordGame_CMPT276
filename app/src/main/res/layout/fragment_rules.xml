@@ -5,13 +5,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="10dip"
     tools:context=".RulesFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/PopUp_Box"
+        android:id="@+id/PopUp_RulesBox"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
@@ -27,13 +24,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="3dp"
-            android:scaleX="0.90"
-            android:scaleY="0.90"
             android:src="@android:drawable/ic_menu_close_clear_cancel"
             android:visibility="visible"
             custom:layout_constraintBottom_toBottomOf="parent"
-            custom:layout_constraintEnd_toEndOf="@+id/RulesText"
-            custom:layout_constraintHorizontal_bias="1.0"
+            custom:layout_constraintEnd_toEndOf="parent"
             custom:layout_constraintStart_toEndOf="@+id/RulesHeader"
             custom:layout_constraintTop_toTopOf="parent"
             custom:layout_constraintVertical_bias="0.0" />
@@ -54,6 +48,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:paddingBottom="20dp"
             android:text="@string/RulesText"
             custom:layout_constraintBottom_toBottomOf="parent"
             custom:layout_constraintEnd_toEndOf="parent"

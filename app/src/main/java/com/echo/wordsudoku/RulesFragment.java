@@ -23,7 +23,7 @@ public class RulesFragment extends DialogFragment {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
-    ImageButton exitButton;
+    private ImageButton exitButton;
 
     // TODO: Rename and change types of parameters
 
@@ -55,7 +55,7 @@ public class RulesFragment extends DialogFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view1 = inflater.inflate(R.layout.fragment_help, container, false);
+        View view1 = inflater.inflate(R.layout.fragment_rules, container, false);
 
         exitButton = view1.findViewById(R.id.rulesExitButton);
         exitButton.setOnClickListener(new View.OnClickListener() {

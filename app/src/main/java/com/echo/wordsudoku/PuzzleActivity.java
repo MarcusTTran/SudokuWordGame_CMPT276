@@ -182,22 +182,27 @@ public class PuzzleActivity extends AppCompatActivity {
 
     //When the user presses the rules button
     public void rulesButtonPressed(View view) {
-        Toast.makeText(this, "Help Button pressed", Toast.LENGTH_LONG).show();
-        //Call some view to be created;
+        //Toast.makeText(this, "Help Button pressed", Toast.LENGTH_LONG).show();
 
-        //Intent intent = HelpFragment.newInstance(PuzzleActivity.this);
-        //startActivity(intent);
-//        RulesFragment rulesFragment = new RulesFragment();
-//        rulesFragment.show(getSupportFragmentManager(), "RulesFragment");
-        RulesFragment rulesFragment1 = new RulesFragment();
-        rulesFragment1.show(getSupportFragmentManager(), "RulesFragment");
+        RulesFragment rulesFragment = new RulesFragment();
+        rulesFragment.show(getSupportFragmentManager(), "RulesFragment");
     }
 
-    //When the user presses the rules button
+    //When the user presses the dictionary button
     public void dictionaryButtonPressed(View view) {
-        Toast.makeText(this, "Dictionary Button pressed", Toast.LENGTH_LONG).show();
-        //Call some view to be created;
+        //Toast.makeText(this, "Dictionary Button pressed", Toast.LENGTH_LONG).show();
+        //Used to hold English and French strings to pass to DictionaryFragment
+        String[] LanguageList1 = new String[mWordPairs.length];
+        String[] LanguageList2 = new String[mWordPairs.length];
 
+        for (int i = 0; i < mWordPairs.length; i++) {
+            LanguageList1[i] = mWordPairs[i].getEnglish();
+        }
+        for (int i = 0; i < mWordPairs.length; i++) {
+            LanguageList2[i] = mWordPairs[i].getFrench();
+        }
+        DictionaryFragment dictionaryFragment = DictionaryFragment.newInstance(LanguageList1, LanguageList2);
+        dictionaryFragment.show(getSupportFragmentManager(), "DictionaryFragment");
 
     }
 
