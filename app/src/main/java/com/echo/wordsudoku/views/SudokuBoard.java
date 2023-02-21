@@ -1,4 +1,4 @@
-package com.echo.wordsudoku;
+package com.echo.wordsudoku.views;
 
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -6,13 +6,17 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 
 import androidx.annotation.Nullable;
 
-import java.util.Arrays;
+import com.echo.wordsudoku.R;
+
+
+
+// using tutorial from https://www.youtube.com/watch?v=lYjSl_ou05Q
+// they implement a sudoku solver app and I am using their code to implement the sudoku board View component
 
 public class SudokuBoard extends View {
 
@@ -21,6 +25,23 @@ public class SudokuBoard extends View {
     // We are not going to use this for now
     // TODO: Use this to make the board dynamic
     private final int mBoardSize;
+
+    // This is the default size of the board
+    private final int DEFAULT_BOARD_SIZE = 9;
+
+
+    // The padding for each cell. This is the space between the cell and the text inside it
+    private final int mCellVerticalPadding;
+    // This is the default vertical padding for the cells
+    private final int DEFAULT_CELL_VERTICAL_PADDING = 35;
+    private final int mCellHorizontalPadding;
+    // This is the default horizontal padding for the cells
+    private final int DEFAULT_CELL_HORIZONTAL_PADDING = 25;
+
+    // The maximum font size for the letters in the cells. The font size will not be bigger than this
+    private final int mCellMaxFontSize;
+    // This is the default maximum font size for the letters in the cells
+    private final int DEFAULT_CELL_MAX_FONT_SIZE = 60;
 
     // The background color of the board
     // It will be loaded from the XML layout (passed as an attribute) - custom:boardColor="#000000"
@@ -33,8 +54,6 @@ public class SudokuBoard extends View {
     private final int mCellsHighlightColor;
     // The color of the letters in the cells.
     // TODO: This will be used to display the letters in the cells that are not empty
-    private final int mletterColor;
-    private final int mletterColorSolve;
 
 
     // The Paint objects that will be used to draw the board
@@ -45,7 +64,6 @@ public class SudokuBoard extends View {
     private final Paint mCellFillColorPaint = new Paint();
     private final Paint mCellsHighlightColorPaint = new Paint();
     private final Paint mLetterColorPaint = new Paint();
-    private final Paint mLetterColorSolvePaint = new Paint();
 
 
     // This is a utility object that will be used to draw the letters in the cells
@@ -87,12 +105,13 @@ public class SudokuBoard extends View {
         // If the attribute is not found, use the default value
         // and finally recycle the TypedArray object so we can empty the memory
         try {
-            mBoardSize = a.getInteger(R.styleable.SudokuBoard_boardSize, 9);
+            mBoardSize = a.getInteger(R.styleable.SudokuBoard_boardSize, DEFAULT_BOARD_SIZE);
             mBoardColor = a.getInteger(R.styleable.SudokuBoard_boardColor, 0);
             mCellFillColor = a.getInteger(R.styleable.SudokuBoard_cellFillColor, 0);
             mCellsHighlightColor = a.getInteger(R.styleable.SudokuBoard_cellsHighlightColor, 0);
-            mletterColor = a.getInteger(R.styleable.SudokuBoard_letterColor, 0);
-            mletterColorSolve = a.getInteger(R.styleable.SudokuBoard_letterColorSolve, 0);
+            mCellVerticalPadding = a.getInteger(R.styleable.SudokuBoard_cellVerticalPadding, DEFAULT_CELL_VERTICAL_PADDING);
+            mCellHorizontalPadding = a.getInteger(R.styleable.SudokuBoard_cellHorizontalPadding, DEFAULT_CELL_HORIZONTAL_PADDING);
+            mCellMaxFontSize = a.getInteger(R.styleable.SudokuBoard_cellMaxFontSize, DEFAULT_CELL_MAX_FONT_SIZE);
         } finally {
             a.recycle();
         }
@@ -264,12 +283,15 @@ public class SudokuBoard extends View {
     // It calculates the width and height of the word to center it
     // It uses utility methods to set the font of the text in a way that all of the words fit in the cell
     private void drawWord(Canvas canvas) {
+        final int desiredHeightForEachWord = cellSize-mCellVerticalPadding;
+        final int desiredWidthForEachWord = cellSize-mCellHorizontalPadding;
+        final int maximumLetterFontSize = mCellMaxFontSize;
         for (int r=0; r<9; r++) {
             for (int c=0; c<9; c++) {
                 if (board[r][c] != null){
                     String word = board[r][c];
                     float width, height;
-                    setTextSizeForWidth(mLetterColorPaint, cellSize-15, word);
+                    setTextSize(mLetterColorPaint, desiredHeightForEachWord, desiredWidthForEachWord, word,maximumLetterFontSize);
                     // We need to get the bounds of the word to center it
                     mLetterColorPaint.getTextBounds(word, 0, word.length(), letterPaintBounds);
                     width = mLetterColorPaint.measureText(word);
@@ -283,12 +305,17 @@ public class SudokuBoard extends View {
     // We have variable length words, some are short (Apple) and some are long (Pineapple)
     // Method below will set the text size for the word to fit the cell so all of the words are the same size
     // Taken from: http://stackoverflow.com/questions/2617266/how-to-adjust-text-font-size-to-fit-textview
+    // @param: paint is the paint object that will be used to draw the word
+    // @param: desiredHeight is the height constraint of the cell
+    // @param: desiredWidth is the width constraint of the cell
+    // @param: text is the word that will be drawn
+    // @param: maxTextSize is the maximum size of the text (60)
 
-    private static void setTextSizeForWidth(Paint paint, float desiredWidth,
-                                            String text) {
+    private static void setTextSize(Paint paint, float desiredHeight, float desiredWidth,
+                                            String text, int maxTextSize) {
 
 
-        final float testTextSize = 48f;
+        final float testTextSize = 20f;
 
         // Get the bounds of the text, using our testTextSize.
         paint.setTextSize(testTextSize);
@@ -296,10 +323,11 @@ public class SudokuBoard extends View {
         paint.getTextBounds(text, 0, text.length(), bounds);
 
         // Calculate the desired size as a proportion of our testTextSize.
-        float desiredTextSize = testTextSize * desiredWidth / bounds.width();
+        float desiredTextSizeHeightConstraint = testTextSize * desiredHeight / bounds.height();
+        float desiredTextSizeWidthConstraint = testTextSize * desiredWidth / bounds.width();
 
         // Set the paint for that size.
-        paint.setTextSize(desiredTextSize);
+        paint.setTextSize(Math.min(desiredTextSizeHeightConstraint, Math.min(maxTextSize,desiredTextSizeWidthConstraint)));
     }
 
     // Method to fill the word in the board

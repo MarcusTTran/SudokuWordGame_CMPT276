@@ -16,6 +16,7 @@ import com.echo.wordsudoku.models.BoardLanguage;
 import com.echo.wordsudoku.models.GameResult;
 import com.echo.wordsudoku.models.WordPair;
 import com.echo.wordsudoku.models.WordPairReader;
+import com.echo.wordsudoku.views.SudokuBoard;
 
 import org.json.JSONException;
 
@@ -67,6 +68,8 @@ public class PuzzleActivity extends AppCompatActivity {
         catch (JSONException e) {
             throw new RuntimeException(e);
         }
+
+
 
 
         // Get the shared preferences
