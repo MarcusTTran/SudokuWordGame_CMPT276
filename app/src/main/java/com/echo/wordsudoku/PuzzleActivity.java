@@ -136,6 +136,8 @@ public class PuzzleActivity extends AppCompatActivity {
     }
 
 
+
+
     @Override
     protected void onStart() {
         super.onStart();
@@ -177,6 +179,29 @@ public class PuzzleActivity extends AppCompatActivity {
         String word = ((Button)view).getText().toString();
         enterWord(word);
     }
+
+    //When the user presses the rules button
+    public void rulesButtonPressed(View view) {
+        Toast.makeText(this, "Help Button pressed", Toast.LENGTH_LONG).show();
+        //Call some view to be created;
+
+        //Intent intent = HelpFragment.newInstance(PuzzleActivity.this);
+        //startActivity(intent);
+//        RulesFragment rulesFragment = new RulesFragment();
+//        rulesFragment.show(getSupportFragmentManager(), "RulesFragment");
+        RulesFragment rulesFragment1 = new RulesFragment();
+        rulesFragment1.show(getSupportFragmentManager(), "RulesFragment");
+    }
+
+    //When the user presses the rules button
+    public void dictionaryButtonPressed(View view) {
+        Toast.makeText(this, "Dictionary Button pressed", Toast.LENGTH_LONG).show();
+        //Call some view to be created;
+
+
+    }
+
+
 
     // This method is called when the finish button is pressed
     // It checks if the user has filled the board

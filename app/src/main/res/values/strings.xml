@@ -9,4 +9,13 @@
     <string name="finish_btn">FINISH</string>
     <string name="preference_file_key">com.echo.wordsudoku.gameOptions</string>
     <string name="puzzle_language_key">com.echo.wordsudoku.puzzleLanguageKey</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="RulesHeader">Rules to Sudoku</string>
+    <string name="RulesText">When you start a new game you will be presented with a 9x9 puzzle.
+        Every cell in each row or column and also in a 3x3 square has to contain unique words. No repetition is allowed in rows and columns and also the 3x3 squares.\n<b>Hint:</b>
+When you have difficulty translating the words you can always tap the dictionary button to see the translation of words but remember that you can access this translation table only twice per game.</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="DictionaryHeader">Puzzle Dictionary</string>
+
+
 </resources>
