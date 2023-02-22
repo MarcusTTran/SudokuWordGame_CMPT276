@@ -1,444 +1,5007 @@
-{
-  "words": [
-    {
-      "word": "bonjour",
-      "translation": "hello"
-    },
-    {
-      "word": "au revoir",
-      "translation": "goodbye"
-    },
-    {
-      "word": "chat",
-      "translation": "cat"
-    },
-    {
-      "word": "chien",
-      "translation": "dog"
-    },
-    {
-      "word": "maison",
-      "translation": "house"
-    },
-    {
-      "word": "arbre",
-      "translation": "tree"
-    },
-    {
-      "word": "livre",
-      "translation": "book"
-    },
-    {
-      "word": "ordinateur",
-      "translation": "computer"
-    },
-    {
-      "word": "téléphone",
-      "translation": "phone"
-    },
-    {
-      "word": "eau",
-      "translation": "water"
-    },
-    {
-      "word": "nourriture",
-      "translation": "food"
-    },
-    {
-      "word": "ami(e)",
-      "translation": "friend"
-    },
-    {
-      "word": "famille",
-      "translation": "family"
-    },
-    {
-      "word": "amour",
-      "translation": "love"
-    },
-    {
-      "word": "argent",
-      "translation": "money"
-    },
-    {
-      "word": "musique",
-      "translation": "music"
-    },
-    {
-      "word": "temps",
-      "translation": "time"
-    },
-    {
-      "word": "travail",
-      "translation": "work"
-    },
-    {
-      "word": "jouer",
-      "translation": "play"
-    },
-    {
-      "word": "étudier",
-      "translation": "study"
-    },
-    {
-      "word": "écrire",
-      "translation": "write"
-    },
-    {
-      "word": "parler",
-      "translation": "speak"
-    },
-    {
-      "word": "écouter",
-      "translation": "listen"
-    },
-    {
-      "word": "regarder",
-      "translation": "watch"
-    },
-    {
-      "word": "manger",
-      "translation": "eat"
-    },
-    {
-      "word": "boire",
-      "translation": "drink"
-    },
-    {
-      "word": "dormir",
-      "translation": "sleep"
-    },
-    {
-      "word": "chanter",
-      "translation": "sing"
-    },
-    {
-      "word": "crier",
-      "translation": "scream"
-    },
-    {
-      "word": "rire",
-      "translation": "laugh"
-    },
-    {
-      "word": "pleurer",
-      "translation": "cry"
-    },
-    {
-      "word": "jouer",
-      "translation": "play"
-    },
-    {
-      "word": "courir",
-      "translation": "run"
-    },
-    {
-      "word": "marcher",
-      "translation": "walk"
-    },
-    {
-      "word": "nager",
-      "translation": "swim"
-    },
-    {
-      "word": "voler",
-      "translation": "fly"
-    },
-    {
-      "word": "dessiner",
-      "translation": "draw"
-    },
-    {
-      "word": "peindre",
-      "translation": "paint"
-    },
-    {
-      "word": "lire",
-      "translation": "read"
-    },
-    {
-      "word": "regretter",
-      "translation": "regret"
-    },
-    {
-      "word": "admirer",
-      "translation": "admire"
-    },
-    {
-      "word": "aimer",
-      "translation": "like/love"
-    },
-    {
-      "word": "détester",
-      "translation": "hate"
-    },
-    {
-      "word": "vouloir",
-      "translation": "want"
-    },
-    {
-      "word": "pouvoir",
-      "translation": "can"
-    },
-    {
-      "word": "devoir",
-      "translation": "must"
-    },
-    {
-      "word": "aller",
-      "translation": "go"
-    },
-    {
-      "word": "venir",
-      "translation": "come"
-    },
-    {
-      "word": "partir",
-      "translation": "leave"
-    },
-    {
-      "word": "arriver",
-      "translation": "arrive"
-    },
-    {
-      "word": "rester",
-      "translation": "stay"
-    },
-    {
-      "word": "revenir",
-      "translation": "return"
-    },
-    {
-      "word": "entrer",
-      "translation": "enter"
-    },
-    {
-      "word": "sortir",
-      "translation": "exit"
-    },
-    {
-      "word": "ouvrir",
-      "translation": "open"
-    },
-    {
-      "word": "fermer",
-      "translation": "close"
-    },
-    {
-      "word": "montrer",
-      "translation": "show"
-    },
-    {
-      "word": "cacher",
-      "translation": "hide"
-    },
-    {
-      "word": "chercher",
-      "translation": "search"
-    },
-    {
-      "word": "trouver",
-      "translation": "find"
-    },
-    {
-      "word": "perdre",
-      "translation": "lose"
-    },
-    {
-      "word": "gagner",
-      "translation": "win"
-    },
-    {
-      "word": "acheter",
-      "translation": "buy"
-    },
-    {
-      "word": "vendre",
-      "translation": "sell"
-    },
-    {
-      "word": "donner",
-      "translation": "give"
-    },
-    {
-      "word": "recevoir",
-      "translation": "receive"
-    },
-    {
-      "word": "demander",
-      "translation": "ask"
-    },
-    {
-      "word": "répondre",
-      "translation": "answer"
-    },
-    {
-      "word": "dire",
-      "translation": "say"
-    },
-    {
-      "word": "parler",
-      "translation": "speak"
-    },
-    {
-      "word": "écouter",
-      "translation": "listen"
-    },
-    {
-      "word": "appeler",
-      "translation": "call"
-    },
-    {
-      "word": "envoyer",
-      "translation": "send"
-    },
-    {
-      "word": "recevoir",
-      "translation": "receive"
-    },
-    {
-      "word": "attendre",
-      "translation": "wait"
-    },
-    {
-      "word": "terminer",
-      "translation": "finish"
-    },
-    {
-      "word": "commencer",
-      "translation": "start"
-    },
-    {
-      "word": "arrêter",
-      "translation": "stop"
-    },
-    {
-      "word": "continuer",
-      "translation": "continue"
-    },
-    {
-      "word": "recommencer",
-      "translation": "restart"
-    },
-    {
-      "word": "forêt",
-      "translation": "forest"
-    },
-    {
-      "word": "lac",
-      "translation": "lake"
-    },
-    {
-      "word": "plage",
-      "translation": "beach"
-    },
-    {
-      "word": "ciel",
-      "translation": "sky"
-    },
-    {
-      "word": "terre",
-      "translation": "earth"
-    },
-    {
-      "word": "mer",
-      "translation": "sea"
-    },
-    {
-      "word": "vent",
-      "translation": "wind"
-    },
-    {
-      "word": "soleil",
-      "translation": "sun"
-    },
-    {
-      "word": "montagne",
-      "translation": "mountain"
-    },
-    {
-      "word": "rivière",
-      "translation": "river"
-    },
-    {
-      "word": "nuage",
-      "translation": "cloud"
-    },
-    {
-      "word": "étoile",
-      "translation": "star"
-    },
-    {
-      "word": "lune",
-      "translation": "moon"
-    },
-    {
-      "word": "herbe",
-      "translation": "grass"
-    },
-    {
-      "word": "fleur",
-      "translation": "flower"
-    },
-    {
-      "word": "arbre",
-      "translation": "tree"
-    },
-    {
-      "word": "pierre",
-      "translation": "stone"
-    },
-    {
-      "word": "terre",
-      "translation": "soil"
-    },
-    {
-      "word": "paysage",
-      "translation": "landscape"
-    },
-    {
-      "word": "nuageux",
-      "translation": "cloudy"
-    },
-    {
-      "word": "pluvieux",
-      "translation": "rainy"
-    },
-    {
-      "word": "ensoleillé",
-      "translation": "sunny"
-    },
-    {
-      "word": "neigeux",
-      "translation": "snowy"
-    },
-    {
-      "word": "orage",
-      "translation": "thunderstorm"
-    },
-    {
-      "word": "éclair",
-      "translation": "lightning"
-    },
-    {
-      "word": "tempête",
-      "translation": "storm"
-    },
-    {
-      "word": "brume",
-      "translation": "fog"
-    },
-    {
-      "word": "arc-en-ciel",
-      "translation": "rainbow"
-    },
-    {
-      "word": "tornade",
-      "translation": "tornado"
-    },
-    {
-      "word": "avalanche",
-      "translation": "avalanche"
-    }
-  ]
-}
+{"words":[
+ {
+  "word": "oui",
+  "translation": "yes",
+  "category": "adjective"
+ },
+ {
+  "word": "foyer",
+  "translation": "lobby",
+  "category": "noun"
+ },
+ {
+  "word": "ecole",
+  "translation": "school",
+  "category": "noun"
+ },
+ {
+  "word": "débrouiller",
+  "translation": "untangle",
+  "category": "verb"
+ },
+ {
+  "word": "rouge",
+  "translation": "red",
+  "category": "colour"
+ },
+ {
+  "word": "risque",
+  "translation": "risk",
+  "category": "noun"
+ },
+ {
+  "word": "bienvenue",
+  "translation": "welcome",
+  "category": "greeting"
+ },
+ {
+  "word": "oiseau",
+  "translation": "bird",
+  "category": "noun"
+ },
+ {
+  "word": "esquive",
+  "translation": "evasion",
+  "category": "noun"
+ },
+ {
+  "word": "lit",
+  "translation": "bed",
+  "category": "noun"
+ },
+ {
+  "word": "artiste",
+  "translation": "artist",
+  "category": "noun"
+ },
+ {
+  "word": "mouche",
+  "translation": "fly",
+  "category": "insect"
+ },
+ {
+  "word": "merci",
+  "translation": "thanks",
+  "category": "greeting"
+ },
+ {
+  "word": "doute",
+  "translation": "doubt",
+  "category": "noun"
+ },
+ {
+  "word": "chien",
+  "translation": "dog",
+  "category": "noun"
+ },
+ {
+  "word": "salut",
+  "translation": "hi",
+  "category": "greeting"
+ },
+ {
+  "word": "chat",
+  "translation": "cat",
+  "category": "animal"
+ },
+ {
+  "word": "jacquier",
+  "translation": "heather",
+  "category": "plant"
+ },
+ {
+  "word": "bonjour",
+  "translation": "hello",
+  "category": "greeting"
+ },
+ {
+  "word": "domaine",
+  "translation": "domain",
+  "category": "noun"
+ },
+ {
+  "word": "balai",
+  "translation": "broom",
+  "category": "cleaning"
+ },
+ {
+  "word": "blouse",
+  "translation": "shirt",
+  "category": "clothing"
+ },
+ {
+  "word": "noir",
+  "translation": "black",
+  "category": "color"
+ },
+ {
+  "word": "déchirer",
+  "translation": "rip",
+  "category": "verb"
+ },
+ {
+  "word": "écrire",
+  "translation": "write",
+  "category": "verb"
+ },
+ {
+  "word": "vigile",
+  "translation": "watchman",
+  "category": "noun"
+ },
+ {
+  "word": "entêté",
+  "translation": "stubborn",
+  "category": "adjective"
+ },
+ {
+  "word": "chic",
+  "translation": "stylish",
+  "category": "adjective"
+ },
+ {
+  "word": "avoir",
+  "translation": "have",
+  "category": "verb"
+ },
+ {
+  "word": "bonbon",
+  "translation": "sweet",
+  "category": "food"
+ },
+ {
+  "word": "départ",
+  "translation": "departure",
+  "category": "noun"
+ },
+ {
+  "word": "fleur",
+  "translation": "flower",
+  "category": "noun"
+ },
+ {
+  "word": "bouche",
+  "translation": "mouth",
+  "category": "noun"
+ },
+ {
+  "word": "dégringolade",
+  "translation": "plunge",
+  "category": "noun"
+ },
+ {
+  "word": "amour",
+  "translation": "love",
+  "category": "noun"
+ },
+ {
+  "word": "livre",
+  "translation": "book",
+  "category": "noun"
+ },
+ {
+  "word": "loup",
+  "translation": "wolf",
+  "category": "animal"
+ },
+ {
+  "word": "nécessaire",
+  "translation": "necessary",
+  "category": "adjective"
+ },
+ {
+  "word": "boire",
+  "translation": "drink",
+  "category": "verb"
+ },
+ {
+  "word": "entrepreneur",
+  "translation": "entrepreneur",
+  "category": "business"
+ },
+ {
+  "word": "entrer",
+  "translation": "enter",
+  "category": "verb"
+ },
+ {
+  "word": "dépanner",
+  "translation": "repair",
+  "category": "verb"
+ },
+ {
+  "word": "manger",
+  "translation": "eat",
+  "category": "verb"
+ },
+ {
+  "word": "bourgeonner",
+  "translation": "bud",
+  "category": "verb"
+ },
+ {
+  "word": "voiture",
+  "translation": "car",
+  "category": "noun"
+ },
+ {
+  "word": "secours",
+  "translation": "aid",
+  "category": "noun"
+ },
+ {
+  "word": "très",
+  "translation": "very",
+  "category": "adjective"
+ },
+ {
+  "word": "bouquet",
+  "translation": "bunch",
+  "category": "noun"
+ },
+ {
+  "word": "bouillir",
+  "translation": "boil",
+  "category": "verb"
+ },
+ {
+  "word": "souhaiter",
+  "translation": "wish",
+  "category": "verb"
+ },
+ {
+  "word": "doigt",
+  "translation": "finger",
+  "category": "bodypart"
+ },
+ {
+  "word": "paix",
+  "translation": "peace",
+  "category": "noun"
+ },
+ {
+  "word": "équité",
+  "translation": "equity",
+  "category": "justice"
+ },
+ {
+  "word": "tâche",
+  "translation": "task",
+  "category": "noun"
+ },
+ {
+  "word": "souffler",
+  "translation": "breathe",
+  "category": "verb."
+ },
+ {
+  "word": "mensonge",
+  "translation": "lie",
+  "category": "noun"
+ },
+ {
+  "word": "éviter",
+  "translation": "avoid",
+  "category": "verb"
+ },
+ {
+  "word": "coucou",
+  "translation": "hello",
+  "category": "greeting"
+ },
+ {
+  "word": "bereft",
+  "translation": "deprived",
+  "category": "adjective"
+ },
+ {
+  "word": "château",
+  "translation": "castle",
+  "category": "structure"
+ },
+ {
+  "word": "roi",
+  "translation": "king",
+  "category": "noun"
+ },
+ {
+  "word": "souhait",
+  "translation": "wish",
+  "category": "noun"
+ },
+ {
+  "word": "foule",
+  "translation": "crowd",
+  "category": "noun"
+ },
+ {
+  "word": "délicat",
+  "translation": "delicate",
+  "category": "adjective"
+ },
+ {
+  "word": "espoir",
+  "translation": "hope",
+  "category": "noun"
+ },
+ {
+  "word": "accueillir",
+  "translation": "welcome",
+  "category": "verb"
+ },
+ {
+  "word": "amusement",
+  "translation": "fun",
+  "category": "noun"
+ },
+ {
+  "word": "lune",
+  "translation": "moon",
+  "category": "object"
+ },
+ {
+  "word": "froid",
+  "translation": "cold",
+  "category": "adjective"
+ },
+ {
+  "word": "couper",
+  "translation": "cut",
+  "category": "verb"
+ },
+ {
+  "word": "beau",
+  "translation": "beautiful",
+  "category": "adjective"
+ },
+ {
+  "word": "maison",
+  "translation": "house",
+  "category": "noun"
+ },
+ {
+  "word": "voir",
+  "translation": "see",
+  "category": "verb"
+ },
+ {
+  "word": "déjà",
+  "translation": "already",
+  "category": "adverb"
+ },
+ {
+  "word": "doux",
+  "translation": "sweet",
+  "category": "adjective"
+ },
+ {
+  "word": "esclave",
+  "translation": "slave",
+  "category": "noun"
+ },
+ {
+  "word": "cuisiner",
+  "translation": "cook",
+  "category": "verb"
+ },
+ {
+  "word": "porte",
+  "translation": "door",
+  "category": "noun"
+ },
+ {
+  "word": "enterrer",
+  "translation": "bury",
+  "category": "verb"
+ },
+ {
+  "word": "délicieux",
+  "translation": "delicious",
+  "category": "adjective"
+ },
+ {
+  "word": "vin",
+  "translation": "wine",
+  "category": "drink"
+ },
+ {
+  "word": "joie",
+  "translation": "joy",
+  "category": "feeling"
+ },
+ {
+  "word": "pêche",
+  "translation": "fishing",
+  "category": "activity"
+ },
+ {
+  "word": "rapport",
+  "translation": "report",
+  "category": "noun"
+ },
+ {
+  "word": "mauvais",
+  "translation": "bad",
+  "category": "adjective"
+ },
+ {
+  "word": "ombre",
+  "translation": "shadow",
+  "category": "noun"
+ },
+ {
+  "word": "chou",
+  "translation": "cabbage",
+  "category": "vegetable"
+ },
+ {
+  "word": "enfin",
+  "translation": "finally",
+  "category": "adverb"
+ },
+ {
+  "word": "cerise",
+  "translation": "cherry",
+  "category": "fruit"
+ },
+ {
+  "word": "saumon",
+  "translation": "salmon",
+  "category": "fish"
+ },
+ {
+  "word": "aboiement",
+  "translation": "barking",
+  "category": "noise"
+ },
+ {
+  "word": "bain",
+  "translation": "bath",
+  "category": "noun"
+ },
+ {
+  "word": "fenêtre",
+  "translation": "window",
+  "category": "noun"
+ },
+ {
+  "word": "pur",
+  "translation": "pure",
+  "category": "adjective"
+ },
+ {
+  "word": "bien",
+  "translation": "well",
+  "category": "adverb"
+ },
+ {
+  "word": "plage",
+  "translation": "beach",
+  "category": "noun"
+ },
+ {
+  "word": "feuille",
+  "translation": "sheet",
+  "category": "noun"
+ },
+ {
+  "word": "louche",
+  "translation": "suspicious",
+  "category": "adjective"
+ },
+ {
+  "word": "être",
+  "translation": "be",
+  "category": "verb"
+ },
+ {
+  "word": "escalier",
+  "translation": "staircase",
+  "category": "noun"
+ },
+ {
+  "word": "assoupir",
+  "translation": "doze",
+  "category": "verb"
+ },
+ {
+  "word": "écriture",
+  "translation": "writing",
+  "category": "noun"
+ },
+ {
+  "word": "ennui",
+  "translation": "tedium",
+  "category": "noun"
+ },
+ {
+  "word": "chaise",
+  "translation": "chair",
+  "category": "noun"
+ },
+ {
+  "word": "éclat",
+  "translation": "glimmer",
+  "category": "noun"
+ },
+ {
+  "word": "laissez",
+  "translation": "faire",
+  "category": "letgo"
+ },
+ {
+  "word": "pomme",
+  "translation": "apple",
+  "category": "fruit"
+ },
+ {
+  "word": "au revoir",
+  "translation": "bye",
+  "category": "greeting"
+ },
+ {
+  "word": "courier",
+  "translation": "messenger",
+  "category": "noun"
+ },
+ {
+  "word": "voler",
+  "translation": "fly",
+  "category": "verb"
+ },
+ {
+  "word": "chocolat",
+  "translation": "chocolate",
+  "category": "food"
+ },
+ {
+  "word": "poisson",
+  "translation": "fish",
+  "category": "noun"
+ },
+ {
+  "word": "café",
+  "translation": "coffee",
+  "category": "drink"
+ },
+ {
+  "word": "propre",
+  "translation": "clean",
+  "category": "adjective"
+ },
+ {
+  "word": "panier",
+  "translation": "basket",
+  "category": "noun"
+ },
+ {
+  "word": "droit",
+  "translation": "right",
+  "category": "noun"
+ },
+ {
+  "word": "sac",
+  "translation": "bag",
+  "category": "noun"
+ },
+ {
+  "word": "école",
+  "translation": "school",
+  "category": "noun"
+ },
+ {
+  "word": "légume",
+  "translation": "vegetable",
+  "category": "noun"
+ },
+ {
+  "word": "couverture",
+  "translation": "duvet",
+  "category": "bedding"
+ },
+ {
+  "word": "croissant",
+  "translation": "crescent",
+  "category": "food"
+ },
+ {
+  "word": "français",
+  "translation": "french",
+  "category": "language"
+ },
+ {
+  "word": "donne",
+  "translation": "gives",
+  "category": "verb"
+ },
+ {
+  "word": "étreindre",
+  "translation": "embrace",
+  "category": "verb"
+ },
+ {
+  "word": "fleurs",
+  "translation": "flowers",
+  "category": "noun"
+ },
+ {
+  "word": "accord",
+  "translation": "agreement",
+  "category": "noun"
+ },
+ {
+  "word": "jouer",
+  "translation": "play",
+  "category": "verb"
+ },
+ {
+  "word": "savoir",
+  "translation": "know",
+  "category": "verb"
+ },
+ {
+  "word": "toile",
+  "translation": "canvas",
+  "category": "noun"
+ },
+ {
+  "word": "voilà",
+  "translation": "here",
+  "category": "interjection"
+ },
+ {
+  "word": "accoucher",
+  "translation": "deliver",
+  "category": "verb"
+ },
+ {
+  "word": "éclair",
+  "translation": "lightning",
+  "category": "noun"
+ },
+ {
+  "word": "célèbre",
+  "translation": "famous",
+  "category": "adjective"
+ },
+ {
+  "word": "élite",
+  "translation": "elite",
+  "category": "adjective"
+ },
+ {
+  "word": "abeille",
+  "translation": "bee",
+  "category": "insect"
+ },
+ {
+  "word": "dénicher",
+  "translation": "trackdown",
+  "category": "verb"
+ },
+ {
+  "word": "billet",
+  "translation": "ticket",
+  "category": "noun"
+ },
+ {
+  "word": "accordion",
+  "translation": "accordion",
+  "category": "instrument"
+ },
+ {
+  "word": "soumettre",
+  "translation": "submit",
+  "category": "verb"
+ },
+ {
+  "word": "neuf",
+  "translation": "nine",
+  "category": "number"
+ },
+ {
+  "word": "baguette",
+  "translation": "stick",
+  "category": "food"
+ },
+ {
+  "word": "unisexe",
+  "translation": "unisex",
+  "category": "adjective"
+ },
+ {
+  "word": "oisillon",
+  "translation": "chick",
+  "category": "animal"
+ },
+ {
+  "word": "l'oiseau",
+  "translation": "bird",
+  "category": "animal"
+ },
+ {
+  "word": "été",
+  "translation": "summer",
+  "category": "season"
+ },
+ {
+  "word": "tout",
+  "translation": "all",
+  "category": "adverb"
+ },
+ {
+  "word": "bateau",
+  "translation": "boat",
+  "category": "noun"
+ },
+ {
+  "word": "faire",
+  "translation": "do",
+  "category": "verb"
+ },
+ {
+  "word": "appeler",
+  "translation": "call",
+  "category": "verb"
+ },
+ {
+  "word": "doucement",
+  "translation": "softly",
+  "category": "adverb"
+ },
+ {
+  "word": "baiser",
+  "translation": "kiss",
+  "category": "verb"
+ },
+ {
+  "word": "accorder",
+  "translation": "allow",
+  "category": "verb"
+ },
+ {
+  "word": "cendre",
+  "translation": "ash",
+  "category": "noun"
+ },
+ {
+  "word": "lieu",
+  "translation": "place",
+  "category": "noun"
+ },
+ {
+  "word": "élève",
+  "translation": "pupil",
+  "category": "noun"
+ },
+ {
+  "word": "gâteau",
+  "translation": "cake",
+  "category": "food"
+ },
+ {
+  "word": "acheminer",
+  "translation": "route",
+  "category": "verb"
+ },
+ {
+  "word": "entendu",
+  "translation": "heard",
+  "category": "verb"
+ },
+ {
+  "word": "tricoter",
+  "translation": "knit",
+  "category": "verb"
+ },
+ {
+  "word": "torche",
+  "translation": "torch",
+  "category": "object"
+ },
+ {
+  "word": "mange",
+  "translation": "eat",
+  "category": "verb"
+ },
+ {
+  "word": "piton",
+  "translation": "piton",
+  "category": "climbing"
+ },
+ {
+  "word": "grâce",
+  "translation": "grace",
+  "category": "noun"
+ },
+ {
+  "word": "triste",
+  "translation": "sad",
+  "category": "adjective"
+ },
+ {
+  "word": "crème",
+  "translation": "cream",
+  "category": "food"
+ },
+ {
+  "word": "jetée",
+  "translation": "pier",
+  "category": "noun"
+ },
+ {
+  "word": "debarrasser",
+  "translation": "rid",
+  "category": "verb"
+ },
+ {
+  "word": "verglas",
+  "translation": "frost",
+  "category": "noun"
+ },
+ {
+  "word": "travailler",
+  "translation": "work",
+  "category": "verb"
+ },
+ {
+  "word": "soleil",
+  "translation": "sun",
+  "category": "noun"
+ },
+ {
+  "word": "chapeau",
+  "translation": "hat",
+  "category": "clothes"
+ },
+ {
+  "word": "quatre",
+  "translation": "four",
+  "category": "number"
+ },
+ {
+  "word": "développer",
+  "translation": "develop",
+  "category": "verb"
+ },
+ {
+  "word": "accepter",
+  "translation": "accept",
+  "category": "verb"
+ },
+ {
+  "word": "baignoire",
+  "translation": "bathtub",
+  "category": "noun"
+ },
+ {
+  "word": "enfant",
+  "translation": "child",
+  "category": "noun"
+ },
+ {
+  "word": "ravir",
+  "translation": "delight",
+  "category": "verb"
+ },
+ {
+  "word": "volition",
+  "translation": "will",
+  "category": "noun"
+ },
+ {
+  "word": "chaleur",
+  "translation": "heat",
+  "category": "noun"
+ },
+ {
+  "word": "couler",
+  "translation": "sink",
+  "category": "verb"
+ },
+ {
+  "word": "courir",
+  "translation": "run",
+  "category": "verb"
+ },
+ {
+  "word": "jamais",
+  "translation": "never",
+  "category": "adverb"
+ },
+ {
+  "word": "coeur",
+  "translation": "heart",
+  "category": "noun"
+ },
+ {
+  "word": "ancien",
+  "translation": "ancient",
+  "category": "adjective"
+ },
+ {
+  "word": "hôpital",
+  "translation": "hospital",
+  "category": "noun"
+ },
+ {
+  "word": "débrouillard",
+  "translation": "resourceful",
+  "category": "adjective"
+ },
+ {
+  "word": "voulez",
+  "translation": "want",
+  "category": "verb"
+ },
+ {
+  "word": "arrivée",
+  "translation": "arrival",
+  "category": "noun"
+ },
+ {
+  "word": "entendre",
+  "translation": "hear",
+  "category": "verb"
+ },
+ {
+  "word": "bébé",
+  "translation": "baby",
+  "category": "noun"
+ },
+ {
+  "word": "eau",
+  "translation": "water",
+  "category": "noun"
+ },
+ {
+  "word": "hôtel",
+  "translation": "hotel",
+  "category": "noun"
+ },
+ {
+  "word": "réglage",
+  "translation": "setting",
+  "category": "noun"
+ },
+ {
+  "word": "entente",
+  "translation": "agreement",
+  "category": "noun"
+ },
+ {
+  "word": "coup",
+  "translation": "strike",
+  "category": "verb"
+ },
+ {
+  "word": "vite",
+  "translation": "fast",
+  "category": "adjective"
+ },
+ {
+  "word": "crêpe",
+  "translation": "pancake",
+  "category": "food"
+ },
+ {
+  "word": "attendre",
+  "translation": "await",
+  "category": "verb"
+ },
+ {
+  "word": "assurer",
+  "translation": "ensure",
+  "category": "verb"
+ },
+ {
+  "word": "lettre",
+  "translation": "letter",
+  "category": "noun"
+ },
+ {
+  "word": "décoller",
+  "translation": "takeoff",
+  "category": "verb"
+ },
+ {
+  "word": "monde",
+  "translation": "world",
+  "category": "noun."
+ },
+ {
+  "word": "vrai",
+  "translation": "true",
+  "category": "adjective"
+ },
+ {
+  "word": "temps",
+  "translation": "time",
+  "category": "noun"
+ },
+ {
+  "word": "désert",
+  "translation": "desert",
+  "category": "noun"
+ },
+ {
+  "word": "début",
+  "translation": "start",
+  "category": "verb"
+ },
+ {
+  "word": "bienvenu",
+  "translation": "welcome",
+  "category": "greeting"
+ },
+ {
+  "word": "jardin",
+  "translation": "garden",
+  "category": "noun"
+ },
+ {
+  "word": "ami",
+  "translation": "friend",
+  "category": "noun"
+ },
+ {
+  "word": "déformation",
+  "translation": "distortion",
+  "category": "noun"
+ },
+ {
+  "word": "lumière",
+  "translation": "light",
+  "category": "noun"
+ },
+ {
+  "word": "écharpe",
+  "translation": "scarf",
+  "category": "clothing"
+ },
+ {
+  "word": "goudronner",
+  "translation": "tar",
+  "category": "verb"
+ },
+ {
+  "word": "machine",
+  "translation": "machine",
+  "category": "noun"
+ },
+ {
+  "word": "velours",
+  "translation": "velvet",
+  "category": "fabric"
+ },
+ {
+  "word": "jeter",
+  "translation": "toss",
+  "category": "verb"
+ },
+ {
+  "word": "marché",
+  "translation": "market",
+  "category": "noun"
+ },
+ {
+  "word": "chaud",
+  "translation": "hot",
+  "category": "adjective"
+ },
+ {
+  "word": "toujours",
+  "translation": "always",
+  "category": "adverb"
+ },
+ {
+  "word": "accueil",
+  "translation": "welcome",
+  "category": "noun"
+ },
+ {
+  "word": "cérémonie",
+  "translation": "ceremony",
+  "category": "ritual"
+ },
+ {
+  "word": "culture",
+  "translation": "culture",
+  "category": "noun"
+ },
+ {
+  "word": "baume",
+  "translation": "balm",
+  "category": "care"
+ },
+ {
+  "word": "conseil",
+  "translation": "advice",
+  "category": "noun"
+ },
+ {
+  "word": "mélange",
+  "translation": "mixture",
+  "category": "noun"
+ },
+ {
+  "word": "puissance",
+  "translation": "power",
+  "category": "noun."
+ },
+ {
+  "word": "cernes",
+  "translation": "darkcircles",
+  "category": "facialsignofaging"
+ },
+ {
+  "word": "étang",
+  "translation": "pond",
+  "category": "noun"
+ },
+ {
+  "word": "clair",
+  "translation": "clear",
+  "category": "adjective"
+ },
+ {
+  "word": "television",
+  "translation": "television",
+  "category": "electronics"
+ },
+ {
+  "word": "oeuf",
+  "translation": "egg",
+  "category": "food"
+ },
+ {
+  "word": "bouleau",
+  "translation": "birch",
+  "category": "tree"
+ },
+ {
+  "word": "forêt",
+  "translation": "forest",
+  "category": "noun"
+ },
+ {
+  "word": "déménagement",
+  "translation": "move",
+  "category": "noun"
+ },
+ {
+  "word": "blanc",
+  "translation": "white",
+  "category": "adjective"
+ },
+ {
+  "word": "l'état",
+  "translation": "state",
+  "category": "noun"
+ },
+ {
+  "word": "plâtre",
+  "translation": "plaster",
+  "category": "noun"
+ },
+ {
+  "word": "désormais",
+  "translation": "henceforth",
+  "category": "adverb"
+ },
+ {
+  "word": "attention",
+  "translation": "attention",
+  "category": "noun"
+ },
+ {
+  "word": "coq",
+  "translation": "rooster",
+  "category": "animal"
+ },
+ {
+  "word": "bouillon",
+  "translation": "broth",
+  "category": "food"
+ },
+ {
+  "word": "égalité",
+  "translation": "equality",
+  "category": "noun"
+ },
+ {
+  "word": "étanger",
+  "translation": "stranger",
+  "category": "noun"
+ },
+ {
+  "word": "pardonner",
+  "translation": "forgive",
+  "category": "verb"
+ },
+ {
+  "word": "roue",
+  "translation": "wheel",
+  "category": "noun"
+ },
+ {
+  "word": "canard",
+  "translation": "duck",
+  "category": "noun"
+ },
+ {
+  "word": "corps",
+  "translation": "body",
+  "category": "noun"
+ },
+ {
+  "word": "courage",
+  "translation": "bravery",
+  "category": "emotion"
+ },
+ {
+  "word": "héritage",
+  "translation": "inheritance",
+  "category": "noun"
+ },
+ {
+  "word": "prénom",
+  "translation": "forename",
+  "category": "noun"
+ },
+ {
+  "word": "jurer",
+  "translation": "swear",
+  "category": "verb"
+ },
+ {
+  "word": "séjourner",
+  "translation": "stay",
+  "category": "verb."
+ },
+ {
+  "word": "à",
+  "translation": "to",
+  "category": "preposition"
+ },
+ {
+  "word": "poulet",
+  "translation": "chicken",
+  "category": "noun"
+ },
+ {
+  "word": "formidable",
+  "translation": "amazing",
+  "category": "adjective"
+ },
+ {
+  "word": "seul",
+  "translation": "alone",
+  "category": "adjective"
+ },
+ {
+  "word": "voyage",
+  "translation": "travel",
+  "category": "noun"
+ },
+ {
+  "word": "oublier",
+  "translation": "forget",
+  "category": "verb"
+ },
+ {
+  "word": "déguster",
+  "translation": "savor",
+  "category": "verb"
+ },
+ {
+  "word": "mot",
+  "translation": "word",
+  "category": "noun"
+ },
+ {
+  "word": "jaune",
+  "translation": "yellow",
+  "category": "color"
+ },
+ {
+  "word": "céleri",
+  "translation": "celery",
+  "category": "vegetable"
+ },
+ {
+  "word": "sept",
+  "translation": "seven",
+  "category": "number"
+ },
+ {
+  "word": "moi",
+  "translation": "me",
+  "category": "pronoun"
+ },
+ {
+  "word": "mélanger",
+  "translation": "blend",
+  "category": "verb"
+ },
+ {
+  "word": "tête",
+  "translation": "head",
+  "category": "noun"
+ },
+ {
+  "word": "chant",
+  "translation": "sing",
+  "category": "verb"
+ },
+ {
+  "word": "bruschetta",
+  "translation": "toast",
+  "category": "food"
+ },
+ {
+  "word": "noël",
+  "translation": "christmas",
+  "category": "holiday"
+ },
+ {
+  "word": "audace",
+  "translation": "boldness",
+  "category": "noun"
+ },
+ {
+  "word": "brouhaha",
+  "translation": "hubbub",
+  "category": "noun"
+ },
+ {
+  "word": "poupée",
+  "translation": "doll",
+  "category": "noun"
+ },
+ {
+  "word": "menteur",
+  "translation": "liar",
+  "category": "noun"
+ },
+ {
+  "word": "vent",
+  "translation": "wind",
+  "category": "noun"
+ },
+ {
+  "word": "tresse",
+  "translation": "braid",
+  "category": "hairstyle"
+ },
+ {
+  "word": "abattu",
+  "translation": "defeated",
+  "category": "adjective"
+ },
+ {
+  "word": "moulin",
+  "translation": "mill",
+  "category": "structure"
+ },
+ {
+  "word": "étouffée",
+  "translation": "suffocated",
+  "category": "food"
+ },
+ {
+  "word": "douceur",
+  "translation": "sweetness",
+  "category": "noun"
+ },
+ {
+  "word": "culturelle",
+  "translation": "cultural",
+  "category": "adjective"
+ },
+ {
+  "word": "gallic",
+  "translation": "gallic",
+  "category": "adjective"
+ },
+ {
+  "word": "nuage",
+  "translation": "cloud",
+  "category": "noun"
+ },
+ {
+  "word": "bâtir",
+  "translation": "build",
+  "category": "verb"
+ },
+ {
+  "word": "religion",
+  "translation": "faith",
+  "category": "noun"
+ },
+ {
+  "word": "essayer",
+  "translation": "try",
+  "category": "verb"
+ },
+ {
+  "word": "écouter",
+  "translation": "listen",
+  "category": "verb"
+ },
+ {
+  "word": "mention",
+  "translation": "mention",
+  "category": "noun"
+ },
+ {
+  "word": "galette",
+  "translation": "pancake",
+  "category": "food"
+ },
+ {
+  "word": "décor",
+  "translation": "decor",
+  "category": "noun"
+ },
+ {
+  "word": "impossible",
+  "translation": "unattainable",
+  "category": "adjective"
+ },
+ {
+  "word": "sourire",
+  "translation": "smile",
+  "category": "noun"
+ },
+ {
+  "word": "culot",
+  "translation": "socket",
+  "category": "electrical"
+ },
+ {
+  "word": "au",
+  "translation": "revoir",
+  "category": "farewell"
+ },
+ {
+  "word": "barrière",
+  "translation": "barrier",
+  "category": "noun"
+ },
+ {
+  "word": "rigueur",
+  "translation": "strictness",
+  "category": "noun"
+ },
+ {
+  "word": "santé",
+  "translation": "health",
+  "category": "greeting"
+ },
+ {
+  "word": "étudié",
+  "translation": "studied",
+  "category": "verb"
+ },
+ {
+  "word": "jeune",
+  "translation": "young",
+  "category": "adjective"
+ },
+ {
+  "word": "zut",
+  "translation": "oops",
+  "category": "interjection"
+ },
+ {
+  "word": "boutique",
+  "translation": "shop",
+  "category": "noun"
+ },
+ {
+  "word": "univers",
+  "translation": "universe",
+  "category": "noun"
+ },
+ {
+  "word": "tromper",
+  "translation": "deceive",
+  "category": "verb"
+ },
+ {
+  "word": "tricot",
+  "translation": "knitting",
+  "category": "clothing"
+ },
+ {
+  "word": "couleur",
+  "translation": "color",
+  "category": "noun"
+ },
+ {
+  "word": "commode",
+  "translation": "chest",
+  "category": "furniture"
+ },
+ {
+  "word": "frisson",
+  "translation": "thrill",
+  "category": "noun"
+ },
+ {
+  "word": "filet",
+  "translation": "fillet",
+  "category": "fish"
+ },
+ {
+  "word": "mercerie",
+  "translation": "haberdashery",
+  "category": "noun"
+ },
+ {
+  "word": "trembler",
+  "translation": "quiver",
+  "category": "verb"
+ },
+ {
+  "word": "nicotine",
+  "translation": "toxin",
+  "category": "substance"
+ },
+ {
+  "word": "passer",
+  "translation": "pass",
+  "category": "verb"
+ },
+ {
+  "word": "potager",
+  "translation": "kitchen garden",
+  "category": "noun"
+ },
+ {
+  "word": "ciseau",
+  "translation": "scissor",
+  "category": "tool"
+ },
+ {
+  "word": "drapeau",
+  "translation": "flag",
+  "category": "noun"
+ },
+ {
+  "word": "robe",
+  "translation": "dress",
+  "category": "clothing"
+ },
+ {
+  "word": "devenir",
+  "translation": "become",
+  "category": "verb"
+ },
+ {
+  "word": "aller",
+  "translation": "go",
+  "category": "verb"
+ },
+ {
+  "word": "oeillet",
+  "translation": "carnation",
+  "category": "flower"
+ },
+ {
+  "word": "déception",
+  "translation": "disappointment",
+  "category": "noun"
+ },
+ {
+  "word": "balcon",
+  "translation": "balcony",
+  "category": "noun"
+ },
+ {
+  "word": "déjeuner",
+  "translation": "breakfast",
+  "category": "noun"
+ },
+ {
+  "word": "non",
+  "translation": "oui",
+  "category": "negation"
+ },
+ {
+  "word": "cuisine",
+  "translation": "kitchen",
+  "category": "noun"
+ },
+ {
+  "word": "habit",
+  "translation": "clothing",
+  "category": "noun"
+ },
+ {
+  "word": "soigner",
+  "translation": "heal",
+  "category": "verb"
+ },
+ {
+  "word": "heure",
+  "translation": "hour",
+  "category": "time"
+ },
+ {
+  "word": "serpent",
+  "translation": "serpent",
+  "category": "animal"
+ },
+ {
+  "word": "béret",
+  "translation": "beret",
+  "category": "hat"
+ },
+ {
+  "word": "brouillon",
+  "translation": "draft",
+  "category": "noun."
+ },
+ {
+  "word": "percevoir",
+  "translation": "perceive",
+  "category": "verb"
+ },
+ {
+  "word": "valise",
+  "translation": "suitcase",
+  "category": "noun"
+ },
+ {
+  "word": "fin",
+  "translation": "end",
+  "category": "noun"
+ },
+ {
+  "word": "ferme",
+  "translation": "closed",
+  "category": "adjective"
+ },
+ {
+  "word": "c'est",
+  "translation": "that",
+  "category": "interjection"
+ },
+ {
+  "word": "raconteur",
+  "translation": "narrator",
+  "category": "noun"
+ },
+ {
+  "word": "détail",
+  "translation": "detail",
+  "category": "noun"
+ },
+ {
+  "word": "regarder",
+  "translation": "watch",
+  "category": "verb"
+ },
+ {
+  "word": "bise",
+  "translation": "greeting",
+  "category": "noun"
+ },
+ {
+  "word": "mourir",
+  "translation": "die",
+  "category": "verb"
+ },
+ {
+  "word": "finir",
+  "translation": "finish",
+  "category": "verb"
+ },
+ {
+  "word": "mort",
+  "translation": "death",
+  "category": "noun"
+ },
+ {
+  "word": "homme",
+  "translation": "man",
+  "category": "noun"
+ },
+ {
+  "word": "lavabo",
+  "translation": "sink",
+  "category": "noun"
+ },
+ {
+  "word": "feu",
+  "translation": "fire",
+  "category": "noun"
+ },
+ {
+  "word": "noix",
+  "translation": "nuts",
+  "category": "food"
+ },
+ {
+  "word": "aboyer",
+  "translation": "bark",
+  "category": "verb"
+ },
+ {
+  "word": "foie",
+  "translation": "liver",
+  "category": "organ"
+ },
+ {
+  "word": "décolleté",
+  "translation": "cleavage",
+  "category": "clothing"
+ },
+ {
+  "word": "flâner",
+  "translation": "stroll",
+  "category": "verb"
+ },
+ {
+  "word": "fou",
+  "translation": "crazy",
+  "category": "adjective"
+ },
+ {
+  "word": "réveil",
+  "translation": "alarm",
+  "category": "noun"
+ },
+ {
+  "word": "gare",
+  "translation": "station",
+  "category": "noun"
+ },
+ {
+  "word": "profiter",
+  "translation": "enjoy",
+  "category": "verb"
+ },
+ {
+  "word": "île",
+  "translation": "island",
+  "category": "noun"
+ },
+ {
+  "word": "nouveau",
+  "translation": "new",
+  "category": "adjective"
+ },
+ {
+  "word": "façon",
+  "translation": "manner",
+  "category": "noun"
+ },
+ {
+  "word": "tristesse",
+  "translation": "sadness",
+  "category": "emotion"
+ },
+ {
+  "word": "écureuil",
+  "translation": "squirrel",
+  "category": "animal"
+ },
+ {
+  "word": "liqueur",
+  "translation": "liqueur",
+  "category": "drink"
+ },
+ {
+  "word": "banque",
+  "translation": "bank",
+  "category": "noun"
+ },
+ {
+  "word": "baise",
+  "translation": "kiss",
+  "category": "action"
+ },
+ {
+  "word": "gastronomie",
+  "translation": "cuisine",
+  "category": "noun"
+ },
+ {
+  "word": "l'amour",
+  "translation": "love",
+  "category": "noun"
+ },
+ {
+  "word": "dinde",
+  "translation": "turkey",
+  "category": "animal"
+ },
+ {
+  "word": "cher",
+  "translation": "dear",
+  "category": "adjective"
+ },
+ {
+  "word": "ballon",
+  "translation": "balloon",
+  "category": "noun"
+ },
+ {
+  "word": "chatte",
+  "translation": "cat",
+  "category": "noun"
+ },
+ {
+  "word": "vie",
+  "translation": "life",
+  "category": "noun"
+ },
+ {
+  "word": "personne",
+  "translation": "person",
+  "category": "noun"
+ },
+ {
+  "word": "beaucoup",
+  "translation": "many",
+  "category": "adverb"
+ },
+ {
+  "word": "réveiller",
+  "translation": "awaken",
+  "category": "verb"
+ },
+ {
+  "word": "futur",
+  "translation": "future",
+  "category": "verb"
+ },
+ {
+  "word": "hibou",
+  "translation": "owl",
+  "category": "animal"
+ },
+ {
+  "word": "situer",
+  "translation": "locate",
+  "category": "verb"
+ },
+ {
+  "word": "femme",
+  "translation": "woman",
+  "category": "noun"
+ },
+ {
+  "word": "bracelet",
+  "translation": "bracelet",
+  "category": "accessory"
+ },
+ {
+  "word": "acheter",
+  "translation": "buy",
+  "category": "verb"
+ },
+ {
+  "word": "rencontre",
+  "translation": "meeting",
+  "category": "noun"
+ },
+ {
+  "word": "menter",
+  "translation": "think",
+  "category": "verb"
+ },
+ {
+  "word": "famille",
+  "translation": "family",
+  "category": "noun"
+ },
+ {
+  "word": "cueillir",
+  "translation": "pick",
+  "category": "verb"
+ },
+ {
+  "word": "escargot",
+  "translation": "snail",
+  "category": "food"
+ },
+ {
+  "word": "cadeau",
+  "translation": "gift",
+  "category": "noun"
+ },
+ {
+  "word": "boucle",
+  "translation": "loop",
+  "category": "noun"
+ },
+ {
+  "word": "balade",
+  "translation": "walk",
+  "category": "noun"
+ },
+ {
+  "word": "chanson",
+  "translation": "song",
+  "category": "noun"
+ },
+ {
+  "word": "chef",
+  "translation": "cook",
+  "category": "noun"
+ },
+ {
+  "word": "déplacer",
+  "translation": "move",
+  "category": "verb"
+ },
+ {
+  "word": "thé",
+  "translation": "tea",
+  "category": "beverage"
+ },
+ {
+  "word": "éléphant",
+  "translation": "elephant",
+  "category": "animal"
+ },
+ {
+  "word": "assez",
+  "translation": "enough",
+  "category": "adverb"
+ },
+ {
+  "word": "souffle",
+  "translation": "puff",
+  "category": "pastry"
+ },
+ {
+  "word": "ile",
+  "translation": "island",
+  "category": "geography"
+ },
+ {
+  "word": "fille",
+  "translation": "girl",
+  "category": "noun"
+ },
+ {
+  "word": "étendu",
+  "translation": "widespread",
+  "category": "adjective"
+ },
+ {
+  "word": "arbre",
+  "translation": "tree",
+  "category": "noun"
+ },
+ {
+  "word": "souffrance",
+  "translation": "suffering",
+  "category": "noun"
+ },
+ {
+  "word": "interdire",
+  "translation": "forbid",
+  "category": "verb"
+ },
+ {
+  "word": "mignon",
+  "translation": "cute",
+  "category": "adjective"
+ },
+ {
+  "word": "sangloter",
+  "translation": "sob",
+  "category": "verb"
+ },
+ {
+  "word": "pamplemousse",
+  "translation": "grapefruit",
+  "category": "fruit"
+ },
+ {
+  "word": "coucher",
+  "translation": "sleep",
+  "category": "verb"
+ },
+ {
+  "word": "concierge",
+  "translation": "porter",
+  "category": "noun"
+ },
+ {
+  "word": "clou",
+  "translation": "nail",
+  "category": "object"
+ },
+ {
+  "word": "défaillir",
+  "translation": "falter",
+  "category": "verb"
+ },
+ {
+  "word": "lourd",
+  "translation": "heavy",
+  "category": "adjective"
+ },
+ {
+  "word": "baton",
+  "translation": "baton",
+  "category": "object"
+ },
+ {
+  "word": "étage",
+  "translation": "floor",
+  "category": "noun"
+ },
+ {
+  "word": "assouvir",
+  "translation": "satisfy",
+  "category": "verb"
+ },
+ {
+  "word": "chanteuse",
+  "translation": "singer",
+  "category": "noun"
+ },
+ {
+  "word": "bacterie",
+  "translation": "bacteria",
+  "category": "microorganism"
+ },
+ {
+  "word": "parole",
+  "translation": "speech",
+  "category": "noun"
+ },
+ {
+  "word": "dernier",
+  "translation": "last",
+  "category": "adjective"
+ },
+ {
+  "word": "support",
+  "translation": "help",
+  "category": "noun."
+ },
+ {
+  "word": "lampe",
+  "translation": "lamp",
+  "category": "noun"
+ },
+ {
+  "word": "omelette",
+  "translation": "omelet",
+  "category": "food"
+ },
+ {
+  "word": "concordance",
+  "translation": "agreement",
+  "category": "noun"
+ },
+ {
+  "word": "coin",
+  "translation": "coin",
+  "category": "currency"
+ },
+ {
+  "word": "épouse",
+  "translation": "spouse",
+  "category": "noun"
+ },
+ {
+  "word": "élixir",
+  "translation": "elixir",
+  "category": "noun"
+ },
+ {
+  "word": "bande",
+  "translation": "band",
+  "category": "group"
+ },
+ {
+  "word": "balayer",
+  "translation": "sweep",
+  "category": "verb"
+ },
+ {
+  "word": "camion",
+  "translation": "truck",
+  "category": "noun"
+ },
+ {
+  "word": "adieu",
+  "translation": "farewell",
+  "category": "greeting"
+ },
+ {
+  "word": "passé",
+  "translation": "past",
+  "category": "verb"
+ },
+ {
+  "word": "apéritif",
+  "translation": "aperitif",
+  "category": "food"
+ },
+ {
+  "word": "ananas",
+  "translation": "pineapple",
+  "category": "fruit"
+ },
+ {
+  "word": "définir",
+  "translation": "define",
+  "category": "verb"
+ },
+ {
+  "word": "chante",
+  "translation": "sing",
+  "category": "verb"
+ },
+ {
+  "word": "manoir",
+  "translation": "manor",
+  "category": "building"
+ },
+ {
+  "word": "je",
+  "translation": "i",
+  "category": "pronoun"
+ },
+ {
+  "word": "potage",
+  "translation": "soup",
+  "category": "food"
+ },
+ {
+  "word": "libre",
+  "translation": "free",
+  "category": "adjective"
+ },
+ {
+  "word": "réveillon",
+  "translation": "revelry",
+  "category": "holiday"
+ },
+ {
+  "word": "emploi",
+  "translation": "employment",
+  "category": "noun"
+ },
+ {
+  "word": "attirer",
+  "translation": "attract",
+  "category": "verb"
+ },
+ {
+  "word": "assurance",
+  "translation": "insurance",
+  "category": "noun"
+ },
+ {
+  "word": "dément",
+  "translation": "mad",
+  "category": "adj."
+ },
+ {
+  "word": "dépenser",
+  "translation": "spend",
+  "category": "verb"
+ },
+ {
+  "word": "localiser",
+  "translation": "locate",
+  "category": "verb"
+ },
+ {
+  "word": "soupe",
+  "translation": "soup",
+  "category": "food"
+ },
+ {
+  "word": "étalon",
+  "translation": "standard",
+  "category": "noun"
+ },
+ {
+  "word": "merveilleux",
+  "translation": "wonderful",
+  "category": "adjective"
+ },
+ {
+  "word": "dépanneur",
+  "translation": "convenience",
+  "category": "store"
+ },
+ {
+  "word": "aqueduc",
+  "translation": "aqueduct",
+  "category": "structure"
+ },
+ {
+  "word": "pierre",
+  "translation": "stone",
+  "category": "noun"
+ },
+ {
+  "word": "dire",
+  "translation": "say",
+  "category": "verb"
+ },
+ {
+  "word": "mariage",
+  "translation": "marriage",
+  "category": "noun"
+ },
+ {
+  "word": "tour",
+  "translation": "tour",
+  "category": "noun"
+ },
+ {
+  "word": "risqué",
+  "translation": "risky",
+  "category": "adjective"
+ },
+ {
+  "word": "arrêter",
+  "translation": "stop",
+  "category": "verb"
+ },
+ {
+  "word": "atelier",
+  "translation": "workshop",
+  "category": "noun"
+ },
+ {
+  "word": "pot",
+  "translation": "pan",
+  "category": "kitchen"
+ },
+ {
+  "word": "mi",
+  "translation": "me",
+  "category": "pronoun"
+ },
+ {
+  "word": "azur",
+  "translation": "azure",
+  "category": "color"
+ },
+ {
+  "word": "boulanger",
+  "translation": "baker",
+  "category": "noun"
+ },
+ {
+  "word": "rentrée",
+  "translation": "backstart",
+  "category": "school"
+ },
+ {
+  "word": "gratuit",
+  "translation": "free",
+  "category": "adjective"
+ },
+ {
+  "word": "berceau",
+  "translation": "cradle",
+  "category": "noun"
+ },
+ {
+  "word": "souple",
+  "translation": "supple",
+  "category": "adjective"
+ },
+ {
+  "word": "flambé",
+  "translation": "flamed",
+  "category": "cooking"
+ },
+ {
+  "word": "arnaque",
+  "translation": "scam",
+  "category": "noun"
+ },
+ {
+  "word": "soucoupe",
+  "translation": "saucer",
+  "category": "noun"
+ },
+ {
+  "word": "épilogue",
+  "translation": "epilogue",
+  "category": "noun"
+ },
+ {
+  "word": "dépêche",
+  "translation": "hasten",
+  "category": "verb"
+ },
+ {
+  "word": "pain",
+  "translation": "pain",
+  "category": "food"
+ },
+ {
+  "word": "événement",
+  "translation": "event",
+  "category": "noun"
+ },
+ {
+  "word": "élan",
+  "translation": "vigor",
+  "category": "noun"
+ },
+ {
+  "word": "errant",
+  "translation": "errant",
+  "category": "adjective"
+ },
+ {
+  "word": "parfum",
+  "translation": "perfume",
+  "category": "noun"
+ },
+ {
+  "word": "paille",
+  "translation": "straw",
+  "category": "noun"
+ },
+ {
+  "word": "bête",
+  "translation": "beast",
+  "category": "animal"
+ },
+ {
+  "word": "délinquance",
+  "translation": "delinquency",
+  "category": "crime"
+ },
+ {
+  "word": "plaisir",
+  "translation": "pleasure",
+  "category": "noun"
+ },
+ {
+  "word": "pardon",
+  "translation": "forgive",
+  "category": "verb"
+ },
+ {
+  "word": "espèce",
+  "translation": "species",
+  "category": "noun"
+ },
+ {
+  "word": "découpage",
+  "translation": "pruning",
+  "category": "verb"
+ },
+ {
+  "word": "jour",
+  "translation": "day",
+  "category": "time"
+ },
+ {
+  "word": "réveillé",
+  "translation": "awakened",
+  "category": "verb"
+ },
+ {
+  "word": "gentil",
+  "translation": "kind",
+  "category": "adjective"
+ },
+ {
+  "word": "aigle",
+  "translation": "eagle",
+  "category": "animal"
+ },
+ {
+  "word": "crèche",
+  "translation": "creche",
+  "category": "noun"
+ },
+ {
+  "word": "dresser",
+  "translation": "dresser",
+  "category": "furniture"
+ },
+ {
+  "word": "dérailler",
+  "translation": "derail",
+  "category": "verb"
+ },
+ {
+  "word": "assistant",
+  "translation": "helper",
+  "category": "job"
+ },
+ {
+  "word": "maître",
+  "translation": "master",
+  "category": "noun"
+ },
+ {
+  "word": "pitou",
+  "translation": "cat",
+  "category": "animal"
+ },
+ {
+  "word": "veau",
+  "translation": "calf",
+  "category": "animal"
+ },
+ {
+  "word": "spirite",
+  "translation": "spirit",
+  "category": "noun"
+ },
+ {
+  "word": "brun",
+  "translation": "brown",
+  "category": "color"
+ },
+ {
+  "word": "alors",
+  "translation": "then",
+  "category": "adverb"
+ },
+ {
+  "word": "travail",
+  "translation": "work",
+  "category": "noun"
+ },
+ {
+  "word": "après",
+  "translation": "after",
+  "category": "adverb"
+ },
+ {
+  "word": "vichyssoise",
+  "translation": "soup",
+  "category": "cuisine"
+ },
+ {
+  "word": "interrogation",
+  "translation": "question",
+  "category": "noun"
+ },
+ {
+  "word": "merveille",
+  "translation": "wonder",
+  "category": "noun"
+ },
+ {
+  "word": "argent",
+  "translation": "money",
+  "category": "noun"
+ },
+ {
+  "word": "étouffer",
+  "translation": "suffocate",
+  "category": "verb"
+ },
+ {
+  "word": "délice",
+  "translation": "delight",
+  "category": "noun"
+ },
+ {
+  "word": "déluge",
+  "translation": "flood",
+  "category": "noun"
+ },
+ {
+  "word": "pluie",
+  "translation": "rain",
+  "category": "noun"
+ },
+ {
+  "word": "reve",
+  "translation": "dream",
+  "category": "noun"
+ },
+ {
+  "word": "désastre",
+  "translation": "disaster",
+  "category": "noun"
+ },
+ {
+  "word": "amitié",
+  "translation": "friendship",
+  "category": "noun"
+ },
+ {
+  "word": "train",
+  "translation": "train",
+  "category": "transportation"
+ },
+ {
+  "word": "joli",
+  "translation": "pretty",
+  "category": "adjective"
+ },
+ {
+  "word": "œuf",
+  "translation": "egg",
+  "category": "food"
+ },
+ {
+  "word": "bâtisse",
+  "translation": "building",
+  "category": "noun"
+ },
+ {
+  "word": "appétit",
+  "translation": "appetite",
+  "category": "noun"
+ },
+ {
+  "word": "est",
+  "translation": "translation",
+  "category": "verb"
+ },
+ {
+  "word": "braise",
+  "translation": "braised",
+  "category": "food"
+ },
+ {
+  "word": "déplacement",
+  "translation": "movement",
+  "category": "noun"
+ },
+ {
+  "word": "grappe",
+  "translation": "cluster",
+  "category": "fruit"
+ },
+ {
+  "word": "lis",
+  "translation": "hear",
+  "category": "verb"
+ },
+ {
+  "word": "ravissement",
+  "translation": "rapture",
+  "category": "emotion"
+ },
+ {
+  "word": "détromper",
+  "translation": "disabuse",
+  "category": "verb"
+ },
+ {
+  "word": "requin",
+  "translation": "shark",
+  "category": "animal"
+ },
+ {
+  "word": "apprendre",
+  "translation": "learn",
+  "category": "verb"
+ },
+ {
+  "word": "exemple : amour",
+  "translation": "love",
+  "category": "noun\n\nfamille"
+ },
+ {
+  "word": "avion",
+  "translation": "plane",
+  "category": "noun"
+ },
+ {
+  "word": "ceci",
+  "translation": "this",
+  "category": "pronoun"
+ },
+ {
+  "word": "brouillard",
+  "translation": "fog",
+  "category": "weather"
+ },
+ {
+  "word": "bâtiment",
+  "translation": "building",
+  "category": "noun"
+ },
+ {
+  "word": "exemple:\nflorissant",
+  "translation": "flourishing",
+  "category": "adjective\n\nrigolo"
+ },
+ {
+  "word": "pays",
+  "translation": "country",
+  "category": "noun"
+ },
+ {
+  "word": "limon",
+  "translation": "lemon",
+  "category": "fruit"
+ },
+ {
+  "word": "ouvrir",
+  "translation": "open",
+  "category": "verb"
+ },
+ {
+  "word": "chacun",
+  "translation": "each",
+  "category": "pronoun"
+ },
+ {
+  "word": "accolade",
+  "translation": "accolade",
+  "category": "noun"
+ },
+ {
+  "word": "gratitude",
+  "translation": "gratitude",
+  "category": "feeling"
+ },
+ {
+  "word": "péage",
+  "translation": "toll",
+  "category": "noun"
+ },
+ {
+  "word": "effrayer",
+  "translation": "frighten",
+  "category": "verb"
+ },
+ {
+  "word": "pâte",
+  "translation": "dough",
+  "category": "food"
+ },
+ {
+  "word": "heureux",
+  "translation": "happy",
+  "category": "adjective"
+ },
+ {
+  "word": "ame",
+  "translation": "soul",
+  "category": "noun"
+ },
+ {
+  "word": "carrousel",
+  "translation": "carousel",
+  "category": "fun"
+ },
+ {
+  "word": "préférence",
+  "translation": "preference",
+  "category": "noun"
+ },
+ {
+  "word": "découvert",
+  "translation": "discovery",
+  "category": "noun"
+ },
+ {
+  "word": "magasin",
+  "translation": "shop",
+  "category": "noun"
+ },
+ {
+  "word": "difficile",
+  "translation": "difficult",
+  "category": "adjective"
+ },
+ {
+  "word": "requête",
+  "translation": "request",
+  "category": "noun"
+ },
+ {
+  "word": "lapin",
+  "translation": "rabbit",
+  "category": "animal"
+ },
+ {
+  "word": "empire",
+  "translation": "empire",
+  "category": "noun"
+ },
+ {
+  "word": "chêne",
+  "translation": "oak",
+  "category": "tree"
+ },
+ {
+  "word": "pouvoir",
+  "translation": "power",
+  "category": "verb"
+ },
+ {
+  "word": "économique",
+  "translation": "economic",
+  "category": "adjective"
+ },
+ {
+  "word": "bénédiction",
+  "translation": "blessing",
+  "category": "noun"
+ },
+ {
+  "word": "charme",
+  "translation": "charm",
+  "category": "noun"
+ },
+ {
+  "word": "couette",
+  "translation": "pillow",
+  "category": "noun"
+ },
+ {
+  "word": "vert",
+  "translation": "green",
+  "category": "color"
+ },
+ {
+  "word": "souci",
+  "translation": "worry",
+  "category": "noun."
+ },
+ {
+  "word": "absence",
+  "translation": "absence",
+  "category": "noun"
+ },
+ {
+  "word": "il",
+  "translation": "it",
+  "category": "pronoun"
+ },
+ {
+  "word": "répit",
+  "translation": "respite",
+  "category": "noun"
+ },
+ {
+  "word": "préserver",
+  "translation": "preserve",
+  "category": "verb"
+ },
+ {
+  "word": "revoir",
+  "translation": "farewell",
+  "category": "conj"
+ },
+ {
+  "word": "moitié",
+  "translation": "half",
+  "category": "noun"
+ },
+ {
+  "word": "dégustation",
+  "translation": "tasting",
+  "category": "noun"
+ },
+ {
+  "word": "lâcher",
+  "translation": "release",
+  "category": "verb"
+ },
+ {
+  "word": "épaule",
+  "translation": "shoulder",
+  "category": "body"
+ },
+ {
+  "word": "parfait",
+  "translation": "perfect",
+  "category": "adjective"
+ },
+ {
+  "word": "cela",
+  "translation": "that",
+  "category": "pronoun"
+ },
+ {
+  "word": "étoile",
+  "translation": "star",
+  "category": "noun"
+ },
+ {
+  "word": "piscine",
+  "translation": "pool",
+  "category": "noun"
+ },
+ {
+  "word": "dessert",
+  "translation": "dessert",
+  "category": "noun"
+ },
+ {
+  "word": "timide",
+  "translation": "shy",
+  "category": "adjective"
+ },
+ {
+  "word": "brûler",
+  "translation": "burn",
+  "category": "verb"
+ },
+ {
+  "word": ":\n\nfeuille",
+  "translation": "leaf",
+  "category": "nature"
+ },
+ {
+  "word": "tous",
+  "translation": "all",
+  "category": "adjective"
+ },
+ {
+  "word": "\"regarder",
+  "translation": "watch",
+  "category": "verb\""
+ },
+ {
+  "word": "croûter",
+  "translation": "toast",
+  "category": "noun"
+ },
+ {
+  "word": "énervé",
+  "translation": "irritated",
+  "category": "adjective"
+ },
+ {
+  "word": "résumé",
+  "translation": "resume",
+  "category": "noun"
+ },
+ {
+  "word": "cache",
+  "translation": "hide",
+  "category": "verb"
+ },
+ {
+  "word": "étude",
+  "translation": "study",
+  "category": "noun"
+ },
+ {
+  "word": "église",
+  "translation": "church",
+  "category": "noun"
+ },
+ {
+  "word": "souffrir",
+  "translation": "suffer",
+  "category": "verb"
+ },
+ {
+  "word": "stoïque",
+  "translation": "stoic",
+  "category": "adjective"
+ },
+ {
+  "word": "cliché",
+  "translation": "stereotype",
+  "category": "noun"
+ },
+ {
+  "word": "lequel",
+  "translation": "which",
+  "category": "pronoun"
+ },
+ {
+  "word": "crevette",
+  "translation": "prawn",
+  "category": "food"
+ },
+ {
+  "word": "agréable",
+  "translation": "pleasant",
+  "category": "adjective"
+ },
+ {
+  "word": "naissance",
+  "translation": "birth",
+  "category": "noun"
+ },
+ {
+  "word": "noisette",
+  "translation": "hazelnut",
+  "category": "nut"
+ },
+ {
+  "word": "automobile",
+  "translation": "car",
+  "category": "transportation"
+ },
+ {
+  "word": "sacré",
+  "translation": "blest",
+  "category": "interjection"
+ },
+ {
+  "word": "euro",
+  "translation": "euro",
+  "category": "currency"
+ },
+ {
+  "word": "masque",
+  "translation": "mask",
+  "category": "noun"
+ },
+ {
+  "word": "pommes",
+  "translation": "apples",
+  "category": "fruit"
+ },
+ {
+  "word": "vivre",
+  "translation": "live",
+  "category": "verb"
+ },
+ {
+  "word": "boucher",
+  "translation": "butcher",
+  "category": "job"
+ },
+ {
+  "word": "pièce",
+  "translation": "piece",
+  "category": "noun"
+ },
+ {
+  "word": "dîner",
+  "translation": "dinner",
+  "category": "noun"
+ },
+ {
+  "word": "pâtisserie",
+  "translation": "pastry",
+  "category": "food"
+ },
+ {
+  "word": "stupéfait",
+  "translation": "astounded",
+  "category": "adjective"
+ },
+ {
+  "word": "grand",
+  "translation": "large",
+  "category": "adjective"
+ },
+ {
+  "word": "tutoyer",
+  "translation": "address",
+  "category": "verb"
+ },
+ {
+  "word": "confiance",
+  "translation": "trust",
+  "category": "noun"
+ },
+ {
+  "word": "bataille",
+  "translation": "battle",
+  "category": "noun"
+ },
+ {
+  "word": "jeu",
+  "translation": "game",
+  "category": "noun"
+ },
+ {
+  "word": "henri",
+  "translation": "henry",
+  "category": "proper noun"
+ },
+ {
+  "word": "but",
+  "translation": "but",
+  "category": "conjunction"
+ },
+ {
+  "word": "agir",
+  "translation": "act",
+  "category": "verb"
+ },
+ {
+  "word": "dégager",
+  "translation": "release",
+  "category": "verb"
+ },
+ {
+  "word": "se débrouiller",
+  "translation": "manage",
+  "category": "verb"
+ },
+ {
+  "word": "déclaration",
+  "translation": "declaration",
+  "category": "noun"
+ },
+ {
+  "word": "présentation",
+  "translation": "presentation",
+  "category": "noun"
+ },
+ {
+  "word": "haïr",
+  "translation": "hate",
+  "category": "verb"
+ },
+ {
+  "word": "garde",
+  "translation": "guard",
+  "category": "noun"
+ },
+ {
+  "word": "aimer",
+  "translation": "love",
+  "category": "verb"
+ },
+ {
+  "word": "coton",
+  "translation": "cotton",
+  "category": "fabric"
+ },
+ {
+  "word": "croquer",
+  "translation": "crunch",
+  "category": "verb"
+ },
+ {
+  "word": "mouchoir",
+  "translation": "handkerchief",
+  "category": "object"
+ },
+ {
+  "word": "brûlure",
+  "translation": "burn",
+  "category": "noun"
+ },
+ {
+  "word": "tomate",
+  "translation": "tomato",
+  "category": "fruit"
+ },
+ {
+  "word": "ance ",
+  "translation": " flagship",
+  "category": "noun"
+ },
+ {
+  "word": "calme",
+  "translation": "calm",
+  "category": "adjective"
+ },
+ {
+  "word": "manteau",
+  "translation": "coat",
+  "category": "clothing"
+ },
+ {
+  "word": "pinceau",
+  "translation": "brush",
+  "category": "noun"
+ },
+ {
+  "word": "tableau",
+  "translation": "board",
+  "category": "noun"
+ },
+ {
+  "word": "étudier",
+  "translation": "study",
+  "category": "verb"
+ },
+ {
+  "word": "miel",
+  "translation": "honey",
+  "category": "food"
+ },
+ {
+  "word": "un",
+  "translation": "one",
+  "category": "number"
+ },
+ {
+  "word": "pire",
+  "translation": "worst",
+  "category": "adjective"
+ },
+ {
+  "word": "hôte",
+  "translation": "host",
+  "category": "noun"
+ },
+ {
+  "word": "démarrer",
+  "translation": "start",
+  "category": "verb"
+ },
+ {
+  "word": "piège",
+  "translation": "trap",
+  "category": "noun"
+ },
+ {
+  "word": "forte",
+  "translation": "strong",
+  "category": "adjective"
+ },
+ {
+  "word": "oeil",
+  "translation": "eye",
+  "category": "noun"
+ },
+ {
+  "word": "cible",
+  "translation": "target",
+  "category": "noun"
+ },
+ {
+  "word": "transmettre",
+  "translation": "transmit",
+  "category": "verb"
+ },
+ {
+  "word": ":\n\nmerci",
+  "translation": "thankful",
+  "category": "greeting"
+ },
+ {
+  "word": "défendre",
+  "translation": "defend",
+  "category": "verbs"
+ },
+ {
+  "word": "visage",
+  "translation": "face",
+  "category": "noun"
+ },
+ {
+  "word": "mangeoire",
+  "translation": "trough",
+  "category": "noun"
+ },
+ {
+  "word": "bleu",
+  "translation": "blue",
+  "category": "color"
+ },
+ {
+  "word": "§ code\n\nbienvenu",
+  "translation": "welcome",
+  "category": "greeting"
+ },
+ {
+  "word": "récit",
+  "translation": "tale",
+  "category": "noun"
+ },
+ {
+  "word": "coupé",
+  "translation": "cut",
+  "category": "verb"
+ },
+ {
+  "word": "spectacle",
+  "translation": "show",
+  "category": "noun"
+ },
+ {
+  "word": "ameliorer",
+  "translation": "improve",
+  "category": "verb"
+ },
+ {
+  "word": "garçon",
+  "translation": "boy",
+  "category": "noun"
+ },
+ {
+  "word": "rat",
+  "translation": "mouse",
+  "category": "animal"
+ },
+ {
+  "word": "épée",
+  "translation": "sword",
+  "category": "noun"
+ },
+ {
+  "word": "lumineux",
+  "translation": "luminous",
+  "category": "adjective"
+ },
+ {
+  "word": "cendres",
+  "translation": "ashes",
+  "category": "noun"
+ },
+ {
+  "word": "là",
+  "translation": "there",
+  "category": "adverb"
+ },
+ {
+  "word": "estampille",
+  "translation": "stamp",
+  "category": "noun"
+ },
+ {
+  "word": "rapporter",
+  "translation": "report",
+  "category": "verb"
+ },
+ {
+  "word": "décliner",
+  "translation": "decline",
+  "category": "verb"
+ },
+ {
+  "word": "rendez",
+  "translation": "vous",
+  "category": "meeting"
+ },
+ {
+  "word": "malade",
+  "translation": "ill",
+  "category": "adjective"
+ },
+ {
+  "word": "folie",
+  "translation": "madness",
+  "category": "noun"
+ },
+ {
+  "word": "bizarre",
+  "translation": "strange",
+  "category": "adjective"
+ },
+ {
+  "word": "découvrir",
+  "translation": "discover",
+  "category": "verb"
+ },
+ {
+  "word": "rouler",
+  "translation": "roll",
+  "category": "verb"
+ },
+ {
+  "word": "chair",
+  "translation": "chair",
+  "category": "noun"
+ },
+ {
+  "word": "louer",
+  "translation": "rent",
+  "category": "verb"
+ },
+ {
+  "word": "échantillon",
+  "translation": "sample",
+  "category": "noun"
+ },
+ {
+  "word": "guichet",
+  "translation": "booth",
+  "category": "noun"
+ },
+ {
+  "word": "citron",
+  "translation": "lemon",
+  "category": "fruit"
+ },
+ {
+  "word": "avant",
+  "translation": "before",
+  "category": "adverb"
+ },
+ {
+  "word": "cheval",
+  "translation": "horse",
+  "category": "animal"
+ },
+ {
+  "word": "secourir",
+  "translation": "rescue",
+  "category": "verb"
+ },
+ {
+  "word": "sang",
+  "translation": "blood",
+  "category": "noun"
+ },
+ {
+  "word": "brise",
+  "translation": "burst",
+  "category": "verb."
+ },
+ {
+  "word": "aide",
+  "translation": "aid",
+  "category": "noun"
+ },
+ {
+  "word": "taille",
+  "translation": "size",
+  "category": "noun"
+ },
+ {
+  "word": "papier",
+  "translation": "paper",
+  "category": "noun"
+ },
+ {
+  "word": "éponge",
+  "translation": "sponge",
+  "category": "noun"
+ },
+ {
+  "word": "l'oeil",
+  "translation": "eye",
+  "category": "bodypart"
+ },
+ {
+  "word": "danse",
+  "translation": "dance",
+  "category": "verb"
+ },
+ {
+  "word": "cou",
+  "translation": "kiss",
+  "category": "verb"
+ },
+ {
+  "word": "nuit",
+  "translation": "night",
+  "category": "time"
+ },
+ {
+  "word": "encourager",
+  "translation": "encourage",
+  "category": "verb"
+ },
+ {
+  "word": "abbé",
+  "translation": "abbot",
+  "category": "noun"
+ },
+ {
+  "word": "carotte",
+  "translation": "carrot",
+  "category": "vegetable"
+ },
+ {
+  "word": "rappeler",
+  "translation": "remind",
+  "category": "verb"
+ },
+ {
+  "word": "touche",
+  "translation": "touch",
+  "category": "noun"
+ },
+ {
+  "word": "verbe",
+  "translation": "verb",
+  "category": "partofspeech"
+ },
+ {
+  "word": "fête",
+  "translation": "party",
+  "category": "celebration"
+ },
+ {
+  "word": "voile",
+  "translation": "sail",
+  "category": "noun"
+ },
+ {
+  "word": "carton",
+  "translation": "cardboard",
+  "category": "noun"
+ },
+ {
+  "word": "essence",
+  "translation": "fuel",
+  "category": "noun"
+ },
+ {
+  "word": "détente",
+  "translation": "relaxation",
+  "category": "noun"
+ },
+ {
+  "word": "désarroi",
+  "translation": "distress",
+  "category": "feeling"
+ },
+ {
+  "word": "cul",
+  "translation": "butt",
+  "category": "body"
+ },
+ {
+  "word": "gorgeous",
+  "translation": "beautiful",
+  "category": "adjective."
+ },
+ {
+  "word": "drôle",
+  "translation": "funny",
+  "category": "adjective"
+ },
+ {
+  "word": "romain",
+  "translation": "roman",
+  "category": "adjective"
+ },
+ {
+  "word": "ampoule",
+  "translation": "bulb",
+  "category": "object"
+ },
+ {
+  "word": "écran",
+  "translation": "screen",
+  "category": "noun"
+ },
+ {
+  "word": "ours",
+  "translation": "bear",
+  "category": "animal."
+ },
+ {
+  "word": "ratatouille",
+  "translation": "stew",
+  "category": "food"
+ },
+ {
+  "word": "aubergine",
+  "translation": "eggplant",
+  "category": "food"
+ },
+ {
+  "word": "barbecue",
+  "translation": "grill",
+  "category": "food"
+ },
+ {
+  "word": "desole",
+  "translation": "sorry",
+  "category": "apology."
+ },
+ {
+  "word": "dissonance",
+  "translation": "conflict",
+  "category": "harmony"
+ },
+ {
+  "word": "l'oeuf",
+  "translation": "egg",
+  "category": "food"
+ },
+ {
+  "word": "résolu",
+  "translation": "resolved",
+  "category": "adjective"
+ },
+ {
+  "word": "gallant",
+  "translation": "gallant",
+  "category": "adjective"
+ },
+ {
+  "word": "déchiffrer",
+  "translation": "decipher",
+  "category": "verb"
+ },
+ {
+  "word": "marche",
+  "translation": "walk",
+  "category": "verb"
+ },
+ {
+  "word": "boeuf",
+  "translation": "beef",
+  "category": "meat"
+ },
+ {
+  "word": "immeuble",
+  "translation": "building",
+  "category": "noun"
+ },
+ {
+  "word": "chanteur",
+  "translation": "singer",
+  "category": "noun"
+ },
+ {
+  "word": "hâte",
+  "translation": "haste",
+  "category": "noun"
+ },
+ {
+  "word": "épine",
+  "translation": "thorn",
+  "category": "noun"
+ },
+ {
+  "word": "abréger",
+  "translation": "abridge",
+  "category": "verb"
+ },
+ {
+  "word": "marque",
+  "translation": "brand",
+  "category": "noun"
+ },
+ {
+  "word": "gaz",
+  "translation": "gas",
+  "category": "noun"
+ },
+ {
+  "word": "assis",
+  "translation": "seated",
+  "category": "adjective"
+ },
+ {
+  "word": "recevoir",
+  "translation": "receive",
+  "category": "verb"
+ },
+ {
+  "word": "croissance",
+  "translation": "growth",
+  "category": "noun"
+ },
+ {
+  "word": "fourchette",
+  "translation": "fork",
+  "category": "utensil"
+ },
+ {
+  "word": "détruire",
+  "translation": "destroy",
+  "category": "verb"
+ },
+ {
+  "word": "masse",
+  "translation": "mass",
+  "category": "noun"
+ },
+ {
+  "word": "patisserie",
+  "translation": "pastry",
+  "category": "food"
+ },
+ {
+  "word": "ballet",
+  "translation": "dance",
+  "category": "activity"
+ },
+ {
+  "word": "providence",
+  "translation": "foresight",
+  "category": "noun"
+ },
+ {
+  "word": "danser",
+  "translation": "dance",
+  "category": "verb"
+ },
+ {
+  "word": "détestable",
+  "translation": "hateful",
+  "category": "adjective"
+ },
+ {
+  "word": "verre",
+  "translation": "glass",
+  "category": "noun"
+ },
+ {
+  "word": "souvenir",
+  "translation": "remembrance",
+  "category": "noun"
+ },
+ {
+  "word": "perdu",
+  "translation": "lost",
+  "category": "adjective."
+ },
+ {
+  "word": "aube",
+  "translation": "dawn",
+  "category": "noun"
+ },
+ {
+  "word": "silhouette",
+  "translation": "silhouette",
+  "category": "noun"
+ },
+ {
+  "word": "stupide",
+  "translation": "stupid",
+  "category": "adjective"
+ },
+ {
+  "word": "cité",
+  "translation": "city",
+  "category": "location"
+ },
+ {
+  "word": "etoile",
+  "translation": "star",
+  "category": "noun"
+ },
+ {
+  "word": "mentir",
+  "translation": "lie",
+  "category": "verb"
+ },
+ {
+  "word": "barbeau",
+  "translation": "catfish",
+  "category": "fish"
+ },
+ {
+  "word": "mon",
+  "translation": "my",
+  "category": "possessive"
+ },
+ {
+  "word": "poule",
+  "translation": "chicken",
+  "category": "animal"
+ },
+ {
+  "word": "midi",
+  "translation": "noon",
+  "category": "time"
+ },
+ {
+  "word": "sauver",
+  "translation": "save",
+  "category": "verb"
+ },
+ {
+  "word": "aérienne",
+  "translation": "aerial",
+  "category": "adjective"
+ },
+ {
+  "word": "souhaite",
+  "translation": "wish",
+  "category": "verb"
+ },
+ {
+  "word": "souhaitez",
+  "translation": "desire",
+  "category": "verb"
+ },
+ {
+  "word": "oiseaux",
+  "translation": "birds",
+  "category": "animal"
+ },
+ {
+  "word": "nous",
+  "translation": "we",
+  "category": "pronoun"
+ },
+ {
+  "word": "corbeille",
+  "translation": "basket",
+  "category": "noun"
+ },
+ {
+  "word": "étincelle",
+  "translation": "spark",
+  "category": "noun"
+ },
+ {
+  "word": "étui",
+  "translation": "case",
+  "category": "noun"
+ },
+ {
+  "word": "déficit",
+  "translation": "deficit",
+  "category": "finance"
+ },
+ {
+  "word": "panneau",
+  "translation": "sign",
+  "category": "noun"
+ },
+ {
+  "word": "mardi",
+  "translation": "tuesday",
+  "category": "day"
+ },
+ {
+  "word": "monstre",
+  "translation": "monster",
+  "category": "noun"
+ },
+ {
+  "word": "spirale",
+  "translation": "spiral",
+  "category": "shape"
+ },
+ {
+  "word": "angoisse",
+  "translation": "anxiety",
+  "category": "feeling"
+ },
+ {
+  "word": "moule",
+  "translation": "mold",
+  "category": "food"
+ },
+ {
+  "word": "vu",
+  "translation": "seen",
+  "category": "verb"
+ },
+ {
+  "word": "classe",
+  "translation": "class",
+  "category": "noun"
+ },
+ {
+  "word": "fouine",
+  "translation": "marten",
+  "category": "animal."
+ },
+ {
+  "word": "tournesol",
+  "translation": "sunflower",
+  "category": "plant"
+ },
+ {
+  "word": "avec",
+  "translation": "with",
+  "category": "preposition"
+ },
+ {
+  "word": "peut",
+  "translation": "can",
+  "category": "verb"
+ },
+ {
+  "word": "écrivain",
+  "translation": "writer",
+  "category": "noun"
+ },
+ {
+  "word": "demande",
+  "translation": "request",
+  "category": "noun"
+ },
+ {
+  "word": "aborde",
+  "translation": "approaches",
+  "category": "verb"
+ },
+ {
+  "word": "nourriture",
+  "translation": "food",
+  "category": "noun"
+ },
+ {
+  "word": "embrasser",
+  "translation": "kiss",
+  "category": "verb"
+ },
+ {
+  "word": "refuge",
+  "translation": "shelter",
+  "category": "noun"
+ },
+ {
+  "word": "étagère",
+  "translation": "shelf",
+  "category": "furniture"
+ },
+ {
+  "word": "dormir",
+  "translation": "sleep",
+  "category": "verb"
+ },
+ {
+  "word": "sol",
+  "translation": "sun",
+  "category": "noun"
+ },
+ {
+  "word": "trouver",
+  "translation": "find",
+  "category": "verb"
+ },
+ {
+  "word": "bisou",
+  "translation": "kiss",
+  "category": "termofendearment"
+ },
+ {
+  "word": "randonnée",
+  "translation": "hike",
+  "category": "activity"
+ },
+ {
+  "word": "fluide",
+  "translation": "fluid",
+  "category": "adjective"
+ },
+ {
+  "word": "casserole",
+  "translation": "casserole",
+  "category": "cookware"
+ },
+ {
+  "word": "déroute",
+  "translation": "retreat",
+  "category": "noun"
+ },
+ {
+  "word": "collègue",
+  "translation": "colleague",
+  "category": "noun"
+ },
+ {
+  "word": "demain",
+  "translation": "tomorrow",
+  "category": "adverb"
+ },
+ {
+  "word": "poser",
+  "translation": "ask",
+  "category": "verb"
+ },
+ {
+  "word": "menton",
+  "translation": "chin",
+  "category": "body"
+ },
+ {
+  "word": "désillusion",
+  "translation": "disillusion",
+  "category": "noun"
+ },
+ {
+  "word": "affreux",
+  "translation": "ugly",
+  "category": "adjective"
+ },
+ {
+  "word": "antenne",
+  "translation": "antenna",
+  "category": "technology"
+ },
+ {
+  "word": "loser",
+  "translation": "loser",
+  "category": "noun"
+ },
+ {
+  "word": "réchauffer",
+  "translation": "warm",
+  "category": "verb"
+ },
+ {
+  "word": "tricher",
+  "translation": "cheat",
+  "category": "verb"
+ },
+ {
+  "word": "coté",
+  "translation": "side",
+  "category": "noun"
+ },
+ {
+  "word": "igloo",
+  "translation": "igloo",
+  "category": "dwelling"
+ },
+ {
+  "word": "bœuf",
+  "translation": "beef",
+  "category": "meat"
+ },
+ {
+  "word": "coureur",
+  "translation": "runner",
+  "category": "noun"
+ },
+ {
+  "word": "teacher",
+  "translation": "instructor",
+  "category": "occupation"
+ },
+ {
+  "word": "naïf",
+  "translation": "naive",
+  "category": "adjective"
+ },
+ {
+  "word": "clairvoyance",
+  "translation": "foresight",
+  "category": "noun"
+ },
+ {
+  "word": "élément",
+  "translation": "element",
+  "category": "noun"
+ },
+ {
+  "word": "conteur",
+  "translation": "narrator",
+  "category": "noun"
+ },
+ {
+  "word": "lumiere",
+  "translation": "light",
+  "category": "noun"
+ },
+ {
+  "word": "trésor",
+  "translation": "treasure",
+  "category": "noun"
+ },
+ {
+  "word": "expliquer",
+  "translation": "explain",
+  "category": "verb"
+ },
+ {
+  "word": "fournir",
+  "translation": "supply",
+  "category": "verb"
+ },
+ {
+  "word": "jalouse",
+  "translation": "jealous",
+  "category": "adjective"
+ },
+ {
+  "word": "lecon",
+  "translation": "lesson",
+  "category": "noun"
+ },
+ {
+  "word": "fillet",
+  "translation": "filet",
+  "category": "fish."
+ },
+ {
+  "word": "trottoir",
+  "translation": "pavement",
+  "category": "noun"
+ },
+ {
+  "word": "bourg",
+  "translation": "town",
+  "category": "place"
+ },
+ {
+  "word": "pruneau",
+  "translation": "prune",
+  "category": "fruit"
+ },
+ {
+  "word": "ris",
+  "translation": "laugh",
+  "category": "verb"
+ },
+ {
+  "word": "besoin",
+  "translation": "need",
+  "category": "noun"
+ },
+ {
+  "word": "macaron",
+  "translation": "cookie",
+  "category": "food"
+ },
+ {
+  "word": "moules",
+  "translation": "mussels",
+  "category": "food"
+ },
+ {
+  "word": "fraternité",
+  "translation": "fraternity",
+  "category": "noun"
+ },
+ {
+  "word": "glace",
+  "translation": "ice",
+  "category": "food"
+ },
+ {
+  "word": "signer",
+  "translation": "sign",
+  "category": "verb"
+ },
+ {
+  "word": "taux",
+  "translation": "rate",
+  "category": "noun"
+ },
+ {
+  "word": "verrue",
+  "translation": "wart",
+  "category": "disease"
+ },
+ {
+  "word": "répondu",
+  "translation": "answered",
+  "category": "verb"
+ },
+ {
+  "word": "patron",
+  "translation": "patronage",
+  "category": "noun"
+ },
+ {
+  "word": "boucler",
+  "translation": "curl",
+  "category": "verb"
+ },
+ {
+  "word": "échec",
+  "translation": "checkmate",
+  "category": "game."
+ },
+ {
+  "word": "brindille",
+  "translation": "twig",
+  "category": "noun"
+ },
+ {
+  "word": "ciseaux",
+  "translation": "scissors",
+  "category": "tools"
+ },
+ {
+  "word": "collage",
+  "translation": "college",
+  "category": "noun"
+ },
+ {
+  "word": "détesté",
+  "translation": "hated",
+  "category": "verb"
+ },
+ {
+  "word": "déviation",
+  "translation": "deviation",
+  "category": "verb"
+ },
+ {
+  "word": "triceratops",
+  "translation": "three",
+  "category": "horned"
+ },
+ {
+  "word": "vache",
+  "translation": "cow",
+  "category": "noun"
+ },
+ {
+  "word": "exemple",
+  "translation": "example",
+  "category": "noun\n\nfigue"
+ },
+ {
+  "word": "maman",
+  "translation": "mom",
+  "category": "noun"
+ },
+ {
+  "word": "digne",
+  "translation": "worthy",
+  "category": "adjective"
+ },
+ {
+  "word": "l’abattoir",
+  "translation": "slaughterhouse",
+  "category": "noun"
+ },
+ {
+  "word": "emporter",
+  "translation": "carry",
+  "category": "verb"
+ },
+ {
+  "word": "blessure",
+  "translation": "wound",
+  "category": "noun"
+ },
+ {
+  "word": "même",
+  "translation": "same",
+  "category": "adjective"
+ },
+ {
+  "word": "fiance",
+  "translation": "fiancee",
+  "category": "gender"
+ },
+ {
+  "word": "alsacien",
+  "translation": "alsatian",
+  "category": "region"
+ },
+ {
+  "word": "piétiner",
+  "translation": "trample",
+  "category": "verb"
+ },
+ {
+  "word": "fraisiers",
+  "translation": "strawberries",
+  "category": "fruit"
+ },
+ {
+  "word": "image",
+  "translation": "picture",
+  "category": "noun"
+ },
+ {
+  "word": "dommage",
+  "translation": "harm",
+  "category": "noun"
+ },
+ {
+  "word": "champignon",
+  "translation": "mushroom",
+  "category": "food"
+ },
+ {
+  "word": "patience",
+  "translation": "patience",
+  "category": "virtue"
+ },
+ {
+  "word": "tranquille",
+  "translation": "calm",
+  "category": "adjective"
+ },
+ {
+  "word": "foret",
+  "translation": "forest",
+  "category": "noun"
+ },
+ {
+  "word": "peloton",
+  "translation": "group",
+  "category": "noun"
+ },
+ {
+  "word": "messe",
+  "translation": "mass",
+  "category": "religion"
+ },
+ {
+  "word": "l'année",
+  "translation": "year",
+  "category": "noun"
+ },
+ {
+  "word": "trop",
+  "translation": "too",
+  "category": "adverb"
+ },
+ {
+  "word": "farce",
+  "translation": "farce",
+  "category": "comedy"
+ },
+ {
+  "word": "chantez",
+  "translation": "sings",
+  "category": "verbs"
+ },
+ {
+  "word": "toilette",
+  "translation": "toilet",
+  "category": "noun"
+ },
+ {
+  "word": "pois",
+  "translation": "peas",
+  "category": "food"
+ },
+ {
+  "word": "coeurs",
+  "translation": "hearts",
+  "category": "bodyparts"
+ },
+ {
+  "word": "perdre",
+  "translation": "lose",
+  "category": "verb"
+ },
+ {
+  "word": "strasbourgeois",
+  "translation": "strasburgian",
+  "category": "noun"
+ },
+ {
+  "word": "élevé",
+  "translation": "raised",
+  "category": "adjective"
+ },
+ {
+  "word": "adorer",
+  "translation": "adore",
+  "category": "verb"
+ },
+ {
+  "word": "mayonnaise",
+  "translation": "sauce",
+  "category": "condiment"
+ },
+ {
+  "word": "abricot",
+  "translation": "apricot",
+  "category": "fruit"
+ },
+ {
+  "word": "royaume",
+  "translation": "kingdom",
+  "category": "noun"
+ },
+ {
+  "word": "déprimé",
+  "translation": "depressed",
+  "category": "adjective"
+ },
+ {
+  "word": "vieux",
+  "translation": "old",
+  "category": "adjective"
+ },
+ {
+  "word": "bas",
+  "translation": "low",
+  "category": "adjective"
+ },
+ {
+  "word": "débarrasser",
+  "translation": "clear",
+  "category": "verb"
+ },
+ {
+  "word": "cauchemar",
+  "translation": "nightmare",
+  "category": "noun"
+ },
+ {
+  "word": "cours",
+  "translation": "course",
+  "category": "verb"
+ },
+ {
+  "word": "fente",
+  "translation": "cleft",
+  "category": "geology"
+ },
+ {
+  "word": "couvre",
+  "translation": "feu",
+  "category": "curfew"
+ },
+ {
+  "word": "négliger",
+  "translation": "neglect",
+  "category": "verb"
+ },
+ {
+  "word": "bouillabaisse",
+  "translation": "stew",
+  "category": "food"
+ },
+ {
+  "word": "célérité",
+  "translation": "expeditiousness",
+  "category": "noun"
+ },
+ {
+  "word": "héberger",
+  "translation": "host",
+  "category": "verb"
+ },
+ {
+  "word": "créer",
+  "translation": "create",
+  "category": "verb"
+ },
+ {
+  "word": "bouleverser",
+  "translation": "upset",
+  "category": "verb"
+ },
+ {
+  "word": "obéir",
+  "translation": "obey",
+  "category": "verb"
+ },
+ {
+  "word": "déverrouiller",
+  "translation": "unlock",
+  "category": "verb"
+ },
+ {
+  "word": "delicat",
+  "translation": "dainty",
+  "category": "adjective"
+ },
+ {
+  "word": "hausse",
+  "translation": "rise",
+  "category": "noun"
+ },
+ {
+  "word": "bourgeoisie",
+  "translation": "upperclass",
+  "category": "noun"
+ },
+ {
+  "word": "baisse",
+  "translation": "decrease",
+  "category": "verb"
+ },
+ {
+  "word": "source",
+  "translation": "origin",
+  "category": "noun"
+ },
+ {
+  "word": "épouvante",
+  "translation": "terror",
+  "category": "noun"
+ },
+ {
+  "word": "recherche",
+  "translation": "search",
+  "category": "noun"
+ },
+ {
+  "word": "marcher",
+  "translation": "walk",
+  "category": "verb"
+ },
+ {
+  "word": "balayage",
+  "translation": "sweeping",
+  "category": "hair"
+ },
+ {
+  "word": "boulangerie",
+  "translation": "bakery",
+  "category": "business"
+ },
+ {
+  "word": "toucher",
+  "translation": "touch",
+  "category": "verb"
+ },
+ {
+  "word": "pied",
+  "translation": "foot",
+  "category": "noun"
+ },
+ {
+  "word": "bâton",
+  "translation": "stick",
+  "category": "object"
+ },
+ {
+  "word": "dépendre",
+  "translation": "depend",
+  "category": "verb"
+ },
+ {
+  "word": "venant",
+  "translation": "coming",
+  "category": "verb"
+ },
+ {
+  "word": "chantier",
+  "translation": "construction",
+  "category": "noun"
+ },
+ {
+  "word": "humidité",
+  "translation": "humidity",
+  "category": "weather"
+ },
+ {
+  "word": "désespoir",
+  "translation": "despair",
+  "category": "noun"
+ },
+ {
+  "word": "ambiance",
+  "translation": "atmosphere",
+  "category": "noun"
+ },
+ {
+  "word": "beret",
+  "translation": "cap",
+  "category": "clothing"
+ },
+ {
+  "word": "cigogne",
+  "translation": "stork",
+  "category": "bird"
+ },
+ {
+  "word": "ville",
+  "translation": "city",
+  "category": "noun"
+ },
+ {
+  "word": "aucun",
+  "translation": "none",
+  "category": "adjective"
+ },
+ {
+  "word": "herbivore",
+  "translation": "vegetarian",
+  "category": "animal"
+ },
+ {
+  "word": "ogre",
+  "translation": "monster",
+  "category": "fantasy"
+ },
+ {
+  "word": "centre",
+  "translation": "center",
+  "category": "location"
+ },
+ {
+  "word": "l'escargot",
+  "translation": "snail",
+  "category": "animal"
+ },
+ {
+  "word": "amiral",
+  "translation": "admiral",
+  "category": "noun"
+ },
+ {
+  "word": "soirée",
+  "translation": "evening",
+  "category": "party"
+ },
+ {
+  "word": "encre",
+  "translation": "ink",
+  "category": "noun"
+ },
+ {
+  "word": "étouffé",
+  "translation": "smothered",
+  "category": "food"
+ },
+ {
+  "word": "entrée",
+  "translation": "entrance",
+  "category": "noun"
+ },
+ {
+  "word": "ça",
+  "translation": "that",
+  "category": "pronoun"
+ },
+ {
+  "word": "métier",
+  "translation": "job",
+  "category": "noun"
+ },
+ {
+  "word": "gnocchi",
+  "translation": "dumpling",
+  "category": "food."
+ },
+ {
+  "word": "ciel",
+  "translation": "sky",
+  "category": "noun"
+ },
+ {
+  "word": "bouchon",
+  "translation": "cork",
+  "category": "noun"
+ },
+ {
+  "word": "soupir",
+  "translation": "sigh",
+  "category": "noun"
+ },
+ {
+  "word": "oeuvre",
+  "translation": "work",
+  "category": "noun"
+ },
+ {
+  "word": "floquet",
+  "translation": "floppy",
+  "category": "disc"
+ },
+ {
+  "word": "détestez",
+  "translation": "loathe",
+  "category": "verb"
+ },
+ {
+  "word": "gratte",
+  "translation": "ciel",
+  "category": "skyscraper"
+ },
+ {
+  "word": "bénéfice",
+  "translation": "benefit",
+  "category": "noun"
+ },
+ {
+  "word": "délivrer",
+  "translation": "deliver",
+  "category": "verb"
+ },
+ {
+  "word": "désirer",
+  "translation": "desire",
+  "category": "verb"
+ },
+ {
+  "word": "marqueur",
+  "translation": "marker",
+  "category": "noun"
+ },
+ {
+  "word": "plat",
+  "translation": "dish",
+  "category": "noun"
+ },
+ {
+  "word": "dérive",
+  "translation": "drift",
+  "category": "verb"
+ },
+ {
+  "word": "déplier",
+  "translation": "unfold",
+  "category": "verb"
+ },
+ {
+  "word": "frolicking",
+  "translation": "frolicking",
+  "category": "activity"
+ },
+ {
+  "word": "cochon",
+  "translation": "pig",
+  "category": "animal"
+ },
+ {
+  "word": "voix",
+  "translation": "voice",
+  "category": "noun"
+ },
+ {
+  "word": "geler",
+  "translation": "freeze",
+  "category": "verb"
+ },
+ {
+  "word": "os",
+  "translation": "mouth",
+  "category": "body part"
+ },
+ {
+  "word": "foudre",
+  "translation": "lightning",
+  "category": "weather"
+ },
+ {
+  "word": "bombe",
+  "translation": "bomb",
+  "category": "noun"
+ },
+ {
+  "word": "maladie",
+  "translation": "illness",
+  "category": "noun"
+ },
+ {
+  "word": "chapitre",
+  "translation": "chapter",
+  "category": "noun"
+ },
+ {
+  "word": "propice",
+  "translation": "favorable",
+  "category": "adjective"
+ },
+ {
+  "word": "volaille",
+  "translation": "poultry",
+  "category": "animals"
+ },
+ {
+  "word": "prononcer",
+  "translation": "pronounce",
+  "category": "verb"
+ },
+ {
+  "word": "volonté",
+  "translation": "will",
+  "category": "noun"
+ },
+ {
+  "word": "sautiller",
+  "translation": "skip",
+  "category": "verb"
+ },
+ {
+  "word": "soigné",
+  "translation": "neat",
+  "category": "adjective"
+ },
+ {
+  "word": "précaution",
+  "translation": "caution",
+  "category": "noun"
+ },
+ {
+  "word": "bibliothèque",
+  "translation": "library",
+  "category": "noun"
+ },
+ {
+  "word": "jaunir",
+  "translation": "rejuvenate",
+  "category": "verb"
+ },
+ {
+  "word": "individu",
+  "translation": "individual",
+  "category": "noun"
+ },
+ {
+  "word": "secouer",
+  "translation": "shake",
+  "category": "verb"
+ },
+ {
+  "word": "étreinte",
+  "translation": "embrace",
+  "category": "noun"
+ },
+ {
+  "word": "dépôt",
+  "translation": "deposit",
+  "category": "noun"
+ },
+ {
+  "word": "ascenseur",
+  "translation": "elevator",
+  "category": "noun"
+ },
+ {
+  "word": "fabriquer",
+  "translation": "make",
+  "category": "verb"
+ },
+ {
+  "word": "coupon",
+  "translation": "voucher",
+  "category": "finance"
+ },
+ {
+  "word": "auto",
+  "translation": "car",
+  "category": "noun"
+ },
+ {
+  "word": "décevoir",
+  "translation": "deceive",
+  "category": "verb"
+ },
+ {
+  "word": "désir",
+  "translation": "desire",
+  "category": "noun"
+ },
+ {
+  "word": "coloriage",
+  "translation": "coloring",
+  "category": "pastime"
+ },
+ {
+  "word": "mouille",
+  "translation": "wet",
+  "category": "adjective"
+ },
+ {
+  "word": "soufflé",
+  "translation": "souffle",
+  "category": "food"
+ },
+ {
+  "word": "cueillette",
+  "translation": "gathering",
+  "category": "noun"
+ },
+ {
+  "word": "s'il",
+  "translation": "vous",
+  "category": "plaît"
+ },
+ {
+  "word": "équipe",
+  "translation": "team",
+  "category": "noun"
+ },
+ {
+  "word": "étouffe",
+  "translation": "stifle",
+  "category": "verb"
+ },
+ {
+  "word": "boule",
+  "translation": "ball",
+  "category": "noun"
+ },
+ {
+  "word": "délai",
+  "translation": "delay",
+  "category": "noun"
+ },
+ {
+  "word": "rebondir",
+  "translation": "bounce",
+  "category": "verb"
+ },
+ {
+  "word": "serveur",
+  "translation": "server",
+  "category": "noun"
+ },
+ {
+  "word": "défi",
+  "translation": "challenge",
+  "category": "noun"
+ },
+ {
+  "word": "menu",
+  "translation": "menu",
+  "category": "gastronomy"
+ },
+ {
+  "word": "ère",
+  "translation": "era",
+  "category": "time"
+ },
+ {
+  "word": "mesure",
+  "translation": "measure",
+  "category": "noun"
+ },
+ {
+  "word": "gris",
+  "translation": "gray",
+  "category": "color"
+ },
+ {
+  "word": "panache",
+  "translation": "flair",
+  "category": "noun"
+ },
+ {
+  "word": "canal",
+  "translation": "canal",
+  "category": "noun"
+ },
+ {
+  "word": "noire",
+  "translation": "black",
+  "category": "adjective"
+ },
+ {
+  "word": "égal",
+  "translation": "equal",
+  "category": "adjective"
+ },
+ {
+  "word": "mouiller",
+  "translation": "wet",
+  "category": "verb"
+ },
+ {
+  "word": "onge",
+  "translation": "dumb",
+  "category": "adjective"
+ },
+ {
+  "word": "infini",
+  "translation": "infinite",
+  "category": "adjective"
+ },
+ {
+  "word": "acteur",
+  "translation": "actor",
+  "category": "noun"
+ },
+ {
+  "word": "bûcheron",
+  "translation": "woodcutter",
+  "category": "occupation"
+ },
+ {
+  "word": "otage",
+  "translation": "hostage",
+  "category": "noun"
+ },
+ {
+  "word": "du",
+  "translation": "you",
+  "category": "pronoun"
+ },
+ {
+  "word": "poubelle",
+  "translation": "bin",
+  "category": "noun."
+ },
+ {
+  "word": "promenade",
+  "translation": "stroll",
+  "category": "noun"
+ },
+ {
+  "word": "levez",
+  "translation": "raise",
+  "category": "verb"
+ },
+ {
+  "word": "menthe",
+  "translation": "mint",
+  "category": "herb"
+ },
+ {
+  "word": "année",
+  "translation": "year",
+  "category": "noun"
+ },
+ {
+  "word": "lundi",
+  "translation": "monday",
+  "category": "day"
+ },
+ {
+  "word": "mille",
+  "translation": "thousand",
+  "category": "numeral"
+ },
+ {
+  "word": "cloche",
+  "translation": "bell",
+  "category": "noun"
+ },
+ {
+  "word": "éternuer",
+  "translation": "sneeze",
+  "category": "verb"
+ },
+ {
+  "word": "fruits",
+  "translation": "fruit",
+  "category": "noun"
+ },
+ {
+  "word": "car",
+  "translation": "auto",
+  "category": "noun"
+ },
+ {
+  "word": "accordeon",
+  "translation": "accordion",
+  "category": "instrument"
+ },
+ {
+  "word": "tarte",
+  "translation": "pie",
+  "category": "food"
+ },
+ {
+  "word": "près",
+  "translation": "near",
+  "category": "adverb"
+ },
+ {
+  "word": "mâcher",
+  "translation": "chew",
+  "category": "verb"
+ },
+ {
+  "word": "chevet",
+  "translation": "bedside",
+  "category": "furniture."
+ },
+ {
+  "word": "repas",
+  "translation": "meal",
+  "category": "noun"
+ },
+ {
+  "word": "chenille",
+  "translation": "caterpillar",
+  "category": "insect"
+ },
+ {
+  "word": "faible",
+  "translation": "weak",
+  "category": "adjective"
+ },
+ {
+  "word": "épicerie",
+  "translation": "grocery",
+  "category": "noun"
+ },
+ {
+  "word": "couché",
+  "translation": "reclined",
+  "category": "adjective"
+ },
+ {
+  "word": "essai",
+  "translation": "attempt",
+  "category": "noun"
+ },
+ {
+  "word": "éguillette",
+  "translation": "garment",
+  "category": "noun"
+ },
+ {
+  "word": "tranche",
+  "translation": "slice",
+  "category": "food"
+ },
+ {
+  "word": "attache",
+  "translation": "fasten",
+  "category": "verb"
+ },
+ {
+  "word": "bon",
+  "translation": "good",
+  "category": "adjective"
+ },
+ {
+  "word": "auberge",
+  "translation": "inn",
+  "category": "noun"
+ }
+]}
