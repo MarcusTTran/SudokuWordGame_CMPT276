@@ -21,8 +21,6 @@ public class Cell {
     private boolean isEditable;
 
     // isCorrect: whether the cell is correct or not
-    private boolean isCorrect;
-
     // language: the language of the cell
     private int language;
 
@@ -34,20 +32,19 @@ public class Cell {
      * @throws IllegalArgumentException if the given language name is invalid
      */
 
-    public Cell(WordPair content, boolean isEditable, boolean isCorrect, int language) {
+    public Cell(WordPair content, boolean isEditable, int language) {
         setContent(content);
         setEditable(isEditable);
-        setCorrect(isCorrect);
         setLanguage(language);
         this.isEmpty = false;
     }
 
     public Cell(Cell cell) {
-        this(cell.getContent(), cell.isEditable(), cell.isCorrect(), cell.getLanguage());
+        this(cell.getContent(), cell.isEditable(), cell.getLanguage());
     }
 
     public Cell(WordPair content, int language) {
-        this(content, true, true, language);
+        this(content, true, language);
     }
 
     public Cell(WordPair content) {
@@ -78,14 +75,6 @@ public class Cell {
 
     public void setEditable(boolean editable) {
         isEditable = editable;
-    }
-
-    public boolean isCorrect() {
-        return isCorrect;
-    }
-
-    public void setCorrect(boolean correct) {
-        isCorrect = correct;
     }
 
     public int getLanguage() {
