@@ -91,10 +91,10 @@ public class WordPairReader {
     // @method getWordPairs
     // @return the list of WordPair objects
     // calls the collectWord method to generate a list of WordPair objects
-    public WordPair[] getWords() throws JSONException {
+    public List<WordPair> getWords() throws JSONException {
         collectWord();
         // Convert the list of WordPair objects to an array of WordPair objects and return it
-        return mWordPairs.toArray(new WordPair[0]);
+        return mWordPairs;
     }
 
 

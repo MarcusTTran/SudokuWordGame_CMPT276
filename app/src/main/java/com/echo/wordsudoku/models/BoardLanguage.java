@@ -33,4 +33,12 @@ public class BoardLanguage {
             throw new IllegalArgumentException("Invalid language name");
         }
     }
+
+    public static boolean isValidLanguage(int language) {
+        return language == ENGLISH || language == FRENCH;
+    }
+
+    public static int defaultLanguage() {
+        return ENGLISH;
+    }
 }

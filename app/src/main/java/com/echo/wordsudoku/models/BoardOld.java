@@ -18,10 +18,17 @@ package com.echo.wordsudoku.models;
      ========================================= BOARD =========================================
 */
 
-public class Board {
+public class BoardOld {
+    // The board is a 2D array of integers which holds the numerical representation of the words
     private int[][] board;
+
+
+    // The solutions is a 2D array of integers which holds the numerical representation of the words in the solution board which is filled correctly (this is defined as a constant)
     private int [][] solutions;
-    private String[][] displayBoard, displayBoard_Solved;
+
+    // The displayBoard is a 2D array of Strings which holds the words to be displayed on the board
+    private String[][] displayBoard;
+    private String [][] displayBoard_Solved;
     private WordPair[] wordPairs;
 
     // This 2D array is a constant which holds the values of the cells which are allowed to be filled.
@@ -47,7 +54,7 @@ public class Board {
 
     // CONSTRUCTOR
     // EFFECT: makes a 2D array list and adds empty string to each location on list
-    public Board(int dim, WordPair[] wordPairs, int board_language, int numToRemove) {
+    public BoardOld(int dim, WordPair[] wordPairs, int board_language, int numToRemove) {
         this.dim = dim;
 
         // TODO : change this part because later on we want to generate a

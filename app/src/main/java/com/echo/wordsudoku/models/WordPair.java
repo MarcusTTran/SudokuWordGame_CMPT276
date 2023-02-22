@@ -60,5 +60,9 @@ public class WordPair {
         }
     }
 
+    public boolean isEqual(WordPair other) {
+        return this.getEnglish().equals(other.getEnglish()) && this.getFrench().equals(other.getFrench());
+    }
+
 
 }
