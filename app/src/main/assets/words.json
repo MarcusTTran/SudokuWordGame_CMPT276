@@ -10,7 +10,7 @@
   "category": "noun"
  },
  {
-  "word": "ecole",
+  "word": "école",
   "translation": "school",
   "category": "noun"
  },
@@ -182,7 +182,7 @@
  {
   "word": "loup",
   "translation": "wolf",
-  "category": "animal"
+  "category": "noun"
  },
  {
   "word": "nécessaire",
@@ -197,7 +197,7 @@
  {
   "word": "entrepreneur",
   "translation": "entrepreneur",
-  "category": "business"
+  "category": "noun"
  },
  {
   "word": "entrer",
@@ -252,7 +252,7 @@
  {
   "word": "doigt",
   "translation": "finger",
-  "category": "bodypart"
+  "category": "noun"
  },
  {
   "word": "paix",
@@ -262,7 +262,7 @@
  {
   "word": "équité",
   "translation": "equity",
-  "category": "justice"
+  "category": "noun"
  },
  {
   "word": "tâche",
@@ -272,7 +272,7 @@
  {
   "word": "souffler",
   "translation": "breathe",
-  "category": "verb."
+  "category": "verb"
  },
  {
   "word": "mensonge",
@@ -286,11 +286,11 @@
  },
  {
   "word": "coucou",
-  "translation": "hello",
-  "category": "greeting"
+  "translation": "cuckoo",
+  "category": "noun"
  },
  {
-  "word": "bereft",
+  "word": "défavorisé",
   "translation": "deprived",
   "category": "adjective"
  },
@@ -351,7 +351,7 @@
  },
  {
   "word": "beau",
-  "translation": "beautiful",
+  "translation": "handsome",
   "category": "adjective"
  },
  {
@@ -526,8 +526,8 @@
  },
  {
   "word": "laissez",
-  "translation": "faire",
-  "category": "letgo"
+  "translation": "let",
+  "category": "verb"
  },
  {
   "word": "pomme",
@@ -836,7 +836,7 @@
  },
  {
   "word": "verglas",
-  "translation": "frost",
+  "translation": "black ice",
   "category": "noun"
  },
  {
@@ -1127,12 +1127,7 @@
  {
   "word": "puissance",
   "translation": "power",
-  "category": "noun."
- },
- {
-  "word": "cernes",
-  "translation": "darkcircles",
-  "category": "facialsignofaging"
+  "category": "noun"
  },
  {
   "word": "étang",
@@ -1335,11 +1330,6 @@
   "category": "verb"
  },
  {
-  "word": "bruschetta",
-  "translation": "toast",
-  "category": "food"
- },
- {
   "word": "noël",
   "translation": "christmas",
   "category": "holiday"
@@ -1415,7 +1405,7 @@
   "category": "verb"
  },
  {
-  "word": "religion",
+  "word": "foi",
   "translation": "faith",
   "category": "noun"
  },
@@ -1543,11 +1533,6 @@
   "word": "trembler",
   "translation": "quiver",
   "category": "verb"
- },
- {
-  "word": "nicotine",
-  "translation": "toxin",
-  "category": "substance"
  },
  {
   "word": "passer",
@@ -1880,7 +1865,7 @@
   "category": "accessory"
  },
  {
-  "word": "acheter",
+  "word": "achèter",
   "translation": "buy",
   "category": "verb"
  },
@@ -2067,7 +2052,7 @@
  {
   "word": "support",
   "translation": "help",
-  "category": "noun."
+  "category": "noun"
  },
  {
   "word": "lampe",
@@ -2265,7 +2250,7 @@
   "category": "kitchen"
  },
  {
-  "word": "mi",
+  "word": "moi",
   "translation": "me",
   "category": "pronoun"
  },
@@ -2341,7 +2326,7 @@
  },
  {
   "word": "errant",
-  "translation": "errant",
+  "translation": "nomadic",
   "category": "adjective"
  },
  {
@@ -2465,11 +2450,6 @@
   "category": "adverb"
  },
  {
-  "word": "vichyssoise",
-  "translation": "soup",
-  "category": "cuisine"
- },
- {
   "word": "interrogation",
   "translation": "question",
   "category": "noun"
@@ -2550,7 +2530,7 @@
   "category": "verb"
  },
  {
-  "word": "braise",
+  "word": "braisé",
   "translation": "braised",
   "category": "food"
  },
@@ -2590,11 +2570,6 @@
   "category": "verb"
  },
  {
-  "word": "exemple : amour",
-  "translation": "love",
-  "category": "noun\n\nfamille"
- },
- {
   "word": "avion",
   "translation": "plane",
   "category": "noun"
@@ -2613,11 +2588,6 @@
   "word": "bâtiment",
   "translation": "building",
   "category": "noun"
- },
- {
-  "word": "exemple:\nflorissant",
-  "translation": "flourishing",
-  "category": "adjective\n\nrigolo"
  },
  {
   "word": "pays",
@@ -2835,7 +2805,7 @@
   "category": "verb"
  },
  {
-  "word": ":\n\nfeuille",
+  "word": "feuille",
   "translation": "leaf",
   "category": "nature"
  },
@@ -2845,9 +2815,9 @@
   "category": "adjective"
  },
  {
-  "word": "\"regarder",
+  "word": "regarder",
   "translation": "watch",
-  "category": "verb\""
+  "category": "verb"
  },
  {
   "word": "croûter",
@@ -3000,12 +2970,7 @@
   "category": "noun"
  },
  {
-  "word": "henri",
-  "translation": "henry",
-  "category": "proper noun"
- },
- {
-  "word": "but",
+  "word": "mais",
   "translation": "but",
   "category": "conjunction"
  },
@@ -3155,11 +3120,6 @@
   "category": "verb"
  },
  {
-  "word": ":\n\nmerci",
-  "translation": "thankful",
-  "category": "greeting"
- },
- {
   "word": "défendre",
   "translation": "defend",
   "category": "verbs"
@@ -3180,7 +3140,7 @@
   "category": "color"
  },
  {
-  "word": "§ code\n\nbienvenu",
+  "word": "bienvenu",
   "translation": "welcome",
   "category": "greeting"
  },
@@ -3200,7 +3160,7 @@
   "category": "noun"
  },
  {
-  "word": "ameliorer",
+  "word": "améliorer",
   "translation": "improve",
   "category": "verb"
  },
@@ -3278,11 +3238,6 @@
   "word": "rouler",
   "translation": "roll",
   "category": "verb"
- },
- {
-  "word": "chair",
-  "translation": "chair",
-  "category": "noun"
  },
  {
   "word": "louer",
@@ -3490,11 +3445,6 @@
   "category": "harmony"
  },
  {
-  "word": "l'oeuf",
-  "translation": "egg",
-  "category": "food"
- },
- {
   "word": "résolu",
   "translation": "resolved",
   "category": "adjective"
@@ -3645,7 +3595,7 @@
   "category": "location"
  },
  {
-  "word": "etoile",
+  "word": "étoile",
   "translation": "star",
   "category": "noun"
  },
@@ -3837,7 +3787,7 @@
  {
   "word": "bisou",
   "translation": "kiss",
-  "category": "termofendearment"
+  "category": "term of endearment"
  },
  {
   "word": "randonnée",
@@ -3895,7 +3845,7 @@
   "category": "technology"
  },
  {
-  "word": "loser",
+  "word": "perdante",
   "translation": "loser",
   "category": "noun"
  },
@@ -3915,7 +3865,7 @@
   "category": "noun"
  },
  {
-  "word": "igloo",
+  "word": "iglou",
   "translation": "igloo",
   "category": "dwelling"
  },
@@ -3955,7 +3905,7 @@
   "category": "noun"
  },
  {
-  "word": "lumiere",
+  "word": "lumière",
   "translation": "light",
   "category": "noun"
  },
@@ -4065,9 +4015,9 @@
   "category": "verb"
  },
  {
-  "word": "échec",
-  "translation": "checkmate",
-  "category": "game."
+  "word": "échecs",
+  "translation": "chess",
+  "category": "game"
  },
  {
   "word": "brindille",
@@ -4107,7 +4057,7 @@
  {
   "word": "exemple",
   "translation": "example",
-  "category": "noun\n\nfigue"
+  "category": "noun"
  },
  {
   "word": "maman",
@@ -4155,7 +4105,7 @@
   "category": "verb"
  },
  {
-  "word": "fraisiers",
+  "word": "fraises",
   "translation": "strawberries",
   "category": "fruit"
  },
@@ -4190,11 +4140,6 @@
   "category": "noun"
  },
  {
-  "word": "peloton",
-  "translation": "group",
-  "category": "noun"
- },
- {
   "word": "messe",
   "translation": "mass",
   "category": "religion"
@@ -4213,11 +4158,6 @@
   "word": "farce",
   "translation": "farce",
   "category": "comedy"
- },
- {
-  "word": "chantez",
-  "translation": "sings",
-  "category": "verbs"
  },
  {
   "word": "toilette",
@@ -4253,11 +4193,6 @@
   "word": "adorer",
   "translation": "adore",
   "category": "verb"
- },
- {
-  "word": "mayonnaise",
-  "translation": "sauce",
-  "category": "condiment"
  },
  {
   "word": "abricot",
@@ -4316,7 +4251,7 @@
  },
  {
   "word": "bouillabaisse",
-  "translation": "stew",
+  "translation": "fish stew",
   "category": "food"
  },
  {
@@ -4350,7 +4285,7 @@
   "category": "verb"
  },
  {
-  "word": "delicat",
+  "word": "délicat",
   "translation": "dainty",
   "category": "adjective"
  },
@@ -4445,11 +4380,6 @@
   "category": "noun"
  },
  {
-  "word": "beret",
-  "translation": "cap",
-  "category": "clothing"
- },
- {
   "word": "cigogne",
   "translation": "stork",
   "category": "bird"
@@ -4520,11 +4450,6 @@
   "category": "noun"
  },
  {
-  "word": "gnocchi",
-  "translation": "dumpling",
-  "category": "food."
- },
- {
   "word": "ciel",
   "translation": "sky",
   "category": "noun"
@@ -4545,12 +4470,12 @@
   "category": "noun"
  },
  {
-  "word": "floquet",
-  "translation": "floppy",
+  "word": "disquet",
+  "translation": "floppy disk",
   "category": "disc"
  },
  {
-  "word": "détestez",
+  "word": "détester",
   "translation": "loathe",
   "category": "verb"
  },
@@ -4595,7 +4520,7 @@
   "category": "verb"
  },
  {
-  "word": "frolicking",
+  "word": "gambader",
   "translation": "frolicking",
   "category": "activity"
  },
@@ -4616,7 +4541,7 @@
  },
  {
   "word": "os",
-  "translation": "mouth",
+  "translation": "bone",
   "category": "body part"
  },
  {
@@ -4820,11 +4745,6 @@
   "category": "noun"
  },
  {
-  "word": "canal",
-  "translation": "canal",
-  "category": "noun"
- },
- {
   "word": "noire",
   "translation": "black",
   "category": "adjective"
@@ -4840,7 +4760,7 @@
   "category": "verb"
  },
  {
-  "word": "onge",
+  "word": "stupide",
   "translation": "dumb",
   "category": "adjective"
  },
