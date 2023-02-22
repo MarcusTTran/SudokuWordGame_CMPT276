@@ -36,7 +36,7 @@ public class Puzzle {
         // End of setting the puzzle dimension and box dimension
 
         // Setting the language
-        setLanguage(BoardLanguage.getOtherLanguage(language));
+        setLanguage(language);
 
         // We set the language of the board opposite to the language of the puzzle
         this.solutionBoard = new CellBox2DArray(puzzleDimension);
