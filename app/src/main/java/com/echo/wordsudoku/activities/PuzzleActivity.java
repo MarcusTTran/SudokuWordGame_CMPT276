@@ -15,17 +15,16 @@ import com.echo.wordsudoku.R;
 import com.echo.wordsudoku.fragments.DictionaryFragment;
 import com.echo.wordsudoku.fragments.RulesFragment;
 import com.echo.wordsudoku.models.BoardLanguage;
-import com.echo.wordsudoku.models.GameResult;
-import com.echo.wordsudoku.models.Puzzle;
-import com.echo.wordsudoku.models.WordPair;
-import com.echo.wordsudoku.models.WordPairReader;
+import com.echo.wordsudoku.models.sudoku.GameResult;
+import com.echo.wordsudoku.models.sudoku.Puzzle;
+import com.echo.wordsudoku.models.words.WordPair;
+import com.echo.wordsudoku.models.words.WordPairReader;
 import com.echo.wordsudoku.views.SudokuBoard;
 
 import org.json.JSONException;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.Arrays;
 import java.util.List;
 
 public class PuzzleActivity extends AppCompatActivity {

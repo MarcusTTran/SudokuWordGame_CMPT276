@@ -1,4 +1,6 @@
-package com.echo.wordsudoku.models;
+package com.echo.wordsudoku.models.words;
+
+import com.echo.wordsudoku.models.BoardLanguage;
 
 /**
  *  ========================================= WORDPAIR =========================================

@@ -1,5 +1,8 @@
-package com.echo.wordsudoku.models;
+package com.echo.wordsudoku.models.sudoku;
 
+
+import com.echo.wordsudoku.models.BoardLanguage;
+import com.echo.wordsudoku.models.words.WordPair;
 
 /**
  * The Cell class represents a cell in the board.

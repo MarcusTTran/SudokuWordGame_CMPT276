@@ -1,4 +1,9 @@
-package com.echo.wordsudoku.models;
+package com.echo.wordsudoku.models.sudoku;
+
+import com.echo.wordsudoku.models.BoardLanguage;
+import com.echo.wordsudoku.models.dimension.Dimension;
+import com.echo.wordsudoku.models.dimension.PuzzleDimensions;
+import com.echo.wordsudoku.models.words.WordPair;
 
 import java.util.Arrays;
 import java.util.List;

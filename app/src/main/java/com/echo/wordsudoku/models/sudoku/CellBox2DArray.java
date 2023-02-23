@@ -1,4 +1,4 @@
-package com.echo.wordsudoku.models;
+package com.echo.wordsudoku.models.sudoku;
 
 /*
 * CellBox2DArray class represents a 2D array of CellBox objects
@@ -46,6 +46,10 @@ package com.echo.wordsudoku.models;
 * @version 1.0
 *
 * */
+
+import com.echo.wordsudoku.models.dimension.Dimension;
+import com.echo.wordsudoku.models.dimension.PuzzleDimensions;
+import com.echo.wordsudoku.models.words.WordPair;
 
 public class CellBox2DArray{
 
@@ -101,7 +105,7 @@ public class CellBox2DArray{
     * @param puzzleDimensions: The appropriate sudoku puzzle dimensions passed as a PuzzleDimensions object
     * @param language: The language to set cells in
     * */
-    public CellBox2DArray(PuzzleDimensions puzzleDimensions,int language) {
+    public CellBox2DArray(PuzzleDimensions puzzleDimensions, int language) {
         this(puzzleDimensions.getBoxesInPuzzleDimension(), puzzleDimensions.getEachBoxDimension(),language);
         setBoxDimensions(puzzleDimensions.getBoxesInPuzzleDimension());
         setCellDimensions(puzzleDimensions.getEachBoxDimension());

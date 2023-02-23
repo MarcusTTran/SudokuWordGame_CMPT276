@@ -1,4 +1,4 @@
-package com.echo.wordsudoku.models;
+package com.echo.wordsudoku.models.dimension;
 
 /*
     * PuzzleDimensions class represents the dimensions of the puzzle.
@@ -39,6 +39,9 @@ package com.echo.wordsudoku.models;
     * @version: 1.0
     *
  */
+
+import com.echo.wordsudoku.models.MathUtils;
+import com.echo.wordsudoku.models.sudoku.Puzzle;
 
 public class PuzzleDimensions {
 

@@ -1,4 +1,4 @@
-package com.echo.wordsudoku.models;
+package com.echo.wordsudoku.models.dimension;
 
 /**
  * The Dimension class represents the x,y dimensions.

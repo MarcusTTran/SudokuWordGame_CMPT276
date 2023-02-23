@@ -1,4 +1,4 @@
-package com.echo.wordsudoku.models;
+package com.echo.wordsudoku.models.sudoku;
 
 /*
     * This class represents a 2D array of cells.
@@ -38,6 +38,9 @@ package com.echo.wordsudoku.models;
 
  */
 
+import com.echo.wordsudoku.models.dimension.Dimension;
+import com.echo.wordsudoku.models.words.WordPair;
+
 public class CellBox {
 
     // cells: the 2D array of cells.
@@ -57,7 +60,7 @@ public class CellBox {
     * @param content: the content of the cells. The content of all cells will be the same.
     *
     * */
-    public CellBox(WordPair content,int rows, int columns,int language) {
+    public CellBox(WordPair content, int rows, int columns, int language) {
         this.dimension = new Dimension(rows, columns);
         this.cells = new Cell[rows][columns];
         fillCellsWith(new Cell(content,language));
