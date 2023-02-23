@@ -31,9 +31,18 @@ android {
         useJUnitPlatform()
     }
 
+    //Used for Unit tests TODO: REMOVE LATER (IF DOESN'T WORK)
+    testOptions {
+        unitTests.returnDefaultValues = true
+    }
+
 }
 
 dependencies {
+
+
+    //Used for Unit tests TODO: REMOVE LATER (IF DOESN'T WORK)
+    testImplementation 'org.json:json:20180813'
 
     implementation 'androidx.appcompat:appcompat:1.6.0'
     implementation 'com.google.android.material:material:1.8.0'

@@ -1,5 +1,7 @@
 package com.echo.wordsudoku.models;
 
+import android.util.Log;
+
 /**
  *  ========================================= BOARD =========================================
  *  DESCRIPTION OF FIELDS AND FEATURES
@@ -19,6 +21,10 @@ package com.echo.wordsudoku.models;
 */
 
 public class Board {
+
+    //LogCat tag used for debugging
+    private static final String TAG = "Board";
+
     private int[][] board;
     private int [][] solutions;
     private String[][] displayBoard, displayBoard_Solved;
@@ -29,6 +35,8 @@ public class Board {
     // The cells that are initially filled when the game is started cannot be changed and this
     // 2D array is used to keep track of those.
         // Marcus' Comment: Maybe in the future iterations, we could make this an enum (filled, open, filled_at_start)
+    // insertAllowedInBoard is non-final to allow insertion of dummy-
+    //insertAllowedInBoard to test Sudoku generation logic
     private final boolean[][] insertAllowedInBoard;
 
     // change to enum later
@@ -37,7 +45,7 @@ public class Board {
     private int numToRemove;
     // count the number of mistakes made in solving the puzzle
     private int mistakes;
-    // dimenstion of the boarm is terms of dim x dim
+    // dimension of the board is terms of dim x dim
     private int dim;
     // board operates on too fixed languages ENGLISH and FRENCH
     private final String ENGLISH = "English";
@@ -48,8 +56,18 @@ public class Board {
     // CONSTRUCTOR
     // EFFECT: makes a 2D array list and adds empty string to each location on list
     public Board(int dim, WordPair[] wordPairs, int board_language, int numToRemove) {
+
+        //Prevent user from making 9x9 board that is unsolvable
+        // 17 cells is the minimum num of cells needed for 9x9
+        checkMinNumberCellsValid(dim, numToRemove);
+
+        //Prevent users from making a board where dimensions do not match length of wordPair list
+        checkWordPairDimension(dim, wordPairs);
+
+
         this.dim = dim;
 
+        //All Sudoku with unique solutions must have at least 17 clues
         // TODO : change this part because later on we want to generate a
         //  board of 6x6 or 12x12 we can't use
         this.BOX_LENGTH = (int)Math.sqrt(dim);
@@ -70,11 +88,11 @@ public class Board {
 
         this.mistakes = 0;
 
-        // generate the board and displayed board values
+        // Generate the board and displayed board values
         this.generateGame();
 
-        // At this stage we fill the 2d array of boolean values which indicate whether a cell is filled initially or not.
-        // it is used to keep track of the cells which are not allowed to be filled (the cells which are initially filled).
+        // Fill a 2d array of boolean values which indicates whether a cell is permanently filled or not
+        // It is used to keep track of which cells are able to be filled and which are not (the cells which are initially filled are not allowed to be filled).
         this.insertAllowedInBoard = getInsertTable(this.board,dim,dim);
         this.GenerateWordPuzzle();
 
@@ -84,6 +102,65 @@ public class Board {
     }
 
 
+    // Static factory method used to create debug boards for testing;
+    // Allows for insertion of dummy boards and solutions; used to test Sudoku logic
+    public static Board createDebugBoard(int dim, WordPair[] wordPairs, int board_language, int numToRemove, int[][] dummyBoard, int[][] dummyBoardSolutions) {
+        return new Board(dim, wordPairs, board_language, numToRemove, dummyBoard, dummyBoardSolutions);
+    }
+    private Board(int dim, WordPair[] wordPairs, int board_language, int numToRemove, int[][] dummyBoard, int[][] dummyBoardSolutions) {
+        checkMinNumberCellsValid(dim, numToRemove);
+
+        //Prevent users from making a board where dimensions do not match length of wordPair list
+        checkWordPairDimension(dim, wordPairs);
+
+        this.dim = dim;
+        this.BOX_LENGTH = (int)Math.sqrt(dim);
+
+        this.board = dummyBoard;
+        this.solutions = dummyBoardSolutions;
+        this.displayBoard = new String[dim][dim];
+        this.displayBoard_Solved = new String[dim][dim];
+        this.wordPairs = wordPairs;
+        this.board_language = board_language;
+        // Sets the input language to the opposite of the board language
+        this.input_language = BoardLanguage.getOtherLanguage(board_language);
+
+        // Remove the number of cells based on the difficulty
+        this.numToRemove = numToRemove;
+        this.mistakes = 0;
+
+        // Generate the board and displayed board values
+        // Fill a 2d array of boolean values which indicates whether a cell is permanently filled or not
+        // It is used to keep track of which cells are able to be filled and which are not (the cells which are initially filled are not allowed to be filled).
+        this.insertAllowedInBoard = getInsertTable(this.board,dim,dim);
+        this.GenerateWordPuzzle();
+    }
+
+    //Checks if numToRemove does not exceed maximum minimum number of cells (prevents creating invalid boards)
+    public void checkMinNumberCellsValid(int dim, int numToRemove) {
+        if (dim == 9 && numToRemove > 64 ) {
+            throw new IllegalArgumentException("Number of cells to remove on a 9x9 board cannot exceed 64");
+        }
+    }
+
+    //Checks if length of wordPair list matches given dimension
+    public void checkWordPairDimension(int dim, WordPair[] wordPairs) {
+        if (wordPairs.length != dim) {
+            throw new IllegalArgumentException("WordPair list given must match dimension given");
+        }
+    }
+
+    //Returns copy of the Board
+    public int[][] getBoard() {
+        int[][] boardCopy = new int[dim][dim];
+        return takeCopy(board, boardCopy);
+    }
+
+    //Returns copy of the solutions
+    public int[][] getBoardSolutions() {
+        int[][] solutionCopy = new int[dim][dim];
+        return takeCopy(solutions, solutionCopy);
+    }
 
 
     // This utility method is used to return a 2D array of boolean values which indicate whether a cell is filled or not
@@ -184,8 +261,6 @@ public class Board {
 
     // EFFECT: checks for wins
     public boolean checkWin() {
-
-
         for (int x = 0; x < dim; x++) {
             for (int y = 0; y < dim; y++) {
                 // if there is at least one different cell that is not equal
@@ -215,10 +290,10 @@ public class Board {
         // 3. once everything is filled remove n elements randomly to generate a game
         //    based on numToRemove
 
-        // 1. fill the diagonal cells from top left to bottom righ
+        // 1. fill the diagonal sub-boxes from top left to bottom right
         completeDiagonal();
 
-        // 2. complete the remaining non-diagonal  cells
+        // 2. complete the remaining non-diagonal sub-boxes
         completeRemaining(0, BOX_LENGTH);
 
         // take a copy of the board of int before modifying for game generation
@@ -261,8 +336,8 @@ public class Board {
         }
     }
 
-    // EFFECT: fill the remaining cells when all diagonals are filled check if the position is safe
-    //            before inserting the randomly generated value
+    // EFFECT: Recursively fill the remaining cells when all diagonals are filled check if the
+    //         position is safe before inserting the randomly generated value
     private boolean completeRemaining(int x, int y) {
 
         // if the last cell at the column is complete and x is not at the cell in the row

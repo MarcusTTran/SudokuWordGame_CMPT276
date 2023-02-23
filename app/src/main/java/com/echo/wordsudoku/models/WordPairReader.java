@@ -120,7 +120,8 @@ public class WordPairReader {
                 // get the JSON Object at the index i that is from the randomIndexesList and add it to the mWordPairs list
                 JSONObject wordPair = allWords.getJSONObject(randomWordPairIndexes.get(i));
                 // create a new WordPair object and add it to the mWordPairs list
-                mWordPairs.add(new WordPair(wordPair.getString("word"), wordPair.getString("translation")));
+                //TODO: BUG FIXED FLIP AROUND
+                mWordPairs.add(new WordPair(wordPair.getString("translation"), wordPair.getString("word")));
             } catch (JSONException e) {
                 e.printStackTrace();
             }
