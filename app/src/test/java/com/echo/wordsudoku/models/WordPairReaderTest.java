@@ -17,6 +17,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 
 class WordPairReaderTest {
+    //JSON FILES USED FOR TESTING ARE STORED IN src/main/assets/jsontestfiles
 
     //Dummy wordPair list identical to the wordPair objects stored in the testWords9x9.json file
     // Used to validate whether WordPairReader is parsing JSON files and objects correctly
@@ -29,7 +30,6 @@ class WordPairReaderTest {
     };
 
 
-
     //Try to read in a JSON file with a malformed String
     @Test
     void testConstructorJSONException() {
@@ -39,15 +39,11 @@ class WordPairReaderTest {
 
         try {
             File initialFile = new File("src/main/assets/jsontestfiles/testWordsMalformedString.json");
-            targetStream = new FileInputStream(initialFile);
+            targetStream = Files.newInputStream(initialFile.toPath());
             newReader = new WordPairReader(targetStream, 9);
             mWordPairs = newReader.getWords();
             assertEquals("Orange", mWordPairs[0].getEnglish());
-        } catch (FileNotFoundException e) {
-            fail();
-        } catch (IOException e) {
-            fail();
-        } catch (JSONException e) {
+        } catch (IOException | JSONException e) {
             fail();
         } catch (RuntimeException e) {
             return;
@@ -68,11 +64,9 @@ class WordPairReaderTest {
 
         try {
             File testFile = new File("src/main/assets/jsontestfiles/testWordsMalformedStructure.json");
-            testStream = new FileInputStream(testFile);
+            testStream = Files.newInputStream(testFile.toPath());
             testReader = new WordPairReader(testStream, dim);
             mWordPairs = testReader.getWords();
-        } catch (FileNotFoundException e) {
-            fail(e);
         } catch (IOException e) {
             fail(e);
         } catch (JSONException e) {
@@ -91,7 +85,7 @@ class WordPairReaderTest {
 
         try {
             File testFile = new File("src/main/assets/jsontestfiles/testWords9x9.json");
-            testStream = new FileInputStream(testFile);
+            testStream = Files.newInputStream(testFile.toPath());
             testReader = new WordPairReader(testStream, dim);
             mWordPairs = testReader.getWords();
             int counter = 0;
@@ -103,8 +97,6 @@ class WordPairReaderTest {
                 }
             }
             assertEquals(dim, counter);
-        } catch (FileNotFoundException e) {
-            fail(e);
         } catch (IOException e) {
             fail(e);
         } catch (JSONException e) {
@@ -128,14 +120,10 @@ class WordPairReaderTest {
             json = "2" + json;
             testReader = new WordPairReader(json, dim);
             mWordPairs = testReader.getWords();
-        } catch (FileNotFoundException e) {
-            fail();
-        } catch (IOException e) {
+        } catch (IOException | JSONException e) {
             fail();
         } catch (RuntimeException e) {
             return;
-        } catch (JSONException e) {
-            fail();
         }
         fail();
     }
@@ -162,8 +150,6 @@ class WordPairReaderTest {
                 }
             }
             assertEquals(dim, counter);
-        } catch (FileNotFoundException e) {
-            fail(e);
         } catch (IOException e) {
             fail(e);
         } catch (JSONException e) {
@@ -182,7 +168,7 @@ class WordPairReaderTest {
 
         try {
             File testFile = new File("src/main/assets/jsontestfiles/testWords9x9.json");
-            testStream = new FileInputStream(testFile);
+            testStream = Files.newInputStream(testFile.toPath());
             testReader = new WordPairReader(testStream, dim);
             mWordPairs = testReader.getWords();
             int counter = 0;
@@ -196,11 +182,7 @@ class WordPairReaderTest {
                 }
             }
             assertEquals(dim, counter);
-        } catch (FileNotFoundException e) {
-            fail(e);
-        } catch (IOException e) {
-            fail(e);
-        } catch (JSONException e) {
+        } catch (IOException | JSONException e) {
             fail(e);
         }
     }
@@ -216,7 +198,7 @@ class WordPairReaderTest {
 
         try {
             File testFile = new File("src/main/assets/jsontestfiles/testWords9x9.json");
-            testStream = new FileInputStream(testFile);
+            testStream = Files.newInputStream(testFile.toPath());
             testReader = new WordPairReader(testStream, dim);
             mWordPairs = testReader.getWords();
             int counter = 0;
@@ -230,11 +212,7 @@ class WordPairReaderTest {
                 }
             }
             assertEquals(dim, counter);
-        } catch (FileNotFoundException e) {
-            fail(e);
-        } catch (IOException e) {
-            fail(e);
-        } catch (JSONException e) {
+        } catch (IOException | JSONException e) {
             fail(e);
         }
     }
@@ -252,15 +230,13 @@ class WordPairReaderTest {
         int counter = 0;
         try {
             File testFile = new File("src/main/assets/words.json");
-            testStream = new FileInputStream(testFile);
+            testStream = Files.newInputStream(testFile.toPath());
             testReader = new WordPairReader(testStream, dim);
             mWordPairs = testReader.getWords();
             for (int i = 0; i < mWordPairs.length; i++) {
                 counter++;
             }
             assertEquals(dim, counter);
-        } catch (FileNotFoundException e) {
-            fail(e);
         } catch (IOException e) {
             fail(e);
         } catch (JSONException e) {
@@ -280,15 +256,13 @@ class WordPairReaderTest {
 
         try {
             File testFile = new File("src/main/assets/jsontestfiles/testWords9x9.json");
-            testStream = new FileInputStream(testFile);
+            testStream = Files.newInputStream(testFile.toPath());
             testReader = new WordPairReader(testStream, dim);
 
 
             assertEquals(dim, testReader.getPuzzleDimension());
 
 
-        } catch (FileNotFoundException e) {
-            fail(e);
         } catch (IOException e) {
             fail(e);
         }

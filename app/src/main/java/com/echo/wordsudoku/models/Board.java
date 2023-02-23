@@ -102,7 +102,8 @@ public class Board {
     }
 
 
-    //Static factory method used to create debug boards; Allows for insertion of dummy board; used to test Sudoku logic
+    // Static factory method used to create debug boards for testing;
+    // Allows for insertion of dummy boards and solutions; used to test Sudoku logic
     public static Board createDebugBoard(int dim, WordPair[] wordPairs, int board_language, int numToRemove, int[][] dummyBoard, int[][] dummyBoardSolutions) {
         return new Board(dim, wordPairs, board_language, numToRemove, dummyBoard, dummyBoardSolutions);
     }
@@ -112,14 +113,8 @@ public class Board {
         //Prevent users from making a board where dimensions do not match length of wordPair list
         checkWordPairDimension(dim, wordPairs);
 
-
         this.dim = dim;
-
-        //All Sudoku with unique solutions must have at least 17 clues
-        // TODO : change this part because later on we want to generate a
-        //  board of 6x6 or 12x12 we can't use
         this.BOX_LENGTH = (int)Math.sqrt(dim);
-        // end TODO
 
         this.board = dummyBoard;
         this.solutions = dummyBoardSolutions;
@@ -130,14 +125,11 @@ public class Board {
         // Sets the input language to the opposite of the board language
         this.input_language = BoardLanguage.getOtherLanguage(board_language);
 
-
         // Remove the number of cells based on the difficulty
         this.numToRemove = numToRemove;
-
         this.mistakes = 0;
 
         // Generate the board and displayed board values
-
         // Fill a 2d array of boolean values which indicates whether a cell is permanently filled or not
         // It is used to keep track of which cells are able to be filled and which are not (the cells which are initially filled are not allowed to be filled).
         this.insertAllowedInBoard = getInsertTable(this.board,dim,dim);
