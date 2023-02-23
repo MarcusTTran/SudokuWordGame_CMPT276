@@ -27,5 +27,24 @@ class BoardLanguageTest {
         assertEquals(1, BoardLanguage.getOtherLanguage(0));
     }
 
+    @Test
+    void testGetLanguageNameEnglish() {
+        assertEquals("English", BoardLanguage.getLanguageName(0));
+    }
+
+    @Test
+    void testGetLanguageNameFrench() {
+        assertEquals("French", BoardLanguage.getLanguageName(1));
+    }
+
+    @Test
+    void testGetLanguageNameException() {
+        Assertions.assertThrows(IllegalArgumentException.class, () -> {
+            assertEquals("French", BoardLanguage.getLanguageName(-10));
+        });
+
+    }
+
+
 
 }

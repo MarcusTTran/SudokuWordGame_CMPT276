@@ -1,0 +1,45 @@
+1{"words":[
+ {
+  "translation": "yes",
+  "category": "adjective"
+ },
+ {
+  "word": "foyer",
+  "category": "noun"
+ },
+ {
+  "word": "école",
+  "translation": "school",
+  "category": "noun"
+ },
+ {
+  "word": "débrouiller",
+  "translation": "untangle",
+  "category": "verb"
+ },
+ {
+  "word": "rouge",
+  "translation": "red",
+  "category": "colour"
+ },
+ {
+  "word": "risque",
+  "translation": "risk",
+  "category": "noun"
+ },
+ {
+  "word": "bienvenue",
+  "translation": "welcome",
+  "category": "greeting"
+ },
+ {
+  "word": "oiseau",
+  "translation": "bird",
+  "category": "noun"
+ },
+ {
+  "word": "esquive",
+  "translation": "evasion",
+  "category": "noun"
+ }
+]}

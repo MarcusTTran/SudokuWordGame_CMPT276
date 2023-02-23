@@ -37,7 +37,7 @@ public class Board {
         // Marcus' Comment: Maybe in the future iterations, we could make this an enum (filled, open, filled_at_start)
     // insertAllowedInBoard is non-final to allow insertion of dummy-
     //insertAllowedInBoard to test Sudoku generation logic
-    private boolean[][] insertAllowedInBoard;
+    private final boolean[][] insertAllowedInBoard;
 
     // change to enum later
     private int board_language, input_language;
@@ -102,11 +102,46 @@ public class Board {
     }
 
 
-    //Allows for insertion of dummy board; used to test Sudoku logic
-    public void insertDummyBoard(int dim, int[][] testBoard, int[][] testBoardSolutions) {
-        this.board = testBoard;
-        this.solutions = testBoardSolutions;
+    //Static factory method used to create debug boards; Allows for insertion of dummy board; used to test Sudoku logic
+    public static Board createDebugBoard(int dim, WordPair[] wordPairs, int board_language, int numToRemove, int[][] dummyBoard, int[][] dummyBoardSolutions) {
+        return new Board(dim, wordPairs, board_language, numToRemove, dummyBoard, dummyBoardSolutions);
+    }
+    private Board(int dim, WordPair[] wordPairs, int board_language, int numToRemove, int[][] dummyBoard, int[][] dummyBoardSolutions) {
+        checkMinNumberCellsValid(dim, numToRemove);
+
+        //Prevent users from making a board where dimensions do not match length of wordPair list
+        checkWordPairDimension(dim, wordPairs);
+
+
+        this.dim = dim;
+
+        //All Sudoku with unique solutions must have at least 17 clues
+        // TODO : change this part because later on we want to generate a
+        //  board of 6x6 or 12x12 we can't use
+        this.BOX_LENGTH = (int)Math.sqrt(dim);
+        // end TODO
+
+        this.board = dummyBoard;
+        this.solutions = dummyBoardSolutions;
+        this.displayBoard = new String[dim][dim];
+        this.displayBoard_Solved = new String[dim][dim];
+        this.wordPairs = wordPairs;
+        this.board_language = board_language;
+        // Sets the input language to the opposite of the board language
+        this.input_language = BoardLanguage.getOtherLanguage(board_language);
+
+
+        // Remove the number of cells based on the difficulty
+        this.numToRemove = numToRemove;
+
+        this.mistakes = 0;
+
+        // Generate the board and displayed board values
+
+        // Fill a 2d array of boolean values which indicates whether a cell is permanently filled or not
+        // It is used to keep track of which cells are able to be filled and which are not (the cells which are initially filled are not allowed to be filled).
         this.insertAllowedInBoard = getInsertTable(this.board,dim,dim);
+        this.GenerateWordPuzzle();
     }
 
     //Checks if numToRemove does not exceed maximum minimum number of cells (prevents creating invalid boards)
