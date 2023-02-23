@@ -4,8 +4,10 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import static java.util.Arrays.deepEquals;
 
+import com.echo.wordsudoku.models.Board.Board;
+import com.echo.wordsudoku.models.Words.WordPair;
+
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.List;

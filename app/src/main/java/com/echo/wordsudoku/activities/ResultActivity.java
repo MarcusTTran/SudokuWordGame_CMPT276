@@ -10,7 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.echo.wordsudoku.R;
-import com.echo.wordsudoku.models.GameResult;
+import com.echo.wordsudoku.models.GameInfo.GameResult;
 
 public class ResultActivity extends AppCompatActivity {
 

@@ -1,4 +1,4 @@
-package com.echo.wordsudoku.models;
+package com.echo.wordsudoku.models.Board;
 
 public class BoardLanguage {
     // The language names

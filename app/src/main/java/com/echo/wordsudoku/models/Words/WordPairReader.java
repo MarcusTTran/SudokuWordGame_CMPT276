@@ -1,4 +1,4 @@
-package com.echo.wordsudoku.models;
+package com.echo.wordsudoku.models.Words;
 
 import org.json.JSONArray;
 import org.json.JSONException;
