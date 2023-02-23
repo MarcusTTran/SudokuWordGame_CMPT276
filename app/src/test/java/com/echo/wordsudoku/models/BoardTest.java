@@ -110,9 +110,6 @@ class BoardTest {
         assertEquals(dimensions, testBoard.getUnSolvedBoard()[0].length);
     }
 
-
-
-
     //Create 50 boards and test that they are all unique
     @org.junit.jupiter.api.Test
     public void testBoardUniqueness() {
@@ -331,7 +328,7 @@ class BoardTest {
         if (testBoard.getUnSolvedBoard()[x_value][y_value].equals("Yellow")) {
             secondInsert = true;
         }
-        if (firstInsert == true && secondInsert == true) {
+        if (firstInsert && secondInsert) {
             bothWorking = true;
         }
         assertTrue(bothWorking);

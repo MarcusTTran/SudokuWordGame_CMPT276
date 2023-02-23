@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Test;
 
 class WordPairTest {
 
+    //Test getEnglish
     @Test
     void getEnglish() {
         String englishWord = "Water";
@@ -14,6 +15,7 @@ class WordPairTest {
         assertEquals(englishWord, testWordPair.getEnglish());
     }
 
+    //Test getFrench
     @Test
     void getFrench() {
         String frenchWord = "Aqua";
@@ -21,6 +23,7 @@ class WordPairTest {
         assertEquals(frenchWord, testWordPair.getFrench());
     }
 
+    //Test getFrenchOrFrench English scenario
     @Test
     void getEnglishOrFrenchEnglish() {
         String englishWord = "Black";
@@ -28,6 +31,7 @@ class WordPairTest {
         assertEquals(englishWord, testWordPair.getEnglishOrFrench(0));
     }
 
+    //Test getFrenchOrFrench French scenario
     @Test
     void getEnglishOrFrenchFrench() {
         String frenchWord = "Jaune";
@@ -45,6 +49,7 @@ class WordPairTest {
         });
     }
 
+    //Test setEnglish
     @Test
     void setEnglish() {
         WordPair testWordPair = new WordPair("Black", "Rouge");
@@ -53,6 +58,7 @@ class WordPairTest {
         assertEquals(correctEnglishWord, testWordPair.getEnglish());
     }
 
+    //Test setFrench
     @Test
     void setFrench() {
         WordPair testWordPair = new WordPair("Red", "Noire");
