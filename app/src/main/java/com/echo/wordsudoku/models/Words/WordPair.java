@@ -1,4 +1,6 @@
-package com.echo.wordsudoku.models;
+package com.echo.wordsudoku.models.Words;
+
+import com.echo.wordsudoku.models.Board.BoardLanguage;
 
 /**
  *  ========================================= WORDPAIR =========================================
@@ -18,6 +20,8 @@ public class WordPair {
 
     // constructor
     // EFFECTS: assigns the eng and fre translation of a word
+    // @param - str eng - english word
+    //          str fre - french word
     public WordPair(String eng, String fre) {
         setEnglish(eng);
         setFrench(fre);
@@ -25,26 +29,32 @@ public class WordPair {
 
 
     // getters and setters
-    // EFFECT: returns the English translation
+
+    // EFFECT: get english
+    // @returns the English translation
     public String getEnglish() {
         return eng;
     }
 
-    // EFFECT: returns the French translation
+    // EFFECT: get french
+    // @return returns the French translation
     public String getFrench() {
         return fre;
     }
     // EFFECT: sets/changes the English translation
+    // @param String eng - english word to be set
     public void setEnglish(String eng) {
         this.eng = eng;
     }
 
     // EFFECT: sets/changes the French translation
+    // @param String fre - french word to be set
     public void setFrench(String fre) {
         this.fre = fre;
     }
 
-    // EFFECT: returns the desired language translation based on the given language name
+    // EFFECT: get the chosen translation
+    // @return the desired language translation based on the given language name
     public String getEnglishOrFrench(int language) {
         // if language is English
         if (language == BoardLanguage.ENGLISH) {

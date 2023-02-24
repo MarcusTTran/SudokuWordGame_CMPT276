@@ -14,11 +14,11 @@ import android.widget.Toast;
 import com.echo.wordsudoku.R;
 import com.echo.wordsudoku.fragments.DictionaryFragment;
 import com.echo.wordsudoku.fragments.RulesFragment;
-import com.echo.wordsudoku.models.Board;
-import com.echo.wordsudoku.models.BoardLanguage;
-import com.echo.wordsudoku.models.GameResult;
-import com.echo.wordsudoku.models.WordPair;
-import com.echo.wordsudoku.models.WordPairReader;
+import com.echo.wordsudoku.models.Board.Board;
+import com.echo.wordsudoku.models.Board.BoardLanguage;
+import com.echo.wordsudoku.models.GameInfo.GameResult;
+import com.echo.wordsudoku.models.Words.WordPair;
+import com.echo.wordsudoku.models.Words.WordPairReader;
 import com.echo.wordsudoku.views.SudokuBoard;
 
 import org.json.JSONException;

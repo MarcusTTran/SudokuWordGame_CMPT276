@@ -1,4 +1,4 @@
-package com.echo.wordsudoku.models;
+package com.echo.wordsudoku.models.GameInfo;
 
 public class GameResult {
 

@@ -11,7 +11,7 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.echo.wordsudoku.R;
-import com.echo.wordsudoku.models.BoardLanguage;
+import com.echo.wordsudoku.models.Board.BoardLanguage;
 
 public class MainActivity extends AppCompatActivity {
 
