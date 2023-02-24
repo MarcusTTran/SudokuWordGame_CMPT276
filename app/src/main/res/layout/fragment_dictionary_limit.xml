@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:custom="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/peeksTotal"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".fragments.DictionaryFragment">
@@ -21,16 +20,18 @@
 
 
         <TextView
-            android:id="@+id/peeksRemaining"
+            android:id="@+id/DictionaryLimit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingBottom="25dp"
-            android:text="TextView"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginTop="50dp"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:paddingBottom="20dp"
+            android:text="@string/DictionaryLimit"
+            android:textSize="16sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/wordListLang1" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/DictionaryHeader"
@@ -57,31 +58,6 @@
             custom:layout_constraintStart_toEndOf="@+id/DictionaryHeader"
             custom:layout_constraintTop_toTopOf="parent"
             custom:layout_constraintVertical_bias="0.0" />
-
-
-        <LinearLayout
-            android:id="@+id/wordListLang1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="80dp"
-            android:layout_marginTop="8dp"
-            android:orientation="vertical"
-            android:paddingBottom="25dp"
-            custom:layout_constraintEnd_toEndOf="parent"
-            custom:layout_constraintStart_toStartOf="parent"
-            custom:layout_constraintTop_toBottomOf="@+id/DictionaryHeader" />
-
-        <LinearLayout
-            android:id="@+id/wordListLang2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="160dp"
-            android:orientation="vertical"
-            android:paddingBottom="25dp"
-            custom:layout_constraintEnd_toEndOf="parent"
-            custom:layout_constraintStart_toStartOf="parent"
-            custom:layout_constraintTop_toBottomOf="@+id/DictionaryHeader" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
