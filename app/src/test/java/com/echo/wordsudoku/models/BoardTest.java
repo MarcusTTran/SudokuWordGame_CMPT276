@@ -13,6 +13,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+//Tests the Board class, used for sudoku puzzle logic
+
 class BoardTest {
 
     //Sample set of wordPairs to use
