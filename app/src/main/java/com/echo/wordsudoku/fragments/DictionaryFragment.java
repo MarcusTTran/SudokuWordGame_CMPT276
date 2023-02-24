@@ -25,8 +25,10 @@ public class DictionaryFragment extends DialogFragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
+    private static final String ARG_PARAM3 = "param3";
 
     private ImageButton exitButton;
+    private int popupLimit;
 
     //Used to store word pairs passed for PuzzleActivity for dictionary pop up
     private String[] englishWords;
@@ -41,11 +43,12 @@ public class DictionaryFragment extends DialogFragment {
 //     this fragment using the provided parameters.
 //
 //     returns a new instance of fragment DictionaryFragment.
-    public static DictionaryFragment newInstance(String[] englishWords, String[] frenchWords) {
+    public static DictionaryFragment newInstance(String[] englishWords, String[] frenchWords, int popupLimit) {
         DictionaryFragment fragment = new DictionaryFragment();
         Bundle args = new Bundle();
         args.putStringArray(ARG_PARAM1, englishWords);
         args.putStringArray(ARG_PARAM2, frenchWords);
+        args.putInt(ARG_PARAM3, popupLimit);
         fragment.setArguments(args);
         return fragment;
     }
@@ -56,6 +59,7 @@ public class DictionaryFragment extends DialogFragment {
         if (getArguments() != null) {
             englishWords = getArguments().getStringArray(ARG_PARAM1);
             frenchWords = getArguments().getStringArray(ARG_PARAM2);
+            popupLimit = getArguments().getInt(ARG_PARAM3);
         }
 
     }
@@ -63,8 +67,44 @@ public class DictionaryFragment extends DialogFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        if (getArguments() != null) {
+            englishWords = getArguments().getStringArray(ARG_PARAM1);
+            frenchWords = getArguments().getStringArray(ARG_PARAM2);
+            popupLimit = getArguments().getInt(ARG_PARAM3);
+        }
+
+        View view1;
+        if (popupLimit < 2) {
+            view1 = inflater.inflate(R.layout.fragment_dictionary, container, false);
+
+
+            //Fills a linearlayout full of TextViews objects, which we set to display English words in word pair list
+            LinearLayout linearLayout1 = view1.findViewById(R.id.wordListLang1);
+            for (int i = 0; i < englishWords.length; i++) {
+                TextView word = new TextView(linearLayout1.getContext());
+                word.setText(englishWords[i]);
+                word.setPadding(0, 20, 0, 0);
+                linearLayout1.addView(word);
+            }
+
+            //Same thing but fill linearlayout full of TextView displaying French words
+            LinearLayout linearLayout2 = view1.findViewById(R.id.wordListLang2);
+            for (int i = 0; i < frenchWords.length; i++) {
+                TextView word = new TextView(linearLayout2.getContext());
+                word.setText(frenchWords[i]);
+                word.setPadding(0, 20, 0, 0);
+                linearLayout2.addView(word);
+            }
+
+            TextView peeksRemaining = view1.findViewById(R.id.peeksRemaining);
+            peeksRemaining.setText(R.string.peeks_Remaining);
+            peeksRemaining.append(" " + Integer.toString((1 - popupLimit)));
+
+        } else {
+            view1 = inflater.inflate(R.layout.fragment_dictionary_limit, container, false);
+        }
+
         // Inflate the layout for this fragment
-        View view1 = inflater.inflate(R.layout.fragment_dictionary, container, false);
 
         exitButton = view1.findViewById(R.id.dictionaryExitButton);
         //Set listener to exit button to end fragment when tapped
@@ -77,28 +117,9 @@ public class DictionaryFragment extends DialogFragment {
             }
         });
 
-        if (getArguments() != null) {
-            englishWords = getArguments().getStringArray(ARG_PARAM1);
-            frenchWords = getArguments().getStringArray(ARG_PARAM2);
-        }
 
-        //Fills a linearlayout full of TextViews objects, which we set to display English words in word pair list
-        LinearLayout linearLayout1 = view1.findViewById(R.id.wordListLang1);
-        for (int i = 0; i < englishWords.length; i++) {
-            TextView word = new TextView(linearLayout1.getContext());
-            word.setText(englishWords[i]);
-            word.setPadding(0, 20, 0, 0);
-            linearLayout1.addView(word);
-        }
 
-        //Same thing but fill linearlayout full of TextView displaying French words
-        LinearLayout linearLayout2 = view1.findViewById(R.id.wordListLang2);
-        for (int i = 0; i < frenchWords.length; i++) {
-            TextView word = new TextView(linearLayout2.getContext());
-            word.setText(frenchWords[i]);
-            word.setPadding(0, 20, 0, 0);
-            linearLayout2.addView(word);
-        }
+
 
         return view1;
     }
