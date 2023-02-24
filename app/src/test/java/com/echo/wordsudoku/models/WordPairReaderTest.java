@@ -3,9 +3,10 @@ package com.echo.wordsudoku.models;
 import static org.junit.jupiter.api.Assertions.*;
 
 
+import com.echo.wordsudoku.models.Words.WordPair;
+import com.echo.wordsudoku.models.Words.WordPairReader;
 
 import org.json.JSONException;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.io.*;

@@ -2,6 +2,8 @@ package com.echo.wordsudoku.models;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import com.echo.wordsudoku.models.GameInfo.GameResult;
+
 import org.junit.jupiter.api.Test;
 
 class GameResultTest {
