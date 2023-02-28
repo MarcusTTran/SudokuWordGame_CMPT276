@@ -259,6 +259,7 @@
 <h3>TDD</h3>
 
 - <b>To Be Implemented: </b> When a user selects a difficulty level that is 'medium' or higher, the user can select whether subsequent puzzles are generated from random or themed (topic-specific) word pairs.
+<br>
   <img src="https://i.imgur.com/3koBafM.png"  width="24%">
   <img src="https://i.imgur.com/DXoRdSe.png"  width="24%">
   <img src="https://i.imgur.com/oxpDgi6.png"  width="24%">
@@ -276,6 +277,7 @@
 
 
 - <b>To Be Implemented: </b> If a user loads the app on a larger screen, such as a tablet, the puzzle will be scaled to fit the screen. If the tablet is twice as large as a phone in measurements, the sudoku grid will be twice the area. Consequently, the font of the words and the buttons will also be scaled in size accordingly, allowing for increased clarity.
+<br>
   <img src="https://i.imgur.com/ZDYIsy0.jpg"  width="24%">
   <img src="https://i.imgur.com/T6EgU4U.jpg"  width="40%">
   <br>
