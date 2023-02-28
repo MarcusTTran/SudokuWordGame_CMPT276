@@ -14,6 +14,8 @@
         For every row and column there must contain no repeating words. For every outlined sub-square, there must contain no repeating words\n<b>Hint:</b>
 If you encounter any difficulty translating the words featured in your puzzle, you can tap the dictionary button to see a table with the translation of all your puzzles featured words. But remember, you can only access this translation table twice per game!</string>
     <string name="DictionaryHeader">Puzzle Dictionary</string>
+    <string name="DictionaryLimit">You have reached the maximum number of dictionary peeks for this puzzle. Sorry.</string>
+    <string name="peeks_Remaining">Peeks Remaining</string>
 
 
 

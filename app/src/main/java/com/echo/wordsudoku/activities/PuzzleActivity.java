@@ -52,6 +52,8 @@ public class PuzzleActivity extends AppCompatActivity {
     // This is used for accessing the shared preferences associated with this app
     private SharedPreferences mPreferences;
 
+    private int dictionaryPopupLimit = 0;
+
 
     //Used to hold English and French words to pass to DictionaryFragment
     String[] LanguageList1;
@@ -65,7 +67,7 @@ public class PuzzleActivity extends AppCompatActivity {
 
 
         // CONSTANTS
-        final int numberOfInitialWords = 80;
+        final int numberOfInitialWords = 17;
         final int puzzleDimension = 9;
         // END CONSTANTS
 
@@ -226,8 +228,11 @@ public class PuzzleActivity extends AppCompatActivity {
         }
 
         //Create new instance of RulesFragment
-        DictionaryFragment dictionaryFragment = DictionaryFragment.newInstance(LanguageList1, LanguageList2);
+        DictionaryFragment dictionaryFragment = DictionaryFragment.newInstance(LanguageList1, LanguageList2,dictionaryPopupLimit);
         dictionaryFragment.show(getSupportFragmentManager(), "DictionaryFragment");
+
+        //Increase the dictionary pop up limit (limit is twice per game)
+        dictionaryPopupLimit++;
 
     }
 
