@@ -15,6 +15,7 @@ import com.echo.wordsudoku.R;
 import com.echo.wordsudoku.fragments.DictionaryFragment;
 import com.echo.wordsudoku.fragments.RulesFragment;
 import com.echo.wordsudoku.models.BoardLanguage;
+import com.echo.wordsudoku.models.Memory.JsonWriter;
 import com.echo.wordsudoku.models.sudoku.GameResult;
 import com.echo.wordsudoku.models.sudoku.Puzzle;
 import com.echo.wordsudoku.models.words.WordPair;
@@ -23,6 +24,7 @@ import com.echo.wordsudoku.views.SudokuBoard;
 
 import org.json.JSONException;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
@@ -33,6 +35,8 @@ public class PuzzleActivity extends AppCompatActivity {
     private static final String LOAD_PREVIOUS_GAME = "com.echo.wordsudoku.load_previous_game";
 
     private static final String TAG = "PuzzleActivity";
+
+    private JsonWriter jsonWriter;
 
     private SudokuBoard mSudokuBoardView;
 
@@ -91,6 +95,22 @@ public class PuzzleActivity extends AppCompatActivity {
 
         // Create a new board
         mPuzzle = new Puzzle(mWordPairs,puzzleDimension,puzzleLanguage,numberOfInitialWords);
+
+        String location = "./java/com/echo/wordsudoku/activities/puzzle.json";
+
+
+        try {
+            jsonWriter = new JsonWriter(location);
+            jsonWriter.open();
+            jsonWriter.writePuzzle(mPuzzle);
+            jsonWriter.close();
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        } catch (JSONException e) {
+            throw new RuntimeException(e);
+        }
+
+
 
         // We need to check if the user wants to load a previous game or start a new game
         // It is done by checking the boolean extra in the intent
@@ -214,6 +234,7 @@ public class PuzzleActivity extends AppCompatActivity {
         //Create new instance of RulesFragment
         RulesFragment rulesFragment = new RulesFragment();
         rulesFragment.show(getSupportFragmentManager(), "RulesFragment");
+
     }
 
     //When the user presses the dictionary button

@@ -1,10 +1,17 @@
 package com.echo.wordsudoku.models.dimension;
 
+import com.echo.wordsudoku.models.Memory.Writable;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
 /**
  * The Dimension class represents the x,y dimensions.
- * It can represent the number of rows and columns in a 2D array (e.g. a CellBox object) or CellBox2DArray object which is a 2D array of CellBox objects.
+ * It can represent the number of rows and columns in a 2D array (e.g. a CellBox object) or
+ * CellBox2DArray object which is a 2D array of CellBox objects.
  * It also contains the methods to get the number of rows and columns of the board.
- * It improves the readability of the code when we are dealing with the number of rows and columns of a 2D array and when we want to get a specific cell from the 2D array.
+ * It improves the readability of the code when we are dealing with the number of rows and columns
+ * of a 2D array and when we want to get a specific cell from the 2D array.
  *
  * Usage:
  * Dimension dimension = new Dimension(rows, columns); // or Dimension dimension = new Dimension(new int[]{rows, columns});
@@ -16,7 +23,7 @@ package com.echo.wordsudoku.models.dimension;
  * @version 1.0
  */
 
-public class Dimension {
+public class Dimension implements Writable {
 
     // rows can be used in two ways:
     // x coordinate of a cell in a 2D array.
@@ -76,6 +83,15 @@ public class Dimension {
         this.columns = columns;
     }
 
+    @Override
+    public JSONObject toJson() throws JSONException {
+        JSONObject json = new JSONObject();
+        json.put("rows", this.getRows());
+        json.put("columns", this.getColumns());
+        return json;
+    }
+
     // End of getters and setters
+
 
 }

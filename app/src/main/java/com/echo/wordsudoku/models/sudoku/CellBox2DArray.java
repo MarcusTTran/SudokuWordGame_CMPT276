@@ -47,11 +47,16 @@ package com.echo.wordsudoku.models.sudoku;
 *
 * */
 
+import com.echo.wordsudoku.models.Memory.Writable;
 import com.echo.wordsudoku.models.dimension.Dimension;
 import com.echo.wordsudoku.models.dimension.PuzzleDimensions;
 import com.echo.wordsudoku.models.words.WordPair;
 
-public class CellBox2DArray{
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+public class CellBox2DArray implements Writable {
 
     // The 2D array of CellBox objects
     private CellBox[][] cellBoxes;
@@ -65,10 +70,13 @@ public class CellBox2DArray{
 
     /*
     * @constructor
-    * Takes an array of CellBox objects and the number of rows and the number of columns of the 2D array of CellBoxes and the number of rows and the number of columns of the cells in a CellBox as parameters and initializes the CellBox2DArray object.
+    * Takes an array of CellBox objects and the number of rows and the number of columns of
+    *  the 2D array of CellBoxes and the number of rows and the number of columns of the cells in
+    * a CellBox as parameters and initializes the CellBox2DArray object.
     * It makes a deep copy of the array of CellBox objects and sets it using the setCellBoxes method.
     * @param cellBoxes: The 2D array of CellBox objects
-    * @param boxes: The number of rows and the number of columns of the 2D array of CellBoxes in a Dimension object
+    * @param boxes: The number of rows and the number of columns of the 2D array of CellBoxes
+    * in a Dimension object
     * @param cells: The number of rows and the number of columns of the cells in a CellBox in a Dimension object
     * */
     public CellBox2DArray(CellBox[][] cellBoxes, Dimension boxes, Dimension cells) {
@@ -320,7 +328,6 @@ public class CellBox2DArray{
     *  Used in the constructors.
     *  Used in the setCellBox method.
      */
-
     private void initializeCellBox(Dimension boxes, Dimension cells, CellBox cellBox) {
         int rowsOfBoxes = boxes.getRows();
         int columnsOfBoxes = boxes.getColumns();
@@ -335,4 +342,41 @@ public class CellBox2DArray{
         setCellDimensions(cells);
     }
 
+    /* @method to covert the CellBoxes Object into json and each Dimension into json
+     * @returns JSONObject the json object used to write into .json file within the puzzle
+     */
+    @Override
+    public JSONObject toJson() throws JSONException {
+        JSONObject json = new JSONObject();
+        json.put("cellBoxes", convert2DCellBoxesToJson());
+        json.put("boxDimensions", this.getBoxDimensions().toJson());
+        json.put("cellDimensions", this.getCellDimensions().toJson());
+
+        return null;
+    }
+
+
+    /* @utility to covert the CellBoxes Object into json
+     * @returns JSONObject the json object used to write into .json file within the puzzle
+     */
+    private JSONArray convert2DCellBoxesToJson() throws JSONException {
+        JSONArray jsonArray = new JSONArray();
+        for (CellBox[] cellBoxes: this.getCellBoxes()) {
+            jsonArray.put(convertCellBoxToJson(cellBoxes));
+        }
+
+        return jsonArray;
+    }
+
+    /* @utility to covert the every single CellBox Object into json
+     * @returns JSONObject the json object used to write into .json file within the puzzle
+     */
+    private JSONArray convertCellBoxToJson(CellBox[] cellBoxes) throws JSONException {
+        JSONArray jsonArray = new JSONArray();
+        for (CellBox c : cellBoxes) {
+            jsonArray.put(c.toJson());
+        }
+
+        return jsonArray;
+    }
 }

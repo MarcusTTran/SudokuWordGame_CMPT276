@@ -1,9 +1,14 @@
 package com.echo.wordsudoku.models.sudoku;
 
 import com.echo.wordsudoku.models.BoardLanguage;
+import com.echo.wordsudoku.models.Memory.Writable;
 import com.echo.wordsudoku.models.dimension.Dimension;
 import com.echo.wordsudoku.models.dimension.PuzzleDimensions;
 import com.echo.wordsudoku.models.words.WordPair;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.Arrays;
 import java.util.List;
@@ -28,7 +33,7 @@ import java.util.List;
 *
  * */
 
-public class Puzzle {
+public class Puzzle implements Writable {
 
     // Acceptable dimensions for the puzzle, you cannot create a puzzle with a dimension that is not in this list
     public static final List<Integer> ACCEPTABLE_DIMENSIONS = Arrays.asList(4,6,9,12);
@@ -338,7 +343,6 @@ public class Puzzle {
     *  User cannot insert into the cells that are part of the initial board.
     *  This must be called immediately after the user board is created.
      */
-
     private void lockCells() {
         for (int i = 0; i < userBoard.getRows(); i++) {
             for (int j = 0; j < userBoard.getColumns(); j++) {
@@ -349,5 +353,34 @@ public class Puzzle {
     }
 
 
+    /*
+     * @method convert the puzzle object into json and every single field
+     * @returns Json object to be written into the json file
+     */
+    @Override
+    public JSONObject toJson() throws JSONException {
+        JSONObject json = new JSONObject();
 
+        json.put("userBoard", this.getUserBoard());
+        json.put("solutionBoard", this.getSolutionBoard());
+        json.put("wordPairs", convertWordPairsToJson());
+        json.put("puzzleDimension", this.getPuzzleDimension());
+        json.put("language", this.getLanguage());
+        json.put("mistakes", this.getMistakes());
+
+        return json;
+    }
+
+
+    // @utility convert all wordPairs into json Object
+    // @return JSONArray which is an array of json-converted wordPairs
+    private JSONArray convertWordPairsToJson() throws JSONException {
+        JSONArray jsonArray = new JSONArray();
+
+        for (WordPair w : this.getWordPairs()) {
+            jsonArray.put(w.toJson());
+        }
+
+        return jsonArray;
+    }
 }
