@@ -361,10 +361,10 @@ public class Puzzle implements Writable {
     public JSONObject toJson() throws JSONException {
         JSONObject json = new JSONObject();
 
-        json.put("userBoard", this.getUserBoard());
-        json.put("solutionBoard", this.getSolutionBoard());
+        json.put("userBoard", this.getUserBoard().toJson());
+        json.put("solutionBoard", this.getSolutionBoard().toJson());
         json.put("wordPairs", convertWordPairsToJson());
-        json.put("puzzleDimension", this.getPuzzleDimension());
+        json.put("puzzleDimension", this.getPuzzleDimension().toJson());
         json.put("language", this.getLanguage());
         json.put("mistakes", this.getMistakes());
 

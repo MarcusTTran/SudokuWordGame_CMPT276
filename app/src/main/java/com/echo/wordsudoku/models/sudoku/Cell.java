@@ -206,7 +206,11 @@ public class Cell implements Writable {
     @Override
     public JSONObject toJson() throws JSONException {
         JSONObject json = new JSONObject();
-        json.put("content", this.getContent().toJson());
+        if (this.getContent() != null) {
+            json.put("content", this.getContent().toJson());
+        } else {
+            json.put("content", JSONObject.NULL);
+        }
         json.put("language", this.getLanguage());
         json.put("isEmpty", this.isEmpty());
         json.put("isEditable", this.isEditable());

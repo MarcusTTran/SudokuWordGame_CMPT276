@@ -24,7 +24,6 @@ import com.echo.wordsudoku.views.SudokuBoard;
 
 import org.json.JSONException;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
@@ -47,7 +46,9 @@ public class PuzzleActivity extends AppCompatActivity {
     // This member variable is used to store the input stream for the json file
     // If later on we want to use a remote database, we can just change this to a String and
     // use HttpHandler to get the json file from the database and store it in a String
-    private InputStream jsonFile;
+    private InputStream jsonFile_Words;
+
+    private InputStream jsonFile_LoadPuzzle;
 
 
     private List<WordPair> mWordPairs;
@@ -76,8 +77,8 @@ public class PuzzleActivity extends AppCompatActivity {
         // END CONSTANTS
 
         try {
-            jsonFile = getAssets().open("words.json");
-            mWordPairs = getWords(jsonFile,9);
+            jsonFile_Words = getAssets().open("words.json");
+            mWordPairs = getWords(jsonFile_Words,9);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -96,20 +97,36 @@ public class PuzzleActivity extends AppCompatActivity {
         // Create a new board
         mPuzzle = new Puzzle(mWordPairs,puzzleDimension,puzzleLanguage,numberOfInitialWords);
 
-        String location = "./java/com/echo/wordsudoku/activities/puzzle.json";
+///Users/koushaamouzesh/Desktop/Soduko Project phases/SaveLoad/data
+    // Get the destination file
+            //String destination = getFilesDir().toString();
+            // Create a new JsonWriter
+            String destination = "./src/data/puzzle.json";
+
+            try {
+                jsonWriter = new JsonWriter(this);
+                jsonWriter.open();
+                jsonWriter.writePuzzle(mPuzzle);
+                jsonWriter.close();
+
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            } catch (JSONException e) {
+                throw new RuntimeException(e);
+            }
 
 
-        try {
-            jsonWriter = new JsonWriter(location);
-            jsonWriter.open();
-            jsonWriter.writePuzzle(mPuzzle);
-            jsonWriter.close();
-        } catch (FileNotFoundException e) {
-            throw new RuntimeException(e);
-        } catch (JSONException e) {
-            throw new RuntimeException(e);
-        }
-
+//        try {
+//            jsonWriter = new JsonWriter(destination);
+//            jsonWriter.open();
+//            jsonWriter.writePuzzle(mPuzzle);
+//            jsonWriter.close();
+//
+//        } catch (IOException e) {
+//            throw new RuntimeException(e);
+//        } catch (JSONException e) {
+//            throw new RuntimeException(e);
+//        }
 
 
         // We need to check if the user wants to load a previous game or start a new game
