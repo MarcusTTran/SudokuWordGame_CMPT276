@@ -30,11 +30,21 @@ public class JsonWriter {
     // The file writer to write the JSON object to the file
     private PrintWriter writer;
 
+    // The destination file name
     private String destination;
 
+    // The file name to write the json object
+    private final String FILENAME = "puzzle.json";
+
+
+    /**
+     * Constructs a new JsonWriter that writes to the file with the given file name.
+     *
+     * @param context The context of the application
+     */
     public JsonWriter(Context context) {
-        String filename = "puzzle.json";
-        File file = new File(context.getFilesDir(), filename);
+
+            File file = new File(context.getFilesDir(), FILENAME);
         this.destination = file.getAbsolutePath();
     }
 
@@ -56,7 +66,6 @@ public class JsonWriter {
 
     /**
      * Closes the file writer.
-     *
      * @throws IOException If there is an error closing the file writer
      */
     public void close() throws IOException {
@@ -69,7 +78,7 @@ public class JsonWriter {
      * @param json The JSON string to write
      * @throws IOException If there is an error writing the JSON string to the file
      */
-    private void saveFile(String json) throws IOException {
+    private void saveFile(String json) {
         // Write the JSON string to the file
         writer.print(json);
 

@@ -97,36 +97,22 @@ public class PuzzleActivity extends AppCompatActivity {
         // Create a new board
         mPuzzle = new Puzzle(mWordPairs,puzzleDimension,puzzleLanguage,numberOfInitialWords);
 
-///Users/koushaamouzesh/Desktop/Soduko Project phases/SaveLoad/data
-    // Get the destination file
-            //String destination = getFilesDir().toString();
-            // Create a new JsonWriter
-            String destination = "./src/data/puzzle.json";
 
-            try {
-                jsonWriter = new JsonWriter(this);
-                jsonWriter.open();
-                jsonWriter.writePuzzle(mPuzzle);
-                jsonWriter.close();
+        // write the puzzle to a json file
+        try {
+            jsonWriter = new JsonWriter(this);
+            jsonWriter.open();
+            jsonWriter.writePuzzle(mPuzzle);
+            jsonWriter.close();
 
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            } catch (JSONException e) {
-                throw new RuntimeException(e);
-            }
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        } catch (JSONException e) {
+            throw new RuntimeException(e);
+        }
 
 
-//        try {
-//            jsonWriter = new JsonWriter(destination);
-//            jsonWriter.open();
-//            jsonWriter.writePuzzle(mPuzzle);
-//            jsonWriter.close();
-//
-//        } catch (IOException e) {
-//            throw new RuntimeException(e);
-//        } catch (JSONException e) {
-//            throw new RuntimeException(e);
-//        }
+
 
 
         // We need to check if the user wants to load a previous game or start a new game
