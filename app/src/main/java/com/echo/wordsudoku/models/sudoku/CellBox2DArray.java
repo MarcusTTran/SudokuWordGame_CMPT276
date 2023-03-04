@@ -352,7 +352,7 @@ public class CellBox2DArray implements Writable {
         json.put("boxDimensions", this.getBoxDimensions().toJson());
         json.put("cellDimensions", this.getCellDimensions().toJson());
 
-        return null;
+        return json;
     }
 
 

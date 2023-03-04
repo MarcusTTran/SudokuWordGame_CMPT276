@@ -238,7 +238,7 @@ public class CellBox implements Writable {
         json.put("dimension", this.dimension.toJson());
 
 
-        return null;
+        return json;
     }
 
     /* @utility to covert all Cells (array) into Json
