@@ -15,6 +15,7 @@ import com.echo.wordsudoku.R;
 import com.echo.wordsudoku.fragments.DictionaryFragment;
 import com.echo.wordsudoku.fragments.RulesFragment;
 import com.echo.wordsudoku.models.BoardLanguage;
+import com.echo.wordsudoku.models.Memory.JsonReader;
 import com.echo.wordsudoku.models.Memory.JsonWriter;
 import com.echo.wordsudoku.models.sudoku.GameResult;
 import com.echo.wordsudoku.models.sudoku.Puzzle;
@@ -24,6 +25,7 @@ import com.echo.wordsudoku.views.SudokuBoard;
 
 import org.json.JSONException;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
@@ -37,6 +39,8 @@ public class PuzzleActivity extends AppCompatActivity {
 
     private JsonWriter jsonWriter;
 
+    private JsonReader jsonReader;
+
     private SudokuBoard mSudokuBoardView;
 
     // The word list for the spinner to choose from
@@ -48,7 +52,6 @@ public class PuzzleActivity extends AppCompatActivity {
     // use HttpHandler to get the json file from the database and store it in a String
     private InputStream jsonFile_Words;
 
-    private InputStream jsonFile_LoadPuzzle;
 
 
     private List<WordPair> mWordPairs;
@@ -98,21 +101,19 @@ public class PuzzleActivity extends AppCompatActivity {
         mPuzzle = new Puzzle(mWordPairs,puzzleDimension,puzzleLanguage,numberOfInitialWords);
 
 
-        // write the puzzle to a json file
-        try {
-            jsonWriter = new JsonWriter(this);
-            jsonWriter.open();
-            jsonWriter.writePuzzle(mPuzzle);
-            jsonWriter.close();
 
-        } catch (IOException e) {
+
+        // read puzzle from json
+        try {
+            jsonReader = new JsonReader(this);
+            jsonReader.readPuzzle();
+        } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
         } catch (JSONException e) {
             throw new RuntimeException(e);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
-
-
-
 
 
         // We need to check if the user wants to load a previous game or start a new game
@@ -268,8 +269,22 @@ public class PuzzleActivity extends AppCompatActivity {
     // @param view The view that was pressed (the button)
     // TODO: Add a dialog to ask the user if he wants to finish the puzzle
     public void finishButtonPressed(View view) {
+
+        // for testing purposes
         if (!mPuzzle.isPuzzleFilled()) {
-            Toast.makeText(this, "You have not filled the puzzle!", Toast.LENGTH_LONG).show();
+            //Toast.makeText(this, "You have not filled the puzzle!", Toast.LENGTH_LONG).show();
+
+            try {
+                jsonWriter = new JsonWriter(this);
+                jsonWriter.open();
+                jsonWriter.writePuzzle(mPuzzle);
+                jsonWriter.close();
+
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            } catch (JSONException e) {
+                throw new RuntimeException(e);
+            }
             return;
         }
         // TODO: show a dialog to ask the user if he wants to finish the puzzle
@@ -291,7 +306,7 @@ public class PuzzleActivity extends AppCompatActivity {
     }
 
     // gets a list of word pairs based on the number of dimension given
-    // calls the csv reader
+    // calls the WordPairReader
     private List<WordPair> getWords(InputStream is, int puzzleDimension) throws JSONException, IOException {
         WordPairReader reader = new WordPairReader(is,puzzleDimension);
         return reader.getWords();

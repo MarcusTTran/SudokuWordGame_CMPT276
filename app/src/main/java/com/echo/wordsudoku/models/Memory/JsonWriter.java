@@ -13,9 +13,25 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-
 /**
  * The JsonWriter class writes the Puzzle as json object to the file
+ *
+ * how to call use the JsonWriter: ('this' is the context of the application)
+ *
+ *          // write the puzzle to a json file
+ *
+ *         try {
+ *             jsonWriter = new JsonWriter(this);
+ *             jsonWriter.open();
+ *             jsonWriter.writePuzzle(mPuzzle);
+ *             jsonWriter.close();
+ *
+ *         } catch (IOException e) {
+ *             throw new RuntimeException(e);
+ *         } catch (JSONException e) {
+ *             throw new RuntimeException(e);
+ *         }
+ *
  * @author kousha amouzesh
  * @version 1.0
  */
@@ -44,7 +60,7 @@ public class JsonWriter {
      */
     public JsonWriter(Context context) {
 
-            File file = new File(context.getFilesDir(), FILENAME);
+        File file = new File(context.getFilesDir(), FILENAME);
         this.destination = file.getAbsolutePath();
     }
 
