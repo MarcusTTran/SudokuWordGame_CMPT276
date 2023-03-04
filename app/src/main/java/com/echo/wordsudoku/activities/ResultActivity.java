@@ -69,14 +69,14 @@ public class ResultActivity extends AppCompatActivity {
     // When the user presses the back button, go back to the main menu
     // instead of going back to the puzzle activity with previous game
     public void onBackPressed() {
-        Intent intent = MainActivity.newIntent(ResultActivity.this);
+        Intent intent = MainActivity2.newIntent(ResultActivity.this);
         startActivity(intent);
     }
 
     // When the user presses the main menu button, go back to the main menu
     // instead of going back to the puzzle activity with previous game (this fires when the user clicks the button on the result activity)
     public void mainMenuButtonPressed(View view) {
-        Intent intent = MainActivity.newIntent(ResultActivity.this);
+        Intent intent = MainActivity2.newIntent(ResultActivity.this);
         startActivity(intent);
     }
 

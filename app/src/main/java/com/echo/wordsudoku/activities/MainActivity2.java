@@ -13,7 +13,7 @@ import android.widget.Toast;
 import com.echo.wordsudoku.R;
 import com.echo.wordsudoku.models.BoardLanguage;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity2 extends AppCompatActivity {
 
     private static final String TAG = "MainActivity";
 
@@ -32,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_main2);
 
 
 
@@ -52,10 +52,10 @@ public class MainActivity extends AppCompatActivity {
         mNewGameButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(MainActivity.this, "New Game Button Clicked", Toast.LENGTH_SHORT).show();
+                Toast.makeText(MainActivity2.this, "New Game Button Clicked", Toast.LENGTH_SHORT).show();
 
                 // Start the puzzle activity
-                Intent intent = PuzzleActivity.newIntent(MainActivity.this, false);
+                Intent intent = PuzzleActivity.newIntent(MainActivity2.this, false);
                 startActivity(intent);
             }
         });
@@ -71,10 +71,10 @@ public class MainActivity extends AppCompatActivity {
         mLoadGameButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(MainActivity.this, "Load Game Button Clicked", Toast.LENGTH_SHORT).show();
+                Toast.makeText(MainActivity2.this, "Load Game Button Clicked", Toast.LENGTH_SHORT).show();
 
                 // Start the puzzle activity
-                Intent intent = PuzzleActivity.newIntent(MainActivity.this, true);
+                Intent intent = PuzzleActivity.newIntent(MainActivity2.this, true);
                 startActivity(intent);
             }
         });
@@ -88,7 +88,7 @@ public class MainActivity extends AppCompatActivity {
         mExitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(MainActivity.this, "Exit Button Clicked", Toast.LENGTH_SHORT).show();
+                Toast.makeText(MainActivity2.this, "Exit Button Clicked", Toast.LENGTH_SHORT).show();
                 finish();
             }
         });
@@ -115,7 +115,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public static Intent newIntent(Context packageContext) {
-        Intent intent = new Intent(packageContext, MainActivity.class);
+        Intent intent = new Intent(packageContext, MainActivity2.class);
         // This flag is used to clear the activity stack
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         return intent;
