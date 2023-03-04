@@ -67,6 +67,17 @@ public class PuzzleDimensions implements Writable {
         setPuzzleDimension(puzzleDimension);
     }
 
+    // @constructor used by JSON reader to directly construct the PuzzleDimensions object from a JSONObject
+    // Prepares the correct dimensions for the requested puzzle dimension.
+    // @param: puzzleDimension: int
+    // @param: eachBoxDimension: Dimension
+    // @param: boxesInPuzzleDimension: Dimension
+    public PuzzleDimensions(int puzzleDimension, Dimension eachBoxDimension, Dimension boxesInPuzzleDimension) {
+        this.puzzleDimension = puzzleDimension;
+        this.eachBoxDimension = eachBoxDimension;
+        this.boxesInPuzzleDimension = boxesInPuzzleDimension;
+    }
+
 
     // Getters
     // No setters because we want this class to be immutable.

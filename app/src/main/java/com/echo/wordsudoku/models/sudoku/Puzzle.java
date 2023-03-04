@@ -101,6 +101,26 @@ public class Puzzle implements Writable {
         lockCells();
     }
 
+    /* @constructor
+     a puzzle contrurctor that directly takes all the fields
+     used by JSONReader to create a puzzle from a JSON file and resume the game state
+     @param userBoard: the user board
+    @param solutionBoard: the solution board
+    @param wordPairs: the word pairs
+    @param language: the language
+    @param mistakes: the number of mistakes
+
+     */
+    public Puzzle(CellBox2DArray userBoard, CellBox2DArray solutionBoard, List<WordPair> wordPairs, PuzzleDimensions puzzleDimension, int language, int mistakes) {
+        this.userBoard = userBoard;
+        this.solutionBoard = solutionBoard;
+        this.mWordPairs = wordPairs;
+        this.puzzleDimension = puzzleDimension;
+        this.language = language;
+        this.mistakes = mistakes;
+    }
+
+
     // Getters and setters
 
     public CellBox2DArray getUserBoard() {
@@ -364,7 +384,7 @@ public class Puzzle implements Writable {
         json.put("userBoard", this.getUserBoard().toJson());
         json.put("solutionBoard", this.getSolutionBoard().toJson());
         json.put("wordPairs", convertWordPairsToJson());
-        json.put("puzzleDimension", this.getPuzzleDimension().toJson());
+        json.put("puzzleDimensions", this.getPuzzleDimension().toJson());
         json.put("language", this.getLanguage());
         json.put("mistakes", this.getMistakes());
 
