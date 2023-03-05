@@ -1,8 +1,10 @@
 package com.echo.wordsudoku.ui;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
@@ -17,6 +19,7 @@ import com.echo.wordsudoku.R;
 import com.echo.wordsudoku.models.BoardLanguage;
 import com.echo.wordsudoku.models.words.WordPairReader;
 import com.echo.wordsudoku.ui.puzzleParts.PuzzleViewModel;
+import com.google.android.material.navigation.NavigationView;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -36,6 +39,8 @@ public class MainActivity extends AppCompatActivity {
     private SettingsViewModel mSettingsViewModel;
 
     private int mSettingsPuzzleLanguage;
+
+    private AppBarConfiguration appBarConfiguration;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,14 +66,19 @@ public class MainActivity extends AppCompatActivity {
         NavHostFragment navHostFragment =
                 (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment);
         NavController navController = navHostFragment.getNavController();
-        AppBarConfiguration appBarConfiguration =
-                new AppBarConfiguration.Builder(R.id.puzzleResultFragment,R.id.mainMenuFragment,R.id.puzzleFragment).build();
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        toolbar.showOverflowMenu();
-        NavigationUI.setupWithNavController(
-                toolbar, navController, appBarConfiguration);
+        DrawerLayout drawerLayout = findViewById(R.id.drawer_layout);
+        NavigationView navigationView = findViewById(R.id.nav_view);
+        appBarConfiguration =
+                new AppBarConfiguration.Builder(R.id.puzzleResultFragment,R.id.mainMenuFragment,R.id.puzzleFragment).setDrawerLayout(drawerLayout).build();
+        NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
+        NavigationUI.setupWithNavController(navigationView, navController);
+    }
 
+    @Override
+    public boolean onSupportNavigateUp() {
+        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
+        return NavigationUI.navigateUp(navController, appBarConfiguration)
+                || super.onSupportNavigateUp();
     }
 
     @Override
