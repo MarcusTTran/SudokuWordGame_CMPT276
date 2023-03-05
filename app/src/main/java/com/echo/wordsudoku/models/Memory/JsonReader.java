@@ -27,13 +27,14 @@ import java.util.List;
  *
  * how to call use the JsonReader: ('this' is the context of the application)
  *
+ *  !!! for use in Puzzle activity make sure the the mWordPairs is assigned to the loaded puzzle's word pairs
+ *  !!! use get word pairs from the loaded puzzle to assign the word buttons in the puzzle activity
+ *
  *          // read the puzzle from a json file
  *
  *         try {
  *             jsonReader = new JsonReader(this);
- *             jsonReader.open();
  *             mPuzzle = jsonReader.readPuzzle();
- *             jsonReader.close();
  *
  *         } catch (IOException e) {
  *             throw new RuntimeException(e);
@@ -138,6 +139,7 @@ public class JsonReader {
 
         /**
             using this template used in writing the json object, we read the json object
+
             json.put("userBoard", this.getUserBoard().toJson());
             json.put("solutionBoard", this.getSolutionBoard().toJson());
             json.put("wordPairs", convertWordPairsToJson());
@@ -221,7 +223,6 @@ public class JsonReader {
      */
     private CellBox [][] parse2DCellBoxes(JSONArray cellBoxesJSON) {
         try {
-            // TODO: make sure the size of array is accurate [length][length]
 
             // make a 2D array of cell boxes
             CellBox [][] cellBoxes = new CellBox[cellBoxesJSON.length()][cellBoxesJSON.length()];

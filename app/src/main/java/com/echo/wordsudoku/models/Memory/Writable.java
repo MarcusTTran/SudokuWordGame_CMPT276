@@ -16,7 +16,10 @@ import org.json.JSONObject;
 public interface Writable {
 
 
-    // @method any object that should be written into the puzzle.json
-    // overrides this method `toJson()` to convert the object into a json object
+    /**
+     * toJson() function
+     * @return the json object of the target class
+     * @throws JSONException
+     */
     JSONObject toJson() throws JSONException;
 }

@@ -105,17 +105,17 @@ public class PuzzleActivity extends AppCompatActivity {
 
         // read puzzle from json //TODO: DELETE FOR LATER USE (THIS IS ONLY FOR TESTING)
         // ONLY FOR TESTING
-        try {
-
-            jsonReader = new JsonReader(this);
-            mPuzzle = jsonReader.readPuzzle();
-            mWordPairs = mPuzzle.getWordPairs();
-
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        } catch (JSONException e) {
-            throw new RuntimeException(e);
-        }
+//        try {
+//
+//            jsonReader = new JsonReader(this);
+//            mPuzzle = jsonReader.readPuzzle();
+//            mWordPairs = mPuzzle.getWordPairs();
+//
+//        } catch (IOException e) {
+//            throw new RuntimeException(e);
+//        } catch (JSONException e) {
+//            throw new RuntimeException(e);
+//        }
         // ONLY FOR TESTING
 
 
@@ -276,19 +276,22 @@ public class PuzzleActivity extends AppCompatActivity {
 
         // for testing purposes
         if (!mPuzzle.isPuzzleFilled()) {
-            //Toast.makeText(this, "You have not filled the puzzle!", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "You have not filled the puzzle!", Toast.LENGTH_LONG).show();
 
-            try {
-                jsonWriter = new JsonWriter(this);
-                jsonWriter.open();
-                jsonWriter.writePuzzle(mPuzzle);
-                jsonWriter.close();
 
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            } catch (JSONException e) {
-                throw new RuntimeException(e);
-            }
+            // TODO: show a dialog to ask the user if he wants to finish the puzzle and save it
+            // the lines below are for testing the JsonWriter
+//            try {
+//                jsonWriter = new JsonWriter(this);
+//                jsonWriter.open();
+//                jsonWriter.writePuzzle(mPuzzle);
+//                jsonWriter.close();
+//
+//            } catch (IOException e) {
+//                throw new RuntimeException(e);
+//            } catch (JSONException e) {
+//                throw new RuntimeException(e);
+//            }
             return;
         }
 
