@@ -1,11 +1,17 @@
 <resources>
     <string name="app_name">Word Sudoku</string>
-    <string name="new_game_btn">NEW GAME</string>
-    <string name="load_game_btn">LOAD GAME</string>
-    <string name="exit_btn">EXIT</string>
-    <string name="main_menu_btn">MAIN MENU</string>
+    <string name="menu_new_game_btn">New Game</string>
+    <string name="menu_load_game_btn">Load Game</string>
+    <string name="menu_exit_btn">Exit</string>
+    <string name="menu_main_menu_btn">Main Menu</string>
     <string name="fail_msg">You Failed!</string>
-    <string name="finish_btn">FINISH</string>
+
+    <!-- Options Menu -->
+    <string name="menu_finish">Done</string>
+    <string name="menu_rules">Rules</string>
+    <string name="menu_dictionary">Dictionary</string>
+    <string name="menu_save_game">Save Puzzle</string>
+
     <string name="preference_file_key">com.echo.wordsudoku.gameOptions</string>
     <string name="puzzle_language_key">com.echo.wordsudoku.puzzleLanguageKey</string>
 
@@ -17,6 +23,23 @@ If you encounter any difficulty translating the words featured in your puzzle, y
     <string name="DictionaryLimit">You have reached the maximum number of dictionary peeks for this puzzle. Sorry.</string>
     <string name="peeks_Remaining">Peeks Remaining</string>
 
+
+    <!-- Preference Titles -->
+    <string name="messages_header">Messages</string>
+    <string name="sync_header">Sync</string>
+
+    <!-- Messages Preferences -->
+    <string name="signature_title">Your signature</string>
+    <string name="reply_title">Default reply action</string>
+
+    <!-- Sync Preferences -->
+    <string name="sync_title">Sync email periodically</string>
+    <string name="attachment_title">Download incoming attachments</string>
+    <string name="attachment_summary_on">Automatically download attachments for incoming emails
+    </string>
+    <string name="attachment_summary_off">Only download attachments when manually requested</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 
 </resources>

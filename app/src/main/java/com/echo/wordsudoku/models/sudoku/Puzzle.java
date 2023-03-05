@@ -196,7 +196,7 @@ public class Puzzle {
             for (int j = 0; j < userBoard.getColumns(); j++) {
                 Cell cell = userBoard.getCellFromBigArray(i,j);
                 if (cell.getContent() != null)
-                    stringBoard[i][j] = cell.getContent().getEnglishOrFrench(language);
+                    stringBoard[i][j] = cell.getContent().getEnglishOrFrench(cell.getLanguage());
                 else
                     stringBoard[i][j] = "";
             }
@@ -328,6 +328,7 @@ public class Puzzle {
                 );
             }
             Cell cellThatIsGoingToBeRemoved = result.getCellFromBigArray(cellToRemove);
+            cellThatIsGoingToBeRemoved.setLanguage(BoardLanguage.getOtherLanguage(language));
             cellThatIsGoingToBeRemoved.clear();
         }
         return result;

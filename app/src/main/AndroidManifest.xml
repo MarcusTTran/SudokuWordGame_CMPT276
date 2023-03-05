@@ -16,7 +16,7 @@
             android:name=".activities.ResultActivity"
             android:exported="false" />
         <activity
-            android:name=".activities.MainActivity"
+            android:name=".activities.MainActivity2"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -28,7 +28,7 @@
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
-        <activity android:name=".activities.PuzzleActivity" />
+        <activity android:name=".ui.puzzle.PuzzleActivity" />
     </application>
 
 </manifest>

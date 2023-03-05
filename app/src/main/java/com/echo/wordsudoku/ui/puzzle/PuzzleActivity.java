@@ -1,19 +1,23 @@
-package com.echo.wordsudoku.activities;
+package com.echo.wordsudoku.ui.puzzle;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
-import android.widget.Button;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.echo.wordsudoku.R;
-import com.echo.wordsudoku.fragments.DictionaryFragment;
-import com.echo.wordsudoku.fragments.RulesFragment;
+import com.echo.wordsudoku.activities.ResultActivity;
+import com.echo.wordsudoku.models.dimension.Dimension;
+import com.echo.wordsudoku.ui.dialogs.DictionaryFragment;
+import com.echo.wordsudoku.ui.dialogs.RulesFragment;
 import com.echo.wordsudoku.models.BoardLanguage;
 import com.echo.wordsudoku.models.sudoku.GameResult;
 import com.echo.wordsudoku.models.sudoku.Puzzle;
@@ -59,6 +63,10 @@ public class PuzzleActivity extends AppCompatActivity {
     String[] LanguageList1;
     String[] LanguageList2;
 
+    private int mPuzzleLanguage;
+
+    private PuzzleViewModel mPuzzleViewModel;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,15 +90,18 @@ public class PuzzleActivity extends AppCompatActivity {
         }
 
 
-
-
         // Get the shared preferences
         mPreferences = getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE);
         // Get the puzzle language from the shared preferences
-        int puzzleLanguage = mPreferences.getInt(getString(R.string.puzzle_language_key), BoardLanguage.ENGLISH);
+        mPuzzleLanguage = mPreferences.getInt(getString(R.string.puzzle_language_key), BoardLanguage.ENGLISH);
 
         // Create a new board
-        mPuzzle = new Puzzle(mWordPairs,puzzleDimension,puzzleLanguage,numberOfInitialWords);
+        mPuzzle = new Puzzle(mWordPairs,puzzleDimension,mPuzzleLanguage,numberOfInitialWords);
+
+        mPuzzleViewModel = new ViewModelProvider(this).get(PuzzleViewModel.class);
+        mPuzzleViewModel.setWordPairs(mWordPairs);
+        mPuzzleViewModel.setBoardLanguage(mPuzzleLanguage);
+        mPuzzleViewModel.setPuzzle(mPuzzle);
 
         // We need to check if the user wants to load a previous game or start a new game
         // It is done by checking the boolean extra in the intent
@@ -99,27 +110,11 @@ public class PuzzleActivity extends AppCompatActivity {
             // A toast to make sure the activity is being created
             Toast.makeText(this, "Puzzle Activity being Created (Load previous game!)", Toast.LENGTH_LONG).show();
             */
-        View[] buttons = {findViewById(R.id.button1),
-                findViewById(R.id.button2),
-                findViewById(R.id.button3),
-                findViewById(R.id.button4),
-                findViewById(R.id.button5),
-                findViewById(R.id.button6),
-                findViewById(R.id.button7),
-                findViewById(R.id.button8),
-                findViewById(R.id.button9)};
-        // Set button labels with the other language
-        setButtonLabels(buttons, BoardLanguage.getOtherLanguage(puzzleLanguage));
 
         // For testing purposes only, to make sure the activity is being created
 //        Toast.makeText(this, "Puzzle Activity being Created (Load previous game!)", Toast.LENGTH_LONG).show();
 
 
-        // Get the SudokuBoardView reference from XML layout
-        // this is the view that will display the Sudoku board
-        mSudokuBoardView = findViewById(R.id.sudoku_board);
-        // Setting the initial board to UI
-        mSudokuBoardView.setBoard(mPuzzle.toStringArray());
 
 
         //Used to hold English and French word that we pass to DictionaryFragment
@@ -135,9 +130,8 @@ public class PuzzleActivity extends AppCompatActivity {
     // @param word The word to be entered
     // @return true if the word was entered successfully, false otherwise
     // msg is the message to be displayed in the Logcat
-    private boolean enterWord(String word) {
+    public void enterWordInBoard(String word) {
         String msg = "Word entered successfully!";
-        boolean result = true;
         WordPair associatedWordPair = null;
         for (WordPair wordPair : mWordPairs) {
             if (wordPair.getEnglishOrFrench(BoardLanguage.ENGLISH).equals(word) || wordPair.getEnglishOrFrench(BoardLanguage.FRENCH).equals(word)) {
@@ -146,21 +140,21 @@ public class PuzzleActivity extends AppCompatActivity {
             }
         }
         if (associatedWordPair != null) {
-            try {
-                mPuzzle.setCell(mSudokuBoardView.getCurrentCellRow() - 1, mSudokuBoardView.getCurrentCellColumn() - 1, associatedWordPair);
-                if (!mSudokuBoardView.fillWord(word)) {
-                    msg = "An error occurred! Make sure you have selected a cell";
-                    result = false;
+            Dimension currentCell =  ((PuzzleBoardFragment) (getSupportFragmentManager().findFragmentById(R.id.board))).getSelectedCell();
+            if (currentCell.getRows()==-2 || currentCell.getColumns()==-2) {
+                msg = "You must select a cell first";
+            }
+            else {
+                try {
+                    mPuzzle.setCell(currentCell.getRows(), currentCell.getColumns(), associatedWordPair);
+                    mPuzzleViewModel.setPuzzle(mPuzzle);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    msg = "You can not write in the puzzle initial cells";
                 }
-            } catch (Exception e) {
-                msg = "You can not write in the puzzle initial cells";
-                result = false;
-            } finally {
-                Log.d(TAG, msg);
-                return result;
             }
         }
-        return false;
+        Log.d(TAG, msg);
     }
 
 
@@ -186,30 +180,8 @@ public class PuzzleActivity extends AppCompatActivity {
         return intent;
     }
 
-
-    // This method sets the labels of the buttons
-    // @param buttons The array of buttons
-    // @param language The language to be used for the button labels
-    private void setButtonLabels(View[] buttons, int language)
-    {
-        for(int i = 0; i < mWordPairs.size(); i++)
-        {
-            ((Button)buttons[i]).setText(mWordPairs.get(i).getEnglishOrFrench(language));
-        }
-    }
-
-    // This method is called when a button is pressed
-    // It enters the word in the board
-    // @param view The view that was pressed (the button)
-
-
-    public void wordButtonPressed(View view) {
-        String word = ((Button)view).getText().toString();
-        enterWord(word);
-    }
-
     //When the user presses the rules button
-    public void rulesButtonPressed(View view) {
+    public void rulesButtonPressed() {
         //Toast.makeText(this, "Help Button pressed", Toast.LENGTH_LONG).show();
         //Create new instance of RulesFragment
         RulesFragment rulesFragment = new RulesFragment();
@@ -217,7 +189,7 @@ public class PuzzleActivity extends AppCompatActivity {
     }
 
     //When the user presses the dictionary button
-    public void dictionaryButtonPressed(View view) {
+    public void dictionaryButtonPressed() {
         //Toast.makeText(this, "Dictionary Button pressed", Toast.LENGTH_LONG).show();
 
         for (int i = 0; i < mWordPairs.size(); i++) {
@@ -243,7 +215,7 @@ public class PuzzleActivity extends AppCompatActivity {
     // If the user has filled the board, it checks if the user has solved the puzzle
     // @param view The view that was pressed (the button)
     // TODO: Add a dialog to ask the user if he wants to finish the puzzle
-    public void finishButtonPressed(View view) {
+    public void finishButtonPressed() {
         if (!mPuzzle.isPuzzleFilled()) {
             Toast.makeText(this, "You have not filled the puzzle!", Toast.LENGTH_LONG).show();
             return;
@@ -273,4 +245,35 @@ public class PuzzleActivity extends AppCompatActivity {
         return reader.getWords();
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.puzzle_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.finish_button:
+                finishButtonPressed();
+                return true;
+            case R.id.rules_button:
+                rulesButtonPressed();
+                return true;
+            case R.id.dictionary_help_button:
+                dictionaryButtonPressed();
+                return true;
+            case R.id.save_game_button:
+                //saveGame();
+                Toast.makeText(this, "Save Game Button pressed", Toast.LENGTH_LONG).show();
+                return true;
+            case R.id.discard_game_button:
+                //discardGame();
+                Toast.makeText(this, "Discard Game Button pressed", Toast.LENGTH_LONG).show();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
 }

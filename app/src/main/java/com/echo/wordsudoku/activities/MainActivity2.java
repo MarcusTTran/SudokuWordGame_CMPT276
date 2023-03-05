@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import com.echo.wordsudoku.R;
 import com.echo.wordsudoku.models.BoardLanguage;
+import com.echo.wordsudoku.ui.puzzle.PuzzleActivity;
 
 public class MainActivity2 extends AppCompatActivity {
 

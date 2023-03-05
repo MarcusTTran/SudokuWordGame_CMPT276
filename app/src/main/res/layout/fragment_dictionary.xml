@@ -6,7 +6,7 @@
     android:id="@+id/peeksTotal"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragments.DictionaryFragment">
+    tools:context=".ui.dialogs.DictionaryFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/PopUp_DictionaryBox"

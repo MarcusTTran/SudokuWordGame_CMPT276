@@ -330,24 +330,6 @@ public class SudokuBoard extends View {
         paint.setTextSize(Math.min(desiredTextSizeHeightConstraint, Math.min(maxTextSize,desiredTextSizeWidthConstraint)));
     }
 
-    // Method to fill the word in the board
-    // It is called externally from PuzzleActivity
-    // whenever user presses the "Enter" button,
-    // this method is called to fill the word in the board
-    // it uses the member variables currentCellRow and currentCellColumn
-    // to get the current selected cell's position
-    // returns true if the word was filled successfully
-    // returns false if the word was not filled successfully (User had not selected any word at the beginning or there was any other error)
-    public boolean fillWord(String s) {
-        if (currentCellColumn != -1 && currentCellRow != -1) {
-            board[currentCellRow - 1][currentCellColumn - 1] = s;
-            invalidate();
-            return true;
-        }
-        else {
-            return false;
-        }
-    }
 
     // Method to set the board layout of the view to a custom board
     // It is called externally from PuzzleActivity
@@ -369,5 +351,7 @@ public class SudokuBoard extends View {
     public int getCurrentCellColumn() {
         return currentCellColumn;
     }
+
+
 
 }

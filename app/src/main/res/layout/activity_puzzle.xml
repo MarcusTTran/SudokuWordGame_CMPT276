@@ -4,205 +4,39 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activities.MainActivity">
+    tools:context=".activities.MainActivity2">
 
-    <com.echo.wordsudoku.views.SudokuBoard
-        android:id="@+id/sudoku_board"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        custom:boardColor="#000000"
-        custom:cellFillColor="#036507"
-        custom:cellsHighlightColor="#2C00FF00"
-        custom:layout_constraintEnd_toEndOf="parent"
-        custom:layout_constraintStart_toStartOf="parent"
-        custom:layout_constraintTop_toBottomOf="@id/timer_text_view"></com.echo.wordsudoku.views.SudokuBoard>
-
-    <TextView
-        android:id="@+id/timer_text_view"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="02:48"
-        custom:layout_constraintBottom_toTopOf="@id/sudoku_board"
-        custom:layout_constraintEnd_toEndOf="parent"
-        custom:layout_constraintStart_toStartOf="parent"
-        custom:layout_constraintTop_toTopOf="parent"
-        custom:layout_constraintVertical_bias="0.59000003" />
-
-    <ImageButton
-        android:id="@+id/preference_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        custom:layout_constraintBottom_toTopOf="@id/sudoku_board"
-        custom:layout_constraintEnd_toEndOf="parent"
-        custom:layout_constraintHorizontal_bias="0.5"
-        custom:layout_constraintStart_toEndOf="@+id/help_button"
-        custom:layout_constraintTop_toTopOf="parent"
-        custom:srcCompat="@android:drawable/ic_menu_preferences" />
-
-    <ImageButton
-        android:id="@+id/help_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:onClick="rulesButtonPressed"
-        custom:layout_constraintBottom_toTopOf="@id/sudoku_board"
-        custom:layout_constraintEnd_toStartOf="@+id/preference_button"
-        custom:layout_constraintHorizontal_bias="0.5"
-        custom:layout_constraintStart_toEndOf="@+id/dictionary_help_button"
-        custom:layout_constraintTop_toTopOf="parent"
-        custom:srcCompat="@android:drawable/ic_menu_help" />
-
-    <ImageButton
-        android:id="@+id/dictionary_help_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:onClick="dictionaryButtonPressed"
-        custom:layout_constraintBottom_toTopOf="@+id/sudoku_board"
-        custom:layout_constraintEnd_toStartOf="@+id/help_button"
-        custom:layout_constraintHorizontal_bias="0.5"
-        custom:layout_constraintHorizontal_chainStyle="packed"
-        custom:layout_constraintStart_toEndOf="@+id/timer_text_view"
-        custom:layout_constraintTop_toTopOf="parent"
-        custom:srcCompat="@android:drawable/ic_menu_myplaces" />
-
-
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <androidx.fragment.app.FragmentContainerView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:paddingVertical="10dp"
-        custom:layout_constraintBottom_toBottomOf="parent"
-        custom:layout_constraintStart_toStartOf="parent"
-        custom:layout_constraintTop_toBottomOf="@+id/sudoku_board">
-
-        <Button
-            android:id="@+id/button1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:onClick="wordButtonPressed"
-            android:padding="0dp"
-            android:text="Button"
-            custom:layout_constraintBottom_toTopOf="@+id/button4"
-            custom:layout_constraintEnd_toStartOf="@+id/button2"
-            custom:layout_constraintHorizontal_bias="0.5"
-            custom:layout_constraintStart_toStartOf="parent"
-            custom:layout_constraintTop_toTopOf="parent" />
-
-        <Button
-            android:id="@+id/button2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:onClick="wordButtonPressed"
-            android:padding="0dp"
-            android:text="Button"
-            custom:layout_constraintBottom_toTopOf="@+id/button5"
-            custom:layout_constraintEnd_toStartOf="@+id/button3"
-            custom:layout_constraintHorizontal_bias="0.5"
-            custom:layout_constraintStart_toEndOf="@+id/button1"
-            custom:layout_constraintTop_toTopOf="parent" />
-
-        <Button
-            android:id="@+id/button3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:onClick="wordButtonPressed"
-            android:padding="0dp"
-            android:text="Button"
-            custom:layout_constraintBottom_toTopOf="@+id/button6"
-            custom:layout_constraintEnd_toEndOf="parent"
-            custom:layout_constraintHorizontal_bias="0.5"
-            custom:layout_constraintStart_toEndOf="@+id/button2"
-            custom:layout_constraintTop_toTopOf="parent" />
-
-        <Button
-            android:id="@+id/button4"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:onClick="wordButtonPressed"
-            android:padding="0dp"
-            android:text="Button"
-            custom:layout_constraintBottom_toTopOf="@+id/button7"
-            custom:layout_constraintEnd_toStartOf="@+id/button5"
-            custom:layout_constraintHorizontal_bias="0.5"
-            custom:layout_constraintStart_toStartOf="parent"
-            custom:layout_constraintTop_toBottomOf="@+id/button1" />
-
-        <Button
-            android:id="@+id/button5"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:onClick="wordButtonPressed"
-            android:padding="0dp"
-            android:text="Button"
-            custom:layout_constraintBottom_toTopOf="@+id/button8"
-            custom:layout_constraintEnd_toStartOf="@+id/button6"
-            custom:layout_constraintHorizontal_bias="0.5"
-            custom:layout_constraintStart_toEndOf="@+id/button4"
-            custom:layout_constraintTop_toBottomOf="@+id/button2" />
-
-        <Button
-            android:id="@+id/button6"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:onClick="wordButtonPressed"
-            android:padding="0dp"
-            android:text="Button"
-            custom:layout_constraintBottom_toTopOf="@+id/button9"
-            custom:layout_constraintEnd_toEndOf="parent"
-            custom:layout_constraintHorizontal_bias="0.5"
-            custom:layout_constraintStart_toEndOf="@+id/button5"
-            custom:layout_constraintTop_toBottomOf="@+id/button3" />
-
-        <Button
-            android:id="@+id/button7"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:onClick="wordButtonPressed"
-            android:padding="0dp"
-            android:text="Button"
-            custom:layout_constraintBottom_toBottomOf="parent"
-            custom:layout_constraintEnd_toStartOf="@+id/button8"
-            custom:layout_constraintHorizontal_bias="0.5"
-            custom:layout_constraintStart_toStartOf="parent"
-            custom:layout_constraintTop_toBottomOf="@+id/button4" />
-
-        <Button
-            android:id="@+id/button8"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:onClick="wordButtonPressed"
-            android:padding="0dp"
-            android:text="Button"
-            custom:layout_constraintBottom_toBottomOf="parent"
-            custom:layout_constraintEnd_toStartOf="@+id/button9"
-            custom:layout_constraintHorizontal_bias="0.5"
-            custom:layout_constraintStart_toEndOf="@+id/button7"
-            custom:layout_constraintTop_toBottomOf="@+id/button5" />
-
-        <Button
-            android:id="@+id/button9"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:onClick="wordButtonPressed"
-            android:padding="0dp"
-            android:text="Button"
-            custom:layout_constraintBottom_toBottomOf="parent"
-            custom:layout_constraintEnd_toEndOf="parent"
-            custom:layout_constraintHorizontal_bias="0.5"
-            custom:layout_constraintStart_toEndOf="@+id/button8"
-            custom:layout_constraintTop_toBottomOf="@+id/button6" />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:onClick="finishButtonPressed"
-        android:text="@string/finish_btn"
-        custom:layout_constraintBottom_toTopOf="@+id/sudoku_board"
-        custom:layout_constraintEnd_toStartOf="@+id/timer_text_view"
-        custom:layout_constraintStart_toStartOf="parent"
+        android:name="com.echo.wordsudoku.ui.puzzle.PuzzleTopMenuBarFragment"
+        android:id="@+id/puzzle_top_menu_bar"
+        custom:layout_constraintBottom_toTopOf="@id/board"
         custom:layout_constraintTop_toTopOf="parent"
-        custom:layout_constraintVertical_bias="0.0" />
+        custom:layout_constraintLeft_toLeftOf="parent"
+        custom:layout_constraintRight_toRightOf="parent"
+        tools:layout="@layout/fragment_puzzle_top_menu_bar" />
+
+    <androidx.fragment.app.FragmentContainerView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/board"
+        android:name="com.echo.wordsudoku.ui.puzzle.PuzzleBoardFragment"
+        custom:layout_constraintTop_toBottomOf="@id/puzzle_top_menu_bar"
+        custom:layout_constraintBottom_toTopOf="@id/puzzle_input_buttons"
+        custom:layout_constraintLeft_toLeftOf="parent"
+        custom:layout_constraintRight_toRightOf="parent"
+        tools:layout="@layout/fragment_puzzle_board" />
+
+
+    <androidx.fragment.app.FragmentContainerView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/puzzle_input_buttons"
+        android:name="com.echo.wordsudoku.ui.puzzle.PuzzleInputButtonsFragment"
+        custom:layout_constraintTop_toBottomOf="@id/board"
+        custom:layout_constraintBottom_toBottomOf="parent"
+        tools:layout="@layout/fragment_puzzle_input_buttons" />
 
 
 

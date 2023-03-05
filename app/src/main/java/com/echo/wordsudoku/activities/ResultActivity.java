@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.echo.wordsudoku.R;
 import com.echo.wordsudoku.models.sudoku.GameResult;
+import com.echo.wordsudoku.ui.puzzle.PuzzleActivity;
 
 public class ResultActivity extends AppCompatActivity {
 
