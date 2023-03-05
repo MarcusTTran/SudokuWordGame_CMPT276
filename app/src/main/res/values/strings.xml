@@ -24,6 +24,14 @@ If you encounter any difficulty translating the words featured in your puzzle, y
     <string name="peeks_Remaining">Peeks Remaining</string>
 
 
+    <!-- Destination Titles -->
+    <string name="destination_main_menu">Main Menu</string>
+    <string name="destination_puzzle">Puzzle</string>
+    <string name="destination_puzzle_result">Puzzle Result</string>
+    <string name="destination_choose_custom_words">Choose Custom Words</string>
+    <string name="destination_settings">Settings</string>
+
+
     <!-- Preference Titles -->
     <string name="messages_header">Messages</string>
     <string name="sync_header">Sync</string>

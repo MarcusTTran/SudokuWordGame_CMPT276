@@ -1,4 +1,4 @@
-package com.echo.wordsudoku.ui.puzzle;
+package com.echo.wordsudoku.ui.puzzleParts;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -10,6 +10,7 @@ import android.widget.ImageButton;
 import androidx.fragment.app.Fragment;
 
 import com.echo.wordsudoku.R;
+import com.echo.wordsudoku.ui.destinations.PuzzleFragment;
 
 public class PuzzleTopMenuBarFragment extends Fragment {
 
@@ -18,28 +19,28 @@ public class PuzzleTopMenuBarFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_puzzle_top_menu_bar, container, false);
-        Button doneButton = view.findViewById(R.id.finish_button);
+        Button doneButton = view.findViewById(R.id.options_finish_button);
         doneButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                PuzzleActivity activity = (PuzzleActivity) PuzzleTopMenuBarFragment.this.getActivity();
-                activity.finishButtonPressed();
+                PuzzleFragment puzzleFragment = (PuzzleFragment) getParentFragment();
+                puzzleFragment.finishButtonPressed();
             }
         });
         ImageButton helpButton = view.findViewById(R.id.help_button);
         helpButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                PuzzleActivity activity = (PuzzleActivity) PuzzleTopMenuBarFragment.this.getActivity();
-                activity.rulesButtonPressed();
+                PuzzleFragment puzzleFragment = (PuzzleFragment) getParentFragment();
+                puzzleFragment.rulesButtonPressed();
             }
         });
-        ImageButton dictionaryButton = view.findViewById(R.id.dictionary_help_button);
+        ImageButton dictionaryButton = view.findViewById(R.id.options_dictionary_help_button);
         dictionaryButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                PuzzleActivity activity = (PuzzleActivity) PuzzleTopMenuBarFragment.this.getActivity();
-                activity.dictionaryButtonPressed();
+                PuzzleFragment puzzleFragment = (PuzzleFragment) getParentFragment();
+                puzzleFragment.dictionaryButtonPressed();
             }
         });
         return view;

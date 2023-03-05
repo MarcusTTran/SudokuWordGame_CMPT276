@@ -4,12 +4,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activities.MainActivity2">
+    tools:context=".ui.MainActivity">
 
     <androidx.fragment.app.FragmentContainerView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:name="com.echo.wordsudoku.ui.puzzle.PuzzleTopMenuBarFragment"
+        android:name="com.echo.wordsudoku.ui.puzzleParts.PuzzleTopMenuBarFragment"
         android:id="@+id/puzzle_top_menu_bar"
         custom:layout_constraintBottom_toTopOf="@id/board"
         custom:layout_constraintTop_toTopOf="parent"
@@ -21,7 +21,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/board"
-        android:name="com.echo.wordsudoku.ui.puzzle.PuzzleBoardFragment"
+        android:name="com.echo.wordsudoku.ui.puzzleParts.PuzzleBoardFragment"
         custom:layout_constraintTop_toBottomOf="@id/puzzle_top_menu_bar"
         custom:layout_constraintBottom_toTopOf="@id/puzzle_input_buttons"
         custom:layout_constraintLeft_toLeftOf="parent"
@@ -33,7 +33,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/puzzle_input_buttons"
-        android:name="com.echo.wordsudoku.ui.puzzle.PuzzleInputButtonsFragment"
+        android:name="com.echo.wordsudoku.ui.puzzleParts.PuzzleInputButtonsFragment"
         custom:layout_constraintTop_toBottomOf="@id/board"
         custom:layout_constraintBottom_toBottomOf="parent"
         tools:layout="@layout/fragment_puzzle_input_buttons" />

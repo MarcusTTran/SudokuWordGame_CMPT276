@@ -1,7 +1,6 @@
-package com.echo.wordsudoku.ui.puzzle;
+package com.echo.wordsudoku.ui.puzzleParts;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +13,7 @@ import androidx.lifecycle.ViewModelProvider;
 import com.echo.wordsudoku.R;
 import com.echo.wordsudoku.models.BoardLanguage;
 import com.echo.wordsudoku.models.words.WordPair;
+import com.echo.wordsudoku.ui.destinations.PuzzleFragment;
 
 import java.util.List;
 
@@ -59,9 +59,9 @@ public class PuzzleInputButtonsFragment extends Fragment {
                 buttons[i].setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        PuzzleActivity activity = (PuzzleActivity) PuzzleInputButtonsFragment.this.getActivity();
+                        PuzzleFragment puzzleFragment = (PuzzleFragment) getParentFragment();
                         Button button = (Button) v;
-                        activity.enterWordInBoard(button.getText().toString());
+                        puzzleFragment.enterWordInBoard(button.getText().toString());
                     }
                 });
             }

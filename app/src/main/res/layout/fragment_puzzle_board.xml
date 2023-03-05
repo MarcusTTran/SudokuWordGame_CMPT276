@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activities.MainActivity2">
+    tools:context=".ui.MainActivity">
 
     <com.echo.wordsudoku.views.SudokuBoard
         android:id="@+id/sudoku_board"

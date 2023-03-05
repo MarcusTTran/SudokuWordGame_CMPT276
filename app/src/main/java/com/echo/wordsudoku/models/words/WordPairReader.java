@@ -31,16 +31,13 @@ public class WordPairReader {
     // Defined as a static variable so it would be only stored once in the memory
     private static JSONObject mJSONObject;
 
-    // The dimension of the puzzle
-    private final int mPuzzleDimension;
 
     // @constructor WordPairReader
     // @param jsonStr: the json file as a string
-    // @param mPuzzleDimension: the dimension of the puzzle
     // @throws RuntimeException if the json string is invalid
     // sets the mJSONObject to the json object created from the json string
     // sets the mPuzzleDimension to the given puzzle dimension
-    public WordPairReader(String jsonStr,int mPuzzleDimension) {
+    public WordPairReader(String jsonStr) {
         try {
             // Create a json object from the json string
             JSONObject jsonObject = new JSONObject(jsonStr);
@@ -49,17 +46,14 @@ public class WordPairReader {
         } catch (JSONException e) {
             throw new RuntimeException(e);
         }
-        // Set the mPuzzleDimension to the given puzzle dimension
-        this.mPuzzleDimension = mPuzzleDimension;
     }
 
     // @constructor WordPairReader
     // @param inputStream: the input stream of the json file
-    // @param mPuzzleDimension: the dimension of the puzzle
     // @throws RuntimeException if the string read from JSON file is invalid
     // sets the mJSONObject to the json object created from the json string read from inputStream
     // sets the mPuzzleDimension to the given puzzle dimension
-    public WordPairReader(InputStream inputStream, int mPuzzleDimension) throws IOException {
+    public WordPairReader(InputStream inputStream) throws IOException {
         // Read the file size and create a buffer
         int size = inputStream.available();
         byte[] buffer = new byte[size];
@@ -79,20 +73,14 @@ public class WordPairReader {
             throw new RuntimeException(e);
         }
         // Set the mPuzzleDimension to the given puzzle dimension
-        this.mPuzzleDimension = mPuzzleDimension;
     }
 
-    // @method getPuzzleDimension
-    // @return the dimension of the puzzle
-    public int getPuzzleDimension() {
-        return mPuzzleDimension;
-    }
 
     // @method getWordPairs
     // @return the list of WordPair objects
     // calls the collectWord method to generate a list of WordPair objects
-    public List<WordPair> getWords() throws JSONException {
-        collectWord();
+    public List<WordPair> getRandomWords( int numberOfWords) throws JSONException {
+        collectWord(numberOfWords);
         // Convert the list of WordPair objects to an array of WordPair objects and return it
         return mWordPairs;
     }
@@ -107,15 +95,15 @@ public class WordPairReader {
     // sets the mWordPairs to a list of WordPair objects generated from the json file
     // the size of the list is the same as the puzzle dimension
     // the list is generated randomly using the generateRandomArray method
-    private void collectWord() throws JSONException {
+    private void collectWord(int numberOfWords) throws JSONException {
         // gets all the words from the json file
         JSONArray allWords = mJSONObject.getJSONArray("words");
         // creates a new list of WordPair objects
         mWordPairs = new ArrayList<WordPair>();
         // generates a random list of indexes between 0 (inclusive) and the length of the allWords array (exclusive)
-        List<Integer> randomWordPairIndexes = generateRandomArray(mPuzzleDimension, allWords.length()-1, 0);
+        List<Integer> randomWordPairIndexes = generateRandomArray(numberOfWords, allWords.length()-1, 0);
         // for each index in the randomWordPairIndexes list
-        for (int i = 0; i < mPuzzleDimension; i++) {
+        for (int i = 0; i < numberOfWords; i++) {
             try {
                 // get the JSON Object at the index i that is from the randomIndexesList and add it to the mWordPairs list
                 JSONObject wordPair = allWords.getJSONObject(randomWordPairIndexes.get(i));

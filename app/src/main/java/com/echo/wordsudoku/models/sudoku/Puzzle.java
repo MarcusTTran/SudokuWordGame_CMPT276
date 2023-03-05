@@ -80,7 +80,7 @@ public class Puzzle {
         setLanguage(language);
 
         // We set the language of the board opposite to the language of the puzzle
-        this.solutionBoard = new CellBox2DArray(puzzleDimension);
+        this.solutionBoard = new CellBox2DArray(puzzleDimension,language);
 
         // First we create a solved board
         SolveBoard(this.solutionBoard);
@@ -164,6 +164,10 @@ public class Puzzle {
             }
         }
         return true;
+    }
+
+    public GameResult getGameResult() {
+        return new GameResult(isPuzzleSolved(),getMistakes());
     }
 
     /* @method

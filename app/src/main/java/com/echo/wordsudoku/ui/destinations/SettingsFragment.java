@@ -1,4 +1,4 @@
-package com.echo.wordsudoku.fragments;
+package com.echo.wordsudoku.ui.destinations;
 
 import android.os.Bundle;
 

@@ -5,7 +5,7 @@
     android:layout_height="match_parent">
 
     <Button
-        android:id="@+id/finish_button"
+        android:id="@+id/options_finish_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:onClick="finishButtonPressed"
@@ -24,9 +24,9 @@
         android:text="02:48"
         app:layout_constraintEnd_toStartOf="@+id/preference_button"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/finish_button"
+        app:layout_constraintStart_toEndOf="@+id/options_finish_button"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="@id/dictionary_help_button"/>
+        app:layout_constraintBottom_toBottomOf="@id/options_dictionary_help_button"/>
 
     <ImageButton
         android:id="@+id/preference_button"
@@ -43,14 +43,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:onClick="rulesButtonPressed"
-        app:layout_constraintEnd_toStartOf="@+id/dictionary_help_button"
+        app:layout_constraintEnd_toStartOf="@+id/options_dictionary_help_button"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/preference_button"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@android:drawable/ic_menu_help" />
 
     <ImageButton
-        android:id="@+id/dictionary_help_button"
+        android:id="@+id/options_dictionary_help_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:onClick="dictionaryButtonPressed"
