@@ -62,7 +62,7 @@ public class PuzzleFragment extends Fragment{
                              ViewGroup container, Bundle savedInstanceState) {
         setHasOptionsMenu(true);
         // CONSTANTS
-        final int numberOfInitialWords = 17;
+        final int numberOfInitialWords = 80;
         final int puzzleDimension = 9;
         // END CONSTANTS
 

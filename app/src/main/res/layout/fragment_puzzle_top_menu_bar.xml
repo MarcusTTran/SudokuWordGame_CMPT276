@@ -22,30 +22,20 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="02:48"
-        app:layout_constraintEnd_toStartOf="@+id/preference_button"
+        app:layout_constraintEnd_toStartOf="@id/help_button"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/options_finish_button"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="@id/options_dictionary_help_button"/>
 
     <ImageButton
-        android:id="@+id/preference_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintEnd_toStartOf="@+id/help_button"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/timer_text_view"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@android:drawable/ic_menu_preferences" />
-
-    <ImageButton
         android:id="@+id/help_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:onClick="rulesButtonPressed"
-        app:layout_constraintEnd_toStartOf="@+id/options_dictionary_help_button"
+        app:layout_constraintEnd_toStartOf="@id/options_dictionary_help_button"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/preference_button"
+        app:layout_constraintStart_toEndOf="@id/timer_text_view"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@android:drawable/ic_menu_help" />
 
@@ -56,7 +46,7 @@
         android:onClick="dictionaryButtonPressed"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/help_button"
+        app:layout_constraintStart_toEndOf="@id/help_button"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@android:drawable/ic_menu_myplaces" />
 

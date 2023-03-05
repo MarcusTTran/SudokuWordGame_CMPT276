@@ -1,6 +1,7 @@
 package com.echo.wordsudoku.ui;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
@@ -10,10 +11,8 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import androidx.appcompat.widget.Toolbar;
 
 import com.echo.wordsudoku.R;
 import com.echo.wordsudoku.models.BoardLanguage;
@@ -42,6 +41,8 @@ public class MainActivity extends AppCompatActivity {
 
     private AppBarConfiguration appBarConfiguration;
 
+    private DrawerLayout mDrawerLayout;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -66,12 +67,16 @@ public class MainActivity extends AppCompatActivity {
         NavHostFragment navHostFragment =
                 (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment);
         NavController navController = navHostFragment.getNavController();
-        DrawerLayout drawerLayout = findViewById(R.id.drawer_layout);
+
+        mDrawerLayout = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
+
+        // Hooking the navigation with the drawer and the action bar
+
         appBarConfiguration =
-                new AppBarConfiguration.Builder(R.id.puzzleResultFragment,R.id.mainMenuFragment,R.id.puzzleFragment).setDrawerLayout(drawerLayout).build();
-        NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
+                new AppBarConfiguration.Builder(R.id.mainMenuFragment).setDrawerLayout(mDrawerLayout).build();
         NavigationUI.setupWithNavController(navigationView, navController);
+        NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
     }
 
     @Override
@@ -91,5 +96,13 @@ public class MainActivity extends AppCompatActivity {
         editor.apply();
     }
 
+    @Override
+    public void onBackPressed() {
+        if(mDrawerLayout.isDrawerOpen(GravityCompat.START)){
+            mDrawerLayout.closeDrawer(GravityCompat.START);
+        } else {
+            super.onBackPressed();
+        }
+    }
 
 }
