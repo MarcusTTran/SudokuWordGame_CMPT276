@@ -350,7 +350,7 @@ public class JsonReader {
             WordPair wordPair = parseWordPair(wordPair_json);
 
             // FOR TESTING
-            System.out.println(wordPair.getEnglish() + " " + wordPair.getFrench());
+            //System.out.println(wordPair.getEnglish() + " " + wordPair.getFrench());
 
             // add the word pair to the list
             wordPairsList.add(wordPair);
