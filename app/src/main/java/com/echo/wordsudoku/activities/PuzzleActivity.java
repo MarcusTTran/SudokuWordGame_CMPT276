@@ -1,5 +1,6 @@
 package com.echo.wordsudoku.activities;
 
+
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
@@ -70,6 +71,7 @@ public class PuzzleActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_puzzle);
 
@@ -79,6 +81,7 @@ public class PuzzleActivity extends AppCompatActivity {
         final int puzzleDimension = 9;
         // END CONSTANTS
 
+        // Get the word pairs from the json file
         try {
             jsonFile_Words = getAssets().open("words.json");
             mWordPairs = getWords(jsonFile_Words,9);
@@ -90,10 +93,9 @@ public class PuzzleActivity extends AppCompatActivity {
         }
 
 
-
-
         // Get the shared preferences
         mPreferences = getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE);
+
         // Get the puzzle language from the shared preferences
         int puzzleLanguage = mPreferences.getInt(getString(R.string.puzzle_language_key), BoardLanguage.ENGLISH);
 
@@ -101,28 +103,31 @@ public class PuzzleActivity extends AppCompatActivity {
         mPuzzle = new Puzzle(mWordPairs,puzzleDimension,puzzleLanguage,numberOfInitialWords);
 
 
-
-
-        // read puzzle from json
+        // read puzzle from json //TODO: DELETE FOR LATER USE (THIS IS ONLY FOR TESTING)
+        // ONLY FOR TESTING
         try {
+
             jsonReader = new JsonReader(this);
-            jsonReader.readPuzzle();
-        } catch (FileNotFoundException e) {
+            mPuzzle = jsonReader.readPuzzle();
+            mWordPairs = mPuzzle.getWordPairs();
+
+        } catch (IOException e) {
             throw new RuntimeException(e);
         } catch (JSONException e) {
             throw new RuntimeException(e);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
         }
+        // ONLY FOR TESTING
+
 
 
         // We need to check if the user wants to load a previous game or start a new game
         // It is done by checking the boolean extra in the intent
         /*
-        if(getIntent().getBooleanExtra(LOAD_PREVIOUS_GAME, false)){
-            // A toast to make sure the activity is being created
-            Toast.makeText(this, "Puzzle Activity being Created (Load previous game!)", Toast.LENGTH_LONG).show();
-            */
+            if(getIntent().getBooleanExtra(LOAD_PREVIOUS_GAME, false)){
+                // A toast to make sure the activity is being created
+                Toast.makeText(this, "Puzzle Activity being Created (Load previous game!)", Toast.LENGTH_LONG).show();
+        */
+
         View[] buttons = {findViewById(R.id.button1),
                 findViewById(R.id.button2),
                 findViewById(R.id.button3),
@@ -132,11 +137,12 @@ public class PuzzleActivity extends AppCompatActivity {
                 findViewById(R.id.button7),
                 findViewById(R.id.button8),
                 findViewById(R.id.button9)};
+
         // Set button labels with the other language
         setButtonLabels(buttons, BoardLanguage.getOtherLanguage(puzzleLanguage));
 
         // For testing purposes only, to make sure the activity is being created
-//        Toast.makeText(this, "Puzzle Activity being Created (Load previous game!)", Toast.LENGTH_LONG).show();
+        //Toast.makeText(this, "Puzzle Activity being Created (Load previous game!)", Toast.LENGTH_LONG).show();
 
 
         // Get the SudokuBoardView reference from XML layout
@@ -225,8 +231,6 @@ public class PuzzleActivity extends AppCompatActivity {
     // This method is called when a button is pressed
     // It enters the word in the board
     // @param view The view that was pressed (the button)
-
-
     public void wordButtonPressed(View view) {
         String word = ((Button)view).getText().toString();
         enterWord(word);
@@ -287,6 +291,7 @@ public class PuzzleActivity extends AppCompatActivity {
             }
             return;
         }
+
         // TODO: show a dialog to ask the user if he wants to finish the puzzle
 
         GameResult gameResult = new GameResult();

@@ -102,14 +102,13 @@ public class Puzzle implements Writable {
     }
 
     /* @constructor
-     a puzzle contrurctor that directly takes all the fields
-     used by JSONReader to create a puzzle from a JSON file and resume the game state
-     @param userBoard: the user board
+    a puzzle constructor that directly takes all the fields
+    used by JSONReader to create a puzzle from a JSON file and resume the game state
+    @param userBoard: the user board
     @param solutionBoard: the solution board
     @param wordPairs: the word pairs
     @param language: the language
     @param mistakes: the number of mistakes
-
      */
     public Puzzle(CellBox2DArray userBoard, CellBox2DArray solutionBoard, List<WordPair> wordPairs, PuzzleDimensions puzzleDimension, int language, int mistakes) {
         this.userBoard = userBoard;

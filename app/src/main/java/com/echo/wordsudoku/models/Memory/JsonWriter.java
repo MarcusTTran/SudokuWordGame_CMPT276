@@ -64,6 +64,11 @@ public class JsonWriter {
         this.destination = file.getAbsolutePath();
     }
 
+    /**
+     * Opens the file writer.
+     *
+     * @throws FileNotFoundException If the file cannot be opened
+     */
     public void open() throws FileNotFoundException {
         writer = new PrintWriter(new File(destination));
     }

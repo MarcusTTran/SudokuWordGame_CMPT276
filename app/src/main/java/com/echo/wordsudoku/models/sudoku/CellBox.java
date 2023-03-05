@@ -140,6 +140,17 @@ public class CellBox implements Writable {
         }
     }
 
+    /*
+    * @constructor
+    * Constructs a CellBox object with the given dimension and initializes the cells with the given content.
+    * @param cells: the 2D array of cells.
+    * @param dimension: the dimension of the 2D array of cells.
+     */
+    public CellBox (Cell [][] cells, Dimension dimension) {
+        this.dimension = dimension;
+        this.cells = cells;
+    }
+
     // Getters and Setters
     // for the member variable Cell[][] cells
     public void setCells(Cell[][] cells) throws IllegalArgumentException {

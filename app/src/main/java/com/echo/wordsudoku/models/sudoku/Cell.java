@@ -87,9 +87,29 @@ public class Cell implements Writable {
         this.isEmpty = false;
     }
 
+    /* @constructor
+     * @param content: the word pair of the cell
+     * @param language: the language of the cell
+     * @param isEditable: whether the cell is editable or not
+     */
     public Cell(WordPair content, boolean isEditable, int language) {
         this(content, language);
         setEditable(isEditable);
+    }
+
+    /* @constructor
+     * @param content: the content of the cell
+     * @param isEditable: whether the cell is editable or not
+     * @param language: the language of the cell
+     * @param isEmpty: whether the cell is empty or not
+     * Creates a cell with the given content, whether the cell is editable or not, the language
+     *  of the cell, and whether the cell is empty or not
+     */
+    public Cell(WordPair content, boolean isEditable, int language, boolean isEmpty) {
+        this.content = content;
+        this.isEmpty = isEmpty;
+        this.isEditable = isEditable;
+        this.language = language;
     }
 
     /* @constructor
