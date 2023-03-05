@@ -9,10 +9,12 @@ import androidx.navigation.ui.NavigationUI;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import androidx.appcompat.widget.Toolbar;
 
 import com.echo.wordsudoku.R;
+import com.echo.wordsudoku.models.BoardLanguage;
 import com.echo.wordsudoku.models.words.WordPairReader;
 import com.echo.wordsudoku.ui.puzzleParts.PuzzleViewModel;
 
@@ -25,7 +27,15 @@ public class MainActivity extends AppCompatActivity {
 
     private InputStream jsonFile;
 
+
     private PuzzleViewModel mPuzzleViewModel;
+
+    // This is used for accessing the shared preferences associated with this app
+    private SharedPreferences mPreferences;
+
+    private SettingsViewModel mSettingsViewModel;
+
+    private int mSettingsPuzzleLanguage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +43,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         mPuzzleViewModel = new ViewModelProvider(this).get(PuzzleViewModel.class);
+        mSettingsViewModel = new ViewModelProvider(this).get(SettingsViewModel.class);
+        mPreferences = getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE);
 
         try {
             jsonFile = getAssets().open("words.json");
@@ -40,6 +52,11 @@ public class MainActivity extends AppCompatActivity {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+
+        // Setting up the game settings saved in the shared preferences
+        // Get the puzzle language from the shared preferences
+        mSettingsPuzzleLanguage = mPreferences.getInt(getString(R.string.puzzle_language_key), BoardLanguage.ENGLISH);
+        mSettingsViewModel.setPuzzleLanguage(mSettingsPuzzleLanguage);
 
         NavHostFragment navHostFragment =
                 (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment);
@@ -54,11 +71,15 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    public static Intent newIntent(Context packageContext) {
-        Intent intent = new Intent(packageContext, MainActivity.class);
-        // This flag is used to clear the activity stack
-        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        return intent;
+    @Override
+    protected void onStop() {
+        super.onStop();
+        // Save the puzzle language to the shared preferences
+        SharedPreferences.Editor editor = mPreferences.edit();
+        mSettingsPuzzleLanguage = mSettingsViewModel.getPuzzleLanguage().getValue();
+        editor.putInt(getString(R.string.puzzle_language_key), mSettingsPuzzleLanguage);
+        editor.apply();
     }
+
 
 }

@@ -1,7 +1,5 @@
 package com.echo.wordsudoku.ui.destinations;
 
-import android.content.Context;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,11 +8,13 @@ import android.widget.Button;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 
 import com.echo.wordsudoku.R;
 import com.echo.wordsudoku.models.BoardLanguage;
+import com.echo.wordsudoku.ui.SettingsViewModel;
 
 public class MainMenuFragment extends Fragment {
 
@@ -28,13 +28,16 @@ public class MainMenuFragment extends Fragment {
 
     private Button mChangeLanguageButton;
 
-    private int mPuzzleLanguage = BoardLanguage.ENGLISH;
-    private SharedPreferences mPreferences;
+    private int mSettingsPuzzleLanguage;
+
+    private SettingsViewModel mSettingsViewModel;
+
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_main_menu, container, false);
-        mPreferences = getActivity().getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE);
+
+        mSettingsViewModel = new ViewModelProvider(getActivity()).get(SettingsViewModel.class);
 
 
         // This is used to navigate to the different fragments
@@ -71,21 +74,20 @@ public class MainMenuFragment extends Fragment {
             }
         });
 
-
-
         mChangeLanguageButton = root.findViewById(R.id.change_language_button);
-        String changeLanguageButtonText = "Puzzle Language : " + BoardLanguage.getLanguageName(mPuzzleLanguage);
-        mChangeLanguageButton.setText(changeLanguageButtonText);
-        SharedPreferences.Editor preferencesEditor = mPreferences.edit();
+
+        mSettingsViewModel.getPuzzleLanguage().observe(getViewLifecycleOwner(), language -> {
+            mSettingsPuzzleLanguage = language;
+            String changeLanguageButtonText = "Puzzle Language : " + BoardLanguage.getLanguageName(mSettingsPuzzleLanguage);
+            mChangeLanguageButton.setText(changeLanguageButtonText);
+        });
+
         mChangeLanguageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 try {
-                    mPuzzleLanguage = BoardLanguage.getOtherLanguage(mPuzzleLanguage);
-                    preferencesEditor.putInt(getString(R.string.puzzle_language_key), mPuzzleLanguage);
-                    preferencesEditor.apply();
-                    String changeLanguageButtonText = "Puzzle Language : " + BoardLanguage.getLanguageName(mPuzzleLanguage);
-                    mChangeLanguageButton.setText(changeLanguageButtonText);
+                    mSettingsPuzzleLanguage = BoardLanguage.getOtherLanguage(mSettingsPuzzleLanguage);
+                    mSettingsViewModel.setPuzzleLanguage(mSettingsPuzzleLanguage);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }

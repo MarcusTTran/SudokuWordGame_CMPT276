@@ -23,6 +23,7 @@ import com.echo.wordsudoku.models.dimension.Dimension;
 import com.echo.wordsudoku.models.sudoku.GameResult;
 import com.echo.wordsudoku.models.sudoku.Puzzle;
 import com.echo.wordsudoku.models.words.WordPair;
+import com.echo.wordsudoku.ui.SettingsViewModel;
 import com.echo.wordsudoku.ui.dialogs.DictionaryFragment;
 import com.echo.wordsudoku.ui.dialogs.RulesFragment;
 
@@ -42,8 +43,6 @@ public class PuzzleFragment extends Fragment{
     private List<WordPair> mWordPairs;
     private Puzzle mPuzzle;
 
-    // This is used for accessing the shared preferences associated with this app
-    private SharedPreferences mPreferences;
 
     private int dictionaryPopupLimit = 0;
 
@@ -56,6 +55,8 @@ public class PuzzleFragment extends Fragment{
 
     private PuzzleViewModel mPuzzleViewModel;
 
+    private SettingsViewModel mSettingsViewModel;
+
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -66,14 +67,17 @@ public class PuzzleFragment extends Fragment{
         // END CONSTANTS
 
         mPuzzleViewModel = new ViewModelProvider(getActivity()).get(PuzzleViewModel.class);
-        mPreferences = getActivity().getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE);
-        // Get the puzzle language from the shared preferences
-        mPuzzleLanguage = mPreferences.getInt(getString(R.string.puzzle_language_key), BoardLanguage.ENGLISH);
+        mSettingsViewModel = new ViewModelProvider(getActivity()).get(SettingsViewModel.class);
+
         try {
             mWordPairs = mPuzzleViewModel.getWordPairReader().getValue().getRandomWords(puzzleDimension);
         } catch (JSONException e) {
             throw new RuntimeException(e);
         }
+
+        // Get the language setting from the SettingsViewModel and update respectively
+        mPuzzleLanguage = mSettingsViewModel.getPuzzleLanguage().getValue();
+
         // Create a new board
         mPuzzle = new Puzzle(mWordPairs,puzzleDimension,mPuzzleLanguage,numberOfInitialWords);
 
