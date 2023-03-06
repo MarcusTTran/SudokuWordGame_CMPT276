@@ -58,6 +58,12 @@ public class PuzzleDimensions implements Writable {
     // The dimension of the boxes in the puzzle. A 6x6 puzzle has a dimension of 3x1 for the boxes in the puzzle. (To make the boxes fit perfectly it needs to be opposite of eachBoxDimension)
     private Dimension boxesInPuzzleDimension;
 
+    public PuzzleDimensions(PuzzleDimensions puzzleDimensions) {
+        this.puzzleDimension = puzzleDimensions.puzzleDimension;
+        this.eachBoxDimension = new Dimension(puzzleDimensions.eachBoxDimension);
+        this.boxesInPuzzleDimension = new Dimension(puzzleDimensions.boxesInPuzzleDimension);
+    }
+
     /* @constructor
      * Prepares the correct dimensions for the requested puzzle dimension.
      * @param: puzzleDimension: int

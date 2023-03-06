@@ -10,6 +10,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -99,6 +100,18 @@ public class Puzzle implements Writable {
 
         // We lock the cells that are not empty so the user cannot change them
         lockCells();
+    }
+
+    /* @copy constructor
+    a puzzle constructor that takes another puzzle and copies its fields
+     */
+    public Puzzle(Puzzle puzzle) {
+        this.userBoard = new CellBox2DArray(puzzle.getUserBoard());
+        this.solutionBoard = new CellBox2DArray(puzzle.getSolutionBoard());
+        this.mWordPairs = new ArrayList<>(puzzle.getWordPairs());
+        this.puzzleDimension = new PuzzleDimensions(puzzle.getPuzzleDimension());
+        this.language = puzzle.getLanguage();
+        this.mistakes = puzzle.getMistakes();
     }
 
     /* @constructor

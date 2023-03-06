@@ -27,7 +27,6 @@ public class PuzzleBoardFragment extends Fragment {
         mSudokuBoard = root.findViewById(R.id.sudoku_board);
         mPuzzleViewModel = new ViewModelProvider(requireActivity()).get(PuzzleViewModel.class);
         mSudokuBoard.setBoard(mPuzzleViewModel.getPuzzle().getValue().toStringArray());
-        mPuzzleViewModel.getWordPairs().getValue();
         mPuzzleViewModel.getPuzzle().observe(getViewLifecycleOwner(), puzzle -> {
             mSudokuBoard.setBoard(puzzle.toStringArray());
         });

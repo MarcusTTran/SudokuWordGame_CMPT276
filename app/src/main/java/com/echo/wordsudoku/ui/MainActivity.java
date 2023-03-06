@@ -12,7 +12,10 @@ import androidx.navigation.ui.NavigationUI;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.StrictMode;
+import android.os.strictmode.Violation;
 
 import com.echo.wordsudoku.R;
 import com.echo.wordsudoku.models.BoardLanguage;
@@ -52,6 +55,16 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+            StrictMode.setVmPolicy( new StrictMode.VmPolicy.Builder()
+                    .detectLeakedClosableObjects()
+                    .penaltyListener( this.getMainExecutor(), ( Violation v ) -> {
+                        v.fillInStackTrace();
+                        v.printStackTrace();
+                    } )
+                    .build());
+        }
 
         mPuzzleViewModel = new ViewModelProvider(this).get(PuzzleViewModel.class);
         mSettingsViewModel = new ViewModelProvider(this).get(SettingsViewModel.class);
@@ -109,7 +122,6 @@ public class MainActivity extends AppCompatActivity {
         } catch (JSONException | IOException e) {
             throw new RuntimeException(e);
         }
-
         super.onStop();
     }
 

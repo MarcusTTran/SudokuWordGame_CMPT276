@@ -425,6 +425,14 @@ public class JsonReader {
     }
 
 
+    public void close() {
+        try {
+            this.fileReader.close();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     // getter for the source file name
     public String getSource() {
         return this.source;
