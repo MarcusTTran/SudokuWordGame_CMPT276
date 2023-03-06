@@ -41,7 +41,7 @@ public class PuzzleFragment extends Fragment{
 
 
     // CONSTANTS
-    private final int numberOfInitialWords = 17;
+    private final int numberOfInitialWords = 80;
     private final int puzzleDimension = 9;
     // END CONSTANTS
 

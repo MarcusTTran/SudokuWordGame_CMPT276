@@ -11,13 +11,7 @@
         tools:layout="@layout/fragment_main_menu">
         <action
             android:id="@+id/startPuzzleAction"
-            app:destination="@id/puzzleFragment"
-            >
-        <argument
-            android:name="isNewGame"
-            app:argType="boolean"
-            android:defaultValue="true" />
-        </action>
+            app:destination="@id/puzzleFragment"/>
     </fragment>
     <fragment
         android:id="@+id/settingsFragment"
@@ -28,24 +22,25 @@
         android:name="com.echo.wordsudoku.ui.destinations.ChooseCustomWordsFragment"
         android:label="@string/destination_choose_custom_words"
         tools:layout="@layout/fragment_choose_custom_words"/>
-        <fragment
-            android:id="@+id/puzzleFragment"
-            android:name="com.echo.wordsudoku.ui.destinations.PuzzleFragment"
-            android:label="@string/destination_puzzle"
-            tools:layout="@layout/fragment_puzzle">
-            <action
-                android:id="@+id/submitPuzzleAction"
-                app:destination="@id/puzzleResultFragment"
-                app:popUpTo="@id/mainMenuFragment"/>
-            <action
-                android:id="@+id/quitPuzzleToMainMenuAction"
-                app:destination="@id/mainMenuFragment"
-                app:popUpTo="@id/mainMenuFragment"
-                app:popUpToInclusive="true" />
-            <argument
-                android:name="isNewGame"
-                app:argType="boolean"
-                android:defaultValue="true" />
+
+    <fragment
+        android:id="@+id/puzzleFragment"
+        android:name="com.echo.wordsudoku.ui.destinations.PuzzleFragment"
+        android:label="@string/destination_puzzle"
+        tools:layout="@layout/fragment_puzzle">
+        <action
+            android:id="@+id/submitPuzzleAction"
+            app:destination="@id/puzzleResultFragment"
+            app:popUpTo="@id/mainMenuFragment" />
+        <action
+            android:id="@+id/quitPuzzleToMainMenuAction"
+            app:destination="@id/mainMenuFragment"
+            app:popUpTo="@id/mainMenuFragment"
+            app:popUpToInclusive="true"/>
+        <argument
+            android:name="isNewGame"
+            app:argType="boolean"
+            android:defaultValue="true" />
         </fragment>
         <fragment
             android:id="@+id/puzzleResultFragment"
@@ -56,7 +51,11 @@
                 android:id="@+id/MainMenuAfterPuzzleAction"
                 app:destination="@id/mainMenuFragment"
                 app:popUpTo="@id/mainMenuFragment"
-                app:popUpToInclusive="true" />
+                app:popUpToInclusive="true"/>
+            <action
+                android:id="@+id/NewGameAfterPuzzleAction"
+                app:destination="@id/puzzleFragment"
+                app:popUpTo="@id/mainMenuFragment"/>
             <argument
                 android:name="isWin"
                 android:defaultValue="false"
@@ -65,10 +64,5 @@
                 android:name="mistakes"
                 android:defaultValue="-1"
                 app:argType="integer" />
-            <action
-                android:id="@+id/NewGameAfterPuzzleAction"
-                app:destination="@id/puzzleFragment"
-                app:popUpTo="@id/puzzleFragment"
-                app:popUpToInclusive="true" />
         </fragment>
 </navigation>
