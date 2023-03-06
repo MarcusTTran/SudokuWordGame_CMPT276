@@ -101,9 +101,6 @@ public class PuzzleFragment extends Fragment{
 
         // Update the PuzzleViewModel
         mPuzzleViewModel.setPuzzle(puzzle);
-        mPuzzleViewModel.setBoardLanguage(puzzle.getLanguage());
-
-        mJsonReader.close();
     }
 
     private void newGame() {
@@ -119,7 +116,6 @@ public class PuzzleFragment extends Fragment{
 
         // Create a new board
         Puzzle puzzle = new Puzzle(wordPairs,puzzleDimension,puzzleLanguage,numberOfInitialWords);
-        mPuzzleViewModel.setBoardLanguage(puzzle.getLanguage());
         mPuzzleViewModel.setPuzzle(puzzle);
     }
 
@@ -243,9 +239,7 @@ public class PuzzleFragment extends Fragment{
         if (mJsonWriter == null) {
             mJsonWriter = new JsonWriter(requireActivity());
         }
-        mJsonWriter.open();
         Puzzle puzzle = mPuzzleViewModel.getPuzzle().getValue();
         mJsonWriter.writePuzzle(puzzle);
-        mJsonWriter.close();
     }
 }

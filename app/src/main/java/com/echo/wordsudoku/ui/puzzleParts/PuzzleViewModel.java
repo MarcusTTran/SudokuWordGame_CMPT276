@@ -12,21 +12,11 @@ import com.echo.wordsudoku.models.words.WordPairReader;
 import java.util.List;
 
 public class PuzzleViewModel extends ViewModel {
-    private final MutableLiveData<Integer> boardLanguage = new MutableLiveData<>();
     private final MutableLiveData<Puzzle> puzzle = new MutableLiveData<>();
-    private  WordPairReader wordPairReader;
+    private WordPairReader wordPairReader;
 
     public List<WordPair> getWordPairs() {
         return puzzle.getValue().getWordPairs();
-    }
-
-    public LiveData<Integer> getBoardLanguage() {
-        return boardLanguage;
-    }
-    public void setBoardLanguage(int language) {
-        if (BoardLanguage.isValidLanguage(language))
-            this.boardLanguage.setValue(language);
-        else throw new IllegalArgumentException("Invalid language");
     }
 
     public LiveData<Puzzle> getPuzzle() {

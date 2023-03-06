@@ -15,6 +15,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
+import java.io.Closeable;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -54,9 +55,6 @@ public class JsonReader {
     // The file name to read the json object
     private final String FILENAME = "puzzle.json";
 
-    // The file reader to read the JSON object from the file
-    private FileReader fileReader;
-
     // The file to read the JSON object from the file
     private File file;
 
@@ -71,7 +69,6 @@ public class JsonReader {
         // initialize the file given the name
         this.file = new File(context.getFilesDir(),FILENAME);
         // initialize the file reader
-        this.fileReader = new FileReader(file);
 
     }
 
@@ -103,6 +100,7 @@ public class JsonReader {
      * @throws IOException If an I/O error occurs
      */
     private String readFile(String source) throws IOException {
+        FileReader fileReader = new FileReader(source);
         // Create a file reader
         BufferedReader bufferedReader = new BufferedReader(fileReader);
         // Create a string builder
@@ -120,6 +118,7 @@ public class JsonReader {
 
         // Close the reader
         bufferedReader.close();
+        fileReader.close();
 
         // This respond will have Json Format String
         String content = stringBuilder.toString();
@@ -424,14 +423,6 @@ public class JsonReader {
         return new Dimension(row, col);
     }
 
-
-    public void close() {
-        try {
-            this.fileReader.close();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
 
     // getter for the source file name
     public String getSource() {

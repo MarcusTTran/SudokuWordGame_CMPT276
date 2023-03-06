@@ -106,6 +106,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onStop() {
+        super.onStop();
         // Save the puzzle language to the shared preferences
         SharedPreferences.Editor editor = mPreferences.edit();
         mSettingsPuzzleLanguage = mSettingsViewModel.getPuzzleLanguage().getValue();
@@ -116,13 +117,10 @@ public class MainActivity extends AppCompatActivity {
 
         JsonWriter jsonWriter = new JsonWriter(this);
         try {
-            jsonWriter.open();
             jsonWriter.writePuzzle(mPuzzleViewModel.getPuzzle().getValue());
-            jsonWriter.close();
         } catch (JSONException | IOException e) {
             throw new RuntimeException(e);
         }
-        super.onStop();
     }
 
     @Override

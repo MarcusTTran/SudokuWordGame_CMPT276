@@ -40,7 +40,7 @@ public class PuzzleInputButtonsFragment extends Fragment {
                 getView().findViewById(R.id.button7),
                 getView().findViewById(R.id.button8),
                 getView().findViewById(R.id.button9)};
-            initializeButtons(buttons, mPuzzleViewModel.getWordPairs(), BoardLanguage.getOtherLanguage(mPuzzleViewModel.getBoardLanguage().getValue()));
+            initializeButtons(buttons, mPuzzleViewModel.getWordPairs(), BoardLanguage.getOtherLanguage(mPuzzleViewModel.getPuzzle().getValue().getLanguage()));
     }
 
     // This method sets the labels of the buttons and adds on Click Listeners to them

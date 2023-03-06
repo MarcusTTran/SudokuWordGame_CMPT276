@@ -22,10 +22,7 @@ import java.io.PrintWriter;
  *
  *         try {
  *             jsonWriter = new JsonWriter(this);
- *             jsonWriter.open();
  *             jsonWriter.writePuzzle(mPuzzle);
- *             jsonWriter.close();
- *
  *         } catch (IOException e) {
  *             throw new RuntimeException(e);
  *         } catch (JSONException e) {
@@ -38,13 +35,8 @@ import java.io.PrintWriter;
 
 public class JsonWriter {
 
-
-
     // The number of spaces for indentation
     private static final int TAB = 4;
-
-    // The file writer to write the JSON object to the file
-    private PrintWriter writer;
 
     // The destination file name
     private String destination;
@@ -59,19 +51,10 @@ public class JsonWriter {
      * @param context The context of the application
      */
     public JsonWriter(Context context) {
-
         File file = new File(context.getFilesDir(), FILENAME);
         this.destination = file.getAbsolutePath();
     }
 
-    /**
-     * Opens the file writer.
-     *
-     * @throws FileNotFoundException If the file cannot be opened
-     */
-    public void open() throws FileNotFoundException {
-        writer = new PrintWriter(new File(destination));
-    }
 
     /**
      * Writes the given puzzle as a JSON object to a file with the specified file name.
@@ -81,27 +64,9 @@ public class JsonWriter {
      * @throws IOException If there is an error writing the JSON object to the file
      */
     public void writePuzzle(Puzzle puzzle) throws JSONException, IOException {
+        PrintWriter writer = new PrintWriter(new File(destination));
         JSONObject json = puzzle.toJson();
-        saveFile(json.toString(TAB));
-    }
-
-    /**
-     * Closes the file writer.
-     * @throws IOException If there is an error closing the file writer
-     */
-    public void close() throws IOException {
+        writer.print(json.toString(TAB));
         writer.close();
-    }
-
-    /**
-     * Writes the given JSON string to a file with the specified file name.
-     *
-     * @param json The JSON string to write
-     * @throws IOException If there is an error writing the JSON string to the file
-     */
-    private void saveFile(String json) {
-        // Write the JSON string to the file
-        writer.print(json);
-
     }
 }
