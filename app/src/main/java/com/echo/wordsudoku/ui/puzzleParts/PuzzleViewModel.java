@@ -26,6 +26,10 @@ public class PuzzleViewModel extends ViewModel {
         this.puzzle.setValue(new Puzzle(puzzle));
     }
 
+    public void postPuzzle(Puzzle puzzle) {
+        this.puzzle.postValue(new Puzzle(puzzle));
+    }
+
     public WordPairReader getWordPairReader() {
         return wordPairReader;
     }

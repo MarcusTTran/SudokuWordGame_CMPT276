@@ -15,19 +15,17 @@ import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.StrictMode;
-import android.os.strictmode.Violation;
 
 import com.echo.wordsudoku.R;
 import com.echo.wordsudoku.models.BoardLanguage;
 import com.echo.wordsudoku.models.Memory.JsonWriter;
+import com.echo.wordsudoku.models.sudoku.Puzzle;
 import com.echo.wordsudoku.models.words.WordPairReader;
-import com.echo.wordsudoku.ui.destinations.PuzzleFragment;
 import com.echo.wordsudoku.ui.puzzleParts.PuzzleViewModel;
 import com.google.android.material.navigation.NavigationView;
 
 import org.json.JSONException;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -35,9 +33,7 @@ public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = "MainActivity";
 
-    private InputStream jsonFile;
-
-
+    private final String wordPairJsonFile = "words.json";
     private PuzzleViewModel mPuzzleViewModel;
 
     // This is used for accessing the shared preferences associated with this app
@@ -53,29 +49,35 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
 
+        // This is used to detect all the problems in the app with StrictMode.
+        // It is commented out because it is only used for debugging purposes.
+
+        /*
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
-            StrictMode.setVmPolicy( new StrictMode.VmPolicy.Builder()
-                    .detectLeakedClosableObjects()
-                    .penaltyListener( this.getMainExecutor(), ( Violation v ) -> {
-                        v.fillInStackTrace();
-                        v.printStackTrace();
-                    } )
+            StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder()
+                    .detectAll()
+                    .build());
+            StrictMode.setVmPolicy(new StrictMode.VmPolicy.Builder()
+                    .detectAll()
                     .build());
         }
+        */
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
 
         mPuzzleViewModel = new ViewModelProvider(this).get(PuzzleViewModel.class);
         mSettingsViewModel = new ViewModelProvider(this).get(SettingsViewModel.class);
         mPreferences = getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE);
 
-        try {
-            jsonFile = getAssets().open("words.json");
-            mPuzzleViewModel.setWordPairReader(new WordPairReader(jsonFile));
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        new Thread(() -> {
+            try {
+                InputStream jsonFile = getAssets().open(wordPairJsonFile);
+                mPuzzleViewModel.setWordPairReader(new WordPairReader(jsonFile));
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }).start();
 
         // Setting up the game settings saved in the shared preferences
         // Get the puzzle language from the shared preferences
@@ -114,13 +116,21 @@ public class MainActivity extends AppCompatActivity {
         editor.apply();
 
         // Save the puzzle to the json file before app closes
+        saveGame();
+    }
 
-        JsonWriter jsonWriter = new JsonWriter(this);
-        try {
-            jsonWriter.writePuzzle(mPuzzleViewModel.getPuzzle().getValue());
-        } catch (JSONException | IOException e) {
-            throw new RuntimeException(e);
-        }
+    public void saveGame(){
+        new Thread(() -> {
+            JsonWriter jsonWriter = new JsonWriter(MainActivity.this);
+            Puzzle puzzle = mPuzzleViewModel.getPuzzle().getValue();
+            try {
+                jsonWriter.writePuzzle(puzzle);
+            } catch (JSONException e) {
+                throw new RuntimeException(e);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }).start();
     }
 
     @Override

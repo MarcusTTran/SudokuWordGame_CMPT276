@@ -23,6 +23,7 @@ import com.echo.wordsudoku.models.dimension.Dimension;
 import com.echo.wordsudoku.models.sudoku.GameResult;
 import com.echo.wordsudoku.models.sudoku.Puzzle;
 import com.echo.wordsudoku.models.words.WordPair;
+import com.echo.wordsudoku.ui.MainActivity;
 import com.echo.wordsudoku.ui.SettingsViewModel;
 import com.echo.wordsudoku.ui.dialogs.DictionaryFragment;
 import com.echo.wordsudoku.ui.dialogs.RulesFragment;
@@ -74,11 +75,7 @@ public class PuzzleFragment extends Fragment{
         if (isNewGame) {
             newGame();
         } else {
-            try {
-                loadGame();
-            } catch (JSONException | IOException e) {
-                throw new RuntimeException(e);
-            }
+            loadGame();
         }
 
         LanguageList1 = new String[puzzleDimension];
@@ -87,20 +84,28 @@ public class PuzzleFragment extends Fragment{
         return root;
     }
 
-    private void loadGame() throws JSONException, IOException {
+    private void loadGame() {
+        new Thread(() -> {
+            // Load the puzzle from the file and update the class members
+            try {
+                mJsonReader = new JsonReader(requireActivity());
+            } catch (FileNotFoundException e) {
+                throw new RuntimeException(e);
+            }
 
-        // Load the puzzle from the file and update the class members
-        try {
-            mJsonReader = new JsonReader(requireActivity());
-        } catch (FileNotFoundException e) {
-            throw new RuntimeException(e);
-        }
+            // Load the puzzle from the file and update the class members
+            Puzzle puzzle = null;
+            try {
+                puzzle = mJsonReader.readPuzzle();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            } catch (JSONException e) {
+                throw new RuntimeException(e);
+            }
 
-        // Load the puzzle from the file and update the class members
-        Puzzle puzzle = mJsonReader.readPuzzle();
-
-        // Update the PuzzleViewModel
-        mPuzzleViewModel.setPuzzle(puzzle);
+            // Update the PuzzleViewModel
+            mPuzzleViewModel.postPuzzle(puzzle);
+        }).start();
     }
 
     private void newGame() {
@@ -215,13 +220,8 @@ public class PuzzleFragment extends Fragment{
                 dictionaryButtonPressed();
                 return true;
             case R.id.options_save_game_button:
-                try {
-                    saveGame();
-                } catch (JSONException e) {
-                    throw new RuntimeException(e);
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
+                MainActivity activity = (MainActivity) requireActivity();
+                activity.saveGame();
                 return true;
             case R.id.options_main_menu_button:
                 //discardGame();
@@ -235,11 +235,5 @@ public class PuzzleFragment extends Fragment{
         }
     }
 
-    public void saveGame() throws JSONException, IOException {
-        if (mJsonWriter == null) {
-            mJsonWriter = new JsonWriter(requireActivity());
-        }
-        Puzzle puzzle = mPuzzleViewModel.getPuzzle().getValue();
-        mJsonWriter.writePuzzle(puzzle);
-    }
+
 }
