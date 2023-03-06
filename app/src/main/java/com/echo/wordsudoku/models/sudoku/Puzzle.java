@@ -85,7 +85,7 @@ public class Puzzle implements Writable {
         setLanguage(language);
 
         // We set the language of the board opposite to the language of the puzzle
-        this.solutionBoard = new CellBox2DArray(puzzleDimension);
+        this.solutionBoard = new CellBox2DArray(puzzleDimension,language);
 
         // First we create a solved board
         SolveBoard(this.solutionBoard);
