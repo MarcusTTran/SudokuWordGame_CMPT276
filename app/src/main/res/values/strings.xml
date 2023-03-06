@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Word Sudoku</string>
     <string name="menu_new_game_btn">New Game</string>
-    <string name="menu_load_game_btn">Load Game</string>
+    <string name="menu_load_game_btn">Load Previous Game</string>
     <string name="menu_exit_btn">Exit</string>
     <string name="menu_main_menu_btn">Main Menu</string>
     <string name="fail_msg">You Failed!</string>

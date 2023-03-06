@@ -74,7 +74,7 @@ public class MainActivity extends AppCompatActivity {
         // Hooking the navigation with the drawer and the action bar
 
         appBarConfiguration =
-                new AppBarConfiguration.Builder(R.id.mainMenuFragment).setDrawerLayout(mDrawerLayout).build();
+                new AppBarConfiguration.Builder(R.id.mainMenuFragment,R.id.settingsFragment,R.id.chooseCustomWordsFragment).setDrawerLayout(mDrawerLayout).build();
         NavigationUI.setupWithNavController(navigationView, navController);
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
     }
@@ -94,6 +94,8 @@ public class MainActivity extends AppCompatActivity {
         mSettingsPuzzleLanguage = mSettingsViewModel.getPuzzleLanguage().getValue();
         editor.putInt(getString(R.string.puzzle_language_key), mSettingsPuzzleLanguage);
         editor.apply();
+
+
     }
 
     @Override

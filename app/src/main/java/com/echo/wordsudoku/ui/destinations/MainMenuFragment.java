@@ -15,6 +15,7 @@ import androidx.navigation.fragment.NavHostFragment;
 import com.echo.wordsudoku.R;
 import com.echo.wordsudoku.models.BoardLanguage;
 import com.echo.wordsudoku.ui.SettingsViewModel;
+import com.echo.wordsudoku.ui.destinations.MainMenuFragmentDirections.StartPuzzleAction;
 
 public class MainMenuFragment extends Fragment {
 
@@ -49,7 +50,9 @@ public class MainMenuFragment extends Fragment {
         mNewGameButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                navController.navigate(R.id.startPuzzleAction);
+                StartPuzzleAction action = MainMenuFragmentDirections.startPuzzleAction();
+                action.setIsNewGame(true);
+                navController.navigate(action);
             }
         });
 
@@ -57,7 +60,9 @@ public class MainMenuFragment extends Fragment {
         mLoadGameButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                navController.navigate(R.id.startPuzzleAction);
+                StartPuzzleAction action = MainMenuFragmentDirections.startPuzzleAction();
+                action.setIsNewGame(false);
+                navController.navigate(action);
             }
         });
 

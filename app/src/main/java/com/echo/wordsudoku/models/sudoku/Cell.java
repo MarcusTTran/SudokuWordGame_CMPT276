@@ -188,12 +188,12 @@ public class Cell implements Writable {
         this.language = language;
     }
 
-   /* isEqual() throws a NullPointerException if the content of the cell is null
-    * @param cell: the cell to be compared with
-    * @return true if the content of the cell is equal to the content of the given cell, false otherwise
-    * It calls the isEqual() method of the WordPair class to compare the content of the cells
-    * @see WordPair#isEqual(WordPair)
-   *  */
+    /* isEqual() throws a NullPointerException if the content of the cell is null
+     * @param cell: the cell to be compared with
+     * @return true if the content of the cell is equal to the content of the given cell, false otherwise
+     * It calls the isEqual() method of the WordPair class to compare the content of the cells
+     * @see WordPair#isEqual(WordPair)
+     *  */
     public boolean isEqual(Cell cell) throws NullPointerException {
         try {
             return content.isEqual(cell.getContent());

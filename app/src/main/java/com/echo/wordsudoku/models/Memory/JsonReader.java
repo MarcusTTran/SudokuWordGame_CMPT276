@@ -138,14 +138,14 @@ public class JsonReader {
 
 
         /**
-            using this template used in writing the json object, we read the json object
+         using this template used in writing the json object, we read the json object
 
-            json.put("userBoard", this.getUserBoard().toJson());
-            json.put("solutionBoard", this.getSolutionBoard().toJson());
-            json.put("wordPairs", convertWordPairsToJson());
-            json.put("puzzleDimension", this.getPuzzleDimension().toJson());
-            json.put("language", this.getLanguage());
-            json.put("mistakes", this.getMistakes());
+         json.put("userBoard", this.getUserBoard().toJson());
+         json.put("solutionBoard", this.getSolutionBoard().toJson());
+         json.put("wordPairs", convertWordPairsToJson());
+         json.put("puzzleDimension", this.getPuzzleDimension().toJson());
+         json.put("language", this.getLanguage());
+         json.put("mistakes", this.getMistakes());
          */
 
         try {
@@ -243,7 +243,7 @@ public class JsonReader {
 
             return cellBoxes;
 
-        // catch the JSON exception if the object is not parsed properly as json
+            // catch the JSON exception if the object is not parsed properly as json
         } catch (JSONException e) {
             throw new RuntimeException(e);
         }

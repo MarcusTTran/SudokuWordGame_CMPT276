@@ -1,7 +1,5 @@
 package com.echo.wordsudoku.ui.destinations;
 
-import android.content.Context;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -19,6 +17,8 @@ import androidx.navigation.Navigation;
 
 import com.echo.wordsudoku.R;
 import com.echo.wordsudoku.models.BoardLanguage;
+import com.echo.wordsudoku.models.Memory.JsonReader;
+import com.echo.wordsudoku.models.Memory.JsonWriter;
 import com.echo.wordsudoku.models.dimension.Dimension;
 import com.echo.wordsudoku.models.sudoku.GameResult;
 import com.echo.wordsudoku.models.sudoku.Puzzle;
@@ -29,6 +29,8 @@ import com.echo.wordsudoku.ui.dialogs.RulesFragment;
 
 import org.json.JSONException;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.List;
 
 import com.echo.wordsudoku.ui.puzzleParts.PuzzleBoardFragment;
@@ -37,6 +39,11 @@ import com.echo.wordsudoku.ui.puzzleParts.PuzzleViewModel;
 
 public class PuzzleFragment extends Fragment{
 
+
+    // CONSTANTS
+    private final int numberOfInitialWords = 17;
+    private final int puzzleDimension = 9;
+    // END CONSTANTS
 
     private static final String TAG = "PuzzleFragment";
 
@@ -57,18 +64,55 @@ public class PuzzleFragment extends Fragment{
 
     private SettingsViewModel mSettingsViewModel;
 
+    private JsonWriter mJsonWriter;
+
+    private JsonReader mJsonReader;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         setHasOptionsMenu(true);
-        // CONSTANTS
-        final int numberOfInitialWords = 80;
-        final int puzzleDimension = 9;
-        // END CONSTANTS
+
+
+        mJsonWriter = new JsonWriter(getActivity());
+        try {
+            mJsonReader = new JsonReader(getActivity());
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        }
 
         mPuzzleViewModel = new ViewModelProvider(getActivity()).get(PuzzleViewModel.class);
         mSettingsViewModel = new ViewModelProvider(getActivity()).get(SettingsViewModel.class);
 
+        boolean isNewGame = PuzzleFragmentArgs.fromBundle(getArguments()).getIsNewGame();
+        if (isNewGame) {
+            newGame();
+        } else {
+            try {
+                loadGame();
+            } catch (JSONException | IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
+
+        LanguageList1 = new String[mWordPairs.size()];
+        LanguageList2 = new String[mWordPairs.size()];
+        View root = inflater.inflate(R.layout.fragment_puzzle, container, false);
+        return root;
+    }
+
+    private void loadGame() throws JSONException, IOException {
+        // Load the puzzle from the file and update the class members
+        mPuzzle = mJsonReader.readPuzzle();
+        mWordPairs = mPuzzle.getWordPairs();
+        mPuzzleLanguage = mPuzzle.getLanguage();
+
+        // Update the PuzzleViewModel
+        mPuzzleViewModel.setPuzzle(mPuzzle);
+        mPuzzleViewModel.setWordPairs(mWordPairs);
+        mPuzzleViewModel.setBoardLanguage(mPuzzleLanguage);
+    }
+
+    private void newGame() {
         try {
             mWordPairs = mPuzzleViewModel.getWordPairReader().getValue().getRandomWords(puzzleDimension);
         } catch (JSONException e) {
@@ -84,10 +128,6 @@ public class PuzzleFragment extends Fragment{
         mPuzzleViewModel.setWordPairs(mWordPairs);
         mPuzzleViewModel.setBoardLanguage(mPuzzleLanguage);
         mPuzzleViewModel.setPuzzle(mPuzzle);
-        LanguageList1 = new String[mWordPairs.size()];
-        LanguageList2 = new String[mWordPairs.size()];
-        View root = inflater.inflate(R.layout.fragment_puzzle, container, false);
-        return root;
     }
 
     public void enterWordInBoard(String word) {
@@ -183,8 +223,13 @@ public class PuzzleFragment extends Fragment{
                 dictionaryButtonPressed();
                 return true;
             case R.id.options_save_game_button:
-                //saveGame();
-                Toast.makeText(getActivity(), "Save Game Button pressed", Toast.LENGTH_LONG).show();
+                try {
+                    saveGame();
+                } catch (JSONException e) {
+                    throw new RuntimeException(e);
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
                 return true;
             case R.id.options_main_menu_button:
                 //discardGame();
@@ -196,5 +241,11 @@ public class PuzzleFragment extends Fragment{
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    private void saveGame() throws JSONException, IOException {
+        mJsonWriter.open();
+        mJsonWriter.writePuzzle(mPuzzle);
+        mJsonWriter.close();
     }
 }

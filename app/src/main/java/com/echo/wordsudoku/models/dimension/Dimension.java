@@ -36,7 +36,7 @@ public class Dimension implements Writable {
     // or the number of columns of the 2D array of cells.
     private int columns;
 
-/*
+    /*
      * @constructor
      * Constructs a Dimension object with the given number of rows and columns (or x,y).
      * @param rows: the number of rows of the 2D array of cells or the x coordinate of a cell in a 2D array.
