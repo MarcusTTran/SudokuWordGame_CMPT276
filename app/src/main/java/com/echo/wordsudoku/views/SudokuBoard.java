@@ -54,7 +54,7 @@ public class SudokuBoard extends View {
     private final int mCellsHighlightColor;
     // The color of the letters in the cells.
     // TODO: This will be used to display the letters in the cells that are not empty
-
+    private final int mTextColor;
 
     // The Paint objects that will be used to draw the board
     // In the onDraw method, we will use these objects to draw the board
@@ -109,6 +109,7 @@ public class SudokuBoard extends View {
             mBoardColor = a.getInteger(R.styleable.SudokuBoard_boardColor, 0);
             mCellFillColor = a.getInteger(R.styleable.SudokuBoard_cellFillColor, 0);
             mCellsHighlightColor = a.getInteger(R.styleable.SudokuBoard_cellsHighlightColor, 0);
+            mTextColor = a.getInteger(R.styleable.SudokuBoard_textColor, 0);
             mCellVerticalPadding = a.getInteger(R.styleable.SudokuBoard_cellVerticalPadding, DEFAULT_CELL_VERTICAL_PADDING);
             mCellHorizontalPadding = a.getInteger(R.styleable.SudokuBoard_cellHorizontalPadding, DEFAULT_CELL_HORIZONTAL_PADDING);
             mCellMaxFontSize = a.getInteger(R.styleable.SudokuBoard_cellMaxFontSize, DEFAULT_CELL_MAX_FONT_SIZE);
@@ -143,6 +144,8 @@ public class SudokuBoard extends View {
 
         // Set the color of the paint objects
         // We also set the style of the paint objects (stroke simply draws a line and fill draws a solid shape)
+
+        mLetterColorPaint.setColor(mTextColor);
 
         // Draw the outer side of the board (the big square that contains all of the cells)
         mBoardColorPaint.setStyle(Paint.Style.STROKE);

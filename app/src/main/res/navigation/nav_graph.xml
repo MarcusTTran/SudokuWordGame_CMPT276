@@ -11,7 +11,7 @@
         tools:layout="@layout/fragment_main_menu">
         <action
             android:id="@+id/startPuzzleAction"
-            app:destination="@id/puzzleGame"
+            app:destination="@id/puzzleFragment"
             >
         <argument
             android:name="isNewGame"
@@ -28,8 +28,6 @@
         android:name="com.echo.wordsudoku.ui.destinations.ChooseCustomWordsFragment"
         android:label="@string/destination_choose_custom_words"
         tools:layout="@layout/fragment_choose_custom_words"/>
-    <navigation android:id="@+id/puzzleGame"
-        app:startDestination="@id/puzzleFragment">
         <fragment
             android:id="@+id/puzzleFragment"
             android:name="com.echo.wordsudoku.ui.destinations.PuzzleFragment"
@@ -69,9 +67,8 @@
                 app:argType="integer" />
             <action
                 android:id="@+id/NewGameAfterPuzzleAction"
-                app:destination="@id/puzzleGame"
-                app:popUpTo="@id/puzzleGame"
+                app:destination="@id/puzzleFragment"
+                app:popUpTo="@id/puzzleFragment"
                 app:popUpToInclusive="true" />
         </fragment>
-    </navigation>
 </navigation>
