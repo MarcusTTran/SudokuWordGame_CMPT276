@@ -16,10 +16,15 @@ import android.os.Bundle;
 
 import com.echo.wordsudoku.R;
 import com.echo.wordsudoku.models.BoardLanguage;
+import com.echo.wordsudoku.models.Memory.JsonWriter;
 import com.echo.wordsudoku.models.words.WordPairReader;
+import com.echo.wordsudoku.ui.destinations.PuzzleFragment;
 import com.echo.wordsudoku.ui.puzzleParts.PuzzleViewModel;
 import com.google.android.material.navigation.NavigationView;
 
+import org.json.JSONException;
+
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -88,14 +93,24 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onStop() {
-        super.onStop();
         // Save the puzzle language to the shared preferences
         SharedPreferences.Editor editor = mPreferences.edit();
         mSettingsPuzzleLanguage = mSettingsViewModel.getPuzzleLanguage().getValue();
         editor.putInt(getString(R.string.puzzle_language_key), mSettingsPuzzleLanguage);
         editor.apply();
 
+        // Save the puzzle to the json file before app closes
 
+        JsonWriter jsonWriter = new JsonWriter(this);
+        try {
+            jsonWriter.open();
+            jsonWriter.writePuzzle(mPuzzleViewModel.getPuzzle().getValue());
+            jsonWriter.close();
+        } catch (JSONException | IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        super.onStop();
     }
 
     @Override
@@ -106,5 +121,4 @@ public class MainActivity extends AppCompatActivity {
             super.onBackPressed();
         }
     }
-
 }
