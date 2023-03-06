@@ -41,9 +41,13 @@ package com.echo.wordsudoku.models.dimension;
  */
 
 import com.echo.wordsudoku.models.MathUtils;
+import com.echo.wordsudoku.models.Memory.Writable;
 import com.echo.wordsudoku.models.sudoku.Puzzle;
 
-public class PuzzleDimensions {
+import org.json.JSONException;
+import org.json.JSONObject;
+
+public class PuzzleDimensions implements Writable {
 
     // The dimension of the puzzle. A 6x6 puzzle has a puzzle dimension of 6.
     private int puzzleDimension;
@@ -64,10 +68,21 @@ public class PuzzleDimensions {
     }
 
 
+    // @constructor used by JSON reader to directly construct the PuzzleDimensions object from a JSONObject
+    // Prepares the correct dimensions for the requested puzzle dimension.
+    // @param: puzzleDimension: int
+    // @param: eachBoxDimension: Dimension
+    // @param: boxesInPuzzleDimension: Dimension
+    public PuzzleDimensions(int puzzleDimension, Dimension eachBoxDimension, Dimension boxesInPuzzleDimension) {
+        this.puzzleDimension = puzzleDimension;
+        this.eachBoxDimension = eachBoxDimension;
+        this.boxesInPuzzleDimension = boxesInPuzzleDimension;
+    }
+
+
     // Getters
     // No setters because we want this class to be immutable.
     // Otherwise the dimension of the puzzle will be changed and there might be no legal puzzle for those dimensions.
-
     public int getPuzzleDimension() {
         return puzzleDimension;
     }
@@ -120,4 +135,15 @@ public class PuzzleDimensions {
         return new Dimension(puzzleDimension / boxDimension.getRows(), puzzleDimension / boxDimension.getColumns());
     }
 
+    /* @method to covert the PuzzleDimension Object into json and each Dimension into json
+     * @returns JSONObject the json object used to write into .json file within the puzzle
+     */
+    @Override
+    public JSONObject toJson() throws JSONException {
+        JSONObject json = new JSONObject();
+        json.put("puzzleDimension", this.getPuzzleDimension());
+        json.put("eachBoxDimension", this.getEachBoxDimension().toJson());
+        json.put("boxesInPuzzleDimension", this.getBoxesInPuzzleDimension().toJson());
+        return json;
+    }
 }

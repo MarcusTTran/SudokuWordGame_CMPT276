@@ -1,6 +1,10 @@
 package com.echo.wordsudoku.models.words;
 
 import com.echo.wordsudoku.models.BoardLanguage;
+import com.echo.wordsudoku.models.Memory.Writable;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 /**
  *  ========================================= WORDPAIR =========================================
@@ -13,7 +17,7 @@ import com.echo.wordsudoku.models.BoardLanguage;
  ========================================= WORDPAIR ===========================================
  */
 
-public class WordPair {
+public class WordPair implements Writable {
 
     private String eng; // english word
     private String fre; // french word
@@ -67,4 +71,11 @@ public class WordPair {
     }
 
 
+    @Override
+    public JSONObject toJson() throws JSONException {
+        JSONObject json = new JSONObject();
+        json.put("eng", this.getEnglish());
+        json.put("fre", this.getFrench());
+        return json;
+    }
 }

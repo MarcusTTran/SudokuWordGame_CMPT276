@@ -38,10 +38,15 @@ package com.echo.wordsudoku.models.sudoku;
 
  */
 
+import com.echo.wordsudoku.models.Memory.Writable;
 import com.echo.wordsudoku.models.dimension.Dimension;
 import com.echo.wordsudoku.models.words.WordPair;
 
-public class CellBox {
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+public class CellBox implements Writable {
 
     // cells: the 2D array of cells.
     private Cell[][] cells;
@@ -135,6 +140,17 @@ public class CellBox {
         }
     }
 
+    /*
+    * @constructor
+    * Constructs a CellBox object with the given dimension and initializes the cells with the given content.
+    * @param cells: the 2D array of cells.
+    * @param dimension: the dimension of the 2D array of cells.
+     */
+    public CellBox (Cell [][] cells, Dimension dimension) {
+        this.dimension = dimension;
+        this.cells = cells;
+    }
+
     // Getters and Setters
     // for the member variable Cell[][] cells
     public void setCells(Cell[][] cells) throws IllegalArgumentException {
@@ -222,4 +238,43 @@ public class CellBox {
             }
         }
     }
+
+    /* @method to covert the CellBox Object into json including the Dimension and all Cells
+     * @returns JSONObject the json object used to write into .json file within the puzzle
+     */
+    @Override
+    public JSONObject toJson() throws JSONException {
+        JSONObject json = new JSONObject();
+        json.put("cells", allCells2DToJson());
+        json.put("dimension", this.dimension.toJson());
+
+
+        return json;
+    }
+
+    /* @utility to covert all Cells (array) into Json
+     * @returns JSONObject the json object used to write into .json file within the puzzle
+     */
+    private JSONArray allCells2DToJson() throws JSONException {
+        JSONArray jsonArray = new JSONArray();
+        for (Cell[] cells : this.getCells()) {
+            jsonArray.put(cellsToJson(cells));
+        }
+
+        return jsonArray;
+    }
+
+    /* @utility to covert each Cell within list of Cells (array) into Json
+     * @returns JSONObject the json object used to write into .json file within the puzzle
+     */
+    private JSONArray cellsToJson(Cell [] cells) throws JSONException {
+        JSONArray jsonArray = new JSONArray();
+        for (Cell c : cells) {
+            jsonArray.put(c.toJson());
+        }
+
+        return jsonArray;
+    }
+
+
 }

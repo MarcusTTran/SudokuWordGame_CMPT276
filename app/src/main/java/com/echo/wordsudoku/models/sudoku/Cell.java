@@ -2,7 +2,11 @@ package com.echo.wordsudoku.models.sudoku;
 
 
 import com.echo.wordsudoku.models.BoardLanguage;
+import com.echo.wordsudoku.models.Memory.Writable;
 import com.echo.wordsudoku.models.words.WordPair;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 /**
  * The Cell class represents a cell in the board.
@@ -46,7 +50,7 @@ import com.echo.wordsudoku.models.words.WordPair;
  * @version 1.0
  */
 
-public class Cell {
+public class Cell implements Writable {
 
     // content: the content of the cell
     // by default, the content of the cell is null which means it is empty
@@ -83,9 +87,29 @@ public class Cell {
         this.isEmpty = false;
     }
 
+    /* @constructor
+     * @param content: the word pair of the cell
+     * @param language: the language of the cell
+     * @param isEditable: whether the cell is editable or not
+     */
     public Cell(WordPair content, boolean isEditable, int language) {
         this(content, language);
         setEditable(isEditable);
+    }
+
+    /* @constructor
+     * @param content: the content of the cell
+     * @param isEditable: whether the cell is editable or not
+     * @param language: the language of the cell
+     * @param isEmpty: whether the cell is empty or not
+     * Creates a cell with the given content, whether the cell is editable or not, the language
+     *  of the cell, and whether the cell is empty or not
+     */
+    public Cell(WordPair content, boolean isEditable, int language, boolean isEmpty) {
+        this.content = content;
+        this.isEmpty = isEmpty;
+        this.isEditable = isEditable;
+        this.language = language;
     }
 
     /* @constructor
@@ -194,5 +218,22 @@ public class Cell {
     @Override
     public String toString() {
         return content.getEnglishOrFrench(getLanguage());
+    }
+
+    /* @method to covert the Cell Object and its WordPair into json
+     * @returns JSONObject the json object used to write into .json file within the puzzle
+     */
+    @Override
+    public JSONObject toJson() throws JSONException {
+        JSONObject json = new JSONObject();
+        if (this.getContent() != null) {
+            json.put("content", this.getContent().toJson());
+        } else {
+            json.put("content", JSONObject.NULL);
+        }
+        json.put("language", this.getLanguage());
+        json.put("isEmpty", this.isEmpty());
+        json.put("isEditable", this.isEditable());
+        return json;
     }
 }
