@@ -66,10 +66,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        mPuzzleViewModel = new ViewModelProvider(this).get(PuzzleViewModel.class);
-        mSettingsViewModel = new ViewModelProvider(this).get(SettingsViewModel.class);
-        mPreferences = getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE);
-
         new Thread(() -> {
             try {
                 InputStream jsonFile = getAssets().open(wordPairJsonFile);
@@ -78,6 +74,13 @@ public class MainActivity extends AppCompatActivity {
                 throw new RuntimeException(e);
             }
         }).start();
+
+        mPuzzleViewModel = new ViewModelProvider(this).get(PuzzleViewModel.class);
+        mSettingsViewModel = new ViewModelProvider(this).get(SettingsViewModel.class);
+        mPreferences = getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE);
+
+        // This is used to load the settings from the shared preferences and update the settings view model and load the program according to these settings
+        loadSettings();
 
         // Setting up the game settings saved in the shared preferences
         // Get the puzzle language from the shared preferences
@@ -106,15 +109,27 @@ public class MainActivity extends AppCompatActivity {
                 || super.onSupportNavigateUp();
     }
 
-    @Override
-    protected void onStop() {
-        super.onStop();
-        // Save the puzzle language to the shared preferences
+    private void loadSettings() {
+        // TODO: Load all of the game settings so when the user opens the app again, the settings are the same
+        // Load the settings from the shared preferences
+        // boolean isTimerOn = mPreferences.getBoolean(getString(R.string.timer_on_key), true);
+        // mSettingsViewModel.setTimerOn(isTimerOn);
+    }
+
+
+    // TODO: Add more settings to be saved
+    private void saveSettings() {
+        // Save all of the game settings so when the user opens the app again, the settings are the same
         SharedPreferences.Editor editor = mPreferences.edit();
         mSettingsPuzzleLanguage = mSettingsViewModel.getPuzzleLanguage().getValue();
         editor.putInt(getString(R.string.puzzle_language_key), mSettingsPuzzleLanguage);
         editor.apply();
+    }
 
+    @Override
+    protected void onStop() {
+        super.onStop();
+        saveSettings();
         // Save the puzzle to the json file before app closes
         saveGame();
     }
