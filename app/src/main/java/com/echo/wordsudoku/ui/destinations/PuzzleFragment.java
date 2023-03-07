@@ -75,11 +75,7 @@ public class PuzzleFragment extends Fragment{
         if (isNewGame) {
             newGame();
         } else {
-            if(!loadGame()) {
-                // If loading the game failed, go back to Main Menu
-                Navigation.findNavController(requireActivity(), R.id.nav_host_fragment).navigateUp();
-                Toast.makeText(requireActivity(), "Failed to load game", Toast.LENGTH_SHORT).show();
-            }
+            loadGame();
         }
 
         LanguageList1 = new String[puzzleDimension];
@@ -88,25 +84,25 @@ public class PuzzleFragment extends Fragment{
         return root;
     }
 
-    private boolean loadGame() {
+    private void loadGame() {
         // Load the puzzle from the file and update the class members
         mJsonReader = new JsonReader(requireActivity());
-        if (!mJsonReader.isFileExists())
-            return false;
         new Thread(() -> {
             // Load the puzzle from the file and update the class members
-            Puzzle puzzle = null;
+            Puzzle puzzle;
             try {
                 puzzle = mJsonReader.readPuzzle();
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            } catch (JSONException e) {
-                throw new RuntimeException(e);
+                // Update the PuzzleViewModel
+                if (puzzle != null)
+                    mPuzzleViewModel.postPuzzle(puzzle);
+            } catch (IOException | JSONException e) {
+                // run from main thread
+                requireActivity().runOnUiThread(() -> {
+                    Toast.makeText(requireActivity(), R.string.load_game_error, Toast.LENGTH_SHORT).show();
+                    Navigation.findNavController(requireActivity(), R.id.nav_host_fragment).navigateUp();
+                });
             }
-            // Update the PuzzleViewModel
-            mPuzzleViewModel.postPuzzle(puzzle);
         }).start();
-        return true;
     }
 
     private void newGame() {
@@ -126,7 +122,7 @@ public class PuzzleFragment extends Fragment{
     }
 
     public void enterWordInBoard(String word) {
-        String msg = "Word entered successfully!";
+        String msg = getString(R.string.word_entry_successful);
         WordPair associatedWordPair = null;
         List<WordPair> mWordPairs = mPuzzleViewModel.getPuzzle().getValue().getWordPairs();
         for (WordPair wordPair : mWordPairs) {
@@ -139,7 +135,7 @@ public class PuzzleFragment extends Fragment{
             PuzzleBoardFragment puzzleFragment = (PuzzleBoardFragment) getChildFragmentManager().findFragmentById(R.id.board);
             Dimension currentCell =  puzzleFragment.getSelectedCell();
             if (currentCell.getRows()==-2 || currentCell.getColumns()==-2) {
-                msg = "You must select a cell first";
+                msg = getString(R.string.error_no_cell_selected);
             }
             else {
                 try {
@@ -148,7 +144,7 @@ public class PuzzleFragment extends Fragment{
                     mPuzzleViewModel.setPuzzle(puzzle);
                 } catch (Exception e) {
                     e.printStackTrace();
-                    msg = "You can not write in the puzzle initial cells";
+                    msg = getString(R.string.error_insert_in_initial_cell);
                 }
             }
         }

@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Word Sudoku</string>
     <string name="menu_new_game_btn">New Game</string>
-    <string name="menu_load_game_btn">Load Previous Game</string>
+    <string name="menu_load_game_btn">Load Saved Game</string>
     <string name="menu_exit_btn">Exit</string>
     <string name="menu_main_menu_btn">Main Menu</string>
     <string name="fail_msg">You Failed!</string>
@@ -49,5 +49,10 @@ If you encounter any difficulty translating the words featured in your puzzle, y
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
+    <string name="save_game_error">Failed to save the game</string>
+    <string name="load_game_error">Failed to load the game</string>
+    <string name="word_entry_successful">Word entered successfully!</string>
+    <string name="error_no_cell_selected">No cell selected</string>
+    <string name="error_insert_in_initial_cell">You can not write in the puzzle initial cells</string>
 
 </resources>

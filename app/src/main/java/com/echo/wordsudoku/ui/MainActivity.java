@@ -15,6 +15,7 @@ import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.StrictMode;
+import android.widget.Toast;
 
 import com.echo.wordsudoku.R;
 import com.echo.wordsudoku.models.BoardLanguage;
@@ -126,10 +127,8 @@ public class MainActivity extends AppCompatActivity {
             if(puzzle == null) return;
             try {
                 jsonWriter.writePuzzle(puzzle);
-            } catch (JSONException e) {
-                throw new RuntimeException(e);
-            } catch (IOException e) {
-                throw new RuntimeException(e);
+            } catch (JSONException | IOException e) {
+                Toast.makeText(MainActivity.this,R.string.save_game_error , Toast.LENGTH_SHORT).show();
             }
         }).start();
     }
