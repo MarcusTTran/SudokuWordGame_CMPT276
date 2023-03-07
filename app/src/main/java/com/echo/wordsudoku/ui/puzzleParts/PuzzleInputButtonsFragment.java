@@ -40,7 +40,12 @@ public class PuzzleInputButtonsFragment extends Fragment {
                 getView().findViewById(R.id.button7),
                 getView().findViewById(R.id.button8),
                 getView().findViewById(R.id.button9)};
-            initializeButtons(buttons, mPuzzleViewModel.getWordPairs(), BoardLanguage.getOtherLanguage(mPuzzleViewModel.getPuzzle().getValue().getLanguage()));
+        mPuzzleViewModel.getPuzzle().observe(getViewLifecycleOwner(), puzzle -> {
+            if (puzzle != null) {
+                initializeButtons(buttons, mPuzzleViewModel.getWordPairs(), BoardLanguage.getOtherLanguage(mPuzzleViewModel.getPuzzle().getValue().getLanguage()));
+            }
+        });
+//            initializeButtons(buttons, mPuzzleViewModel.getWordPairs(), BoardLanguage.getOtherLanguage(mPuzzleViewModel.getPuzzle().getValue().getLanguage()));
     }
 
     // This method sets the labels of the buttons and adds on Click Listeners to them
@@ -54,13 +59,10 @@ public class PuzzleInputButtonsFragment extends Fragment {
         } else {
             for (int i = 0; i < mWordPairs.size(); i++) {
                 buttons[i].setText(mWordPairs.get(i).getEnglishOrFrench(mPuzzleLanguage));
-                buttons[i].setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        PuzzleFragment puzzleFragment = (PuzzleFragment) getParentFragment();
-                        Button button = (Button) v;
-                        puzzleFragment.enterWordInBoard(button.getText().toString());
-                    }
+                buttons[i].setOnClickListener(v -> {
+                    PuzzleFragment puzzleFragment = (PuzzleFragment) getParentFragment();
+                    Button button = (Button) v;
+                    puzzleFragment.enterWordInBoard(button.getText().toString());
                 });
             }
         }
