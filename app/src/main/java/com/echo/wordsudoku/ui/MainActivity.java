@@ -123,6 +123,7 @@ public class MainActivity extends AppCompatActivity {
         new Thread(() -> {
             JsonWriter jsonWriter = new JsonWriter(MainActivity.this);
             Puzzle puzzle = mPuzzleViewModel.getPuzzle().getValue();
+            if(puzzle == null) return;
             try {
                 jsonWriter.writePuzzle(puzzle);
             } catch (JSONException e) {

@@ -75,7 +75,11 @@ public class PuzzleFragment extends Fragment{
         if (isNewGame) {
             newGame();
         } else {
-            loadGame();
+            if(!loadGame()) {
+                // If loading the game failed, go back to Main Menu
+                Navigation.findNavController(requireActivity(), R.id.nav_host_fragment).navigateUp();
+                Toast.makeText(requireActivity(), "Failed to load game", Toast.LENGTH_SHORT).show();
+            }
         }
 
         LanguageList1 = new String[puzzleDimension];
@@ -84,15 +88,12 @@ public class PuzzleFragment extends Fragment{
         return root;
     }
 
-    private void loadGame() {
+    private boolean loadGame() {
+        // Load the puzzle from the file and update the class members
+        mJsonReader = new JsonReader(requireActivity());
+        if (!mJsonReader.isFileExists())
+            return false;
         new Thread(() -> {
-            // Load the puzzle from the file and update the class members
-            try {
-                mJsonReader = new JsonReader(requireActivity());
-            } catch (FileNotFoundException e) {
-                throw new RuntimeException(e);
-            }
-
             // Load the puzzle from the file and update the class members
             Puzzle puzzle = null;
             try {
@@ -102,10 +103,10 @@ public class PuzzleFragment extends Fragment{
             } catch (JSONException e) {
                 throw new RuntimeException(e);
             }
-
             // Update the PuzzleViewModel
             mPuzzleViewModel.postPuzzle(puzzle);
         }).start();
+        return true;
     }
 
     private void newGame() {

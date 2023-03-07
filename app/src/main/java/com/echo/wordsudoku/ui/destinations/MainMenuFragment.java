@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -14,6 +15,7 @@ import androidx.navigation.fragment.NavHostFragment;
 
 import com.echo.wordsudoku.R;
 import com.echo.wordsudoku.models.BoardLanguage;
+import com.echo.wordsudoku.models.Memory.JsonReader;
 import com.echo.wordsudoku.ui.SettingsViewModel;
 import com.echo.wordsudoku.ui.destinations.MainMenuFragmentDirections.StartPuzzleAction;
 
@@ -60,6 +62,10 @@ public class MainMenuFragment extends Fragment {
         mLoadGameButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (!new JsonReader(getContext()).isFileExists()) {
+                    Toast.makeText(getContext(), "No saved game found", Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 StartPuzzleAction action = MainMenuFragmentDirections.startPuzzleAction();
                 action.setIsNewGame(false);
                 navController.navigate(action);
