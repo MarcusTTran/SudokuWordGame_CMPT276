@@ -31,11 +31,11 @@ public class SudokuBoard extends View {
     // This is the number of cells in each row and column
     // We are not going to use this for now
     // TODO: Use this to make the board dynamic
-    private final int mBoardSize;
+    private int mBoardSize;
 
     private OnCellTouchListener mOnCellTouchListener;
-    private final int mBoxHeight;
-    private final int mBoxWidth;
+    private int mBoxHeight;
+    private int mBoxWidth;
     // This is the default size of the board
     private final int DEFAULT_BOARD_SIZE = 9;
 
@@ -83,6 +83,8 @@ public class SudokuBoard extends View {
     // The size of each cell (they are square cells)
     // This is calculated in the onMeasure method
     private int cellSize;
+
+    private int size;
 
     // The current cell that is selected
     // This is used to highlight the selected cell
@@ -133,6 +135,20 @@ public class SudokuBoard extends View {
         board = new String[mBoardSize][mBoardSize];
     }
 
+    // With this method we can set the board size and the box size to different values
+    // This is used to make the board dynamic
+    // @param boardSize - the size of the board (the number of rows and columns)
+    // @param boxHeight - the height of the box (the number of rows in the box)
+    // @param boxWidth - the width of the box (the number of columns in the box)
+    public void setNewPuzzleDimensions(int boardSize, int boxHeight, int boxWidth) {
+        this.mBoardSize = boardSize;
+        this.mBoxHeight = boxHeight;
+        this.mBoxWidth = boxWidth;
+        this.cellSize = this.size / mBoardSize;
+        this.setBoard(new String[mBoardSize][mBoardSize]);
+        this.currentCellColumn = this.currentCellRow = -1;
+    }
+
 
     @Override
     public boolean dispatchHoverEvent(MotionEvent event) {
@@ -155,6 +171,8 @@ public class SudokuBoard extends View {
 
         // Calculate the dimensions of each cell
         cellSize = size / mBoardSize;
+
+        this.size = size;
 
         // Set the measured dimensions
         setMeasuredDimension(size, size);

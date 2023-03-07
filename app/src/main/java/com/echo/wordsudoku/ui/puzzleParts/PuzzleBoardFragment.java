@@ -26,6 +26,7 @@ public class PuzzleBoardFragment extends Fragment {
         View root = inflater.inflate(R.layout.fragment_puzzle_board, container, false);
         mSudokuBoard = root.findViewById(R.id.sudoku_board);
         mPuzzleViewModel = new ViewModelProvider(requireActivity()).get(PuzzleViewModel.class);
+//        mSudokuBoard.setNewPuzzleDimensions(6,2,3);
 //        mSudokuBoard.setBoard(mPuzzleViewModel.getPuzzle().getValue().toStringArray());
         mPuzzleViewModel.getPuzzle().observe(getViewLifecycleOwner(), puzzle -> {
             if (puzzle!=null)
