@@ -14,6 +14,10 @@
 
     <string name="preference_file_key">com.echo.wordsudoku.gameOptions</string>
     <string name="puzzle_language_key">com.echo.wordsudoku.puzzleLanguageKey</string>
+    <string name="puzzle_difficulty_preference_key">com.echo.wordsudoku.puzzleDifficultyKey</string>
+    <string name="puzzle_timer_preference_key">com.echo.wordsudoku.puzzleTimerKey</string>
+    <string name="puzzle_uiImmersion_preference_key">com.echo.wordsudoku.puzzleTimerKey</string>
+
 
     <string name="RulesHeader">Word Sudoku Rules</string>
     <string name="RulesText">When you start a new Word Sudoku game you will be presented with a square grid consisting of a number of cells.
@@ -29,8 +33,8 @@ If you encounter any difficulty translating the words featured in your puzzle, y
     <string name="destination_puzzle">Puzzle</string>
     <string name="destination_puzzle_result">Puzzle Result</string>
     <string name="destination_choose_custom_words">Choose Custom Words</string>
+    <string name="destination_choose_custom_words_size">Choose Size for Puzzle with Custom Words</string>
     <string name="destination_settings">Settings</string>
-
 
 
     <!-- Messages Preferences -->
@@ -52,7 +56,6 @@ If you encounter any difficulty translating the words featured in your puzzle, y
 
     <!-- Difficulty Preferences -->
     <string name="difficulty_header">Puzzle Difficulty</string>
-
 
 
     <string name="save_game_error">Failed to save the game</string>

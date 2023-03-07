@@ -1,8 +1,12 @@
 package com.echo.wordsudoku.ui;
 
+import android.util.Log;
+
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
+
+import java.util.Set;
 
 public class SettingsViewModel extends ViewModel {
     private final MutableLiveData<Integer> mPuzzleLanguage = new MutableLiveData<>();
@@ -40,5 +44,17 @@ public class SettingsViewModel extends ViewModel {
         return timer;
     }
 
+
+
+
+
+    @Override
+    public void onCleared() {
+        Log.d("MYTEST", "ViewModel has been destroyed");
+    }
+
+    public SettingsViewModel() {
+        Log.d("MYTEST", "ViewModel has been created");
+    }
 
 }

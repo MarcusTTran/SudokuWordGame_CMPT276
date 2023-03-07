@@ -9,6 +9,7 @@
 
         <SwitchPreferenceCompat
             app:key="timer"
+            app:defaultValue="false"
             app:summaryOff="@string/set_timer_off"
             app:summaryOn="@string/set_timer_on"
             app:title="@string/timer_title" />
@@ -29,10 +30,10 @@
 
 
         <ListPreference
-            app:defaultValue="difficulty_1"
+            app:key="difficulty"
+            app:defaultValue="1"
             app:entries="@array/difficulty_entries"
             app:entryValues="@array/difficulty_values"
-            app:key="difficulty"
             app:title="@string/difficulty_title"
             app:useSimpleSummaryProvider="true" />
 
@@ -48,6 +49,7 @@
 
         <SwitchPreferenceCompat
             app:key="uiImmersion"
+            app:defaultValue="false"
             app:summaryOff="@string/french_immersion_off"
             app:summaryOn="@string/french_immersion_on"
             app:title="@string/ui_immersion_title" />

@@ -1,5 +1,7 @@
 package com.echo.wordsudoku.ui;
 
+import static android.os.SystemClock.sleep;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -12,9 +14,8 @@ import androidx.navigation.ui.NavigationUI;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.os.Build;
 import android.os.Bundle;
-import android.os.StrictMode;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.echo.wordsudoku.R;
@@ -40,9 +41,12 @@ public class MainActivity extends AppCompatActivity {
     // This is used for accessing the shared preferences associated with this app
     private SharedPreferences mPreferences;
 
-    private SettingsViewModel mSettingsViewModel;
+    public SettingsViewModel mSettingsViewModel;
 
     private int mSettingsPuzzleLanguage;
+//    private int mSettingsPuzzleDifficulty;
+//    private boolean mSettingsPuzzleTimer;
+
 
     private AppBarConfiguration appBarConfiguration;
 
@@ -67,6 +71,12 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+//        TODO: DELETE THIS!
+        mPuzzleViewModel = new ViewModelProvider(this).get(PuzzleViewModel.class);
+        mSettingsViewModel = new ViewModelProvider(this).get(SettingsViewModel.class);
+        mPreferences = getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE);
+//      TODO: DELETE THIS!
+
         new Thread(() -> {
             try {
                 InputStream jsonFile = getAssets().open(wordPairJsonFile);
@@ -87,6 +97,9 @@ public class MainActivity extends AppCompatActivity {
         // Get the puzzle language from the shared preferences
         mSettingsPuzzleLanguage = mPreferences.getInt(getString(R.string.puzzle_language_key), BoardLanguage.ENGLISH);
         mSettingsViewModel.setPuzzleLanguage(mSettingsPuzzleLanguage);
+
+
+
 
         NavHostFragment navHostFragment =
                 (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment);
@@ -113,8 +126,17 @@ public class MainActivity extends AppCompatActivity {
     private void loadSettings() {
         // TODO: Load all of the game settings so when the user opens the app again, the settings are the same
         // Load the settings from the shared preferences
-        // boolean isTimerOn = mPreferences.getBoolean(getString(R.string.timer_on_key), true);
-        // mSettingsViewModel.setTimerOn(isTimerOn);
+        int difficulty = mPreferences.getInt(getString(R.string.puzzle_difficulty_preference_key), 1);
+        mSettingsViewModel.setDifficulty(difficulty);
+        Log.d("MYTESTS", "Retrieving difficulty: " + String.valueOf(difficulty));
+
+        boolean timer = mPreferences.getBoolean(getString(R.string.puzzle_timer_preference_key), false);
+         mSettingsViewModel.setTimer(timer);
+        Log.d("MYTESTS", "Retrieving timer: " + String.valueOf(timer));
+
+        boolean uiImmersion = mPreferences.getBoolean(getString(R.string.puzzle_uiImmersion_preference_key), false);
+        mSettingsViewModel.setUiImmersion(uiImmersion);
+        Log.d("MYTESTS", "Retrieving uiImmersion: " + String.valueOf(uiImmersion));
     }
 
 
@@ -125,11 +147,29 @@ public class MainActivity extends AppCompatActivity {
         mSettingsPuzzleLanguage = mSettingsViewModel.getPuzzleLanguage().getValue();
         editor.putInt(getString(R.string.puzzle_language_key), mSettingsPuzzleLanguage);
         editor.apply();
+
+        int mSettingsPuzzleDifficulty = mSettingsViewModel.getDifficulty();
+        editor.putInt(getString(R.string.puzzle_difficulty_preference_key), mSettingsPuzzleDifficulty);
+        editor.apply();
+        Log.d("MYTESTS", "Saving difficulty: " + String.valueOf(mSettingsPuzzleDifficulty));
+
+        boolean  mSettingsPuzzleTimer = mSettingsViewModel.isTimer();
+        editor.putBoolean(getString(R.string.puzzle_timer_preference_key), mSettingsPuzzleTimer);
+        editor.apply();
+        Log.d("MYTESTS", "Saving timer: " + String.valueOf(mSettingsPuzzleTimer));
+
+        boolean mSettingsPuzzleUiImmersion = mSettingsViewModel.isUiImmersion();
+        editor.putBoolean(getString(R.string.puzzle_timer_preference_key), mSettingsPuzzleTimer);
+        editor.apply();
+        Log.d("MYTESTS", "Saving UiImmersion: " + String.valueOf(mSettingsPuzzleUiImmersion));
+
     }
 
     @Override
     protected void onStop() {
         super.onStop();
+
+        // Save settings of app before closing
         saveSettings();
         // Save the puzzle to the json file before app closes
         saveGame();

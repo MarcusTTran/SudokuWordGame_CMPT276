@@ -65,4 +65,13 @@
                 android:defaultValue="-1"
                 app:argType="integer" />
         </fragment>
+    <fragment
+        android:id="@+id/chooseCustomWordsSizeFragment"
+        android:name="com.echo.wordsudoku.ui.destinations.ChooseCustomWordsSizeFragment"
+        android:label="@string/destination_choose_custom_words_size"
+        tools:layout="@layout/fragment_choose_custom_words_size">
+        <action
+            android:id="@+id/action_chooseCustomWordsSizeFragment_to_chooseCustomWordsFragment"
+            app:destination="@id/chooseCustomWordsFragment" />
+    </fragment>
 </navigation>

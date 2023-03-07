@@ -7,8 +7,8 @@
     <item android:id="@+id/settingsFragment"
         android:icon="@android:drawable/ic_menu_manage"
         android:title="@string/destination_settings"/>
-    <item android:id="@+id/chooseCustomWordsFragment"
+    <item android:id="@+id/chooseCustomWordsSizeFragment"
         android:icon="@drawable/icon_custom"
-        android:title="@string/destination_choose_custom_words"/>
+        android:title="@string/destination_choose_custom_words_size"/>
     </group>
 </menu>
