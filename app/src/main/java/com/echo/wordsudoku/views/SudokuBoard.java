@@ -5,20 +5,27 @@ import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Rect;
+import android.os.Bundle;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.accessibility.AccessibilityEvent;
 
 import androidx.annotation.Nullable;
+import androidx.core.view.accessibility.AccessibilityNodeInfoCompat;
+import androidx.customview.widget.ExploreByTouchHelper;
 
 import com.echo.wordsudoku.R;
 
+import java.util.List;
 
 
 // using tutorial from https://www.youtube.com/watch?v=lYjSl_ou05Q
 // they implement a sudoku solver app and I am using their code to implement the sudoku board View component
 
 public class SudokuBoard extends View {
+
+    private SudokuBoardTouchHelper mTouchHelper;
 
     // The size of the board
     // This is the number of cells in each row and column
@@ -99,6 +106,8 @@ public class SudokuBoard extends View {
     public SudokuBoard(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
 
+        mTouchHelper = new SudokuBoardTouchHelper(this);
+
         TypedArray a = context.getTheme().obtainStyledAttributes(
                 attrs,
                 R.styleable.SudokuBoard,
@@ -124,6 +133,16 @@ public class SudokuBoard extends View {
         board = new String[mBoardSize][mBoardSize];
     }
 
+
+    @Override
+    public boolean dispatchHoverEvent(MotionEvent event) {
+        // Always attempt to dispatch hover events to accessibility first.
+        if (mTouchHelper.dispatchHoverEvent(event)) {
+            return true;
+        }
+
+        return super.dispatchHoverEvent(event);
+    }
 
     // Here we basically calculate the size of the view
     // We make the view a square and try to make it as big as possible
@@ -210,6 +229,7 @@ public class SudokuBoard extends View {
             currentCellRow = (int) Math.ceil(y / cellSize);
             if (mOnCellTouchListener != null)
                 mOnCellTouchListener.onCellTouched(board[currentCellRow-1][currentCellColumn-1],currentCellRow, currentCellColumn);
+            mTouchHelper.sendEventForVirtualView((currentCellRow-1)*mBoardSize+currentCellColumn-1, AccessibilityEvent.TYPE_VIEW_CLICKED);
             isValid = true;
         } else {
             isValid = false;
@@ -365,5 +385,51 @@ public class SudokuBoard extends View {
     }
     public int getCurrentCellColumn() {
         return currentCellColumn;
+    }
+
+    private class SudokuBoardTouchHelper extends ExploreByTouchHelper {
+
+        public SudokuBoardTouchHelper(View forView) {
+            super(forView);
+        }
+
+        @Override
+        protected int getVirtualViewAt(float x, float y) {
+            int row = (int) (y / cellSize);
+            int column = (int) (x / cellSize);
+            if (row >= mBoardSize || column >= mBoardSize) {
+                return INVALID_ID;
+            }
+            return row * mBoardSize + column;
+        }
+
+        @Override
+        protected void getVisibleVirtualViews(List<Integer> virtualViewIds) {
+            for (int i = 0; i < mBoardSize * mBoardSize; i++) {
+                virtualViewIds.add(i);
+            }
+        }
+
+        @Override
+        protected void onPopulateNodeForVirtualView(int virtualViewId, AccessibilityNodeInfoCompat node) {
+            int row = virtualViewId / mBoardSize;
+            int column = virtualViewId % mBoardSize;
+            node.setContentDescription("Cell " + row + " " + column+" contains "+board[row][column]);
+            node.setBoundsInParent(new Rect(column * cellSize, row * cellSize, (column + 1) * cellSize, (row + 1) * cellSize));
+            node.addAction(AccessibilityNodeInfoCompat.ACTION_CLICK);
+        }
+
+        @Override
+        protected boolean onPerformActionForVirtualView(int virtualViewId, int action, Bundle arguments) {
+            if (action == AccessibilityNodeInfoCompat.ACTION_CLICK) {
+                int row = virtualViewId / mBoardSize;
+                int column = virtualViewId % mBoardSize;
+                if (mOnCellTouchListener != null) {
+                    mOnCellTouchListener.onCellTouched(board[row][column],row, column);
+                }
+                return true;
+            }
+            return false;
+        }
     }
 }
