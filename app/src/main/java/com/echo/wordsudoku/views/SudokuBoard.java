@@ -26,6 +26,9 @@ public class SudokuBoard extends View {
     // TODO: Use this to make the board dynamic
     private final int mBoardSize;
 
+    private OnCellTouchListener mOnCellTouchListener;
+    private final int mBoxHeight;
+    private final int mBoxWidth;
     // This is the default size of the board
     private final int DEFAULT_BOARD_SIZE = 9;
 
@@ -83,7 +86,7 @@ public class SudokuBoard extends View {
     // This string 2D array should later on be linked to the model Board
     // It will be used to store the letters in the cells
     // TODO: Link this to the model Board
-    private String[][] board = new String[9][9];
+    private String[][] board;
 
 
     // This is the constructor that is called when the view is created in the XML layout
@@ -106,6 +109,8 @@ public class SudokuBoard extends View {
         // and finally recycle the TypedArray object so we can empty the memory
         try {
             mBoardSize = a.getInteger(R.styleable.SudokuBoard_boardSize, DEFAULT_BOARD_SIZE);
+            mBoxHeight = a.getInteger(R.styleable.SudokuBoard_boxHeight, 3);
+            mBoxWidth = a.getInteger(R.styleable.SudokuBoard_boxWidth, 3);
             mBoardColor = a.getInteger(R.styleable.SudokuBoard_boardColor, 0);
             mCellFillColor = a.getInteger(R.styleable.SudokuBoard_cellFillColor, 0);
             mCellsHighlightColor = a.getInteger(R.styleable.SudokuBoard_cellsHighlightColor, 0);
@@ -116,6 +121,7 @@ public class SudokuBoard extends View {
         } finally {
             a.recycle();
         }
+        board = new String[mBoardSize][mBoardSize];
     }
 
 
@@ -129,7 +135,7 @@ public class SudokuBoard extends View {
         int size = Math.min(this.getMeasuredWidth(), this.getMeasuredHeight());
 
         // Calculate the dimensions of each cell
-        cellSize = size / 9;
+        cellSize = size / mBoardSize;
 
         // Set the measured dimensions
         setMeasuredDimension(size, size);
@@ -202,6 +208,8 @@ public class SudokuBoard extends View {
         if (action == MotionEvent.ACTION_DOWN) {
             currentCellColumn = (int) Math.ceil(x / cellSize);
             currentCellRow = (int) Math.ceil(y / cellSize);
+            if (mOnCellTouchListener != null)
+                mOnCellTouchListener.onCellTouched(board[currentCellRow-1][currentCellColumn-1],currentCellRow, currentCellColumn);
             isValid = true;
         } else {
             isValid = false;
@@ -223,9 +231,9 @@ public class SudokuBoard extends View {
         // If not, nothing will be highlighted (this will happen when the user first opens the puzzle)
         if (currentCellColumn != -1 && currentCellRow != -1) {
             // Highlight the selected column
-            canvas.drawRect((c-1)*cellSize,0,c*cellSize,cellSize*9,mCellsHighlightColorPaint);
+            canvas.drawRect((c-1)*cellSize,0,c*cellSize,cellSize*mBoardSize,mCellsHighlightColorPaint);
             // Highlight the selected row
-            canvas.drawRect(0,(r-1)*cellSize,9*cellSize,r*cellSize,mCellsHighlightColorPaint);
+            canvas.drawRect(0,(r-1)*cellSize,mBoardSize*cellSize,r*cellSize,mCellsHighlightColorPaint);
             // Highlight the selected cell, different color than the previous 2
             canvas.drawRect((c-1)*cellSize,(r-1)*cellSize,c*cellSize,r*cellSize,mCellFillColorPaint);
         }
@@ -256,8 +264,8 @@ public class SudokuBoard extends View {
     //TODO: Draw the board with custom sizes. Currently only draws a 9x9 board
     private void drawBoard(Canvas canvas) {
         // Draw the column lines
-        for (int c = 0; c < 10; c++) {
-            if (c % 3 == 0) {
+        for (int c = 0; c < mBoardSize+1; c++) {
+            if (c % mBoxWidth == 0) {
                 // If the column is a multiple of 3, draw a thick line because it is in the 3x3 square
                 drawThickLines();
             } else {
@@ -268,8 +276,8 @@ public class SudokuBoard extends View {
         }
 
         // Draw the row lines
-        for (int r = 0; r < 10; r++) {
-            if (r % 3 == 0) {
+        for (int r = 0; r < mBoardSize; r++) {
+            if (r % mBoxHeight == 0) {
                 // If the column is a multiple of 3, draw a thick line because it is in the 3x3 square
                 drawThickLines();
             } else {
@@ -289,8 +297,8 @@ public class SudokuBoard extends View {
         final int desiredHeightForEachWord = cellSize-mCellVerticalPadding;
         final int desiredWidthForEachWord = cellSize-mCellHorizontalPadding;
         final int maximumLetterFontSize = mCellMaxFontSize;
-        for (int r=0; r<9; r++) {
-            for (int c=0; c<9; c++) {
+        for (int r=0; r<mBoardSize; r++) {
+            for (int c=0; c<mBoardSize; c++) {
                 if (board[r][c] != null){
                     String word = board[r][c];
                     float width, height;
@@ -315,7 +323,7 @@ public class SudokuBoard extends View {
     // @param: maxTextSize is the maximum size of the text (60)
 
     private static void setTextSize(Paint paint, float desiredHeight, float desiredWidth,
-                                            String text, int maxTextSize) {
+                                    String text, int maxTextSize) {
 
 
         final float testTextSize = 20f;
@@ -339,11 +347,15 @@ public class SudokuBoard extends View {
     // It will load the board initially when the user opens the puzzle using the unsolved puzzle from Board model.
     // Also used for testing purposes
     public void setBoard(String[][] board) {
-        for (int r=0; r<9; r++) {
-            for (int c=0; c<9; c++) {
+        for (int r=0; r<mBoardSize; r++) {
+            for (int c=0; c<mBoardSize; c++) {
                 this.board[r][c] = board[r][c];
             }
         }
+    }
+
+    public void setOnCellTouchListener(OnCellTouchListener listener) {
+        this.mOnCellTouchListener = listener;
     }
 
 
@@ -354,7 +366,4 @@ public class SudokuBoard extends View {
     public int getCurrentCellColumn() {
         return currentCellColumn;
     }
-
-
-
 }

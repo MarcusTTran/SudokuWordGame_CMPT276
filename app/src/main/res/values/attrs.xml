@@ -6,6 +6,8 @@
         <attr name="textColor" format="color" />
         <attr name="boardColor" format="color" />
         <attr name="boardSize" format="integer" />
+        <attr name="boxHeight" format="integer" />
+        <attr name="boxWidth" format="integer" />
         <attr name="cellVerticalPadding" format="integer" />
         <attr name="cellHorizontalPadding" format="integer" />
         <attr name="cellMaxFontSize" format="integer" />
