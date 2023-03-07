@@ -1,35 +1,59 @@
 <PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <PreferenceCategory app:title="@string/messages_header">
 
-        <EditTextPreference
-            app:key="signature"
-            app:title="@string/signature_title"
-            app:useSimpleSummaryProvider="true" />
+    <PreferenceCategory app:title="@string/timer_header">
+
+        <!--        <SwitchPreferenceCompat-->
+        <!--            app:key="sync"-->
+        <!--            app:title="@string/sync_title" />-->
+
+        <SwitchPreferenceCompat
+            app:key="timer"
+            app:summaryOff="@string/set_timer_off"
+            app:summaryOn="@string/set_timer_on"
+            app:title="@string/timer_title" />
+
+    </PreferenceCategory>
+
+
+
+    <PreferenceCategory app:title="@string/difficulty_header">
+
+
+<!--        <SwitchPreferenceCompat-->
+<!--            app:key="french_immersion"-->
+<!--            app:summaryOff="@string/french_immersion_off"-->
+<!--            app:summaryOn="@string/french_immersion_on"-->
+<!--            app:title="@string/attachment_title" />-->
+
+
 
         <ListPreference
-            app:defaultValue="reply"
-            app:entries="@array/reply_entries"
-            app:entryValues="@array/reply_values"
-            app:key="reply"
-            app:title="@string/reply_title"
+            app:defaultValue="difficulty_1"
+            app:entries="@array/difficulty_entries"
+            app:entryValues="@array/difficulty_values"
+            app:key="difficulty"
+            app:title="@string/difficulty_title"
             app:useSimpleSummaryProvider="true" />
 
-    </PreferenceCategory>
-
-    <PreferenceCategory app:title="@string/sync_header">
-
-        <SwitchPreferenceCompat
-            app:key="sync"
-            app:title="@string/sync_title" />
-
-        <SwitchPreferenceCompat
-            app:dependency="sync"
-            app:key="attachment"
-            app:summaryOff="@string/attachment_summary_off"
-            app:summaryOn="@string/attachment_summary_on"
-            app:title="@string/attachment_title" />
 
     </PreferenceCategory>
+
+
+    <PreferenceCategory app:title="@string/ui_immersion_header">
+
+<!--        <SwitchPreferenceCompat-->
+<!--            app:key="sync"-->
+<!--            app:title="@string/sync_title" />-->
+
+        <SwitchPreferenceCompat
+            app:key="uiImmersion"
+            app:summaryOff="@string/french_immersion_off"
+            app:summaryOn="@string/french_immersion_on"
+            app:title="@string/ui_immersion_title" />
+
+    </PreferenceCategory>
+
+
 
 </PreferenceScreen>

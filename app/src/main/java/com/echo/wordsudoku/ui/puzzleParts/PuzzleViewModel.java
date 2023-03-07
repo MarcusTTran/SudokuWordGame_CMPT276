@@ -13,6 +13,8 @@ import java.util.List;
 
 public class PuzzleViewModel extends ViewModel {
     private final MutableLiveData<Puzzle> puzzle = new MutableLiveData<>();
+
+    private List<WordPair> CustomWordPair;
     private WordPairReader wordPairReader;
 
     public List<WordPair> getWordPairs() {

@@ -32,22 +32,28 @@ If you encounter any difficulty translating the words featured in your puzzle, y
     <string name="destination_settings">Settings</string>
 
 
-    <!-- Preference Titles -->
-    <string name="messages_header">Messages</string>
-    <string name="sync_header">Sync</string>
 
     <!-- Messages Preferences -->
-    <string name="signature_title">Your signature</string>
-    <string name="reply_title">Default reply action</string>
+    <string name="difficulty_title">Set Puzzle Difficulty</string>
 
-    <!-- Sync Preferences -->
-    <string name="sync_title">Sync email periodically</string>
-    <string name="attachment_title">Download incoming attachments</string>
-    <string name="attachment_summary_on">Automatically download attachments for incoming emails
-    </string>
-    <string name="attachment_summary_off">Only download attachments when manually requested</string>
+    <!-- UI Immersion Preferences -->
+    <string name="ui_immersion_title">Set UI immersion</string>
+    <string name="french_immersion_on">French Immersion On</string>
+    <string name="french_immersion_off">French Immersion Off</string>
+    <string name="ui_immersion_header">French UI Immersion</string>
+
     <!-- TODO: Remove or change this placeholder text -->
+    <!-- Timer Preferences -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="set_timer_off">Timer is off</string>
+    <string name="set_timer_on">Timer is on</string>
+    <string name="timer_title">Time Puzzles</string>
+    <string name="timer_header">Puzzle Timer</string>
+
+    <!-- Difficulty Preferences -->
+    <string name="difficulty_header">Puzzle Difficulty</string>
+
+
 
 
 </resources>
