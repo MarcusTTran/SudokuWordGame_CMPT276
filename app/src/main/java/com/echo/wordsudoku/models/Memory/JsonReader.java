@@ -63,7 +63,7 @@ public class JsonReader {
      *
      * @param context The context of the application
      */
-    public JsonReader(Context context) throws FileNotFoundException {
+    public JsonReader(Context context) {
         // The source file name accessed from the context
         this.source = context.getFilesDir() + "/" + FILENAME;
         // initialize the file given the name
@@ -180,6 +180,10 @@ public class JsonReader {
         } catch (JSONException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public boolean isFileExists() {
+        return file.exists();
     }
 
 
