@@ -17,6 +17,7 @@
         android:id="@+id/settingsFragment"
         android:name="com.echo.wordsudoku.ui.destinations.SettingsFragment"
         android:label="@string/destination_settings" />
+
     <fragment
         android:id="@+id/chooseCustomWordsFragment"
         android:name="com.echo.wordsudoku.ui.destinations.ChooseCustomWordsFragment"
@@ -65,13 +66,17 @@
                 android:defaultValue="-1"
                 app:argType="integer" />
         </fragment>
+
     <fragment
         android:id="@+id/chooseCustomWordsSizeFragment"
         android:name="com.echo.wordsudoku.ui.destinations.ChooseCustomWordsSizeFragment"
         android:label="@string/destination_choose_custom_words_size"
         tools:layout="@layout/fragment_choose_custom_words_size">
         <action
-            android:id="@+id/action_chooseCustomWordsSizeFragment_to_chooseCustomWordsFragment"
-            app:destination="@id/chooseCustomWordsFragment" />
+            android:id="@+id/action_chooseCustomWordsSizeFragment_to_chooseCustomWordsFragment2"
+            app:destination="@id/chooseCustomWordsFragment"
+            app:popUpTo="@id/chooseCustomWordsFragment" />
     </fragment>
+
+
 </navigation>

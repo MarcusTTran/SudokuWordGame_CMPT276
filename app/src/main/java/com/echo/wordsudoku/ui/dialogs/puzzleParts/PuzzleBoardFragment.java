@@ -1,4 +1,4 @@
-package com.echo.wordsudoku.ui.puzzleParts;
+package com.echo.wordsudoku.ui.dialogs.puzzleParts;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -19,7 +19,7 @@ public class PuzzleBoardFragment extends Fragment {
     private static final String TAG = "PuzzleBoardFragment";
 
     private SudokuBoard mSudokuBoard;
-    private PuzzleViewModel mPuzzleViewModel;;
+    private PuzzleViewModel mPuzzleViewModel;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {

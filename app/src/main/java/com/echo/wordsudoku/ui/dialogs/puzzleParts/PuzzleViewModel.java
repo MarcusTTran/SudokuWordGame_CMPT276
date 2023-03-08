@@ -1,4 +1,4 @@
-package com.echo.wordsudoku.ui.puzzleParts;
+package com.echo.wordsudoku.ui.dialogs.puzzleParts;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;

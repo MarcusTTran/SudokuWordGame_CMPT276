@@ -30,13 +30,12 @@ import com.echo.wordsudoku.ui.dialogs.RulesFragment;
 
 import org.json.JSONException;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.List;
 
-import com.echo.wordsudoku.ui.puzzleParts.PuzzleBoardFragment;
+import com.echo.wordsudoku.ui.dialogs.puzzleParts.PuzzleBoardFragment;
 import com.echo.wordsudoku.ui.destinations.PuzzleFragmentDirections.SubmitPuzzleAction;
-import com.echo.wordsudoku.ui.puzzleParts.PuzzleViewModel;
+import com.echo.wordsudoku.ui.dialogs.puzzleParts.PuzzleViewModel;
 
 public class PuzzleFragment extends Fragment{
 

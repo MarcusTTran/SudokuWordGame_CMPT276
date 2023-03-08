@@ -1,7 +1,5 @@
 package com.echo.wordsudoku.ui;
 
-import static android.os.SystemClock.sleep;
-
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -23,7 +21,7 @@ import com.echo.wordsudoku.models.BoardLanguage;
 import com.echo.wordsudoku.models.Memory.JsonWriter;
 import com.echo.wordsudoku.models.sudoku.Puzzle;
 import com.echo.wordsudoku.models.words.WordPairReader;
-import com.echo.wordsudoku.ui.puzzleParts.PuzzleViewModel;
+import com.echo.wordsudoku.ui.dialogs.puzzleParts.PuzzleViewModel;
 import com.google.android.material.navigation.NavigationView;
 
 import org.json.JSONException;
