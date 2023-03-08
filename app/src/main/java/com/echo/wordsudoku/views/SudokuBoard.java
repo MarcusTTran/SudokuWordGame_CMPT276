@@ -7,11 +7,14 @@ import android.graphics.Paint;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.util.AttributeSet;
+import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.accessibility.AccessibilityEvent;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.view.ViewCompat;
 import androidx.core.view.accessibility.AccessibilityNodeInfoCompat;
 import androidx.customview.widget.ExploreByTouchHelper;
 
@@ -109,6 +112,7 @@ public class SudokuBoard extends View {
         super(context, attrs);
 
         mTouchHelper = new SudokuBoardTouchHelper(this);
+        ViewCompat.setAccessibilityDelegate(this, mTouchHelper);
 
         TypedArray a = context.getTheme().obtainStyledAttributes(
                 attrs,
@@ -160,6 +164,19 @@ public class SudokuBoard extends View {
         return super.dispatchHoverEvent(event);
     }
 
+    @Override
+    public boolean dispatchKeyEvent(KeyEvent event) {
+        return mTouchHelper.dispatchKeyEvent(event)
+                || super.dispatchKeyEvent(event);
+    }
+
+    @Override
+    public void onFocusChanged(boolean gainFocus, int direction,
+                               Rect previouslyFocusedRect) {
+        super.onFocusChanged(gainFocus, direction, previouslyFocusedRect);
+        mTouchHelper.onFocusChanged(gainFocus, direction, previouslyFocusedRect);
+    }
+
     // Here we basically calculate the size of the view
     // We make the view a square and try to make it as big as possible
     @Override
@@ -184,20 +201,67 @@ public class SudokuBoard extends View {
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
+        drawOutsideBorder(canvas);
+        // This will draw the selected cell and the highlighted column and row
+        colorCell(canvas, this.currentCellRow, this.currentCellColumn);
 
-        // Set the color of the paint objects
-        // We also set the style of the paint objects (stroke simply draws a line and fill draws a solid shape)
+        drawInnerLinesBoard(canvas);
 
-        mLetterColorPaint.setColor(mTextColor);
+        // This will draw the words in the cells
+        drawWord(canvas);
+    }
 
+
+    // This method is called when the user touches the screen
+    // We use it to get the coordinates of the touch event
+    // We then use the coordinates to get the row and column of the cell that was touched
+    // We then use the row and column to highlight the selected cell
+    // We also use the row and column to highlight the selected column and row
+    // We then invalidate the view so that it is redrawn
+    // We return true if the touch event was valid and false if it was not
+
+    private void drawOutsideBorder(Canvas canvas) {
         // Draw the outer side of the board (the big square that contains all of the cells)
         mBoardColorPaint.setStyle(Paint.Style.STROKE);
         mBoardColorPaint.setStrokeWidth(16);
         mBoardColorPaint.setColor(mBoardColor);
         mBoardColorPaint.setAntiAlias(true);
-
         // Draw the outer side of the board
         canvas.drawRect(0, 0, getWidth(), getHeight(), mBoardColorPaint);
+    }
+
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        boolean isValid;
+        float x = event.getX();
+        float y = event.getY();
+
+        int action = event.getAction();
+
+        if (action == MotionEvent.ACTION_DOWN) {
+            onCellTouched((int) Math.ceil(y / cellSize),(int) Math.ceil(x / cellSize));
+            isValid = true;
+        } else {
+            isValid = false;
+        }
+
+        return isValid;
+    }
+
+    private void onCellTouched(int row, int column) {
+        currentCellRow = row;
+        currentCellColumn = column;
+        if (mOnCellTouchListener != null)
+            mOnCellTouchListener.onCellTouched(board[row-1][column-1],row, column);
+        mTouchHelper.sendEventForVirtualView((row-1)*mBoardSize+column-1, AccessibilityEvent.TYPE_VIEW_CLICKED);
+    }
+
+    // This method is used to highlight the selected cell and the selected column and row
+    // r is the row of the selected cell
+    // c is the column of the selected cell
+    // We first check if actually a cell is selected
+    private void colorCell(Canvas canvas, int r, int c) {
+
 
         // Set the color of the single cell that is highlighted when it is selected
         // Set the style of the paint object to fill
@@ -214,53 +278,6 @@ public class SudokuBoard extends View {
         // TODO: Make the letter color dynamic
         // mLetterColorPaint.setColor(mletterColor);
         // mLetterColorSolvePaint.setColor(mletterColorSolve);
-
-        // This will draw the selected cell and the highlighted column and rows
-        colorCell(canvas, currentCellRow, currentCellColumn);
-
-        // This will draw the board, the rows and the columns' lines
-        drawBoard(canvas);
-
-        // This will draw the words in the cells
-        drawWord(canvas);
-    }
-
-
-    // This method is called when the user touches the screen
-    // We use it to get the coordinates of the touch event
-    // We then use the coordinates to get the row and column of the cell that was touched
-    // We then use the row and column to highlight the selected cell
-    // We also use the row and column to highlight the selected column and row
-    // We then invalidate the view so that it is redrawn
-    // We return true if the touch event was valid and false if it was not
-
-    @Override
-    public boolean onTouchEvent(MotionEvent event) {
-        boolean isValid;
-        float x = event.getX();
-        float y = event.getY();
-
-        int action = event.getAction();
-
-        if (action == MotionEvent.ACTION_DOWN) {
-            currentCellColumn = (int) Math.ceil(x / cellSize);
-            currentCellRow = (int) Math.ceil(y / cellSize);
-            if (mOnCellTouchListener != null)
-                mOnCellTouchListener.onCellTouched(board[currentCellRow-1][currentCellColumn-1],currentCellRow, currentCellColumn);
-            mTouchHelper.sendEventForVirtualView((currentCellRow-1)*mBoardSize+currentCellColumn-1, AccessibilityEvent.TYPE_VIEW_CLICKED);
-            isValid = true;
-        } else {
-            isValid = false;
-        }
-
-        return isValid;
-    }
-
-    // This method is used to highlight the selected cell and the selected column and row
-    // r is the row of the selected cell
-    // c is the column of the selected cell
-    // We first check if actually a cell is selected
-    private void colorCell(Canvas canvas, int r, int c) {
 
         // If a cell is selected
         // Highlight the selected column
@@ -300,7 +317,7 @@ public class SudokuBoard extends View {
     // This draws all of the inner lines of the board
     // @param: canvas is the canvas on which the board is drawn
     //TODO: Draw the board with custom sizes. Currently only draws a 9x9 board
-    private void drawBoard(Canvas canvas) {
+    private void drawInnerLinesBoard(Canvas canvas) {
         // Draw the column lines
         for (int c = 0; c < mBoardSize+1; c++) {
             if (c % mBoxWidth == 0) {
@@ -332,6 +349,10 @@ public class SudokuBoard extends View {
     // It calculates the width and height of the word to center it
     // It uses utility methods to set the font of the text in a way that all of the words fit in the cell
     private void drawWord(Canvas canvas) {
+        //Set the color of the letters
+        mLetterColorPaint.setColor(mTextColor);
+
+
         final int desiredHeightForEachWord = cellSize-mCellVerticalPadding;
         final int desiredWidthForEachWord = cellSize-mCellHorizontalPadding;
         final int maximumLetterFontSize = mCellMaxFontSize;
@@ -385,11 +406,21 @@ public class SudokuBoard extends View {
     // It will load the board initially when the user opens the puzzle using the unsolved puzzle from Board model.
     // Also used for testing purposes
     public void setBoard(String[][] board) {
+        if (board.length != mBoardSize || board[0].length != mBoardSize) {
+            throw new IllegalArgumentException("Board size must be " + mBoardSize + "x" + mBoardSize);
+        }
         for (int r=0; r<mBoardSize; r++) {
             for (int c=0; c<mBoardSize; c++) {
                 this.board[r][c] = board[r][c];
             }
         }
+    }
+
+    // Rows and columns are 1 indexed
+    public void setWord(int row, int column, String word) {
+        if (row < 1 || row > mBoardSize || column < 1 || column > mBoardSize)
+            throw new IllegalArgumentException("Invalid row or column. Valid range for this board is 1-" + mBoardSize);
+        board[row][column] = word;
     }
 
     public void setOnCellTouchListener(OnCellTouchListener listener) {
@@ -429,10 +460,29 @@ public class SudokuBoard extends View {
         }
 
         @Override
+        protected void onPopulateEventForVirtualView(int virtualViewId, @NonNull AccessibilityEvent event) {
+            super.onPopulateEventForVirtualView(virtualViewId, event);
+            if (virtualViewId >= mBoardSize * mBoardSize) {
+                throw new IllegalArgumentException("Invalid virtual view id");
+            }
+            int row = getRowColumnForVirtualViewId(virtualViewId)[0];
+            int column = getRowColumnForVirtualViewId(virtualViewId)[1];
+            event.setContentDescription("Cell [" + row+1 + "] [" + column+1+"] contains "+board[row][column]);
+        }
+
+        @Override
         protected void onPopulateNodeForVirtualView(int virtualViewId, AccessibilityNodeInfoCompat node) {
-            int row = virtualViewId / mBoardSize;
-            int column = virtualViewId % mBoardSize;
-            node.setContentDescription("Cell " + row + " " + column+" contains "+board[row][column]);
+            if (virtualViewId >= mBoardSize * mBoardSize) {
+                throw new IllegalArgumentException("Invalid virtual view id");
+            }
+            int row = getRowColumnForVirtualViewId(virtualViewId)[0];
+            int column = getRowColumnForVirtualViewId(virtualViewId)[1];
+            node.setContentDescription("Cell [" + row+1 + "] [" + column+1+"] contains "+board[row][column]);
+            if (currentCellRow-1 == row && currentCellColumn-1 == column) {
+                node.setSelected(true);
+            } else {
+                node.setSelected(false);
+            }
             node.setBoundsInParent(new Rect(column * cellSize, row * cellSize, (column + 1) * cellSize, (row + 1) * cellSize));
             node.addAction(AccessibilityNodeInfoCompat.ACTION_CLICK);
         }
@@ -442,12 +492,16 @@ public class SudokuBoard extends View {
             if (action == AccessibilityNodeInfoCompat.ACTION_CLICK) {
                 int row = virtualViewId / mBoardSize;
                 int column = virtualViewId % mBoardSize;
-                if (mOnCellTouchListener != null) {
-                    mOnCellTouchListener.onCellTouched(board[row][column],row, column);
-                }
+                onCellTouched(row+1, column+1);
                 return true;
             }
             return false;
+        }
+
+        private int[] getRowColumnForVirtualViewId(int virtualViewId) {
+            int row = virtualViewId / mBoardSize;
+            int column = virtualViewId % mBoardSize;
+            return new int[]{row, column};
         }
     }
 }

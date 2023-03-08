@@ -44,6 +44,7 @@ dependencies {
     implementation 'androidx.preference:preference:1.2.0'
     implementation 'androidx.navigation:navigation-fragment:2.5.3'
     implementation 'androidx.navigation:navigation-ui:2.5.3'
+    androidTestImplementation 'androidx.test.uiautomator:uiautomator:2.2.0'
 
     //V is the old version
     testImplementation 'junit:junit:4.13.2'
