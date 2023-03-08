@@ -467,7 +467,7 @@ public class SudokuBoard extends View {
             }
             int row = getRowColumnForVirtualViewId(virtualViewId)[0];
             int column = getRowColumnForVirtualViewId(virtualViewId)[1];
-            event.setContentDescription("Cell [" + row+1 + "] [" + column+1+"] contains "+board[row][column]);
+            event.setContentDescription("Cell [" + (row+1) + "] [" + (column+1)+"] contains "+board[row][column]);
         }
 
         @Override
@@ -477,7 +477,7 @@ public class SudokuBoard extends View {
             }
             int row = getRowColumnForVirtualViewId(virtualViewId)[0];
             int column = getRowColumnForVirtualViewId(virtualViewId)[1];
-            node.setContentDescription("Cell [" + row+1 + "] [" + column+1+"] contains "+board[row][column]);
+            node.setContentDescription("Cell [" + (row+1) + "] [" + (column+1)+"] contains "+board[row][column]);
             if (currentCellRow-1 == row && currentCellColumn-1 == column) {
                 node.setSelected(true);
             } else {
