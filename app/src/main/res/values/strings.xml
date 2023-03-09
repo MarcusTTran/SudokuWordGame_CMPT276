@@ -63,5 +63,9 @@ If you encounter any difficulty translating the words featured in your puzzle, y
     <string name="word_entry_successful">Word entered successfully!</string>
     <string name="error_no_cell_selected">No cell selected</string>
     <string name="error_insert_in_initial_cell">You can not write in the puzzle initial cells</string>
+    <string name="customWords_entry_language_title">Entry Language</string>
+    <string name="customWords_board_language_title">Board Language</string>
+    <string name="customWords_fragment_title">Please enter your custom words</string>
+    <string name="btn_confirm">Confirm</string>
 
 </resources>

@@ -69,11 +69,11 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-//        TODO: DELETE THIS!
+//      TODO: DELETE THIS?
         mPuzzleViewModel = new ViewModelProvider(this).get(PuzzleViewModel.class);
         mSettingsViewModel = new ViewModelProvider(this).get(SettingsViewModel.class);
         mPreferences = getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE);
-//      TODO: DELETE THIS!
+//      TODO: DELETE THIS?
 
         new Thread(() -> {
             try {
