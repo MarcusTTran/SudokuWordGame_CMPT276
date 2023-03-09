@@ -3,10 +3,6 @@
 
     <PreferenceCategory app:title="@string/timer_header">
 
-        <!--        <SwitchPreferenceCompat-->
-        <!--            app:key="sync"-->
-        <!--            app:title="@string/sync_title" />-->
-
         <SwitchPreferenceCompat
             app:key="timer"
             app:defaultValue="false"
@@ -19,15 +15,6 @@
 
 
     <PreferenceCategory app:title="@string/difficulty_header">
-
-
-<!--        <SwitchPreferenceCompat-->
-<!--            app:key="french_immersion"-->
-<!--            app:summaryOff="@string/french_immersion_off"-->
-<!--            app:summaryOn="@string/french_immersion_on"-->
-<!--            app:title="@string/attachment_title" />-->
-
-
 
         <ListPreference
             app:key="difficulty"
@@ -42,10 +29,6 @@
 
 
     <PreferenceCategory app:title="@string/ui_immersion_header">
-
-<!--        <SwitchPreferenceCompat-->
-<!--            app:key="sync"-->
-<!--            app:title="@string/sync_title" />-->
 
         <SwitchPreferenceCompat
             app:key="uiImmersion"
