@@ -27,11 +27,14 @@ public class SettingsFragment extends PreferenceFragmentCompat {
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
         setPreferencesFromResource(R.xml.root_preferences, rootKey);
         Preference preferenceTimer = findPreference("timer");
+
+        //Set a listener for each preference
         preferenceTimer.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
             @Override
             public boolean onPreferenceChange(Preference preference, Object timer) {
+                //Call the settingsViewModel and change the value of fields
                 settingsViewModel.setTimer((boolean) timer);
-                Log.d("MYTEST", "Timer changed to: " + settingsViewModel.isTimer());
+//                Log.d("MYTEST", "Timer changed to: " + settingsViewModel.isTimer());
                 return true;
             }
         });
@@ -42,7 +45,7 @@ public class SettingsFragment extends PreferenceFragmentCompat {
             @Override
             public boolean onPreferenceChange(Preference preference, Object difficulty) {
                 settingsViewModel.setDifficulty(Integer.parseInt(difficulty.toString()));
-                Log.d("MYTEST", "Difficulty changed to: " + settingsViewModel.getDifficulty());
+//                Log.d("MYTEST", "Difficulty changed to: " + settingsViewModel.getDifficulty());
                 return true;
             }
         });
@@ -52,7 +55,7 @@ public class SettingsFragment extends PreferenceFragmentCompat {
             @Override
             public boolean onPreferenceChange(Preference preference, Object uiImmersion) {
                 settingsViewModel.setUiImmersion((boolean) uiImmersion);
-                Log.d("MYTEST", "uiImmersion changed to: " + settingsViewModel.isUiImmersion());
+//                Log.d("MYTEST", "uiImmersion changed to: " + settingsViewModel.isUiImmersion());
                 return true;
             }
         });
@@ -65,7 +68,7 @@ public class SettingsFragment extends PreferenceFragmentCompat {
         //Inflate view
         View view1 = super.onCreateView(inflater, container, savedInstanceState);
 
-        //Store ViewModel
+        //Store the SettingsViewModel; This is where we will store our changes
         settingsViewModel = new ViewModelProvider(requireActivity()).get(SettingsViewModel.class);
 
         return view1;

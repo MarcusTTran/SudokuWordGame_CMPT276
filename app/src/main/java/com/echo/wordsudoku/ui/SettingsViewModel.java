@@ -50,11 +50,11 @@ public class SettingsViewModel extends ViewModel {
 
     @Override
     public void onCleared() {
-        Log.d("MYTEST", "ViewModel has been destroyed");
+//        Log.d("MYTEST", "ViewModel has been destroyed");
     }
 
     public SettingsViewModel() {
-        Log.d("MYTEST", "ViewModel has been created");
+//        Log.d("MYTEST", "ViewModel has been created");
     }
 
 }

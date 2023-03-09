@@ -69,11 +69,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-//      TODO: DELETE THIS?
         mPuzzleViewModel = new ViewModelProvider(this).get(PuzzleViewModel.class);
         mSettingsViewModel = new ViewModelProvider(this).get(SettingsViewModel.class);
         mPreferences = getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE);
-//      TODO: DELETE THIS?
 
         new Thread(() -> {
             try {
@@ -126,15 +124,13 @@ public class MainActivity extends AppCompatActivity {
         // Load the settings from the shared preferences
         int difficulty = mPreferences.getInt(getString(R.string.puzzle_difficulty_preference_key), 1);
         mSettingsViewModel.setDifficulty(difficulty);
-        Log.d("MYTESTS", "Retrieving difficulty: " + String.valueOf(difficulty));
 
         boolean timer = mPreferences.getBoolean(getString(R.string.puzzle_timer_preference_key), false);
          mSettingsViewModel.setTimer(timer);
-        Log.d("MYTESTS", "Retrieving timer: " + String.valueOf(timer));
 
         boolean uiImmersion = mPreferences.getBoolean(getString(R.string.puzzle_uiImmersion_preference_key), false);
         mSettingsViewModel.setUiImmersion(uiImmersion);
-        Log.d("MYTESTS", "Retrieving uiImmersion: " + String.valueOf(uiImmersion));
+
     }
 
 
@@ -149,18 +145,14 @@ public class MainActivity extends AppCompatActivity {
         int mSettingsPuzzleDifficulty = mSettingsViewModel.getDifficulty();
         editor.putInt(getString(R.string.puzzle_difficulty_preference_key), mSettingsPuzzleDifficulty);
         editor.apply();
-        Log.d("MYTESTS", "Saving difficulty: " + String.valueOf(mSettingsPuzzleDifficulty));
 
         boolean  mSettingsPuzzleTimer = mSettingsViewModel.isTimer();
         editor.putBoolean(getString(R.string.puzzle_timer_preference_key), mSettingsPuzzleTimer);
         editor.apply();
-        Log.d("MYTESTS", "Saving timer: " + String.valueOf(mSettingsPuzzleTimer));
 
         boolean mSettingsPuzzleUiImmersion = mSettingsViewModel.isUiImmersion();
-        editor.putBoolean(getString(R.string.puzzle_timer_preference_key), mSettingsPuzzleTimer);
+        editor.putBoolean(getString(R.string.puzzle_uiImmersion_preference_key), mSettingsPuzzleUiImmersion);
         editor.apply();
-        Log.d("MYTESTS", "Saving UiImmersion: " + String.valueOf(mSettingsPuzzleUiImmersion));
-
     }
 
     @Override
