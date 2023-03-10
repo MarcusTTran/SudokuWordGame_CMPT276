@@ -157,6 +157,7 @@ public class PuzzleFragment extends Fragment{
         //Create new instance of RulesFragment
         RulesFragment rulesFragment = new RulesFragment();
         rulesFragment.show(getActivity().getSupportFragmentManager(), "RulesFragment");
+
     }
 
     public void dictionaryButtonPressed() {
