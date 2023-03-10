@@ -1,12 +1,59 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true">
+
 
     <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:text="This is where the user can pick which mode of puzzle (Level or custom Puzzle) they want to work on" />
-</LinearLayout>
+        android:id="@+id/choose_mode_textView"
+        android:layout_width="338dp"
+        android:layout_height="63dp"
+        android:gravity="top|center_horizontal"
+        android:text="@string/choose_mode_title"
+        android:textSize="34sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.493"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.151" />
+
+    <Button
+        android:id="@+id/classic_puzzle_button"
+        android:layout_width="147dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="36dp"
+        android:text="@string/classic_puzzle"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/choose_mode_textView" />
+
+    <Button
+        android:id="@+id/custom_size_button"
+        android:layout_width="150dp"
+        android:layout_height="60dp"
+        android:text="@string/custom_size_puzzle"
+        app:layout_constraintBottom_toTopOf="@+id/custom_words_button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.501"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/classic_puzzle_button" />
+
+    <Button
+        android:id="@+id/custom_words_button"
+        android:layout_width="150dp"
+        android:layout_height="60dp"
+        android:text="@string/custom_words_puzzle"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.505"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/classic_puzzle_button"
+        app:layout_constraintVertical_bias="0.384" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
