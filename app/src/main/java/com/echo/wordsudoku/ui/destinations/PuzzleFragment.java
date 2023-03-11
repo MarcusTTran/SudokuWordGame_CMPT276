@@ -54,11 +54,6 @@ public class PuzzleFragment extends Fragment{
     private int dictionaryPopupLimit = 0;
 
 
-    //Used to hold English and French words to pass to DictionaryFragment
-    String[] LanguageList1;
-    String[] LanguageList2;
-
-
     private PuzzleViewModel mPuzzleViewModel;
 
     private SettingsViewModel mSettingsViewModel;
@@ -89,9 +84,6 @@ public class PuzzleFragment extends Fragment{
         } else {
             loadGame();
         }
-
-        LanguageList1 = new String[puzzleDimension];
-        LanguageList2 = new String[puzzleDimension];
     }
 
     private void loadGame() {
@@ -190,17 +182,18 @@ public class PuzzleFragment extends Fragment{
     public void dictionaryButtonPressed() {
         //Toast.makeText(this, "Dictionary Button pressed", Toast.LENGTH_LONG).show();
         List<WordPair> wordPairs = mPuzzleViewModel.getPuzzle().getWordPairs();
-        for (int i = 0; i < wordPairs.size(); i++) {
+        int size = wordPairs.size();
+        String[] LanguageList1 = new String[size],LanguageList2 = new String[size];
+        for (int i = 0; i < size; i++) {
             LanguageList1[i] = wordPairs.get(i).getEnglish();
         }
-        for (int i = 0; i < wordPairs.size(); i++) {
+        for (int i = 0; i < size; i++) {
             LanguageList2[i] = wordPairs.get(i).getFrench();
         }
 
         //Create new instance of RulesFragment
         DictionaryFragment dictionaryFragment = DictionaryFragment.newInstance(LanguageList1, LanguageList2,dictionaryPopupLimit);
         dictionaryFragment.show(getActivity().getSupportFragmentManager(), "DictionaryFragment");
-
         //Increase the dictionary pop up limit (limit is twice per game)
         dictionaryPopupLimit++;
 
