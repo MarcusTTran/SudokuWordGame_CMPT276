@@ -55,4 +55,19 @@ If you encounter any difficulty translating the words featured in your puzzle, y
     <string name="error_no_cell_selected">No cell selected</string>
     <string name="error_insert_in_initial_cell">You can not write in the puzzle initial cells</string>
 
+    <!-- Choose mode -->
+    <string name="choose_mode_title">Choose Mode</string>
+    <string name="classic_puzzle">Classic Puzzle</string>
+    <string name="custom_size_puzzle">Custom Sized</string>
+    <string name="custom_words_puzzle">Custom Words</string>
+
+
+    <!-- Choose size dialogue -->
+    <string name = "choose_size_title">Choose Size</string>
+    <string name = "option_4x4"> 4 x 4 </string>
+    <string name = "option_6x6"> 6 x 6 </string>
+    <string name = "option_9x9"> 9 x 9 </string>
+    <string name = "option_12x12">12x12</string>
+    <string name = "done_button">Done</string>
+
 </resources>
