@@ -9,6 +9,7 @@ import com.echo.wordsudoku.models.sudoku.Puzzle;
 import com.echo.wordsudoku.models.words.WordPair;
 import com.echo.wordsudoku.models.words.WordPairReader;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class PuzzleViewModel extends ViewModel {
@@ -17,11 +18,14 @@ public class PuzzleViewModel extends ViewModel {
     private final MutableLiveData<Puzzle> puzzle = new MutableLiveData<>();
     private final MutableLiveData<WordPairReader> wordPairReader = new MutableLiveData<>();
 
+    private final MutableLiveData<List<WordPair>> customWordPairs= new MutableLiveData<>();
+
     public LiveData<List<WordPair>> getWordPairs() {
         return boardWordPairs;
     }
     public void setWordPairs(List<WordPair> wordPairs) {
-        this.boardWordPairs.setValue(wordPairs);
+//        this.boardWordPairs.setValue(wordPairs);
+        this.customWordPairs.setValue(wordPairs);
     }
 
     public LiveData<Integer> getBoardLanguage() {

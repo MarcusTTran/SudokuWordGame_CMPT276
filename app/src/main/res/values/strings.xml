@@ -5,6 +5,7 @@
     <string name="menu_exit_btn">Exit</string>
     <string name="menu_main_menu_btn">Main Menu</string>
     <string name="fail_msg">You Failed!</string>
+    <string name="confirm_msg">Confirm</string>
 
     <!-- Options Menu -->
     <string name="menu_finish">Done</string>
