@@ -1,19 +1,29 @@
 package com.echo.wordsudoku.ui.destinations;
 
+import android.app.LocaleManager;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.LocaleList;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
+import androidx.core.os.LocaleListCompat;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
+import androidx.preference.SwitchPreferenceCompat;
 
 import com.echo.wordsudoku.R;
 import com.echo.wordsudoku.ui.SettingsViewModel;
+
+import java.util.Locale;
 
 public class SettingsFragment extends PreferenceFragmentCompat {
 
@@ -50,12 +60,31 @@ public class SettingsFragment extends PreferenceFragmentCompat {
             }
         });
 
-        Preference preferenceUiImmersion = findPreference("uiImmersion");
+        SwitchPreferenceCompat preferenceUiImmersion = findPreference("uiImmersion");
+        LocaleListCompat currentLocale = AppCompatDelegate.getApplicationLocales();
+        LocaleListCompat english = LocaleListCompat.create(new Locale("en")), french = LocaleListCompat.create(new Locale("fr"));
+        preferenceUiImmersion.setChecked(false);
+
         preferenceUiImmersion.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
             @Override
             public boolean onPreferenceChange(Preference preference, Object uiImmersion) {
-                settingsViewModel.setUiImmersion((boolean) uiImmersion);
-//                Log.d("MYTEST", "uiImmersion changed to: " + settingsViewModel.isUiImmersion());
+                boolean changeLanguage = (boolean) uiImmersion;
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                        if (currentLocale.equals(english)) {
+                            if (changeLanguage) {
+                                Toast.makeText(getContext(), getString(R.string.msg_language_french), Toast.LENGTH_SHORT).show();
+                                AppCompatDelegate.setApplicationLocales(french);
+                            }
+                        }
+                        else {
+                            if (changeLanguage) {
+                                Toast.makeText(getContext(), getString(R.string.msg_language_english), Toast.LENGTH_SHORT).show();
+                                AppCompatDelegate.setApplicationLocales(english);
+                            }
+                        }
+                    }
+                }
                 return true;
             }
         });

@@ -1,6 +1,8 @@
 package com.echo.wordsudoku.ui;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
+import androidx.core.os.LocaleListCompat;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.lifecycle.ViewModelProvider;
@@ -10,10 +12,12 @@ import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
+import android.app.LocaleManager;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
-import android.os.StrictMode;
+import android.os.LocaleList;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -29,6 +33,7 @@ import org.json.JSONException;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -130,7 +135,7 @@ public class MainActivity extends AppCompatActivity {
          mSettingsViewModel.setTimer(timer);
 
         boolean uiImmersion = mPreferences.getBoolean(getString(R.string.puzzle_uiImmersion_preference_key), false);
-        mSettingsViewModel.setUiImmersion(uiImmersion);
+//        mSettingsViewModel.setUiImmersion(uiImmersion);
 
     }
 
@@ -141,14 +146,14 @@ public class MainActivity extends AppCompatActivity {
         SharedPreferences.Editor editor = mPreferences.edit();
         mSettingsPuzzleLanguage = mSettingsViewModel.getPuzzleLanguage().getValue();
 
-        boolean mSettingsPuzzleUiImmersion = mSettingsViewModel.isUiImmersion();
+//        boolean mSettingsPuzzleUiImmersion = mSettingsViewModel.getUiImmersion().getValue();
         boolean  mSettingsPuzzleTimer = mSettingsViewModel.isTimer();
         int mSettingsPuzzleDifficulty = mSettingsViewModel.getDifficulty();
 
         editor.putInt(getString(R.string.puzzle_language_key), mSettingsPuzzleLanguage);
         editor.putInt(getString(R.string.puzzle_difficulty_preference_key), mSettingsPuzzleDifficulty);
         editor.putBoolean(getString(R.string.puzzle_timer_preference_key), mSettingsPuzzleTimer);
-        editor.putBoolean(getString(R.string.puzzle_uiImmersion_preference_key), mSettingsPuzzleUiImmersion);
+//        editor.putBoolean(getString(R.string.puzzle_uiImmersion_preference_key), mSettingsPuzzleUiImmersion);
     }
 
     @Override

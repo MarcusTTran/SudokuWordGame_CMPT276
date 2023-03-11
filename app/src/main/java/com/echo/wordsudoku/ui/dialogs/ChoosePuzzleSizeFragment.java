@@ -1,7 +1,5 @@
 package com.echo.wordsudoku.ui.dialogs;
 
-import android.app.AlertDialog;
-import android.app.Dialog;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,16 +10,11 @@ import android.widget.RadioGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
 import androidx.navigation.fragment.NavHostFragment;
 
 import com.echo.wordsudoku.R;
-import com.echo.wordsudoku.models.dimension.PuzzleDimensions;
-import com.echo.wordsudoku.models.sudoku.Puzzle;
 import com.echo.wordsudoku.ui.destinations.ChoosePuzzleModeFragmentDirections;
-import com.echo.wordsudoku.ui.puzzleParts.PuzzleViewModel;
 
 public class ChoosePuzzleSizeFragment extends DialogFragment {
 
@@ -31,7 +24,7 @@ public class ChoosePuzzleSizeFragment extends DialogFragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment_choose_puzzle_size_dialogue, container, false);
+        View v = inflater.inflate(R.layout.fragment_choose_puzzle_size_dialog, container, false);
         return v;
     }
 
