@@ -1,4 +1,4 @@
-package com.echo.wordsudoku.ui.dialogs.puzzleParts;
+package com.echo.wordsudoku.ui.puzzleParts;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;

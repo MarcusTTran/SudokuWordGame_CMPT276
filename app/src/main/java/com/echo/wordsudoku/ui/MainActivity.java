@@ -13,7 +13,6 @@ import androidx.navigation.ui.NavigationUI;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.Toast;
 
 import com.echo.wordsudoku.R;
@@ -21,7 +20,7 @@ import com.echo.wordsudoku.models.BoardLanguage;
 import com.echo.wordsudoku.models.Memory.JsonWriter;
 import com.echo.wordsudoku.models.sudoku.Puzzle;
 import com.echo.wordsudoku.models.words.WordPairReader;
-import com.echo.wordsudoku.ui.dialogs.puzzleParts.PuzzleViewModel;
+import com.echo.wordsudoku.ui.puzzleParts.PuzzleViewModel;
 import com.google.android.material.navigation.NavigationView;
 
 import org.json.JSONException;
