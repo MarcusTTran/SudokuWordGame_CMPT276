@@ -38,6 +38,7 @@ public class ChoosePuzzleModeFragment extends Fragment {
         classicButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                navController.popBackStack();
                 navController.navigate(R.id.puzzleFragment);
             }
         });
@@ -52,11 +53,6 @@ public class ChoosePuzzleModeFragment extends Fragment {
 
                 ChoosePuzzleSizeFragment choosePuzzleSizeFragment = new ChoosePuzzleSizeFragment();
                 choosePuzzleSizeFragment.show(getFragmentManager(), "ChoosePuzzleSizeFragment");
-                PuzzleViewModel puzzleViewModel = new ViewModelProvider(getActivity()).get(PuzzleViewModel.class);
-                puzzleViewModel.getPuzzleDimensions().observe(getViewLifecycleOwner(), puzzleDimensions -> {
-                    if(puzzleViewModel.getPuzzleDimensions().getValue() != null)
-                        System.out.println(puzzleViewModel.getPuzzleDimensions().getValue().getPuzzleDimension());
-                });
             }
         });
 

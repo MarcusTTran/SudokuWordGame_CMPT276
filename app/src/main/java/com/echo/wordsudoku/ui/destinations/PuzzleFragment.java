@@ -21,6 +21,7 @@ import com.echo.wordsudoku.models.BoardLanguage;
 import com.echo.wordsudoku.models.Memory.JsonReader;
 import com.echo.wordsudoku.models.Memory.JsonWriter;
 import com.echo.wordsudoku.models.dimension.Dimension;
+import com.echo.wordsudoku.models.dimension.PuzzleDimensions;
 import com.echo.wordsudoku.models.sudoku.GameResult;
 import com.echo.wordsudoku.models.sudoku.Puzzle;
 import com.echo.wordsudoku.models.words.WordPair;
@@ -44,8 +45,8 @@ public class PuzzleFragment extends Fragment{
 
 
     // CONSTANTS
-    private final int numberOfInitialWords = 80;
-    private final int puzzleDimension = 9;
+    private int numberOfInitialWords;
+    private int puzzleDimension;
     // END CONSTANTS
 
     private static final String TAG = "PuzzleFragment";
@@ -81,6 +82,8 @@ public class PuzzleFragment extends Fragment{
     public void onStart() {
         super.onStart();
         boolean isNewGame = PuzzleFragmentArgs.fromBundle(getArguments()).getIsNewGame();
+        puzzleDimension = PuzzleFragmentArgs.fromBundle(getArguments()).getPuzzleSize();
+        numberOfInitialWords = puzzleDimension*puzzleDimension - puzzleDimension;
         if (isNewGame) {
             newGame();
         } else {
@@ -133,11 +136,12 @@ public class PuzzleFragment extends Fragment{
         // Create a new board
         Puzzle puzzle = new Puzzle(wordPairs,puzzleDimension,puzzleLanguage,numberOfInitialWords);
         mPuzzleViewModel.setPuzzle(puzzle);
-        PuzzleBoardFragment puzzleFragment = (PuzzleBoardFragment) getChildFragmentManager().findFragmentById(R.id.board);
+        PuzzleBoardFragment puzzleViewFragment = (PuzzleBoardFragment) getChildFragmentManager().findFragmentById(R.id.board);
         PuzzleInputButtonsFragment puzzleInputButtonsFragment = (PuzzleInputButtonsFragment) getChildFragmentManager().findFragmentById(R.id.puzzle_input_buttons);
-        // Initialize the board with the puzzle model
-        puzzleFragment.initBoardWithPuzzleModel();
 
+        puzzleViewFragment.setPuzzleViewSize(new PuzzleDimensions(puzzleDimension));
+        // Initialize the board with the puzzle model
+        puzzleViewFragment.initBoardWithPuzzleModel();
         // Initialize the input buttons with the puzzle model
         puzzleInputButtonsFragment.initButtonsFromPuzzleModel();
 
@@ -146,6 +150,10 @@ public class PuzzleFragment extends Fragment{
     public void enterWordInBoard(String word) {
         PuzzleBoardFragment puzzleFragment = (PuzzleBoardFragment) getChildFragmentManager().findFragmentById(R.id.board);
         Dimension currentCell = puzzleFragment.getSelectedCell();
+        if(currentCell.getColumns()==-2 || currentCell.getRows()==-2){
+            Toast.makeText(requireActivity(), R.string.error_no_cell_selected, Toast.LENGTH_SHORT).show();
+            return;
+        }
         Puzzle puzzle = mPuzzleViewModel.getPuzzle();
         if (!puzzle.isWritableCell(currentCell)) {
             Toast.makeText(requireActivity(), R.string.error_insert_in_initial_cell, Toast.LENGTH_SHORT).show();

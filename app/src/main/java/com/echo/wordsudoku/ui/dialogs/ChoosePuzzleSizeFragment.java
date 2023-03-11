@@ -13,16 +13,20 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
+import androidx.navigation.fragment.NavHostFragment;
 
 import com.echo.wordsudoku.R;
 import com.echo.wordsudoku.models.dimension.PuzzleDimensions;
 import com.echo.wordsudoku.models.sudoku.Puzzle;
+import com.echo.wordsudoku.ui.destinations.ChoosePuzzleModeFragmentDirections;
 import com.echo.wordsudoku.ui.puzzleParts.PuzzleViewModel;
 
 public class ChoosePuzzleSizeFragment extends DialogFragment {
 
 
-    PuzzleDimensions mPuzzleDimensions;
+    private int mPuzzleSize;
 
     @Nullable
     @Override
@@ -44,17 +48,16 @@ public class ChoosePuzzleSizeFragment extends DialogFragment {
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 switch (checkedId){
                     case R.id.choose_4x4_button:
-                        System.out.println("checked 4x4");
-                        mPuzzleDimensions = new PuzzleDimensions(4);
+                        mPuzzleSize = 4;
                         break;
                     case R.id.choose_6x6_button:
-                        mPuzzleDimensions = new PuzzleDimensions(6);
+                        mPuzzleSize = 6;
                         break;
                     case R.id.choose_12x12_puzzle:
-                        mPuzzleDimensions = new PuzzleDimensions(12);
+                        mPuzzleSize = 12;
                         break;
                     default:
-                        mPuzzleDimensions = new PuzzleDimensions(9);
+                        mPuzzleSize = 9;
                         break;
                 }
             }
@@ -62,14 +65,26 @@ public class ChoosePuzzleSizeFragment extends DialogFragment {
 
 
         Button doneButton = view.findViewById(R.id.done_button);
+        Button cancelButton = view.findViewById(R.id.cancel_button);
+
+        cancelButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dismiss();
+            }
+        });
+
 
         doneButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                System.out.println("clicked");
-                PuzzleViewModel puzzleViewModel = new ViewModelProvider(getActivity()).get(PuzzleViewModel.class);
-                puzzleViewModel.setPuzzleDimensions(mPuzzleDimensions);
-                ChoosePuzzleSizeFragment.this.dismiss();
+                ChoosePuzzleModeFragmentDirections.ChoosePuzzleModeToStartPuzzleAction action = ChoosePuzzleModeFragmentDirections.choosePuzzleModeToStartPuzzleAction();
+                action.setPuzzleSize(mPuzzleSize);
+                NavHostFragment navHostFragment =
+                        (NavHostFragment) getActivity().getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment);
+                NavController navController = navHostFragment.getNavController();
+                navController.navigate(action);
+                dismiss();
             }
         });
 

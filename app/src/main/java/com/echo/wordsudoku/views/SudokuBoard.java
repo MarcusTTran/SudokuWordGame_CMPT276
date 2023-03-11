@@ -149,7 +149,7 @@ public class SudokuBoard extends View {
         this.mBoxHeight = boxHeight;
         this.mBoxWidth = boxWidth;
         this.cellSize = this.size / mBoardSize;
-        this.setBoard(new String[mBoardSize][mBoardSize]);
+        this.board = new String[mBoardSize][mBoardSize];
         this.currentCellColumn = this.currentCellRow = -1;
     }
 

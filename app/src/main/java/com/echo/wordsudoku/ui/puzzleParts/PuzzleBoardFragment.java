@@ -41,6 +41,10 @@ public class PuzzleBoardFragment extends Fragment {
         return root;
     }
 
+    public void setPuzzleViewSize(PuzzleDimensions puzzleDimensions) {
+        mSudokuBoard.setNewPuzzleDimensions(puzzleDimensions.getPuzzleDimension(), puzzleDimensions.getEachBoxDimension().getRows(), puzzleDimensions.getEachBoxDimension().getColumns());
+    }
+
     public void insertWordInBoardView(String word) {
         mSudokuBoard.insertWord(word);
     }

@@ -12,6 +12,9 @@
         <action
             android:id="@+id/startPuzzleAction"
             app:destination="@id/puzzleFragment"/>
+        <action
+            android:id="@+id/startChoosePuzzleModeAction"
+            app:destination="@id/chooseCustomWordsFragment"/>
     </fragment>
     <fragment
         android:id="@+id/settingsFragment"
@@ -22,6 +25,15 @@
         android:name="com.echo.wordsudoku.ui.destinations.ChooseCustomWordsFragment"
         android:label="@string/destination_choose_custom_words"
         tools:layout="@layout/fragment_choose_custom_words"/>
+    <fragment android:id="@+id/choosePuzzleModeFragment"
+        android:name="com.echo.wordsudoku.ui.destinations.ChoosePuzzleModeFragment"
+        android:label="@string/destination_choose_puzzle_mode"
+        tools:layout="@layout/fragment_choose_puzzle_mode">
+        <action
+            android:id="@+id/choosePuzzleModeToStartPuzzleAction"
+            app:destination="@id/puzzleFragment"
+            app:popUpTo="@id/mainMenuFragment"/>
+    </fragment>
 
     <fragment
         android:id="@+id/puzzleFragment"
@@ -41,6 +53,14 @@
             android:name="isNewGame"
             app:argType="boolean"
             android:defaultValue="true" />
+        <argument
+            android:name="isCustom"
+            app:argType="boolean"
+            android:defaultValue="false" />
+        <argument
+            android:name="puzzleSize"
+            app:argType="integer"
+            android:defaultValue="9" />
         </fragment>
         <fragment
             android:id="@+id/puzzleResultFragment"
@@ -65,8 +85,4 @@
                 android:defaultValue="-1"
                 app:argType="integer" />
         </fragment>
-    <fragment
-        android:id="@+id/choosePuzzleModeFragment"
-        android:name="com.echo.wordsudoku.ui.destinations.ChoosePuzzleModeFragment"
-        android:label="ChoosePuzzleModeFragment" />
 </navigation>
