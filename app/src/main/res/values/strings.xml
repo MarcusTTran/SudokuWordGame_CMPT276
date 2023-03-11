@@ -21,6 +21,10 @@
 
     <string name="preference_file_key">com.echo.wordsudoku.gameOptions</string>
     <string name="puzzle_language_key">com.echo.wordsudoku.puzzleLanguageKey</string>
+    <string name="puzzle_difficulty_preference_key">com.echo.wordsudoku.puzzleDifficultyKey</string>
+    <string name="puzzle_timer_preference_key">com.echo.wordsudoku.puzzleTimerKey</string>
+    <string name="puzzle_uiImmersion_preference_key">com.echo.wordsudoku.puzzleTimerKey</string>
+
 
     <string name="RulesHeader">Word Sudoku Rules</string>
     <string name="RulesText">When you start a new Word Sudoku game you will be presented with a square grid consisting of a number of cells.
@@ -36,8 +40,29 @@ If you encounter any difficulty translating the words featured in your puzzle, y
     <string name="destination_puzzle">Puzzle</string>
     <string name="destination_puzzle_result">Puzzle Result</string>
     <string name="destination_choose_custom_words">Choose Custom Words</string>
+    <string name="destination_choose_custom_words_size">Choose Size for Puzzle with Custom Words</string>
     <string name="destination_settings">Settings</string>
     <string name="destination_choose_puzzle_mode">Choose Puzzle Mode</string>
+
+    <!-- Messages Preferences -->
+    <string name="difficulty_title">Set Puzzle Difficulty</string>
+
+    <!-- UI Immersion Preferences -->
+    <string name="ui_immersion_title">Set UI immersion</string>
+    <string name="french_immersion_on">French Immersion On</string>
+    <string name="french_immersion_off">French Immersion Off</string>
+    <string name="ui_immersion_header">French UI Immersion</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <!-- Timer Preferences -->
+    <string name="set_timer_off">Timer is off</string>
+    <string name="set_timer_on">Timer is on</string>
+    <string name="timer_title">Time Puzzles</string>
+    <string name="timer_header">Puzzle Timer</string>
+
+    <!-- Difficulty Preferences -->
+    <string name="difficulty_header">Puzzle Difficulty</string>
+
 
     <string name="save_game_error">Failed to save the game</string>
     <string name="load_game_error">Failed to load the game</string>
@@ -60,5 +85,6 @@ If you encounter any difficulty translating the words featured in your puzzle, y
     <string name = "option_12x12">12x12</string>
     <string name = "done_button">Done</string>
     <string name="cancel_button">Cancel</string>
+
 
 </resources>

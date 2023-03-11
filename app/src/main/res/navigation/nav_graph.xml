@@ -20,6 +20,7 @@
         android:id="@+id/settingsFragment"
         android:name="com.echo.wordsudoku.ui.destinations.SettingsFragment"
         android:label="@string/destination_settings" />
+
     <fragment
         android:id="@+id/chooseCustomWordsFragment"
         android:name="com.echo.wordsudoku.ui.destinations.ChooseCustomWordsFragment"
@@ -89,4 +90,6 @@
                 android:defaultValue="-1"
                 app:argType="integer" />
         </fragment>
+
+
 </navigation>
