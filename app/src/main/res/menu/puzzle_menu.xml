@@ -2,18 +2,18 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/options_finish_button"
-        android:title="@string/menu_finish" />
+        android:title="@string/done_btn" />
 
     <item
         android:id="@+id/options_rules_button"
-        android:title="@string/menu_rules" />
+        android:title="@string/game_rules_btn" />
 
     <item
         android:id="@+id/options_dictionary_help_button"
-        android:title="@string/menu_dictionary" />
+        android:title="@string/puzzle_dictionary_btn" />
 
     <item android:id="@+id/options_save_game_button"
-        android:title="@string/menu_save_game" />
+        android:title="@string/save_puzzle_btn" />
 
     <item android:id="@+id/options_main_menu_button"
         android:title="@string/menu_main_menu_btn" />

@@ -43,6 +43,9 @@ public class PuzzleInputButtonsFragment extends Fragment {
     }
 
     public void updateButtonsFromPuzzleModel() {
+        if(mLinearLayout.getChildCount() > 0) {
+            mLinearLayout.removeAllViews();
+        }
         PuzzleDimensions puzzleDimension = mPuzzleViewModel.getPuzzle().getPuzzleDimension();
         Button[] buttons = new Button[puzzleDimension.getPuzzleDimension()];
         int rows_of_button = Math.max(puzzleDimension.getEachBoxDimension().getRows(), puzzleDimension.getEachBoxDimension().getColumns());
@@ -62,14 +65,13 @@ public class PuzzleInputButtonsFragment extends Fragment {
             }
             mLinearLayout.addView(linearLayout);
         }
-        initializeButtons(buttons, mPuzzleViewModel.getWordPairs(), BoardLanguage.getOtherLanguage(mPuzzleViewModel.getPuzzle().getLanguage()));
-
+        initializeButtonLabels(buttons, mPuzzleViewModel.getWordPairs(), BoardLanguage.getOtherLanguage(mPuzzleViewModel.getPuzzle().getLanguage()));
     }
 
     // This method sets the labels of the buttons and adds on Click Listeners to them
     // @param buttons The array of buttons
     // @param language The language to be used for the button labels
-    private void initializeButtons(Button[] buttons, List<WordPair> mWordPairs, int mPuzzleLanguage)
+    private void initializeButtonLabels(Button[] buttons, List<WordPair> mWordPairs, int mPuzzleLanguage)
     {
         if (buttons.length != mWordPairs.size())
         {

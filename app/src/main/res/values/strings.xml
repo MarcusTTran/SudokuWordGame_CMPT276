@@ -13,10 +13,11 @@
     <string name="retry_puzzle_btn">Retry Puzzle</string>
 
     <!-- Options Menu -->
-    <string name="menu_finish">Done</string>
-    <string name="menu_rules">Rules</string>
-    <string name="menu_dictionary">Dictionary</string>
-    <string name="menu_save_game">Save Puzzle</string>
+    <string name="done_btn">Done</string>
+    <string name="game_rules_btn">Rules</string>
+    <string name="puzzle_dictionary_btn">Dictionary</string>
+    <string name="save_puzzle_btn">Save Puzzle</string>
+    <string name="reset_puzzle_btn">Reset</string>
 
     <string name="preference_file_key">com.echo.wordsudoku.gameOptions</string>
     <string name="puzzle_language_key">com.echo.wordsudoku.puzzleLanguageKey</string>

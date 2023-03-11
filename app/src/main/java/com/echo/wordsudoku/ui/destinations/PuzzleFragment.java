@@ -74,7 +74,7 @@ public class PuzzleFragment extends Fragment{
         super.onStart();
         boolean isRetry = PuzzleFragmentArgs.fromBundle(getArguments()).getIsRetry();
         if (isRetry) {
-            retryGame();
+            retryPreviousGame();
         } else {
             boolean isNewGame = PuzzleFragmentArgs.fromBundle(getArguments()).getIsNewGame();
             puzzleDimension = PuzzleFragmentArgs.fromBundle(getArguments()).getPuzzleSize();
@@ -87,11 +87,15 @@ public class PuzzleFragment extends Fragment{
         }
     }
 
-    private void retryGame() {
+    public void resetGame() {
         mPuzzleViewModel.getPuzzle().resetPuzzle();
         PuzzleBoardFragment puzzleViewFragment = (PuzzleBoardFragment) getChildFragmentManager().findFragmentById(R.id.board);
-        PuzzleInputButtonsFragment puzzleInputButtonsFragment = (PuzzleInputButtonsFragment) getChildFragmentManager().findFragmentById(R.id.puzzle_input_buttons);
         puzzleViewFragment.updateBoardWithPuzzleModel();
+    }
+
+    private void retryPreviousGame(){
+        resetGame();
+        PuzzleInputButtonsFragment puzzleInputButtonsFragment = (PuzzleInputButtonsFragment) getChildFragmentManager().findFragmentById(R.id.puzzle_input_buttons);
         puzzleInputButtonsFragment.updateButtonsFromPuzzleModel();
     }
 
