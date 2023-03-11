@@ -220,7 +220,7 @@ public class PuzzleFragment extends Fragment{
     public void finishButtonPressed() {
         Puzzle puzzle = mPuzzleViewModel.getPuzzle();
         if (!puzzle.isPuzzleFilled()) {
-            Toast.makeText(getActivity(), "You have not filled the puzzle!", Toast.LENGTH_LONG).show();
+            Toast.makeText(getActivity(), getString(R.string.error_not_filled_puzzle), Toast.LENGTH_LONG).show();
             return;
         }
         // TODO: show a dialog to ask the user if he wants to finish the puzzle

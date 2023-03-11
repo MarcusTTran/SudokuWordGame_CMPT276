@@ -8,7 +8,9 @@
     <string name="menu_main_menu_btn">Main Menu</string>
 
     <!-- Result messages -->
-    <string name="msg_fail">You Failed!</string>
+    <string name="msg_fail">You lost! You made </string>
+    <string name="word_mistake_singular">mistake</string>
+    <string name="word_mistake_plural">mistakes</string>
     <string name="msg_win">You won!</string>
     <string name="retry_puzzle_btn">Retry Puzzle</string>
 
@@ -69,6 +71,8 @@ If you encounter any difficulty translating the words featured in your puzzle, y
     <string name="word_entry_successful">Word entered successfully!</string>
     <string name="error_no_cell_selected">No cell selected</string>
     <string name="error_insert_in_initial_cell">You can not write in the puzzle initial cells</string>
+    <string name="error_not_filled_puzzle">You have not filled the puzzle!</string>
+
 
     <!-- Choose mode -->
     <string name="choose_mode_title">Choose Mode</string>
@@ -85,6 +89,12 @@ If you encounter any difficulty translating the words featured in your puzzle, y
     <string name = "option_12x12">12x12</string>
     <string name = "done_button">Done</string>
     <string name="cancel_button">Cancel</string>
+
+
+    <!-- Change Language Immersion -->
+    <string name="msg_language_french">Restart required. Language changed to French</string>
+    <string name="msg_language_english">Redémarrage requis. Langue changée en anglais</string>
+
 
 
 </resources>

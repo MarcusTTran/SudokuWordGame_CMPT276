@@ -59,9 +59,9 @@ public class PuzzleResultFragment extends Fragment {
         }
         else {
             if (mGameResult.getMistakes() == 1)
-                message = "You lost! You made " + mGameResult.getMistakes() + " mistake.";
+                message = getString(R.string.msg_fail) + mGameResult.getMistakes() + getString(R.string.word_mistake_singular);
             else
-                message = "You lost! You made " + mGameResult.getMistakes() + " mistakes.";
+                message = getString(R.string.msg_fail) + mGameResult.getMistakes() + getString(R.string.word_mistake_plural);
             imageResource = R.drawable.fail;
         }
 
