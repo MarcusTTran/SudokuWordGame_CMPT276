@@ -49,5 +49,12 @@ If you encounter any difficulty translating the words featured in your puzzle, y
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
+    <string-array name="puzzle_sizes_spinner">
+        <item>4x4 Puzzle</item>
+        <item>6x6 Puzzle</item>
+        <item>9x9 Puzzle</item>
+        <item>12x12 Puzzle</item>
+    </string-array>
+
 
 </resources>
