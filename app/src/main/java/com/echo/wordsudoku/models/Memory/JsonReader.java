@@ -266,14 +266,17 @@ public class JsonReader {
             // get the cell
             JSONArray cellsJSON = cellBoxJSON.getJSONArray("cells");
 
-            // make a 2D array of cells
-            Cell [][] cells = new Cell[cellsJSON.length()][cellsJSON.length()];
+            // get the dimension
+            Dimension dimension = parseDimension(cellBoxJSON.getJSONObject("dimension"));
 
-            for (int i = 0; i < cellsJSON.length(); i++) {
+            // make a 2D array of cells
+            Cell [][] cells = new Cell[dimension.getRows()][dimension.getColumns()];
+
+            for (int i = 0; i < dimension.getRows(); i++) {
                 // get the ith json array of cells
                 JSONArray anArrayJSON = cellsJSON.getJSONArray(i);
 
-                for (int j = 0; j < anArrayJSON.length(); j++) {
+                for (int j = 0; j < dimension.getColumns(); j++) {
                     // get the jth json object of anArray
                     JSONObject cellJSON = anArrayJSON.getJSONObject(j);
                     // parse the cell
@@ -284,8 +287,6 @@ public class JsonReader {
 
             }
 
-            // get the dimension
-            Dimension dimension = parseDimension(cellBoxJSON.getJSONObject("dimension"));
 
             // create the cell box (Cell [][] cells, Dimension dimension)
             CellBox cellBox = new CellBox(cells, dimension);

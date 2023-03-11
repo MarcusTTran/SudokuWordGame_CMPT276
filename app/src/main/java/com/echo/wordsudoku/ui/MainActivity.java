@@ -15,6 +15,7 @@ import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.StrictMode;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.echo.wordsudoku.R;
@@ -32,7 +33,7 @@ import java.io.InputStream;
 
 public class MainActivity extends AppCompatActivity {
 
-    private static final String TAG = "MainActivity";
+    private static final String TAG = "Puzzle.MainActivity";
 
     private final String wordPairJsonFile = "words.json";
     private PuzzleViewModel mPuzzleViewModel;
@@ -123,7 +124,12 @@ public class MainActivity extends AppCompatActivity {
     public void saveGame(){
         new Thread(() -> {
             JsonWriter jsonWriter = new JsonWriter(MainActivity.this);
-            Puzzle puzzle = mPuzzleViewModel.getPuzzle().getValue();
+            Puzzle puzzle = mPuzzleViewModel.getPuzzle();
+            try {
+                Log.d(TAG, "saveGame: " + puzzle.toJson().toString(4));
+            } catch (JSONException e) {
+                throw new RuntimeException(e);
+            }
             if(puzzle == null) return;
             try {
                 jsonWriter.writePuzzle(puzzle);

@@ -52,9 +52,11 @@ public class MainMenuFragment extends Fragment {
         mNewGameButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                StartPuzzleAction action = MainMenuFragmentDirections.startPuzzleAction();
-                action.setIsNewGame(true);
-                navController.navigate(action);
+//                StartPuzzleAction action = MainMenuFragmentDirections.startPuzzleAction();
+//                action.setIsNewGame(true);
+
+
+                navController.navigate(R.id.choosePuzzleModeFragment);
             }
         });
 

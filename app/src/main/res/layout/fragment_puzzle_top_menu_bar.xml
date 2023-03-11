@@ -8,8 +8,7 @@
         android:id="@+id/options_finish_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:onClick="finishButtonPressed"
-        android:text="@string/menu_finish"
+        android:text="@string/done_btn"
         app:layout_constraintEnd_toStartOf="@+id/timer_text_view"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintHorizontal_chainStyle="spread"
@@ -32,7 +31,6 @@
         android:id="@+id/help_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:onClick="rulesButtonPressed"
         app:layout_constraintEnd_toStartOf="@id/options_dictionary_help_button"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@id/timer_text_view"
@@ -43,12 +41,24 @@
         android:id="@+id/options_dictionary_help_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:onClick="dictionaryButtonPressed"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@id/help_button"
+        app:layout_constraintEnd_toStartOf="@id/options_reset_puzzle_button"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@android:drawable/ic_menu_myplaces" />
+
+    <Button
+        android:id="@+id/options_reset_puzzle_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/reset_puzzle_btn"
+        app:layout_constraintStart_toEndOf="@id/options_dictionary_help_button"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_chainStyle="spread"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

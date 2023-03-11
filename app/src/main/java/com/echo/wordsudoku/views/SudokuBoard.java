@@ -5,14 +5,22 @@ import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Rect;
+import android.os.Bundle;
 import android.util.AttributeSet;
+import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.accessibility.AccessibilityEvent;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.accessibility.AccessibilityNodeInfoCompat;
+import androidx.customview.widget.ExploreByTouchHelper;
 
 import com.echo.wordsudoku.R;
 
+import java.util.List;
 
 
 // using tutorial from https://www.youtube.com/watch?v=lYjSl_ou05Q
@@ -20,12 +28,17 @@ import com.echo.wordsudoku.R;
 
 public class SudokuBoard extends View {
 
+    private SudokuBoardTouchHelper mTouchHelper;
+
     // The size of the board
     // This is the number of cells in each row and column
     // We are not going to use this for now
     // TODO: Use this to make the board dynamic
-    private final int mBoardSize;
+    private int mBoardSize;
 
+    private OnCellTouchListener mOnCellTouchListener;
+    private int mBoxHeight;
+    private int mBoxWidth;
     // This is the default size of the board
     private final int DEFAULT_BOARD_SIZE = 9;
 
@@ -56,6 +69,8 @@ public class SudokuBoard extends View {
     // TODO: This will be used to display the letters in the cells that are not empty
     private final int mTextColor;
 
+    private final int mImmutableTextColor;
+
     // The Paint objects that will be used to draw the board
     // In the onDraw method, we will use these objects to draw the board
     // and there we set the color of the paint objects
@@ -64,6 +79,7 @@ public class SudokuBoard extends View {
     private final Paint mCellFillColorPaint = new Paint();
     private final Paint mCellsHighlightColorPaint = new Paint();
     private final Paint mLetterColorPaint = new Paint();
+    private final Paint mImmutableLetterColorPaint = new Paint();
 
 
     // This is a utility object that will be used to draw the letters in the cells
@@ -74,6 +90,8 @@ public class SudokuBoard extends View {
     // This is calculated in the onMeasure method
     private int cellSize;
 
+    private int size;
+
     // The current cell that is selected
     // This is used to highlight the selected cell
     // It is initialized to -1 because we don't have any cell selected at the beginning
@@ -83,7 +101,8 @@ public class SudokuBoard extends View {
     // This string 2D array should later on be linked to the model Board
     // It will be used to store the letters in the cells
     // TODO: Link this to the model Board
-    private String[][] board = new String[9][9];
+    private String[][] board;
+    private boolean[][] immutable;
 
 
     // This is the constructor that is called when the view is created in the XML layout
@@ -96,6 +115,9 @@ public class SudokuBoard extends View {
     public SudokuBoard(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
 
+        mTouchHelper = new SudokuBoardTouchHelper(this);
+        ViewCompat.setAccessibilityDelegate(this, mTouchHelper);
+
         TypedArray a = context.getTheme().obtainStyledAttributes(
                 attrs,
                 R.styleable.SudokuBoard,
@@ -106,18 +128,60 @@ public class SudokuBoard extends View {
         // and finally recycle the TypedArray object so we can empty the memory
         try {
             mBoardSize = a.getInteger(R.styleable.SudokuBoard_boardSize, DEFAULT_BOARD_SIZE);
+            mBoxHeight = a.getInteger(R.styleable.SudokuBoard_boxHeight, 3);
+            mBoxWidth = a.getInteger(R.styleable.SudokuBoard_boxWidth, 3);
             mBoardColor = a.getInteger(R.styleable.SudokuBoard_boardColor, 0);
             mCellFillColor = a.getInteger(R.styleable.SudokuBoard_cellFillColor, 0);
             mCellsHighlightColor = a.getInteger(R.styleable.SudokuBoard_cellsHighlightColor, 0);
             mTextColor = a.getInteger(R.styleable.SudokuBoard_textColor, 0);
+            mImmutableTextColor = a.getInteger(R.styleable.SudokuBoard_immutableColor, 0);
             mCellVerticalPadding = a.getInteger(R.styleable.SudokuBoard_cellVerticalPadding, DEFAULT_CELL_VERTICAL_PADDING);
             mCellHorizontalPadding = a.getInteger(R.styleable.SudokuBoard_cellHorizontalPadding, DEFAULT_CELL_HORIZONTAL_PADDING);
             mCellMaxFontSize = a.getInteger(R.styleable.SudokuBoard_cellMaxFontSize, DEFAULT_CELL_MAX_FONT_SIZE);
         } finally {
             a.recycle();
         }
+        board = new String[mBoardSize][mBoardSize];
+        immutable = new boolean[mBoardSize][mBoardSize];
     }
 
+    // With this method we can set the board size and the box size to different values
+    // This is used to make the board dynamic
+    // @param boardSize - the size of the board (the number of rows and columns)
+    // @param boxHeight - the height of the box (the number of rows in the box)
+    // @param boxWidth - the width of the box (the number of columns in the box)
+    public void setNewPuzzleDimensions(int boardSize, int boxHeight, int boxWidth) {
+        this.mBoardSize = boardSize;
+        this.mBoxHeight = boxHeight;
+        this.mBoxWidth = boxWidth;
+        this.cellSize = this.size / mBoardSize;
+        this.board = new String[mBoardSize][mBoardSize];
+        this.immutable = new boolean[mBoardSize][mBoardSize];
+        this.currentCellColumn = this.currentCellRow = -1;
+    }
+
+
+    @Override
+    public boolean dispatchHoverEvent(MotionEvent event) {
+        // Always attempt to dispatch hover events to accessibility first.
+        if (mTouchHelper.dispatchHoverEvent(event)) {
+            return true;
+        }
+        return super.dispatchHoverEvent(event);
+    }
+
+    @Override
+    public boolean dispatchKeyEvent(KeyEvent event) {
+        return mTouchHelper.dispatchKeyEvent(event)
+                || super.dispatchKeyEvent(event);
+    }
+
+    @Override
+    public void onFocusChanged(boolean gainFocus, int direction,
+                               Rect previouslyFocusedRect) {
+        super.onFocusChanged(gainFocus, direction, previouslyFocusedRect);
+        mTouchHelper.onFocusChanged(gainFocus, direction, previouslyFocusedRect);
+    }
 
     // Here we basically calculate the size of the view
     // We make the view a square and try to make it as big as possible
@@ -129,7 +193,9 @@ public class SudokuBoard extends View {
         int size = Math.min(this.getMeasuredWidth(), this.getMeasuredHeight());
 
         // Calculate the dimensions of each cell
-        cellSize = size / 9;
+        cellSize = size / mBoardSize;
+
+        this.size = size;
 
         // Set the measured dimensions
         setMeasuredDimension(size, size);
@@ -141,20 +207,67 @@ public class SudokuBoard extends View {
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
+        drawOutsideBorder(canvas);
+        // This will draw the selected cell and the highlighted column and row
+        colorCell(canvas, this.currentCellRow, this.currentCellColumn);
 
-        // Set the color of the paint objects
-        // We also set the style of the paint objects (stroke simply draws a line and fill draws a solid shape)
+        drawInnerLinesBoard(canvas);
 
-        mLetterColorPaint.setColor(mTextColor);
+        // This will draw the words in the cells
+        drawWord(canvas);
+    }
 
+
+    // This method is called when the user touches the screen
+    // We use it to get the coordinates of the touch event
+    // We then use the coordinates to get the row and column of the cell that was touched
+    // We then use the row and column to highlight the selected cell
+    // We also use the row and column to highlight the selected column and row
+    // We then invalidate the view so that it is redrawn
+    // We return true if the touch event was valid and false if it was not
+
+    private void drawOutsideBorder(Canvas canvas) {
         // Draw the outer side of the board (the big square that contains all of the cells)
         mBoardColorPaint.setStyle(Paint.Style.STROKE);
         mBoardColorPaint.setStrokeWidth(16);
         mBoardColorPaint.setColor(mBoardColor);
         mBoardColorPaint.setAntiAlias(true);
-
         // Draw the outer side of the board
         canvas.drawRect(0, 0, getWidth(), getHeight(), mBoardColorPaint);
+    }
+
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        boolean isValid;
+        float x = event.getX();
+        float y = event.getY();
+
+        int action = event.getAction();
+
+        if (action == MotionEvent.ACTION_DOWN) {
+            onCellTouched((int) Math.ceil(y / cellSize),(int) Math.ceil(x / cellSize));
+            isValid = true;
+        } else {
+            isValid = false;
+        }
+
+        return isValid;
+    }
+
+    private void onCellTouched(int row, int column) {
+        currentCellRow = row;
+        currentCellColumn = column;
+        if (mOnCellTouchListener != null)
+            mOnCellTouchListener.onCellTouched(board[row-1][column-1],row, column);
+        mTouchHelper.sendEventForVirtualView((row-1)*mBoardSize+column-1, AccessibilityEvent.TYPE_VIEW_CLICKED);
+    }
+
+    // This method is used to highlight the selected cell and the selected column and row
+    // r is the row of the selected cell
+    // c is the column of the selected cell
+    // We first check if actually a cell is selected
+    private void colorCell(Canvas canvas, int r, int c) {
+
 
         // Set the color of the single cell that is highlighted when it is selected
         // Set the style of the paint object to fill
@@ -172,50 +285,6 @@ public class SudokuBoard extends View {
         // mLetterColorPaint.setColor(mletterColor);
         // mLetterColorSolvePaint.setColor(mletterColorSolve);
 
-        // This will draw the selected cell and the highlighted column and rows
-        colorCell(canvas, currentCellRow, currentCellColumn);
-
-        // This will draw the board, the rows and the columns' lines
-        drawBoard(canvas);
-
-        // This will draw the words in the cells
-        drawWord(canvas);
-    }
-
-
-    // This method is called when the user touches the screen
-    // We use it to get the coordinates of the touch event
-    // We then use the coordinates to get the row and column of the cell that was touched
-    // We then use the row and column to highlight the selected cell
-    // We also use the row and column to highlight the selected column and row
-    // We then invalidate the view so that it is redrawn
-    // We return true if the touch event was valid and false if it was not
-
-    @Override
-    public boolean onTouchEvent(MotionEvent event) {
-        boolean isValid;
-        float x = event.getX();
-        float y = event.getY();
-
-        int action = event.getAction();
-
-        if (action == MotionEvent.ACTION_DOWN) {
-            currentCellColumn = (int) Math.ceil(x / cellSize);
-            currentCellRow = (int) Math.ceil(y / cellSize);
-            isValid = true;
-        } else {
-            isValid = false;
-        }
-
-        return isValid;
-    }
-
-    // This method is used to highlight the selected cell and the selected column and row
-    // r is the row of the selected cell
-    // c is the column of the selected cell
-    // We first check if actually a cell is selected
-    private void colorCell(Canvas canvas, int r, int c) {
-
         // If a cell is selected
         // Highlight the selected column
         // Highlight the selected row
@@ -223,9 +292,9 @@ public class SudokuBoard extends View {
         // If not, nothing will be highlighted (this will happen when the user first opens the puzzle)
         if (currentCellColumn != -1 && currentCellRow != -1) {
             // Highlight the selected column
-            canvas.drawRect((c-1)*cellSize,0,c*cellSize,cellSize*9,mCellsHighlightColorPaint);
+            canvas.drawRect((c-1)*cellSize,0,c*cellSize,cellSize*mBoardSize,mCellsHighlightColorPaint);
             // Highlight the selected row
-            canvas.drawRect(0,(r-1)*cellSize,9*cellSize,r*cellSize,mCellsHighlightColorPaint);
+            canvas.drawRect(0,(r-1)*cellSize,mBoardSize*cellSize,r*cellSize,mCellsHighlightColorPaint);
             // Highlight the selected cell, different color than the previous 2
             canvas.drawRect((c-1)*cellSize,(r-1)*cellSize,c*cellSize,r*cellSize,mCellFillColorPaint);
         }
@@ -254,10 +323,10 @@ public class SudokuBoard extends View {
     // This draws all of the inner lines of the board
     // @param: canvas is the canvas on which the board is drawn
     //TODO: Draw the board with custom sizes. Currently only draws a 9x9 board
-    private void drawBoard(Canvas canvas) {
+    private void drawInnerLinesBoard(Canvas canvas) {
         // Draw the column lines
-        for (int c = 0; c < 10; c++) {
-            if (c % 3 == 0) {
+        for (int c = 0; c < mBoardSize+1; c++) {
+            if (c % mBoxWidth == 0) {
                 // If the column is a multiple of 3, draw a thick line because it is in the 3x3 square
                 drawThickLines();
             } else {
@@ -268,8 +337,8 @@ public class SudokuBoard extends View {
         }
 
         // Draw the row lines
-        for (int r = 0; r < 10; r++) {
-            if (r % 3 == 0) {
+        for (int r = 0; r < mBoardSize; r++) {
+            if (r % mBoxHeight == 0) {
                 // If the column is a multiple of 3, draw a thick line because it is in the 3x3 square
                 drawThickLines();
             } else {
@@ -286,14 +355,27 @@ public class SudokuBoard extends View {
     // It calculates the width and height of the word to center it
     // It uses utility methods to set the font of the text in a way that all of the words fit in the cell
     private void drawWord(Canvas canvas) {
+        //Set the color of the letters
+        mLetterColorPaint.setColor(mTextColor);
+        mImmutableLetterColorPaint.setColor(mImmutableTextColor);
+
         final int desiredHeightForEachWord = cellSize-mCellVerticalPadding;
         final int desiredWidthForEachWord = cellSize-mCellHorizontalPadding;
         final int maximumLetterFontSize = mCellMaxFontSize;
-        for (int r=0; r<9; r++) {
-            for (int c=0; c<9; c++) {
+        for (int r=0; r<mBoardSize; r++) {
+            for (int c=0; c<mBoardSize; c++) {
                 if (board[r][c] != null){
                     String word = board[r][c];
                     float width, height;
+                    if (immutable[r][c]) {
+                        setTextSize(mImmutableLetterColorPaint, desiredHeightForEachWord, desiredWidthForEachWord, word,maximumLetterFontSize);
+                        // We need to get the bounds of the word to center it
+                        mImmutableLetterColorPaint.getTextBounds(word, 0, word.length(), letterPaintBounds);
+                        width = mImmutableLetterColorPaint.measureText(word);
+                        height = letterPaintBounds.height();
+                        canvas.drawText(word,(c*cellSize)+((cellSize-width))/2,(r*cellSize+cellSize)-((cellSize-height)/2),mImmutableLetterColorPaint);
+                        continue;
+                    }
                     setTextSize(mLetterColorPaint, desiredHeightForEachWord, desiredWidthForEachWord, word,maximumLetterFontSize);
                     // We need to get the bounds of the word to center it
                     mLetterColorPaint.getTextBounds(word, 0, word.length(), letterPaintBounds);
@@ -315,7 +397,7 @@ public class SudokuBoard extends View {
     // @param: maxTextSize is the maximum size of the text (60)
 
     private static void setTextSize(Paint paint, float desiredHeight, float desiredWidth,
-                                            String text, int maxTextSize) {
+                                    String text, int maxTextSize) {
 
 
         final float testTextSize = 20f;
@@ -339,11 +421,53 @@ public class SudokuBoard extends View {
     // It will load the board initially when the user opens the puzzle using the unsolved puzzle from Board model.
     // Also used for testing purposes
     public void setBoard(String[][] board) {
-        for (int r=0; r<9; r++) {
-            for (int c=0; c<9; c++) {
+        if (board.length != mBoardSize || board[0].length != mBoardSize) {
+            throw new IllegalArgumentException("Board size must be " + mBoardSize + "x" + mBoardSize);
+        }
+        for (int r=0; r<mBoardSize; r++) {
+            for (int c=0; c<mBoardSize; c++) {
+                if (board[r][c] != "")
+                    immutable[r][c] = true;
                 this.board[r][c] = board[r][c];
             }
         }
+    }
+
+    public void setImmutability(boolean[][] immutability) {
+        if (immutability.length != mBoardSize || immutability[0].length != mBoardSize) {
+            throw new IllegalArgumentException("Immutable size must be " + mBoardSize + "x" + mBoardSize);
+        }
+        for (int r=0; r<mBoardSize; r++) {
+            for (int c=0; c<mBoardSize; c++) {
+                immutable[r][c] = immutability[r][c];
+            }
+        }
+    }
+
+    // Rows and columns are 1 indexed
+    public void setWordOfCell(int row, int column, String word) {
+        if (row < 1 || row > mBoardSize || column < 1 || column > mBoardSize)
+            throw new IllegalArgumentException("Invalid row or column. Valid range for this board is 1-" + mBoardSize);
+        board[row-1][column-1] = word;
+    }
+
+    public boolean insertWord(String str) {
+        if (currentCellRow != -1 && currentCellColumn != -1) {
+            board[currentCellRow-1][currentCellColumn-1] = str;
+            invalidate();
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
+    public int getBoardSize() {
+        return mBoardSize;
+    }
+
+    public void setOnCellTouchListener(OnCellTouchListener listener) {
+        this.mOnCellTouchListener = listener;
     }
 
 
@@ -355,6 +479,72 @@ public class SudokuBoard extends View {
         return currentCellColumn;
     }
 
+    private class SudokuBoardTouchHelper extends ExploreByTouchHelper {
 
+        public SudokuBoardTouchHelper(View forView) {
+            super(forView);
+        }
 
+        @Override
+        protected int getVirtualViewAt(float x, float y) {
+            int row = (int) (y / cellSize);
+            int column = (int) (x / cellSize);
+            if (row >= mBoardSize || column >= mBoardSize) {
+                return INVALID_ID;
+            }
+            return row * mBoardSize + column;
+        }
+
+        @Override
+        protected void getVisibleVirtualViews(List<Integer> virtualViewIds) {
+            for (int i = 0; i < mBoardSize * mBoardSize; i++) {
+                virtualViewIds.add(i);
+            }
+        }
+
+        @Override
+        protected void onPopulateEventForVirtualView(int virtualViewId, @NonNull AccessibilityEvent event) {
+            super.onPopulateEventForVirtualView(virtualViewId, event);
+            if (virtualViewId >= mBoardSize * mBoardSize) {
+                throw new IllegalArgumentException("Invalid virtual view id");
+            }
+            int row = getRowColumnForVirtualViewId(virtualViewId)[0];
+            int column = getRowColumnForVirtualViewId(virtualViewId)[1];
+            event.setContentDescription("Cell [" + (row+1) + "] [" + (column+1)+"] contains "+board[row][column]);
+        }
+
+        @Override
+        protected void onPopulateNodeForVirtualView(int virtualViewId, AccessibilityNodeInfoCompat node) {
+            if (virtualViewId >= mBoardSize * mBoardSize) {
+                throw new IllegalArgumentException("Invalid virtual view id");
+            }
+            int row = getRowColumnForVirtualViewId(virtualViewId)[0];
+            int column = getRowColumnForVirtualViewId(virtualViewId)[1];
+            node.setContentDescription("Cell [" + (row+1) + "] [" + (column+1)+"] contains "+board[row][column]);
+            if (currentCellRow-1 == row && currentCellColumn-1 == column) {
+                node.setSelected(true);
+            } else {
+                node.setSelected(false);
+            }
+            node.setBoundsInParent(new Rect(column * cellSize, row * cellSize, (column + 1) * cellSize, (row + 1) * cellSize));
+            node.addAction(AccessibilityNodeInfoCompat.ACTION_CLICK);
+        }
+
+        @Override
+        protected boolean onPerformActionForVirtualView(int virtualViewId, int action, Bundle arguments) {
+            if (action == AccessibilityNodeInfoCompat.ACTION_CLICK) {
+                int row = virtualViewId / mBoardSize;
+                int column = virtualViewId % mBoardSize;
+                onCellTouched(row+1, column+1);
+                return true;
+            }
+            return false;
+        }
+
+        private int[] getRowColumnForVirtualViewId(int virtualViewId) {
+            int row = virtualViewId / mBoardSize;
+            int column = virtualViewId % mBoardSize;
+            return new int[]{row, column};
+        }
+    }
 }
