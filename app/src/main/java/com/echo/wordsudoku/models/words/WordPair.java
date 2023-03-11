@@ -70,6 +70,10 @@ public class WordPair implements Writable {
         return this.getEnglish().equals(other.getEnglish()) && this.getFrench().equals(other.getFrench());
     }
 
+    public boolean doesContain(String word) {
+        return this.getEnglish().equals(word) || this.getFrench().equals(word);
+    }
+
 
     @Override
     public JSONObject toJson() throws JSONException {

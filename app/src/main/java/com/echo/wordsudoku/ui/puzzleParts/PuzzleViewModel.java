@@ -12,22 +12,18 @@ import com.echo.wordsudoku.models.words.WordPairReader;
 import java.util.List;
 
 public class PuzzleViewModel extends ViewModel {
-    private final MutableLiveData<Puzzle> puzzle = new MutableLiveData<>();
+    private Puzzle puzzle;
     private WordPairReader wordPairReader;
 
     public List<WordPair> getWordPairs() {
-        return puzzle.getValue().getWordPairs();
+        return puzzle.getWordPairs();
     }
 
-    public LiveData<Puzzle> getPuzzle() {
+    public Puzzle getPuzzle() {
         return puzzle;
     }
     public void setPuzzle(Puzzle puzzle) {
-        this.puzzle.setValue(new Puzzle(puzzle));
-    }
-
-    public void postPuzzle(Puzzle puzzle) {
-        this.puzzle.postValue(new Puzzle(puzzle));
+        this.puzzle = new Puzzle(puzzle);
     }
 
     public WordPairReader getWordPairReader() {

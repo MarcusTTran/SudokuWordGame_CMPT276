@@ -417,10 +417,24 @@ public class SudokuBoard extends View {
     }
 
     // Rows and columns are 1 indexed
-    public void setWord(int row, int column, String word) {
+    public void setWordOfCell(int row, int column, String word) {
         if (row < 1 || row > mBoardSize || column < 1 || column > mBoardSize)
             throw new IllegalArgumentException("Invalid row or column. Valid range for this board is 1-" + mBoardSize);
-        board[row][column] = word;
+        board[row-1][column-1] = word;
+    }
+
+    public boolean insertWord(String str) {
+        if (currentCellRow != -1 && currentCellColumn != -1) {
+            board[currentCellRow-1][currentCellColumn-1] = str;
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
+    public int getBoardSize() {
+        return mBoardSize;
     }
 
     public void setOnCellTouchListener(OnCellTouchListener listener) {

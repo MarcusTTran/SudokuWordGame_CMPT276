@@ -123,7 +123,7 @@ public class MainActivity extends AppCompatActivity {
     public void saveGame(){
         new Thread(() -> {
             JsonWriter jsonWriter = new JsonWriter(MainActivity.this);
-            Puzzle puzzle = mPuzzleViewModel.getPuzzle().getValue();
+            Puzzle puzzle = mPuzzleViewModel.getPuzzle();
             if(puzzle == null) return;
             try {
                 jsonWriter.writePuzzle(puzzle);

@@ -31,6 +31,14 @@ public class PuzzleInputButtonsFragment extends Fragment {
 
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+//        if (mPuzzleViewModel.getPuzzle() != null) {
+//            initializeButtons(buttons, mPuzzleViewModel.getWordPairs(), BoardLanguage.getOtherLanguage(mPuzzleViewModel.getPuzzle().getLanguage()));
+//        }
+
+//            initializeButtons(buttons, mPuzzleViewModel.getWordPairs(), BoardLanguage.getOtherLanguage(mPuzzleViewModel.getPuzzle().getValue().getLanguage()));
+    }
+
+    public void initButtonsFromPuzzleModel() {
         Button[] buttons = {getView().findViewById(R.id.button1),
                 getView().findViewById(R.id.button2),
                 getView().findViewById(R.id.button3),
@@ -40,12 +48,8 @@ public class PuzzleInputButtonsFragment extends Fragment {
                 getView().findViewById(R.id.button7),
                 getView().findViewById(R.id.button8),
                 getView().findViewById(R.id.button9)};
-        mPuzzleViewModel.getPuzzle().observe(getViewLifecycleOwner(), puzzle -> {
-            if (puzzle != null) {
-                initializeButtons(buttons, mPuzzleViewModel.getWordPairs(), BoardLanguage.getOtherLanguage(mPuzzleViewModel.getPuzzle().getValue().getLanguage()));
-            }
-        });
-//            initializeButtons(buttons, mPuzzleViewModel.getWordPairs(), BoardLanguage.getOtherLanguage(mPuzzleViewModel.getPuzzle().getValue().getLanguage()));
+        initializeButtons(buttons, mPuzzleViewModel.getWordPairs(), BoardLanguage.getOtherLanguage(mPuzzleViewModel.getPuzzle().getLanguage()));
+
     }
 
     // This method sets the labels of the buttons and adds on Click Listeners to them

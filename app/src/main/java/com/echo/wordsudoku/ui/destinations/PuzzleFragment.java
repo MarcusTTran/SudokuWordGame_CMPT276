@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
@@ -36,6 +37,7 @@ import java.util.List;
 
 import com.echo.wordsudoku.ui.puzzleParts.PuzzleBoardFragment;
 import com.echo.wordsudoku.ui.destinations.PuzzleFragmentDirections.SubmitPuzzleAction;
+import com.echo.wordsudoku.ui.puzzleParts.PuzzleInputButtonsFragment;
 import com.echo.wordsudoku.ui.puzzleParts.PuzzleViewModel;
 
 public class PuzzleFragment extends Fragment{
@@ -71,6 +73,13 @@ public class PuzzleFragment extends Fragment{
         mPuzzleViewModel = new ViewModelProvider(requireActivity()).get(PuzzleViewModel.class);
         mSettingsViewModel = new ViewModelProvider(requireActivity()).get(SettingsViewModel.class);
 
+        View root = inflater.inflate(R.layout.fragment_puzzle, container, false);
+        return root;
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
         boolean isNewGame = PuzzleFragmentArgs.fromBundle(getArguments()).getIsNewGame();
         if (isNewGame) {
             newGame();
@@ -80,8 +89,6 @@ public class PuzzleFragment extends Fragment{
 
         LanguageList1 = new String[puzzleDimension];
         LanguageList2 = new String[puzzleDimension];
-        View root = inflater.inflate(R.layout.fragment_puzzle, container, false);
-        return root;
     }
 
     private void loadGame() {
@@ -93,8 +100,15 @@ public class PuzzleFragment extends Fragment{
             try {
                 puzzle = mJsonReader.readPuzzle();
                 // Update the PuzzleViewModel
-                if (puzzle != null)
-                    mPuzzleViewModel.postPuzzle(puzzle);
+                if (puzzle != null) {
+                    mPuzzleViewModel.setPuzzle(puzzle);
+                    requireActivity().runOnUiThread(() -> {
+                        PuzzleBoardFragment puzzleFragment = (PuzzleBoardFragment) getChildFragmentManager().findFragmentById(R.id.board);
+                        PuzzleInputButtonsFragment puzzleInputButtonsFragment = (PuzzleInputButtonsFragment) getChildFragmentManager().findFragmentById(R.id.puzzle_input_buttons);
+                        puzzleFragment.initBoardWithPuzzleModel();
+                        puzzleInputButtonsFragment.initButtonsFromPuzzleModel();
+                    });
+                }
             } catch (IOException | JSONException e) {
                 // run from main thread
                 requireActivity().runOnUiThread(() -> {
@@ -119,36 +133,41 @@ public class PuzzleFragment extends Fragment{
         // Create a new board
         Puzzle puzzle = new Puzzle(wordPairs,puzzleDimension,puzzleLanguage,numberOfInitialWords);
         mPuzzleViewModel.setPuzzle(puzzle);
+        PuzzleBoardFragment puzzleFragment = (PuzzleBoardFragment) getChildFragmentManager().findFragmentById(R.id.board);
+        PuzzleInputButtonsFragment puzzleInputButtonsFragment = (PuzzleInputButtonsFragment) getChildFragmentManager().findFragmentById(R.id.puzzle_input_buttons);
+        // Initialize the board with the puzzle model
+        puzzleFragment.initBoardWithPuzzleModel();
+
+        // Initialize the input buttons with the puzzle model
+        puzzleInputButtonsFragment.initButtonsFromPuzzleModel();
+
     }
 
     public void enterWordInBoard(String word) {
-        String msg = getString(R.string.word_entry_successful);
-        WordPair associatedWordPair = null;
-        List<WordPair> mWordPairs = mPuzzleViewModel.getPuzzle().getValue().getWordPairs();
-        for (WordPair wordPair : mWordPairs) {
-            if (wordPair.getEnglishOrFrench(BoardLanguage.ENGLISH).equals(word) || wordPair.getEnglishOrFrench(BoardLanguage.FRENCH).equals(word)) {
-                associatedWordPair = wordPair;
-                break;
-            }
+        PuzzleBoardFragment puzzleFragment = (PuzzleBoardFragment) getChildFragmentManager().findFragmentById(R.id.board);
+        Dimension currentCell = puzzleFragment.getSelectedCell();
+        Puzzle puzzle = mPuzzleViewModel.getPuzzle();
+        if (!puzzle.isWritableCell(currentCell)) {
+            Toast.makeText(requireActivity(), R.string.error_insert_in_initial_cell, Toast.LENGTH_SHORT).show();
+            return;
         }
-        if (associatedWordPair != null) {
-            PuzzleBoardFragment puzzleFragment = (PuzzleBoardFragment) getChildFragmentManager().findFragmentById(R.id.board);
-            Dimension currentCell =  puzzleFragment.getSelectedCell();
-            if (currentCell.getRows()==-2 || currentCell.getColumns()==-2) {
-                msg = getString(R.string.error_no_cell_selected);
-            }
-            else {
-                try {
-                    Puzzle puzzle = mPuzzleViewModel.getPuzzle().getValue();
-                    puzzle.setCell(currentCell.getRows(), currentCell.getColumns(), associatedWordPair);
-                    mPuzzleViewModel.setPuzzle(puzzle);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    msg = getString(R.string.error_insert_in_initial_cell);
+        else {
+            WordPair associatedWordPair = null;
+            List<WordPair> mWordPairs = mPuzzleViewModel.getPuzzle().getWordPairs();
+            for (WordPair wordPair : mWordPairs) {
+                if (wordPair.doesContain(word)) {
+                    associatedWordPair = wordPair;
+                    break;
                 }
             }
+            if (associatedWordPair != null) {
+                puzzle.setCell(currentCell.getRows(), currentCell.getColumns(), associatedWordPair);
+                puzzleFragment.insertWordInBoardView(word);
+                return;
+            } else {
+                throw new RuntimeException("Trying to insert " + word + ". Word not found in word pairs");
+            }
         }
-        Log.d(TAG, msg);
     }
 
     //When the user presses the rules button
@@ -161,7 +180,7 @@ public class PuzzleFragment extends Fragment{
 
     public void dictionaryButtonPressed() {
         //Toast.makeText(this, "Dictionary Button pressed", Toast.LENGTH_LONG).show();
-        List<WordPair> wordPairs = mPuzzleViewModel.getPuzzle().getValue().getWordPairs();
+        List<WordPair> wordPairs = mPuzzleViewModel.getPuzzle().getWordPairs();
         for (int i = 0; i < wordPairs.size(); i++) {
             LanguageList1[i] = wordPairs.get(i).getEnglish();
         }
@@ -184,7 +203,7 @@ public class PuzzleFragment extends Fragment{
     // @param view The view that was pressed (the button)
     // TODO: Add a dialog to ask the user if he wants to finish the puzzle
     public void finishButtonPressed() {
-        Puzzle puzzle = mPuzzleViewModel.getPuzzle().getValue();
+        Puzzle puzzle = mPuzzleViewModel.getPuzzle();
         if (!puzzle.isPuzzleFilled()) {
             Toast.makeText(getActivity(), "You have not filled the puzzle!", Toast.LENGTH_LONG).show();
             return;

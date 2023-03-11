@@ -397,6 +397,10 @@ public class Puzzle implements Writable {
         }
     }
 
+    public boolean isWritableCell(Dimension dimension) {
+        return userBoard.getCellFromBigArray(dimension.getRows(),dimension.getColumns()).isEditable();
+    }
+
 
     /*
      * @method convert the puzzle object into json and every single field
