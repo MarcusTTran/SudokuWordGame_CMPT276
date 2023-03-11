@@ -20,7 +20,6 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.echo.wordsudoku.R;
 import com.echo.wordsudoku.models.words.WordPair;
-import com.echo.wordsudoku.ui.dialogs.DictionaryFragment;
 import com.echo.wordsudoku.ui.puzzleParts.PuzzleViewModel;
 
 import java.util.ArrayList;
@@ -30,6 +29,10 @@ import java.util.List;
 public class ChooseCustomWordsFragment extends Fragment{
 
     private PuzzleViewModel mPuzzleViewModel;
+
+    private final String CC_WORDS_DEBUG_KEY = "CCUSTOM_WORDS_DEBUG_KEY";
+
+    //Store the currentSize selected
     private int currentSize;
 
     private View root;
@@ -39,26 +42,27 @@ public class ChooseCustomWordsFragment extends Fragment{
     private final String KEY_SAVE_CURRENTSIZE = "KEY_SAVE_CURRENTSIZE";
 
 
+    //Store the ID of each EditText we dynamically create
     private List<Integer> idBoardLanguageWords;
     private List<Integer> idButtonLanguageWords;
 
-
+    //Store any filled EditTexts when user rotates the screen
     private List<String> prefilledBoardLanguageWords;
     private List<String> prefilledButtonLanguageWords;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
-        Log.d("MYTEST","onCreate called");
+        Log.d(CC_WORDS_DEBUG_KEY,"onCreate called");
 
         super.onCreate(savedInstanceState);
 
-        //From Bundle
+        //If Bundle not empty; Load any of the previously filled EditTexts into the current existing ones
         if (savedInstanceState != null) {
-            Log.d("MYTEST", "Loading previously saved bundle" );
+            Log.d(CC_WORDS_DEBUG_KEY, "Loading previously saved bundle" );
 
             int savedSize = savedInstanceState.getInt(KEY_SAVE_CURRENTSIZE, -1);
             this.currentSize = savedSize;
-            Log.d("MYTEST", "Currentsize was: " + savedSize);
+            Log.d(CC_WORDS_DEBUG_KEY, "Currentsize was: " + savedSize);
 
             List<String> buttonPrefilled = savedInstanceState.getStringArrayList(KEY_SAVE_BUTTON);
             this.prefilledButtonLanguageWords = buttonPrefilled;
@@ -69,7 +73,7 @@ public class ChooseCustomWordsFragment extends Fragment{
 
         } else {
             //If no saved bundle is found fill with empty "" strings
-            Log.d("MYTEST", "No bundle previously saved" );
+            Log.d(CC_WORDS_DEBUG_KEY, "No bundle previously saved" );
             this.currentSize = 4;
 
             prefilledButtonLanguageWords = initializeBlankStringList();
@@ -83,24 +87,22 @@ public class ChooseCustomWordsFragment extends Fragment{
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
-        Log.d("MYTEST","onCreateView called");
+        Log.d(CC_WORDS_DEBUG_KEY,"onCreateView called");
 
         View root = inflater.inflate(R.layout.fragment_choose_custom_words, container, false);
         this.root = root;
 
         mPuzzleViewModel = new ViewModelProvider(requireActivity()).get(PuzzleViewModel.class);
 
-        // TODO: Get the values of the word pairs user entered and set them in the PuzzleViewModel
-        // EditText editText = root.findViewById(R.id.editText);
-        // mPuzzleViewModel.setWordPairs(editText.getText().toString());
-
+        //Create our dropdown and fill each selection with values from resource file
         Spinner dropdown = root.findViewById(R.id.puzzleSizeCustomDropdown);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getContext(), R.array.puzzle_sizes_spinner, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         dropdown.setAdapter(adapter);
 
-        Log.d("MYTEST", "Prior to initializeEntryBoxes, currentSize is: " + this.currentSize);
+        Log.d(CC_WORDS_DEBUG_KEY, "Prior to initializeEntryBoxes, currentSize is: " + this.currentSize);
 
+        //Create the EditTexts
         initializeEntryBoxes(root, this.currentSize);
 
 
@@ -109,20 +111,20 @@ public class ChooseCustomWordsFragment extends Fragment{
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 if (position == 0) {
                     //If first dropdown selected
-                    Log.d("MYTEST", "Value: " + position);
+                    Log.d(CC_WORDS_DEBUG_KEY, "Value: " + position);
                     fillLayoutsWithEditTexts(root, 4);
                     currentSize = 4;
                 } else if (position == 1) {
                     //If second dropdown selected
-                    Log.d("MYTEST", "Value: " + position);
+                    Log.d(CC_WORDS_DEBUG_KEY, "Value: " + position);
                     fillLayoutsWithEditTexts(root, 6);
                     currentSize = 6;
                 } else if(position == 2) {
-                    Log.d("MYTEST", "Value: " + position);
+                    Log.d(CC_WORDS_DEBUG_KEY, "Value: " + position);
                     fillLayoutsWithEditTexts(root, 9);
                     currentSize = 9;
                 } else {
-                    Log.d("MYTEST", "Value: " + position);
+                    Log.d(CC_WORDS_DEBUG_KEY, "Value: " + position);
                     fillLayoutsWithEditTexts(root, 12);
                     currentSize = 12;
                 }
@@ -130,7 +132,7 @@ public class ChooseCustomWordsFragment extends Fragment{
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
-                Log.d("MYTEST", "Nothing selected");
+                Log.d(CC_WORDS_DEBUG_KEY, "Nothing selected");
                 //Nothing selected; Do nothing
             }
         });
@@ -142,28 +144,29 @@ public class ChooseCustomWordsFragment extends Fragment{
 
                 //Check if all EntryBoxes are full
                 if (isEntryBoxesFull(root)) {
-                    Log.d("MYTEST", "clicked on Confirm");
+                    Log.d(CC_WORDS_DEBUG_KEY, "clicked on Confirm");
                     //Turn the EntryBoxes into a WordPair List
                     List<WordPair> userEnteredWordList = new ArrayList<>();
                     for (int i = 0; i < currentSize; i++) {
                         EditText someEntryBox1 = root.findViewById(idBoardLanguageWords.get(i));
                         EditText someEntryBox2 = root.findViewById(idButtonLanguageWords.get(i));
 
-                        Log.d("MYTEST", "Board Language Words[" + i +"]: " + someEntryBox1.getText().toString());
-                        Log.d("MYTEST", "Button Language Words[" + i +"]: " + someEntryBox2.getText().toString());
+                        //Validate Words are being read with Log.d
+                        Log.d(CC_WORDS_DEBUG_KEY, "Board Language Words[" + i +"]: " + someEntryBox1.getText().toString());
+                        Log.d(CC_WORDS_DEBUG_KEY, "Button Language Words[" + i +"]: " + someEntryBox2.getText().toString());
 
                         //Add in each word to WordPair list
                         userEnteredWordList.add(new WordPair(someEntryBox1.getText().toString(), someEntryBox2.getText().toString()));
                     }
-                    Log.d("MYTEST", "Size of WordPair list: " + userEnteredWordList.size());
+                    Log.d(CC_WORDS_DEBUG_KEY, "Size of WordPair list: " + userEnteredWordList.size());
 
                     //Set the PuzzleViewModel to store the WordPair list we made
-                    mPuzzleViewModel.setWordPairs(userEnteredWordList);
+                    mPuzzleViewModel.setCustomWordPair(userEnteredWordList);
 
-                    Toast.makeText(getContext(), "Words for Custom Puzzle have been successfully set!", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getContext(), "Words for Custom Puzzle have been successfully set.", Toast.LENGTH_LONG).show();
 
                 } else {
-                    Toast.makeText(getContext(), "Please fill in all entry boxes", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), "Please fill in all entry boxes!", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -178,11 +181,12 @@ public class ChooseCustomWordsFragment extends Fragment{
 
     //Remove certain amount of EditText
     private void removeEditTexts(View root, int numberToRemove) {
-        Log.d("MYTEST", "Number to remove: " + numberToRemove);
-
+        Log.d(CC_WORDS_DEBUG_KEY, "Number to of EditTexts to remove: " + numberToRemove);
 
         LinearLayout entryBoxHolder1 = root.findViewById(R.id.boardLanguageEntries);
-        Log.d("MYTEST", "entryBoxHolder1.getChildCounter(): " + entryBoxHolder1.getChildCount());
+
+        //Double check number of view children in the holder of EditTexts
+        Log.d(CC_WORDS_DEBUG_KEY, "Value of entryBoxHolder1.getChildCounter(): " + entryBoxHolder1.getChildCount());
 
         for (int i = 0; i < numberToRemove; i++) {
             entryBoxHolder1.removeViewAt(entryBoxHolder1.getChildCount() - 1);
@@ -190,7 +194,7 @@ public class ChooseCustomWordsFragment extends Fragment{
         }
 
         LinearLayout entryBoxHolder2 = root.findViewById(R.id.buttonLanguageEntries);
-        Log.d("MYTEST", "entryBoxHolder2.getChildCounter(): " + entryBoxHolder2.getChildCount());
+        Log.d(CC_WORDS_DEBUG_KEY, "Value of entryBoxHolder2.getChildCounter(): " + entryBoxHolder2.getChildCount());
 
         for (int i = 0; i < numberToRemove; i++) {
             entryBoxHolder2.removeViewAt(entryBoxHolder2.getChildCount() - 1);
@@ -282,7 +286,7 @@ public class ChooseCustomWordsFragment extends Fragment{
             EditText someEntryBox = new EditText(entryBoxHolder2.getContext());
             someEntryBox.setText(prefilledButtonLanguageWords.get(i));
 
-            Log.d("MYTEST", "Initializing Entry box as: " + prefilledButtonLanguageWords.get(i));
+            Log.d(CC_WORDS_DEBUG_KEY, "Initializing Entry box as: " + prefilledButtonLanguageWords.get(i));
 
 
             someEntryBox.setEms(6);
@@ -297,8 +301,8 @@ public class ChooseCustomWordsFragment extends Fragment{
     @Override
     public void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
-        Log.d("MYTEST", "onSaveInstanceState called");
-        Log.d("MYTEST", "CurrentSize at the moment: " + currentSize);
+        Log.d(CC_WORDS_DEBUG_KEY, "onSaveInstanceState called");
+        Log.d(CC_WORDS_DEBUG_KEY, "CurrentSize at the moment: " + currentSize);
         outState.putInt(KEY_SAVE_CURRENTSIZE, this.currentSize);
 //        savePrefilledEditTexts(root, idButtonLanguageWords);
         outState.putStringArrayList(KEY_SAVE_BUTTON, savePrefilledEditTexts(root, idButtonLanguageWords));
@@ -309,6 +313,7 @@ public class ChooseCustomWordsFragment extends Fragment{
 
     }
 
+    //Helper method to save any filled EditTexts
     public ArrayList<String> savePrefilledEditTexts(View root, List<Integer> idLanguageWords) {
         ArrayList<String> savedWordsButton = new ArrayList<>();
         for (int i = 0; i < currentSize; i++) {

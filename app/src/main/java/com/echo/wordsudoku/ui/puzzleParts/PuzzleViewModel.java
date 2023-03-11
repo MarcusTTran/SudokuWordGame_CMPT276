@@ -21,6 +21,14 @@ public class PuzzleViewModel extends ViewModel {
         return puzzle.getWordPairs();
     }
 
+    public void setCustomWordPair(List<WordPair> customWordPair) {
+        this.CustomWordPair = customWordPair;
+    }
+
+    public List<WordPair> getCustomWordPair() {
+        return CustomWordPair;
+    }
+
     public Puzzle getPuzzle() {
         return puzzle;
     }
