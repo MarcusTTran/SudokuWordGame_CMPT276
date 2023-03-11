@@ -6,7 +6,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -49,7 +48,7 @@ public class PuzzleBoardFragment extends Fragment {
         mSudokuBoard.insertWord(word);
     }
 
-    public void initBoardWithPuzzleModel() {
+    public void updateBoardWithPuzzleModel() {
         PuzzleDimensions puzzleDimensions = mPuzzleViewModel.getPuzzle().getPuzzleDimension();
         mSudokuBoard.setNewPuzzleDimensions(puzzleDimensions.getPuzzleDimension(), puzzleDimensions.getEachBoxDimension().getRows(), puzzleDimensions.getEachBoxDimension().getColumns());
         mSudokuBoard.setBoard(mPuzzleViewModel.getPuzzle().toStringArray());

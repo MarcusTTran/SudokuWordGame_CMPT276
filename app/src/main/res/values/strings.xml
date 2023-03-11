@@ -1,10 +1,16 @@
 <resources>
+
+    <!-- Main menu options -->
     <string name="app_name">Word Sudoku</string>
     <string name="menu_new_game_btn">New Game</string>
     <string name="menu_load_game_btn">Load Saved Game</string>
     <string name="menu_exit_btn">Exit</string>
     <string name="menu_main_menu_btn">Main Menu</string>
-    <string name="fail_msg">You Failed!</string>
+
+    <!-- Result messages -->
+    <string name="msg_fail">You Failed!</string>
+    <string name="msg_win">You won!</string>
+    <string name="retry_puzzle_btn">Retry Puzzle</string>
 
     <!-- Options Menu -->
     <string name="menu_finish">Done</string>
@@ -31,24 +37,6 @@ If you encounter any difficulty translating the words featured in your puzzle, y
     <string name="destination_choose_custom_words">Choose Custom Words</string>
     <string name="destination_settings">Settings</string>
     <string name="destination_choose_puzzle_mode">Choose Puzzle Mode</string>
-
-
-    <!-- Preference Titles -->
-    <string name="messages_header">Messages</string>
-    <string name="sync_header">Sync</string>
-
-    <!-- Messages Preferences -->
-    <string name="signature_title">Your signature</string>
-    <string name="reply_title">Default reply action</string>
-
-    <!-- Sync Preferences -->
-    <string name="sync_title">Sync email periodically</string>
-    <string name="attachment_title">Download incoming attachments</string>
-    <string name="attachment_summary_on">Automatically download attachments for incoming emails
-    </string>
-    <string name="attachment_summary_off">Only download attachments when manually requested</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
 
     <string name="save_game_error">Failed to save the game</string>
     <string name="load_game_error">Failed to load the game</string>

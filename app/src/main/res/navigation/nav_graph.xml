@@ -43,7 +43,7 @@
         <action
             android:id="@+id/submitPuzzleAction"
             app:destination="@id/puzzleResultFragment"
-            app:popUpTo="@id/mainMenuFragment" />
+            app:popUpTo="@id/mainMenuFragment"/>
         <action
             android:id="@+id/quitPuzzleToMainMenuAction"
             app:destination="@id/mainMenuFragment"
@@ -61,6 +61,10 @@
             android:name="puzzleSize"
             app:argType="integer"
             android:defaultValue="9" />
+        <argument
+            android:name="isRetry"
+            app:argType="boolean"
+            android:defaultValue="false"/>
         </fragment>
         <fragment
             android:id="@+id/puzzleResultFragment"
@@ -73,9 +77,9 @@
                 app:popUpTo="@id/mainMenuFragment"
                 app:popUpToInclusive="true"/>
             <action
-                android:id="@+id/NewGameAfterPuzzleAction"
+                android:id="@+id/retryPuzzleAction"
                 app:destination="@id/puzzleFragment"
-                app:popUpTo="@id/mainMenuFragment"/>
+                app:popUpTo="@id/mainMenuFragment" />
             <argument
                 android:name="isWin"
                 android:defaultValue="false"

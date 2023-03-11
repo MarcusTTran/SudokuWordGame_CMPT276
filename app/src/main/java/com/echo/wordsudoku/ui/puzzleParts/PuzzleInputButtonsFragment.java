@@ -1,8 +1,6 @@
 package com.echo.wordsudoku.ui.puzzleParts;
 
 import android.os.Bundle;
-import android.util.AttributeSet;
-import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -44,7 +42,7 @@ public class PuzzleInputButtonsFragment extends Fragment {
 //            initializeButtons(buttons, mPuzzleViewModel.getWordPairs(), BoardLanguage.getOtherLanguage(mPuzzleViewModel.getPuzzle().getValue().getLanguage()));
     }
 
-    public void initButtonsFromPuzzleModel() {
+    public void updateButtonsFromPuzzleModel() {
         PuzzleDimensions puzzleDimension = mPuzzleViewModel.getPuzzle().getPuzzleDimension();
         Button[] buttons = new Button[puzzleDimension.getPuzzleDimension()];
         int rows_of_button = Math.max(puzzleDimension.getEachBoxDimension().getRows(), puzzleDimension.getEachBoxDimension().getColumns());

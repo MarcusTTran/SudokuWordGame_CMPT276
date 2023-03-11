@@ -1,7 +1,6 @@
 package com.echo.wordsudoku.ui.destinations;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -11,13 +10,11 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 
 import com.echo.wordsudoku.R;
-import com.echo.wordsudoku.models.BoardLanguage;
 import com.echo.wordsudoku.models.Memory.JsonReader;
 import com.echo.wordsudoku.models.Memory.JsonWriter;
 import com.echo.wordsudoku.models.dimension.Dimension;
@@ -32,7 +29,6 @@ import com.echo.wordsudoku.ui.dialogs.RulesFragment;
 
 import org.json.JSONException;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.List;
 
@@ -76,14 +72,27 @@ public class PuzzleFragment extends Fragment{
     @Override
     public void onStart() {
         super.onStart();
-        boolean isNewGame = PuzzleFragmentArgs.fromBundle(getArguments()).getIsNewGame();
-        puzzleDimension = PuzzleFragmentArgs.fromBundle(getArguments()).getPuzzleSize();
-        numberOfInitialWords = puzzleDimension*puzzleDimension - puzzleDimension;
-        if (isNewGame) {
-            newGame();
+        boolean isRetry = PuzzleFragmentArgs.fromBundle(getArguments()).getIsRetry();
+        if (isRetry) {
+            retryGame();
         } else {
-            loadGame();
+            boolean isNewGame = PuzzleFragmentArgs.fromBundle(getArguments()).getIsNewGame();
+            puzzleDimension = PuzzleFragmentArgs.fromBundle(getArguments()).getPuzzleSize();
+            numberOfInitialWords = puzzleDimension * puzzleDimension - puzzleDimension;
+            if (isNewGame) {
+                newGame();
+            } else {
+                loadGame();
+            }
         }
+    }
+
+    private void retryGame() {
+        mPuzzleViewModel.getPuzzle().resetPuzzle();
+        PuzzleBoardFragment puzzleViewFragment = (PuzzleBoardFragment) getChildFragmentManager().findFragmentById(R.id.board);
+        PuzzleInputButtonsFragment puzzleInputButtonsFragment = (PuzzleInputButtonsFragment) getChildFragmentManager().findFragmentById(R.id.puzzle_input_buttons);
+        puzzleViewFragment.updateBoardWithPuzzleModel();
+        puzzleInputButtonsFragment.updateButtonsFromPuzzleModel();
     }
 
     private void loadGame() {
@@ -100,8 +109,8 @@ public class PuzzleFragment extends Fragment{
                     requireActivity().runOnUiThread(() -> {
                         PuzzleBoardFragment puzzleFragment = (PuzzleBoardFragment) getChildFragmentManager().findFragmentById(R.id.board);
                         PuzzleInputButtonsFragment puzzleInputButtonsFragment = (PuzzleInputButtonsFragment) getChildFragmentManager().findFragmentById(R.id.puzzle_input_buttons);
-                        puzzleFragment.initBoardWithPuzzleModel();
-                        puzzleInputButtonsFragment.initButtonsFromPuzzleModel();
+                        puzzleFragment.updateBoardWithPuzzleModel();
+                        puzzleInputButtonsFragment.updateButtonsFromPuzzleModel();
                     });
                 }
             } catch (IOException | JSONException e) {
@@ -133,9 +142,9 @@ public class PuzzleFragment extends Fragment{
 
         puzzleViewFragment.setPuzzleViewSize(new PuzzleDimensions(puzzleDimension));
         // Initialize the board with the puzzle model
-        puzzleViewFragment.initBoardWithPuzzleModel();
+        puzzleViewFragment.updateBoardWithPuzzleModel();
         // Initialize the input buttons with the puzzle model
-        puzzleInputButtonsFragment.initButtonsFromPuzzleModel();
+        puzzleInputButtonsFragment.updateButtonsFromPuzzleModel();
 
     }
 
