@@ -45,9 +45,6 @@ public class Puzzle implements Writable {
     // The solution board is the board that contains the solution to the puzzle
     private CellBox2DArray solutionBoard;
 
-    // The initial board copy is the copy of the user board that is used to reset the user board
-    private final CellBox2DArray initialBoardCopy;
-
     // The word pairs are the words that are used to in the puzzle and only they are legal to be entered in the puzzle
     private final List<WordPair> mWordPairs;
 
@@ -99,7 +96,6 @@ public class Puzzle implements Writable {
         // Then we remove a certain number of cells from the solution board and set the user board to the result
         CellBox2DArray userBoard = getTrimmedBoard(numberOfCellsToRemove);
         setUserBoard(userBoard);
-        this.initialBoardCopy = new CellBox2DArray(userBoard);
 
         // We lock the cells that are not empty so the user cannot change them
         lockCells();
@@ -115,7 +111,6 @@ public class Puzzle implements Writable {
         this.puzzleDimension = new PuzzleDimensions(puzzle.getPuzzleDimension());
         this.language = puzzle.getLanguage();
         this.mistakes = puzzle.getMistakes();
-        this.initialBoardCopy = new CellBox2DArray(puzzle.initialBoardCopy);
     }
 
     /* @constructor
@@ -134,7 +129,6 @@ public class Puzzle implements Writable {
         this.puzzleDimension = puzzleDimension;
         this.language = language;
         this.mistakes = mistakes;
-        this.initialBoardCopy = new CellBox2DArray(userBoard);
     }
 
 
@@ -407,11 +401,25 @@ public class Puzzle implements Writable {
     }
 
     public void resetPuzzle() {
-        userBoard = new CellBox2DArray(initialBoardCopy);
+        for (int i = 0; i < userBoard.getRows(); i++) {
+            for (int j = 0; j < userBoard.getColumns(); j++) {
+                if (userBoard.getCellFromBigArray(i,j).isEditable()) {
+                    userBoard.getCellFromBigArray(i,j).clear();
+                }
+            }
+        }
         mistakes = 0;
-        lockCells();
     }
 
+    public boolean[][] getImmutabilityTable() {
+        boolean[][] result = new boolean[userBoard.getRows()][userBoard.getColumns()];
+        for (int i = 0; i < userBoard.getRows(); i++) {
+            for (int j = 0; j < userBoard.getColumns(); j++) {
+                result[i][j] = !userBoard.getCellFromBigArray(i,j).isEditable();
+            }
+        }
+        return result;
+    }
 
     /*
      * @method convert the puzzle object into json and every single field

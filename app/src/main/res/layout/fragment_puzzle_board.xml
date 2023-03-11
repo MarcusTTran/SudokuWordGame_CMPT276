@@ -17,6 +17,7 @@
         custom:cellFillColor="?attr/colorSecondaryVariant"
         custom:cellsHighlightColor="?attr/colorSecondary"
         custom:textColor="?attr/colorOnSecondary"
+        custom:immutableColor="?attr/colorPrimary"
         custom:layout_constraintEnd_toEndOf="parent"
         custom:layout_constraintStart_toStartOf="parent"
         custom:layout_constraintTop_toTopOf="parent"

@@ -69,6 +69,8 @@ public class SudokuBoard extends View {
     // TODO: This will be used to display the letters in the cells that are not empty
     private final int mTextColor;
 
+    private final int mImmutableTextColor;
+
     // The Paint objects that will be used to draw the board
     // In the onDraw method, we will use these objects to draw the board
     // and there we set the color of the paint objects
@@ -77,6 +79,7 @@ public class SudokuBoard extends View {
     private final Paint mCellFillColorPaint = new Paint();
     private final Paint mCellsHighlightColorPaint = new Paint();
     private final Paint mLetterColorPaint = new Paint();
+    private final Paint mImmutableLetterColorPaint = new Paint();
 
 
     // This is a utility object that will be used to draw the letters in the cells
@@ -99,6 +102,7 @@ public class SudokuBoard extends View {
     // It will be used to store the letters in the cells
     // TODO: Link this to the model Board
     private String[][] board;
+    private boolean[][] immutable;
 
 
     // This is the constructor that is called when the view is created in the XML layout
@@ -130,6 +134,7 @@ public class SudokuBoard extends View {
             mCellFillColor = a.getInteger(R.styleable.SudokuBoard_cellFillColor, 0);
             mCellsHighlightColor = a.getInteger(R.styleable.SudokuBoard_cellsHighlightColor, 0);
             mTextColor = a.getInteger(R.styleable.SudokuBoard_textColor, 0);
+            mImmutableTextColor = a.getInteger(R.styleable.SudokuBoard_immutableColor, 0);
             mCellVerticalPadding = a.getInteger(R.styleable.SudokuBoard_cellVerticalPadding, DEFAULT_CELL_VERTICAL_PADDING);
             mCellHorizontalPadding = a.getInteger(R.styleable.SudokuBoard_cellHorizontalPadding, DEFAULT_CELL_HORIZONTAL_PADDING);
             mCellMaxFontSize = a.getInteger(R.styleable.SudokuBoard_cellMaxFontSize, DEFAULT_CELL_MAX_FONT_SIZE);
@@ -137,6 +142,7 @@ public class SudokuBoard extends View {
             a.recycle();
         }
         board = new String[mBoardSize][mBoardSize];
+        immutable = new boolean[mBoardSize][mBoardSize];
     }
 
     // With this method we can set the board size and the box size to different values
@@ -150,6 +156,7 @@ public class SudokuBoard extends View {
         this.mBoxWidth = boxWidth;
         this.cellSize = this.size / mBoardSize;
         this.board = new String[mBoardSize][mBoardSize];
+        this.immutable = new boolean[mBoardSize][mBoardSize];
         this.currentCellColumn = this.currentCellRow = -1;
     }
 
@@ -160,7 +167,6 @@ public class SudokuBoard extends View {
         if (mTouchHelper.dispatchHoverEvent(event)) {
             return true;
         }
-
         return super.dispatchHoverEvent(event);
     }
 
@@ -351,7 +357,7 @@ public class SudokuBoard extends View {
     private void drawWord(Canvas canvas) {
         //Set the color of the letters
         mLetterColorPaint.setColor(mTextColor);
-
+        mImmutableLetterColorPaint.setColor(mImmutableTextColor);
 
         final int desiredHeightForEachWord = cellSize-mCellVerticalPadding;
         final int desiredWidthForEachWord = cellSize-mCellHorizontalPadding;
@@ -361,6 +367,15 @@ public class SudokuBoard extends View {
                 if (board[r][c] != null){
                     String word = board[r][c];
                     float width, height;
+                    if (immutable[r][c]) {
+                        setTextSize(mImmutableLetterColorPaint, desiredHeightForEachWord, desiredWidthForEachWord, word,maximumLetterFontSize);
+                        // We need to get the bounds of the word to center it
+                        mImmutableLetterColorPaint.getTextBounds(word, 0, word.length(), letterPaintBounds);
+                        width = mImmutableLetterColorPaint.measureText(word);
+                        height = letterPaintBounds.height();
+                        canvas.drawText(word,(c*cellSize)+((cellSize-width))/2,(r*cellSize+cellSize)-((cellSize-height)/2),mImmutableLetterColorPaint);
+                        continue;
+                    }
                     setTextSize(mLetterColorPaint, desiredHeightForEachWord, desiredWidthForEachWord, word,maximumLetterFontSize);
                     // We need to get the bounds of the word to center it
                     mLetterColorPaint.getTextBounds(word, 0, word.length(), letterPaintBounds);
@@ -411,7 +426,20 @@ public class SudokuBoard extends View {
         }
         for (int r=0; r<mBoardSize; r++) {
             for (int c=0; c<mBoardSize; c++) {
+                if (board[r][c] != "")
+                    immutable[r][c] = true;
                 this.board[r][c] = board[r][c];
+            }
+        }
+    }
+
+    public void setImmutability(boolean[][] immutability) {
+        if (immutability.length != mBoardSize || immutability[0].length != mBoardSize) {
+            throw new IllegalArgumentException("Immutable size must be " + mBoardSize + "x" + mBoardSize);
+        }
+        for (int r=0; r<mBoardSize; r++) {
+            for (int c=0; c<mBoardSize; c++) {
+                immutable[r][c] = immutability[r][c];
             }
         }
     }
@@ -426,6 +454,7 @@ public class SudokuBoard extends View {
     public boolean insertWord(String str) {
         if (currentCellRow != -1 && currentCellColumn != -1) {
             board[currentCellRow-1][currentCellColumn-1] = str;
+            invalidate();
             return true;
         }
         else {

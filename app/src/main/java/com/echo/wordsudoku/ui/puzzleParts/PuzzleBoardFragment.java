@@ -44,6 +44,10 @@ public class PuzzleBoardFragment extends Fragment {
         mSudokuBoard.setNewPuzzleDimensions(puzzleDimensions.getPuzzleDimension(), puzzleDimensions.getEachBoxDimension().getRows(), puzzleDimensions.getEachBoxDimension().getColumns());
     }
 
+    private void setPuzzleViewImmutability() {
+        mSudokuBoard.setImmutability(mPuzzleViewModel.getPuzzle().getImmutabilityTable());
+    }
+
     public void insertWordInBoardView(String word) {
         mSudokuBoard.insertWord(word);
     }
@@ -52,6 +56,7 @@ public class PuzzleBoardFragment extends Fragment {
         PuzzleDimensions puzzleDimensions = mPuzzleViewModel.getPuzzle().getPuzzleDimension();
         mSudokuBoard.setNewPuzzleDimensions(puzzleDimensions.getPuzzleDimension(), puzzleDimensions.getEachBoxDimension().getRows(), puzzleDimensions.getEachBoxDimension().getColumns());
         mSudokuBoard.setBoard(mPuzzleViewModel.getPuzzle().toStringArray());
+        setPuzzleViewImmutability();
     }
 
     public Dimension getSelectedCell() {
