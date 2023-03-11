@@ -30,46 +30,71 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/entryBoxesHolder"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="300dp"
+        android:layout_height="300dp"
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/puzzleSizeCustomDropdown">
 
-        <LinearLayout
-            android:id="@+id/boardLanguageEntries"
+        <ScrollView
+            android:id="@+id/horizontalScrollView2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_centerHorizontal="true"
+            android:fadeScrollbars="false"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintTop_toBottomOf="@+id/boardLanguageCustomHeader">
 
-            <TextView
-                android:id="@+id/boardLanguageCustomHeader"
-                android:layout_width="match_parent"
+            <LinearLayout
+                android:id="@+id/boardLanguageEntries"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/board_language_custom_words" />
-        </LinearLayout>
+                android:orientation="vertical"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
 
-        <LinearLayout
-            android:id="@+id/buttonLanguageEntries"
+            </LinearLayout>
+        </ScrollView>
+
+        <TextView
+            android:id="@+id/boardLanguageCustomHeader"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/board_language_custom_words"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ScrollView
+            android:id="@+id/horizontalScrollView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="70dp"
-            android:orientation="vertical"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/boardLanguageEntries"
+            android:fadeScrollbars="false"
+            app:layout_constraintEnd_toStartOf="@+id/horizontalScrollView2"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintTop_toBottomOf="@+id/buttonLanguageCustomHeader">
 
-            <TextView
-                android:id="@+id/buttonLanguageCustomHeader"
-                android:layout_width="match_parent"
+            <LinearLayout
+                android:id="@+id/buttonLanguageEntries"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/button_language_custom_words" />
-        </LinearLayout>
+                android:orientation="vertical">
+
+            </LinearLayout>
+        </ScrollView>
+
+        <TextView
+            android:id="@+id/buttonLanguageCustomHeader"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="70dp"
+            android:text="@string/button_language_custom_words"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/boardLanguageCustomHeader"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -78,8 +103,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Confirm"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/entryBoxesHolder"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/entryBoxesHolder" />
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
