@@ -4,6 +4,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/board_input_buttons"
     android:orientation="vertical"
+    android:theme="@style/Theme.WordSudoku"
     >
 
 </LinearLayout>
