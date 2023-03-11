@@ -69,20 +69,16 @@ public class SettingsFragment extends PreferenceFragmentCompat {
             @Override
             public boolean onPreferenceChange(Preference preference, Object uiImmersion) {
                 boolean changeLanguage = (boolean) uiImmersion;
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-                        if (currentLocale.equals(english)) {
-                            if (changeLanguage) {
-                                Toast.makeText(getContext(), getString(R.string.msg_language_french), Toast.LENGTH_SHORT).show();
-                                AppCompatDelegate.setApplicationLocales(french);
-                            }
-                        }
-                        else {
-                            if (changeLanguage) {
-                                Toast.makeText(getContext(), getString(R.string.msg_language_english), Toast.LENGTH_SHORT).show();
-                                AppCompatDelegate.setApplicationLocales(english);
-                            }
-                        }
+                if (currentLocale.equals(english)) {
+                    if (changeLanguage) {
+                        Toast.makeText(getContext(), getString(R.string.msg_language_french), Toast.LENGTH_SHORT).show();
+                        AppCompatDelegate.setApplicationLocales(french);
+                    }
+                }
+                else {
+                    if (changeLanguage) {
+                        Toast.makeText(getContext(), getString(R.string.msg_language_english), Toast.LENGTH_SHORT).show();
+                        AppCompatDelegate.setApplicationLocales(english);
                     }
                 }
                 return true;
