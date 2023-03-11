@@ -10,7 +10,8 @@
     <Button
         android:id="@+id/exit_button"
         android:layout_width="202dp"
-        android:layout_height="64dp"
+        android:layout_height="84dp"
+        android:layout_margin="10dp"
         android:text="@string/menu_exit_btn"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -20,7 +21,8 @@
     <Button
         android:id="@+id/load_game_button"
         android:layout_width="202dp"
-        android:layout_height="64dp"
+        android:layout_height="84dp"
+        android:layout_margin="10dp"
         android:text="@string/menu_load_game_btn"
         app:layout_constraintBottom_toTopOf="@+id/change_language_button"
         app:layout_constraintEnd_toEndOf="parent"
@@ -30,7 +32,8 @@
     <Button
         android:id="@+id/change_language_button"
         android:layout_width="202dp"
-        android:layout_height="64dp"
+        android:layout_height="84dp"
+        android:layout_margin="10dp"
         app:layout_constraintBottom_toTopOf="@+id/exit_button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -39,7 +42,8 @@
     <Button
         android:id="@+id/new_game_button"
         android:layout_width="202dp"
-        android:layout_height="64dp"
+        android:layout_height="84dp"
+        android:layout_margin="10dp"
         android:text="@string/menu_new_game_btn"
         app:layout_constraintBottom_toTopOf="@+id/load_game_button"
         app:layout_constraintEnd_toEndOf="parent"

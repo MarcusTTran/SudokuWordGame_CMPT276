@@ -4,9 +4,11 @@
     <item android:id="@+id/mainMenuFragment"
         android:icon="@drawable/icon_home"
         android:title="@string/menu_main_menu_btn"/>
+
     <item android:id="@+id/settingsFragment"
         android:icon="@android:drawable/ic_menu_manage"
         android:title="@string/destination_settings"/>
+
     <item android:id="@+id/chooseCustomWordsFragment"
         android:icon="@drawable/icon_custom"
         android:title="@string/destination_choose_custom_words"/>

@@ -6,10 +6,41 @@ import androidx.lifecycle.ViewModel;
 
 public class SettingsViewModel extends ViewModel {
     private final MutableLiveData<Integer> mPuzzleLanguage = new MutableLiveData<>();
+    private boolean timer;
+    private int difficulty;
+
+
+
     public LiveData<Integer> getPuzzleLanguage() {
         return mPuzzleLanguage;
     }
     public void setPuzzleLanguage(int language) {
         mPuzzleLanguage.setValue(language);
     }
+
+    public void setDifficulty(int difficulty) {
+        this.difficulty = difficulty;
+    }
+
+    public int getDifficulty() {
+        return difficulty;
+    }
+
+    public void setTimer(boolean timer) {
+        this.timer = timer;
+    }
+
+    public boolean isTimer() {
+        return timer;
+    }
+
+    @Override
+    public void onCleared() {
+//        Log.d("MYTEST", "ViewModel has been destroyed");
+    }
+
+    public SettingsViewModel() {
+//        Log.d("MYTEST", "ViewModel has been created");
+    }
+
 }

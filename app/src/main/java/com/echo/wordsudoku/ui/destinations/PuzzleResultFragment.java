@@ -10,11 +10,11 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
 import com.echo.wordsudoku.R;
 import com.echo.wordsudoku.models.sudoku.GameResult;
+import com.echo.wordsudoku.ui.destinations.PuzzleResultFragmentDirections.RetryPuzzleAction;
 
 public class PuzzleResultFragment extends Fragment {
 
@@ -27,7 +27,7 @@ public class PuzzleResultFragment extends Fragment {
                              ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_puzzle_result, container, false);
         Button mainMenuButton = root.findViewById(R.id.main_menu_button);
-        Button newGameButton = root.findViewById(R.id.result_new_game_button);
+        Button retryPuzzleButton = root.findViewById(R.id.result_retry_puzzle_button);
         mainMenuButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -35,10 +35,12 @@ public class PuzzleResultFragment extends Fragment {
             }
         });
 
-        newGameButton.setOnClickListener(new View.OnClickListener() {
+        retryPuzzleButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Navigation.findNavController(v).navigate(R.id.NewGameAfterPuzzleAction);
+                RetryPuzzleAction action = PuzzleResultFragmentDirections.retryPuzzleAction();
+                action.setIsRetry(true);
+                Navigation.findNavController(v).navigate(action);
             }
         });
 
@@ -52,14 +54,14 @@ public class PuzzleResultFragment extends Fragment {
         mGameResult = new GameResult(PuzzleResultFragmentArgs.fromBundle(getArguments()).getIsWin(), PuzzleResultFragmentArgs.fromBundle(getArguments()).getMistakes());
 
         if(mGameResult.getResult() == true) {
-            message = "You won!";
+            message = getString(R.string.msg_win);
             imageResource = R.drawable.success;
         }
         else {
             if (mGameResult.getMistakes() == 1)
-                message = "You lost! You made " + mGameResult.getMistakes() + " mistake.";
+                message = getString(R.string.msg_fail) + mGameResult.getMistakes() + getString(R.string.word_mistake_singular);
             else
-                message = "You lost! You made " + mGameResult.getMistakes() + " mistakes.";
+                message = getString(R.string.msg_fail) + mGameResult.getMistakes() + getString(R.string.word_mistake_plural);
             imageResource = R.drawable.fail;
         }
 

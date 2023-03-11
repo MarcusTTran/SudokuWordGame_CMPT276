@@ -1,0 +1,107 @@
+<resources>
+
+    <!-- Main menu options -->
+    <string name="app_name">Mot Sudoku</string>
+    <string name="menu_new_game_btn">Nouveau Jeu</string>
+    <string name="menu_load_game_btn">Charger le Jeu Précédent</string>
+    <string name="menu_exit_btn">Quitter</string>
+    <string name="menu_main_menu_btn">Menu Principal</string>
+
+    <!-- Result messages -->
+    <!-- translate to french -->
+    <string name="msg_fail">Vous avez perdu! Vous avez fait </string>
+    <string name="word_mistake_singular">erreur</string>
+    <string name="word_mistake_plural">erreurs</string>
+    <string name="msg_win">Vous avez gagné!</string>
+    <string name="retry_puzzle_btn">Réessayer</string>
+
+    <!-- Options Menu -->
+    <string name="done_btn">Finir</string>
+    <string name="game_rules_btn">Règles</string>
+    <string name="puzzle_dictionary_btn">Dictionnaire</string>
+    <string name="save_puzzle_btn">Sauvegarder</string>
+    <string name="reset_puzzle_btn">Remettre</string>
+
+    <string name="preference_file_key">com.echo.wordsudoku.gameOptions</string>
+    <string name="puzzle_language_key">com.echo.wordsudoku.puzzleLanguageKey</string>
+    <string name="puzzle_difficulty_preference_key">com.echo.wordsudoku.puzzleDifficultyKey</string>
+    <string name="puzzle_timer_preference_key">com.echo.wordsudoku.puzzleTimerKey</string>
+    <string name="puzzle_uiImmersion_preference_key">com.echo.wordsudoku.puzzleTimerKey</string>
+
+
+    <string name="RulesHeader">Les Règles de Mot Sudoku</string>
+    <string name="RulesText">Quand vous commencez un nouveau jeu de Mot Sudoku, vouz serez présenté avec une quadrillage carrée composée d\'un certain nombre des cellules.
+Pour chaque rangée, colonne, et sous-carré délimité, il ne doit y avoir aucun mot répétitif.
+\n<b>Hint:</b>
+Si vous rencontrez des difficultés pour traduire les mots dans votre casse-tête, vous pouvez appuyer sur le bouton du dictionnaire pour voir un tableau avec la traduction de
+tous vos mots en vedette. Mais rappelez-vous, vous ne pouvez accéder à cette table de traduction que deux fois par jeu!
+</string>
+    <string name="DictionaryHeader">Le Dictionnaire</string>
+    <string name="DictionaryLimit">Désolé. Vous avez atteint le nombre maximum de lectures du dictionnaire pour ce casse-tête.</string>
+    <string name="peeks_Remaining">Coups d\'Oeil Restants</string>
+
+
+    <!-- Destination Titles -->
+    <string name="destination_main_menu">Menu Principal</string>
+    <string name="destination_puzzle">Casse-Tête</string>
+    <string name="destination_puzzle_result">Les Résultats</string>
+    <string name="destination_choose_custom_words">Choisissez la taille du puzzle avec des mots personnalisés</string>
+    <string name="destination_settings">Paramètres</string>
+    <string name="destination_choose_custom_words_size">Choisissez la Taille du Casse-Tête avec des Mots Personnalisés</string>
+    <string name="destination_choose_puzzle_mode">Choisissez le mode Puzzle</string>
+
+    <!-- change all of the below string resources to french -->
+
+    <!-- Messages Preferences -->
+    <string name="difficulty_title">difficulté du puzzle</string>
+
+
+    <!-- UI Immersion Preferences -->
+    <string name="ui_immersion_title">Définir l’immersion</string>
+    <string name="french_immersion_on">Immersion en anglais désactivée</string>
+    <string name="french_immersion_off">Immersion en anglais sur</string>
+    <string name="ui_immersion_header">Immersion en anglais</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <!-- Timer Preferences -->
+    <string name="set_timer_off">La minuterie est désactivée</string>
+    <string name="set_timer_on">La minuterie est activée</string>
+    <string name="timer_title">Puzzles temporels</string>
+    <string name="timer_header">Minuterie de puzzle</string>
+
+    <!-- Difficulty Preferences -->
+    <string name="difficulty_header">Difficulté du puzzle</string>
+
+
+    <string name="save_game_error">Echec de l’enregistrement du jeu</string>
+    <string name="load_game_error">Impossible de charger le jeu</string>
+    <string name="word_entry_successful">Word entré avec succès!</string>
+    <string name="error_no_cell_selected">Aucune cellule sélectionnée</string>
+    <string name="error_insert_in_initial_cell">Vous ne pouvez pas écrire dans le puzzle les cellules initiales</string>
+    <string name="error_not_filled_puzzle">Vous n’avez pas rempli le puzzle!</string>
+
+
+    <!-- Choose mode -->
+    <string name="choose_mode_title">Choisissez le mode</string>
+    <string name="classic_puzzle">Puzzle classique</string>
+    <string name="custom_size_puzzle">Taille personnalisée</string>
+    <string name="custom_words_puzzle">Mots personnalisés</string>
+
+
+    <!-- Choose size dialogue -->
+    <string name = "choose_size_title">Choisissez la taille</string>
+    <string name = "option_4x4"> 4 x 4 </string>
+    <string name = "option_6x6"> 6 x 6 </string>
+    <string name = "option_9x9"> 9 x 9 </string>
+    <string name = "option_12x12">12x12</string>
+    <string name = "done_button">Faite</string>
+    <string name="cancel_button">Annuler</string>
+
+
+    <!-- Change Language Immersion -->
+    <string name="msg_language_french">Restart required. Language changed to French</string>
+    <string name="msg_language_english">Redémarrage requis. Langue changée en anglais</string>
+
+
+
+</resources>

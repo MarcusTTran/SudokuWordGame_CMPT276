@@ -43,6 +43,15 @@ public class PuzzleTopMenuBarFragment extends Fragment {
                 puzzleFragment.dictionaryButtonPressed();
             }
         });
+
+        Button restartButton = view.findViewById(R.id.options_reset_puzzle_button);
+        restartButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                PuzzleFragment puzzleFragment = (PuzzleFragment) getParentFragment();
+                puzzleFragment.resetGame();
+            }
+        });
         return view;
     }
 

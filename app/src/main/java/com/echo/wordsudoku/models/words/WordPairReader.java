@@ -99,7 +99,7 @@ public class WordPairReader {
         // gets all the words from the json file
         JSONArray allWords = mJSONObject.getJSONArray("words");
         // creates a new list of WordPair objects
-        mWordPairs = new ArrayList<WordPair>();
+        mWordPairs = new ArrayList<>();
         // generates a random list of indexes between 0 (inclusive) and the length of the allWords array (exclusive)
         List<Integer> randomWordPairIndexes = generateRandomArray(numberOfWords, allWords.length()-1, 0);
         // for each index in the randomWordPairIndexes list

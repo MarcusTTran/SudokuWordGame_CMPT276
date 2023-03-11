@@ -36,6 +36,11 @@ public class Dimension implements Writable {
     // or the number of columns of the 2D array of cells.
     private int columns;
 
+    public Dimension(Dimension dimension) {
+        this.rows = dimension.getRows();
+        this.columns = dimension.getColumns();
+    }
+
     /*
      * @constructor
      * Constructs a Dimension object with the given number of rows and columns (or x,y).

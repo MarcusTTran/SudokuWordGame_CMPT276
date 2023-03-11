@@ -1,6 +1,8 @@
 package com.echo.wordsudoku.ui;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
+import androidx.core.os.LocaleListCompat;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.lifecycle.ViewModelProvider;
@@ -10,34 +12,45 @@ import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
+import android.app.LocaleManager;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.LocaleList;
+import android.util.Log;
+import android.widget.Toast;
 
 import com.echo.wordsudoku.R;
 import com.echo.wordsudoku.models.BoardLanguage;
+import com.echo.wordsudoku.models.Memory.JsonWriter;
+import com.echo.wordsudoku.models.sudoku.Puzzle;
 import com.echo.wordsudoku.models.words.WordPairReader;
 import com.echo.wordsudoku.ui.puzzleParts.PuzzleViewModel;
 import com.google.android.material.navigation.NavigationView;
 
+import org.json.JSONException;
+
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
 
-    private static final String TAG = "MainActivity";
+    private static final String TAG = "Puzzle.MainActivity";
 
-    private InputStream jsonFile;
-
-
+    private final String wordPairJsonFile = "words.json";
     private PuzzleViewModel mPuzzleViewModel;
 
     // This is used for accessing the shared preferences associated with this app
     private SharedPreferences mPreferences;
 
-    private SettingsViewModel mSettingsViewModel;
+    public SettingsViewModel mSettingsViewModel;
 
     private int mSettingsPuzzleLanguage;
+//    private int mSettingsPuzzleDifficulty;
+//    private boolean mSettingsPuzzleTimer;
+
 
     private AppBarConfiguration appBarConfiguration;
 
@@ -45,6 +58,20 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        // This is used to detect all the problems in the app with StrictMode.
+        // It is commented out because it is only used for debugging purposes.
+
+        /*
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+            StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder()
+                    .detectAll()
+                    .build());
+            StrictMode.setVmPolicy(new StrictMode.VmPolicy.Builder()
+                    .detectAll()
+                    .build());
+        }
+        */
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
@@ -52,17 +79,29 @@ public class MainActivity extends AppCompatActivity {
         mSettingsViewModel = new ViewModelProvider(this).get(SettingsViewModel.class);
         mPreferences = getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE);
 
-        try {
-            jsonFile = getAssets().open("words.json");
-            mPuzzleViewModel.setWordPairReader(new WordPairReader(jsonFile));
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        new Thread(() -> {
+            try {
+                InputStream jsonFile = getAssets().open(wordPairJsonFile);
+                mPuzzleViewModel.setWordPairReader(new WordPairReader(jsonFile));
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }).start();
+
+        mPuzzleViewModel = new ViewModelProvider(this).get(PuzzleViewModel.class);
+        mSettingsViewModel = new ViewModelProvider(this).get(SettingsViewModel.class);
+        mPreferences = getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE);
+
+        // This is used to load the settings from the shared preferences and update the settings view model and load the program according to these settings
+        loadSettings();
 
         // Setting up the game settings saved in the shared preferences
         // Get the puzzle language from the shared preferences
         mSettingsPuzzleLanguage = mPreferences.getInt(getString(R.string.puzzle_language_key), BoardLanguage.ENGLISH);
         mSettingsViewModel.setPuzzleLanguage(mSettingsPuzzleLanguage);
+
+
+
 
         NavHostFragment navHostFragment =
                 (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment);
@@ -86,16 +125,63 @@ public class MainActivity extends AppCompatActivity {
                 || super.onSupportNavigateUp();
     }
 
+    private void loadSettings() {
+        // TODO: Load all of the game settings so when the user opens the app again, the settings are the same
+        // Load the settings from the shared preferences
+        int difficulty = mPreferences.getInt(getString(R.string.puzzle_difficulty_preference_key), 1);
+        mSettingsViewModel.setDifficulty(difficulty);
+
+        boolean timer = mPreferences.getBoolean(getString(R.string.puzzle_timer_preference_key), false);
+         mSettingsViewModel.setTimer(timer);
+
+        boolean uiImmersion = mPreferences.getBoolean(getString(R.string.puzzle_uiImmersion_preference_key), false);
+//        mSettingsViewModel.setUiImmersion(uiImmersion);
+
+    }
+
+
+    // TODO: Add more settings to be saved
+    private void saveSettings() {
+        // Save all of the game settings so when the user opens the app again, the settings are the same
+        SharedPreferences.Editor editor = mPreferences.edit();
+        mSettingsPuzzleLanguage = mSettingsViewModel.getPuzzleLanguage().getValue();
+
+//        boolean mSettingsPuzzleUiImmersion = mSettingsViewModel.getUiImmersion().getValue();
+        boolean  mSettingsPuzzleTimer = mSettingsViewModel.isTimer();
+        int mSettingsPuzzleDifficulty = mSettingsViewModel.getDifficulty();
+
+        editor.putInt(getString(R.string.puzzle_language_key), mSettingsPuzzleLanguage);
+        editor.putInt(getString(R.string.puzzle_difficulty_preference_key), mSettingsPuzzleDifficulty);
+        editor.putBoolean(getString(R.string.puzzle_timer_preference_key), mSettingsPuzzleTimer);
+//        editor.putBoolean(getString(R.string.puzzle_uiImmersion_preference_key), mSettingsPuzzleUiImmersion);
+    }
+
     @Override
     protected void onStop() {
         super.onStop();
-        // Save the puzzle language to the shared preferences
-        SharedPreferences.Editor editor = mPreferences.edit();
-        mSettingsPuzzleLanguage = mSettingsViewModel.getPuzzleLanguage().getValue();
-        editor.putInt(getString(R.string.puzzle_language_key), mSettingsPuzzleLanguage);
-        editor.apply();
 
+        // Save settings of app before closing
+        saveSettings();
+        // Save the puzzle to the json file before app closes
+        saveGame();
+    }
 
+    public void saveGame(){
+        new Thread(() -> {
+            JsonWriter jsonWriter = new JsonWriter(MainActivity.this);
+            Puzzle puzzle = mPuzzleViewModel.getPuzzle();
+            try {
+                Log.d(TAG, "saveGame: " + puzzle.toJson().toString(4));
+            } catch (JSONException e) {
+                throw new RuntimeException(e);
+            }
+            if(puzzle == null) return;
+            try {
+                jsonWriter.writePuzzle(puzzle);
+            } catch (JSONException | IOException e) {
+                Toast.makeText(MainActivity.this,R.string.save_game_error , Toast.LENGTH_SHORT).show();
+            }
+        }).start();
     }
 
     @Override
@@ -106,5 +192,4 @@ public class MainActivity extends AppCompatActivity {
             super.onBackPressed();
         }
     }
-
 }

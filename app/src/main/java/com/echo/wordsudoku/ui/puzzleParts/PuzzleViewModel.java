@@ -9,45 +9,29 @@ import com.echo.wordsudoku.models.sudoku.Puzzle;
 import com.echo.wordsudoku.models.words.WordPair;
 import com.echo.wordsudoku.models.words.WordPairReader;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class PuzzleViewModel extends ViewModel {
-    private final MutableLiveData<List<WordPair>> boardWordPairs = new MutableLiveData<>();
-    private final MutableLiveData<Integer> boardLanguage = new MutableLiveData<>();
-    private final MutableLiveData<Puzzle> puzzle = new MutableLiveData<>();
-    private final MutableLiveData<WordPairReader> wordPairReader = new MutableLiveData<>();
+    private Puzzle puzzle;
 
-    private final MutableLiveData<List<WordPair>> customWordPairs= new MutableLiveData<>();
+    private List<WordPair> CustomWordPair;
+    private WordPairReader wordPairReader;
 
-    public LiveData<List<WordPair>> getWordPairs() {
-        return boardWordPairs;
-    }
-    public void setWordPairs(List<WordPair> wordPairs) {
-//        this.boardWordPairs.setValue(wordPairs);
-        this.customWordPairs.setValue(wordPairs);
+    public List<WordPair> getWordPairs() {
+        return puzzle.getWordPairs();
     }
 
-    public LiveData<Integer> getBoardLanguage() {
-        return boardLanguage;
-    }
-    public void setBoardLanguage(int language) {
-        if (BoardLanguage.isValidLanguage(language))
-            this.boardLanguage.setValue(language);
-        else throw new IllegalArgumentException("Invalid language");
-    }
-
-    public LiveData<Puzzle> getPuzzle() {
+    public Puzzle getPuzzle() {
         return puzzle;
     }
     public void setPuzzle(Puzzle puzzle) {
-        this.puzzle.setValue(puzzle);
+        this.puzzle = new Puzzle(puzzle);
     }
 
-    public LiveData<WordPairReader> getWordPairReader() {
+    public WordPairReader getWordPairReader() {
         return wordPairReader;
     }
     public void setWordPairReader(WordPairReader wordPairReader) {
-        this.wordPairReader.setValue(wordPairReader);
+        this.wordPairReader = wordPairReader;
     }
 }
