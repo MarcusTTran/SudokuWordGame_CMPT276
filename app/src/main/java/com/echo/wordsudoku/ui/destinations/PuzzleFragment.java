@@ -1,6 +1,8 @@
 package com.echo.wordsudoku.ui.destinations;
 
+import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -9,9 +11,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
 import com.echo.wordsudoku.R;
@@ -32,12 +38,14 @@ import org.json.JSONException;
 import java.io.IOException;
 import java.util.List;
 
+import com.echo.wordsudoku.ui.dialogs.SaveGameDialog;
 import com.echo.wordsudoku.ui.puzzleParts.PuzzleBoardFragment;
 import com.echo.wordsudoku.ui.destinations.PuzzleFragmentDirections.SubmitPuzzleAction;
 import com.echo.wordsudoku.ui.puzzleParts.PuzzleInputButtonsFragment;
+import com.echo.wordsudoku.ui.puzzleParts.PuzzleTopMenuBarFragment;
 import com.echo.wordsudoku.ui.puzzleParts.PuzzleViewModel;
 
-public class PuzzleFragment extends Fragment{
+public class PuzzleFragment extends Fragment {
 
 
     // CONSTANTS
@@ -70,36 +78,42 @@ public class PuzzleFragment extends Fragment{
     }
 
     @Override
-    public void onStart() {
-        super.onStart();
+    public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
+        super.onViewStateRestored(savedInstanceState);
         boolean isRetry = PuzzleFragmentArgs.fromBundle(getArguments()).getIsRetry();
+        boolean isGameTimed = mSettingsViewModel.isTimer();
         if (isRetry) {
-            retryPreviousGame();
+            retryPreviousGame(isGameTimed);
         } else {
             boolean isNewGame = PuzzleFragmentArgs.fromBundle(getArguments()).getIsNewGame();
             puzzleDimension = PuzzleFragmentArgs.fromBundle(getArguments()).getPuzzleSize();
             numberOfInitialWords = puzzleDimension * puzzleDimension - puzzleDimension;
             if (isNewGame) {
-                newGame();
+                newGame(mSettingsViewModel.getDifficulty(),isGameTimed);
             } else {
-                loadGame();
+                loadGame(isGameTimed);
             }
         }
     }
 
-    public void resetGame() {
-        mPuzzleViewModel.getPuzzle().resetPuzzle();
+    public void resetGame(boolean isRetry) {
+        mPuzzleViewModel.getPuzzle().resetPuzzle(isRetry);
         PuzzleBoardFragment puzzleViewFragment = (PuzzleBoardFragment) getChildFragmentManager().findFragmentById(R.id.board);
         puzzleViewFragment.updateBoardWithPuzzleModel();
+        mPuzzleViewModel.setGameSaved(false);
     }
 
-    private void retryPreviousGame(){
-        resetGame();
+    private void retryPreviousGame(boolean isGameTimed) {
+        resetGame(true);
         PuzzleInputButtonsFragment puzzleInputButtonsFragment = (PuzzleInputButtonsFragment) getChildFragmentManager().findFragmentById(R.id.puzzle_input_buttons);
+        if (isGameTimed) {
+            PuzzleTopMenuBarFragment puzzleTopMenuBarFragment = (PuzzleTopMenuBarFragment) getChildFragmentManager().findFragmentById(R.id.puzzle_top_menu_bar);
+            puzzleTopMenuBarFragment.startTiming();
+        }
         puzzleInputButtonsFragment.updateButtonsFromPuzzleModel();
     }
 
-    private void loadGame() {
+    private void loadGame(boolean isGameTimed) {
         // Load the puzzle from the file and update the class members
         mJsonReader = new JsonReader(requireActivity());
         new Thread(() -> {
@@ -115,6 +129,11 @@ public class PuzzleFragment extends Fragment{
                         PuzzleInputButtonsFragment puzzleInputButtonsFragment = (PuzzleInputButtonsFragment) getChildFragmentManager().findFragmentById(R.id.puzzle_input_buttons);
                         puzzleFragment.updateBoardWithPuzzleModel();
                         puzzleInputButtonsFragment.updateButtonsFromPuzzleModel();
+                        if (isGameTimed) {
+                            PuzzleTopMenuBarFragment puzzleTopMenuBarFragment = (PuzzleTopMenuBarFragment) getChildFragmentManager().findFragmentById(R.id.puzzle_top_menu_bar);
+                            puzzleTopMenuBarFragment.startTiming();
+                        }
+                        mPuzzleViewModel.setGameSaved(true);
                     });
                 }
             } catch (IOException | JSONException e) {
@@ -127,7 +146,7 @@ public class PuzzleFragment extends Fragment{
         }).start();
     }
 
-    private void newGame() {
+    private void newGame(int difficulty, boolean isGameTimed) {
         List<WordPair> wordPairs;
         try {
             wordPairs = mPuzzleViewModel.getWordPairReader().getRandomWords(puzzleDimension);
@@ -139,7 +158,7 @@ public class PuzzleFragment extends Fragment{
         int puzzleLanguage = mSettingsViewModel.getPuzzleLanguage().getValue();
 
         // Create a new board
-        Puzzle puzzle = new Puzzle(wordPairs,puzzleDimension,puzzleLanguage,numberOfInitialWords);
+        Puzzle puzzle = new Puzzle(wordPairs,puzzleDimension,puzzleLanguage,-1,difficulty);
         mPuzzleViewModel.setPuzzle(puzzle);
         PuzzleBoardFragment puzzleViewFragment = (PuzzleBoardFragment) getChildFragmentManager().findFragmentById(R.id.board);
         PuzzleInputButtonsFragment puzzleInputButtonsFragment = (PuzzleInputButtonsFragment) getChildFragmentManager().findFragmentById(R.id.puzzle_input_buttons);
@@ -149,12 +168,16 @@ public class PuzzleFragment extends Fragment{
         puzzleViewFragment.updateBoardWithPuzzleModel();
         // Initialize the input buttons with the puzzle model
         puzzleInputButtonsFragment.updateButtonsFromPuzzleModel();
-
+        if (isGameTimed) {
+            PuzzleTopMenuBarFragment puzzleTopMenuBarFragment = (PuzzleTopMenuBarFragment) getChildFragmentManager().findFragmentById(R.id.puzzle_top_menu_bar);
+            puzzleTopMenuBarFragment.startTiming();
+        }
+        mPuzzleViewModel.setGameSaved(false);
     }
 
     public void enterWordInBoard(String word) {
-        PuzzleBoardFragment puzzleFragment = (PuzzleBoardFragment) getChildFragmentManager().findFragmentById(R.id.board);
-        Dimension currentCell = puzzleFragment.getSelectedCell();
+        PuzzleBoardFragment puzzleViewFragment = (PuzzleBoardFragment) getChildFragmentManager().findFragmentById(R.id.board);
+        Dimension currentCell = puzzleViewFragment.getSelectedCell();
         if(currentCell.getColumns()==-2 || currentCell.getRows()==-2){
             Toast.makeText(requireActivity(), R.string.error_no_cell_selected, Toast.LENGTH_SHORT).show();
             return;
@@ -175,7 +198,8 @@ public class PuzzleFragment extends Fragment{
             }
             if (associatedWordPair != null) {
                 puzzle.setCell(currentCell.getRows(), currentCell.getColumns(), associatedWordPair);
-                puzzleFragment.insertWordInBoardView(word);
+                puzzleViewFragment.insertWordInBoardView(word);
+                mPuzzleViewModel.setGameSaved(false);
                 return;
             } else {
                 throw new RuntimeException("Trying to insert " + word + ". Word not found in word pairs");
@@ -256,7 +280,7 @@ public class PuzzleFragment extends Fragment{
                 return true;
             case R.id.options_main_menu_button:
                 //discardGame();
-                Navigation.findNavController(getView()).navigate(R.id.quitPuzzleToMainMenuAction);
+                new SaveGameDialog().show(getChildFragmentManager(), SaveGameDialog.TAG);
                 return true;
             case R.id.options_exit_button:
                 getActivity().finish();
@@ -266,5 +290,19 @@ public class PuzzleFragment extends Fragment{
         }
     }
 
-
+    @Override
+    public void onResume() {
+        super.onResume();
+        OnBackPressedCallback callback = new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                if(!mPuzzleViewModel.isGameSaved()) {
+                    new SaveGameDialog().show(getChildFragmentManager(), "SaveGameDialog");
+                } else {
+                    Navigation.findNavController(getView()).navigate(R.id.quitPuzzleToMainMenuAction);
+                }
+            }
+        };
+        requireActivity().getOnBackPressedDispatcher().addCallback(this, callback);
+    }
 }

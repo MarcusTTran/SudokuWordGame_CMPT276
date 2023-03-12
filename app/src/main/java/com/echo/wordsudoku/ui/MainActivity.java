@@ -26,6 +26,7 @@ import com.echo.wordsudoku.models.BoardLanguage;
 import com.echo.wordsudoku.models.Memory.JsonWriter;
 import com.echo.wordsudoku.models.sudoku.Puzzle;
 import com.echo.wordsudoku.models.words.WordPairReader;
+import com.echo.wordsudoku.ui.dialogs.SaveGameDialog;
 import com.echo.wordsudoku.ui.puzzleParts.PuzzleViewModel;
 import com.google.android.material.navigation.NavigationView;
 
@@ -35,7 +36,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Locale;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements SaveGameDialog.SaveGameDialogListener {
 
     private static final String TAG = "Puzzle.MainActivity";
 
@@ -51,10 +52,11 @@ public class MainActivity extends AppCompatActivity {
 //    private int mSettingsPuzzleDifficulty;
 //    private boolean mSettingsPuzzleTimer;
 
-
     private AppBarConfiguration appBarConfiguration;
 
     private DrawerLayout mDrawerLayout;
+
+    private NavController navController;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -105,7 +107,7 @@ public class MainActivity extends AppCompatActivity {
 
         NavHostFragment navHostFragment =
                 (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment);
-        NavController navController = navHostFragment.getNavController();
+        navController = navHostFragment.getNavController();
 
         mDrawerLayout = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
@@ -121,8 +123,13 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onSupportNavigateUp() {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
-        return NavigationUI.navigateUp(navController, appBarConfiguration)
-                || super.onSupportNavigateUp();
+        if (navController.getCurrentDestination().getId() == R.id.puzzleFragment && !mPuzzleViewModel.isGameSaved()) {
+            new SaveGameDialog().show(getSupportFragmentManager(), SaveGameDialog.TAG);
+            return false;
+        } else {
+            return NavigationUI.navigateUp(navController, appBarConfiguration)
+                    || super.onSupportNavigateUp();
+        }
     }
 
     private void loadSettings() {
@@ -133,10 +140,6 @@ public class MainActivity extends AppCompatActivity {
 
         boolean timer = mPreferences.getBoolean(getString(R.string.puzzle_timer_preference_key), false);
          mSettingsViewModel.setTimer(timer);
-
-        boolean uiImmersion = mPreferences.getBoolean(getString(R.string.puzzle_uiImmersion_preference_key), false);
-//        mSettingsViewModel.setUiImmersion(uiImmersion);
-
     }
 
 
@@ -146,14 +149,13 @@ public class MainActivity extends AppCompatActivity {
         SharedPreferences.Editor editor = mPreferences.edit();
         mSettingsPuzzleLanguage = mSettingsViewModel.getPuzzleLanguage().getValue();
 
-//        boolean mSettingsPuzzleUiImmersion = mSettingsViewModel.getUiImmersion().getValue();
         boolean  mSettingsPuzzleTimer = mSettingsViewModel.isTimer();
         int mSettingsPuzzleDifficulty = mSettingsViewModel.getDifficulty();
 
         editor.putInt(getString(R.string.puzzle_language_key), mSettingsPuzzleLanguage);
         editor.putInt(getString(R.string.puzzle_difficulty_preference_key), mSettingsPuzzleDifficulty);
         editor.putBoolean(getString(R.string.puzzle_timer_preference_key), mSettingsPuzzleTimer);
-//        editor.putBoolean(getString(R.string.puzzle_uiImmersion_preference_key), mSettingsPuzzleUiImmersion);
+        editor.apply();
     }
 
     @Override
@@ -163,21 +165,18 @@ public class MainActivity extends AppCompatActivity {
         // Save settings of app before closing
         saveSettings();
         // Save the puzzle to the json file before app closes
-        saveGame();
+        if(mSettingsViewModel.isAutoSave())
+            saveGame();
     }
 
     public void saveGame(){
         new Thread(() -> {
             JsonWriter jsonWriter = new JsonWriter(MainActivity.this);
             Puzzle puzzle = mPuzzleViewModel.getPuzzle();
-            try {
-                Log.d(TAG, "saveGame: " + puzzle.toJson().toString(4));
-            } catch (JSONException e) {
-                throw new RuntimeException(e);
-            }
             if(puzzle == null) return;
             try {
                 jsonWriter.writePuzzle(puzzle);
+                mPuzzleViewModel.setGameSaved(true);
             } catch (JSONException | IOException e) {
                 Toast.makeText(MainActivity.this,R.string.save_game_error , Toast.LENGTH_SHORT).show();
             }
@@ -186,10 +185,26 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        if(mDrawerLayout.isDrawerOpen(GravityCompat.START)){
-            mDrawerLayout.closeDrawer(GravityCompat.START);
-        } else {
+        if (getOnBackPressedDispatcher().hasEnabledCallbacks()){
             super.onBackPressed();
+        } else {
+            if (mDrawerLayout.isDrawerOpen(GravityCompat.START)) {
+                mDrawerLayout.closeDrawer(GravityCompat.START);
+            } else {
+                super.onBackPressed();
+            }
         }
+    }
+
+
+    @Override
+    public void onSaveGame() {
+        saveGame();
+        navController.navigate(R.id.quitPuzzleToMainMenuAction);
+    }
+
+    @Override
+    public void onNotSaveGame() {
+        navController.navigate(R.id.quitPuzzleToMainMenuAction);
     }
 }

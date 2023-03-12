@@ -14,6 +14,8 @@ import java.util.List;
 public class PuzzleViewModel extends ViewModel {
     private Puzzle puzzle;
 
+    private boolean isGameSaved = false;
+
     private List<WordPair> CustomWordPair;
     private WordPairReader wordPairReader;
 
@@ -33,5 +35,13 @@ public class PuzzleViewModel extends ViewModel {
     }
     public void setWordPairReader(WordPairReader wordPairReader) {
         this.wordPairReader = wordPairReader;
+    }
+
+    public void setGameSaved(boolean gameSaved) {
+        isGameSaved = gameSaved;
+    }
+
+    public boolean isGameSaved() {
+        return isGameSaved;
     }
 }
