@@ -16,6 +16,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.core.os.LocaleListCompat;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.preference.ListPreference;
 import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
 import androidx.preference.SwitchPreferenceCompat;
@@ -29,14 +30,16 @@ public class SettingsFragment extends PreferenceFragmentCompat {
 
     private SettingsViewModel settingsViewModel;
 
-    public SettingsFragment() {
-        // Do nothing
-    }
-
     @Override
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
         setPreferencesFromResource(R.xml.root_preferences, rootKey);
-        Preference preferenceTimer = findPreference("timer");
+
+        //Store the SettingsViewModel; This is where we will store our changes
+        settingsViewModel = new ViewModelProvider(requireActivity()).get(SettingsViewModel.class);
+
+
+        SwitchPreferenceCompat preferenceTimer = findPreference("timer");
+        preferenceTimer.setChecked(settingsViewModel.isTimer());
 
         //Set a listener for each preference
         preferenceTimer.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
@@ -50,7 +53,8 @@ public class SettingsFragment extends PreferenceFragmentCompat {
         });
 
 
-        Preference preferenceDifficulty = findPreference("difficulty");
+        ListPreference preferenceDifficulty = findPreference("difficulty");
+        preferenceDifficulty.setValueIndex(settingsViewModel.getDifficulty()-1);
         preferenceDifficulty.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
             @Override
             public boolean onPreferenceChange(Preference preference, Object difficulty) {
@@ -84,18 +88,5 @@ public class SettingsFragment extends PreferenceFragmentCompat {
                 return true;
             }
         });
-    }
-
-    @NonNull
-    @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-
-        //Inflate view
-        View view1 = super.onCreateView(inflater, container, savedInstanceState);
-
-        //Store the SettingsViewModel; This is where we will store our changes
-        settingsViewModel = new ViewModelProvider(requireActivity()).get(SettingsViewModel.class);
-
-        return view1;
     }
 }

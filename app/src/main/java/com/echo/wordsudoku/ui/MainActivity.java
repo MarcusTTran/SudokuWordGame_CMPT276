@@ -133,10 +133,6 @@ public class MainActivity extends AppCompatActivity {
 
         boolean timer = mPreferences.getBoolean(getString(R.string.puzzle_timer_preference_key), false);
          mSettingsViewModel.setTimer(timer);
-
-        boolean uiImmersion = mPreferences.getBoolean(getString(R.string.puzzle_uiImmersion_preference_key), false);
-//        mSettingsViewModel.setUiImmersion(uiImmersion);
-
     }
 
 
@@ -146,14 +142,13 @@ public class MainActivity extends AppCompatActivity {
         SharedPreferences.Editor editor = mPreferences.edit();
         mSettingsPuzzleLanguage = mSettingsViewModel.getPuzzleLanguage().getValue();
 
-//        boolean mSettingsPuzzleUiImmersion = mSettingsViewModel.getUiImmersion().getValue();
         boolean  mSettingsPuzzleTimer = mSettingsViewModel.isTimer();
         int mSettingsPuzzleDifficulty = mSettingsViewModel.getDifficulty();
 
         editor.putInt(getString(R.string.puzzle_language_key), mSettingsPuzzleLanguage);
         editor.putInt(getString(R.string.puzzle_difficulty_preference_key), mSettingsPuzzleDifficulty);
         editor.putBoolean(getString(R.string.puzzle_timer_preference_key), mSettingsPuzzleTimer);
-//        editor.putBoolean(getString(R.string.puzzle_uiImmersion_preference_key), mSettingsPuzzleUiImmersion);
+        editor.apply();
     }
 
     @Override
@@ -170,11 +165,6 @@ public class MainActivity extends AppCompatActivity {
         new Thread(() -> {
             JsonWriter jsonWriter = new JsonWriter(MainActivity.this);
             Puzzle puzzle = mPuzzleViewModel.getPuzzle();
-            try {
-                Log.d(TAG, "saveGame: " + puzzle.toJson().toString(4));
-            } catch (JSONException e) {
-                throw new RuntimeException(e);
-            }
             if(puzzle == null) return;
             try {
                 jsonWriter.writePuzzle(puzzle);
