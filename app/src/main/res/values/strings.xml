@@ -65,6 +65,11 @@ If you encounter any difficulty translating the words featured in your puzzle, y
     <!-- Difficulty Preferences -->
     <string name="difficulty_header">Puzzle Difficulty</string>
 
+    <!-- AutoSave Preferences -->
+    <string name="auto_save_title">Auto Save</string>
+    <string name="auto_save_on">Auto Save is on</string>
+    <string name="auto_save_off">Auto Save is off</string>
+
 
     <string name="save_game_error">Failed to save the game</string>
     <string name="load_game_error">Failed to load the game</string>
@@ -95,6 +100,9 @@ If you encounter any difficulty translating the words featured in your puzzle, y
     <string name="msg_language_french">Restart required. Language changed to French</string>
     <string name="msg_language_english">Redémarrage requis. Langue changée en anglais</string>
 
-
+    <!-- Save Game Dialog -->
+    <string name="save_game_dialog_title">Do you want to save the current puzzle?</string>
+    <string name="yes_button">Yes</string>
+    <string name="no_button">No</string>
 
 </resources>

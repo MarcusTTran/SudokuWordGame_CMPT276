@@ -72,6 +72,11 @@ tous vos mots en vedette. Mais rappelez-vous, vous ne pouvez accéder à cette t
     <!-- Difficulty Preferences -->
     <string name="difficulty_header">Difficulté du puzzle</string>
 
+    <!-- AutoSave Preferences -->
+    <string name="auto_save_title">Enregistrement automatique</string>
+    <string name="auto_save_on">L’enregistrement automatique est activén</string>
+    <string name="auto_save_off">L’enregistrement automatique est désactivé</string>
+
 
     <string name="save_game_error">Echec de l’enregistrement du jeu</string>
     <string name="load_game_error">Impossible de charger le jeu</string>
@@ -101,5 +106,10 @@ tous vos mots en vedette. Mais rappelez-vous, vous ne pouvez accéder à cette t
     <!-- Change Language Immersion -->
     <string name="msg_language_french">Restart required. Language changed to French</string>
     <string name="msg_language_english">Redémarrage requis. Langue changée en anglais</string>
+
+    <!-- Save Game Dialog -->
+    <string name="save_game_dialog_title">Voulez-vous sauver le puzzle actuel?</string>
+    <string name="yes_button">Oui</string>
+    <string name="no_button">Non</string>
 
 </resources>

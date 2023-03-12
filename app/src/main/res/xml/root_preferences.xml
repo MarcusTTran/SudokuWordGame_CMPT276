@@ -37,6 +37,17 @@
 
     </PreferenceCategory>
 
+    <PreferenceCategory app:title="@string/ui_immersion_header">
+
+        <SwitchPreferenceCompat
+            app:key="autoSave"
+            app:defaultValue="true"
+            app:summaryOff="@string/auto_save_off"
+            app:summaryOn="@string/auto_save_on"
+            app:title="@string/auto_save_title" />
+
+    </PreferenceCategory>
+
 
 
 </PreferenceScreen>

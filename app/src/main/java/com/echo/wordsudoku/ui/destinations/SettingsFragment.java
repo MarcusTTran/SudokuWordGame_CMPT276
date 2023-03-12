@@ -37,6 +37,16 @@ public class SettingsFragment extends PreferenceFragmentCompat {
         //Store the SettingsViewModel; This is where we will store our changes
         settingsViewModel = new ViewModelProvider(requireActivity()).get(SettingsViewModel.class);
 
+        SwitchPreferenceCompat preferenceAutoSave = findPreference("autoSave");
+        preferenceAutoSave.setChecked(settingsViewModel.isAutoSave());
+
+        preferenceAutoSave.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+            @Override
+            public boolean onPreferenceChange(Preference preference, Object autoSave) {
+                settingsViewModel.setAutoSave((boolean) autoSave);
+                return true;
+            }
+        });
 
         SwitchPreferenceCompat preferenceTimer = findPreference("timer");
         preferenceTimer.setChecked(settingsViewModel.isTimer());
