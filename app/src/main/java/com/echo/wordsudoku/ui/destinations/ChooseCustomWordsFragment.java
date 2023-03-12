@@ -139,21 +139,25 @@ public class ChooseCustomWordsFragment extends Fragment{
 
         Button confirmButton = root.findViewById(R.id.buttonConfirmCustomWords);
         confirmButton.setOnClickListener(new View.OnClickListener() {
+
+            //On Confirm button click
             @Override
             public void onClick(View v) {
 
                 //Check if all EntryBoxes are full
                 if (isEntryBoxesFull(root)) {
                     Log.d(CC_WORDS_DEBUG_KEY, "clicked on Confirm");
-                    //Turn the EntryBoxes into a WordPair List
+                    //Take all words entered in the EntryBoxes and use them to make a WordPair List
                     List<WordPair> userEnteredWordList = new ArrayList<>();
                     for (int i = 0; i < currentSize; i++) {
+                        //Entry Boxes under Board Language are first argument in WordPair
                         EditText someEntryBox1 = root.findViewById(idBoardLanguageWords.get(i));
+                        //Entry Boxes under Button Language are second argument in WordPair
                         EditText someEntryBox2 = root.findViewById(idButtonLanguageWords.get(i));
 
                         //Validate Words are being read with Log.d
-                        Log.d(CC_WORDS_DEBUG_KEY, "Board Language Words[" + i +"]: " + someEntryBox1.getText().toString());
-                        Log.d(CC_WORDS_DEBUG_KEY, "Button Language Words[" + i +"]: " + someEntryBox2.getText().toString());
+//                        Log.d(CC_WORDS_DEBUG_KEY, "Board Language Words[" + i +"]: " + someEntryBox1.getText().toString());
+//                        Log.d(CC_WORDS_DEBUG_KEY, "Button Language Words[" + i +"]: " + someEntryBox2.getText().toString());
 
                         //Add in each word to WordPair list
                         userEnteredWordList.add(new WordPair(someEntryBox1.getText().toString(), someEntryBox2.getText().toString()));
@@ -206,7 +210,7 @@ public class ChooseCustomWordsFragment extends Fragment{
     private void addEditTexts(View root, int numberToAdd) {
         //Add EditTexts to Board Language table
         LinearLayout entryBoxHolder1 = root.findViewById(R.id.boardLanguageEntries);
-        entryBoxHolder1.getChildCount();
+
         for (int i = 0; i < numberToAdd; i++) {
             EditText someEntryBox = new EditText(entryBoxHolder1.getContext());
             someEntryBox.setText("");
@@ -219,7 +223,7 @@ public class ChooseCustomWordsFragment extends Fragment{
 
         //Add EditTexts to Board Language table
         LinearLayout entryBoxHolder2 = root.findViewById(R.id.buttonLanguageEntries);
-        entryBoxHolder2.getChildCount();
+
         for (int i = 0; i < numberToAdd; i++) {
             EditText someEntryBox = new EditText(entryBoxHolder2.getContext());
             someEntryBox.setText("");

@@ -57,13 +57,15 @@ public class Puzzle implements Writable {
     // The number of mistakes the user has made
     private int mistakes = 0;
 
+    private int timer = 0;
+
     /* @constructor
      * @param wordPairs: the word pairs that are used in the puzzle
      * @param dimension: the dimension of the puzzle
      * @param language: the language of the puzzle
      * @param numberOfStartCells: the number of cells that are not removed from the solution board and user starts with them
      */
-    public Puzzle(List<WordPair> wordPairs,int dimension, int language, int numberOfStartCells) {
+    public Puzzle(List<WordPair> wordPairs,int dimension, int language, int numberOfStartCells, int difficulty) {
 
         // If the word pairs are null, we throw an exception
         if (wordPairs == null)
@@ -90,8 +92,13 @@ public class Puzzle implements Writable {
         // First we create a solved board
         SolveBoard(this.solutionBoard);
 
+        int numberOfCellsToRemove;
+
+        if(numberOfStartCells!=-1)
+            numberOfCellsToRemove = solutionBoard.getRows()*solutionBoard.getColumns() - numberOfStartCells;
+        else
+            numberOfCellsToRemove = getCellsToRemoveWithDifficulty(difficulty);
         // Calculate the number of cells to remove from the solution board
-        int numberOfCellsToRemove = getSolutionBoard().getRows()*getSolutionBoard().getColumns() - numberOfStartCells;
 
         // Then we remove a certain number of cells from the solution board and set the user board to the result
         CellBox2DArray userBoard = getTrimmedBoard(numberOfCellsToRemove);
@@ -99,6 +106,16 @@ public class Puzzle implements Writable {
 
         // We lock the cells that are not empty so the user cannot change them
         lockCells();
+    }
+
+    private int getCellsToRemoveWithDifficulty(int difficulty) {
+        int size = puzzleDimension.getPuzzleDimension();
+        return (difficulty+1)*size*size/8;
+    }
+
+
+    public Puzzle(List<WordPair> wordPairs,int dimension, int language, int numberOfStartCells) {
+        this(wordPairs,dimension,language,numberOfStartCells,0);
     }
 
     /* @copy constructor
@@ -111,6 +128,7 @@ public class Puzzle implements Writable {
         this.puzzleDimension = new PuzzleDimensions(puzzle.getPuzzleDimension());
         this.language = puzzle.getLanguage();
         this.mistakes = puzzle.getMistakes();
+        this.timer = puzzle.getTimer();
     }
 
     /* @constructor
@@ -122,13 +140,14 @@ public class Puzzle implements Writable {
     @param language: the language
     @param mistakes: the number of mistakes
      */
-    public Puzzle(CellBox2DArray userBoard, CellBox2DArray solutionBoard, List<WordPair> wordPairs, PuzzleDimensions puzzleDimension, int language, int mistakes) {
+    public Puzzle(CellBox2DArray userBoard, CellBox2DArray solutionBoard, List<WordPair> wordPairs, PuzzleDimensions puzzleDimension, int language, int mistakes, int timer) {
         this.userBoard = userBoard;
         this.solutionBoard = solutionBoard;
         this.mWordPairs = wordPairs;
         this.puzzleDimension = puzzleDimension;
         this.language = language;
         this.mistakes = mistakes;
+        this.timer = timer;
     }
 
 
@@ -400,7 +419,7 @@ public class Puzzle implements Writable {
         return userBoard.getCellFromBigArray(dimension.getRows(),dimension.getColumns()).isEditable();
     }
 
-    public void resetPuzzle() {
+    public void resetPuzzle(boolean resetTimer) {
         for (int i = 0; i < userBoard.getRows(); i++) {
             for (int j = 0; j < userBoard.getColumns(); j++) {
                 if (userBoard.getCellFromBigArray(i,j).isEditable()) {
@@ -409,6 +428,8 @@ public class Puzzle implements Writable {
             }
         }
         mistakes = 0;
+        if (resetTimer)
+            timer = 0;
     }
 
     public boolean[][] getImmutabilityTable() {
@@ -419,6 +440,14 @@ public class Puzzle implements Writable {
             }
         }
         return result;
+    }
+
+    public void setTimer(int timer) {
+        this.timer = timer;
+    }
+
+    public int getTimer() {
+        return timer;
     }
 
     /*
@@ -435,6 +464,7 @@ public class Puzzle implements Writable {
         json.put("puzzleDimensions", this.getPuzzleDimension().toJson());
         json.put("language", this.getLanguage());
         json.put("mistakes", this.getMistakes());
+        json.put("timer", this.getTimer());
 
         return json;
     }

@@ -14,6 +14,8 @@
     <string name="word_mistake_plural">erreurs</string>
     <string name="msg_win">Vous avez gagné!</string>
     <string name="retry_puzzle_btn">Réessayer</string>
+    <string name="fail_msg">Vous avez échoué!</string>
+    <string name="confirm_msg">Confirmer</string>
 
     <!-- Options Menu -->
     <string name="done_btn">Finir</string>
@@ -72,6 +74,11 @@ tous vos mots en vedette. Mais rappelez-vous, vous ne pouvez accéder à cette t
     <!-- Difficulty Preferences -->
     <string name="difficulty_header">Difficulté du puzzle</string>
 
+    <!-- AutoSave Preferences -->
+    <string name="auto_save_title">Enregistrement automatique</string>
+    <string name="auto_save_on">L’enregistrement automatique est activén</string>
+    <string name="auto_save_off">L’enregistrement automatique est désactivé</string>
+
 
     <string name="save_game_error">Echec de l’enregistrement du jeu</string>
     <string name="load_game_error">Impossible de charger le jeu</string>
@@ -102,6 +109,20 @@ tous vos mots en vedette. Mais rappelez-vous, vous ne pouvez accéder à cette t
     <string name="msg_language_french">Restart required. Language changed to French</string>
     <string name="msg_language_english">Redémarrage requis. Langue changée en anglais</string>
 
+    <!-- Save Game Dialog -->
+    <string name="save_game_dialog_title">Voulez-vous sauver le puzzle actuel?</string>
+    <string name="yes_button">Oui</string>
+    <string name="no_button">Non</string>
 
+    <!-- Choose Custom Words -->
+    <string name="board_language_custom_words">Langue du jeu</string>
+    <string name="button_language_custom_words">Langue du bouton</string>
+    <string name="choose_custom_puzzle_size_custom">Sélectionner la taille du puzzle</string>
+    <string-array name="puzzle_sizes_spinner">
+        <item>4x4 Puzzle</item>
+        <item>6x6 Puzzle</item>
+        <item>9x9 Puzzle</item>
+        <item>12x12 Puzzle</item>
+    </string-array>
 
 </resources>

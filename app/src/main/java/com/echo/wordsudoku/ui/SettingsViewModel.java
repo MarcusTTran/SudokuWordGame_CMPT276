@@ -7,6 +7,8 @@ import androidx.lifecycle.ViewModel;
 public class SettingsViewModel extends ViewModel {
     private final MutableLiveData<Integer> mPuzzleLanguage = new MutableLiveData<>();
     private boolean timer;
+
+    private boolean autoSave;
     private int difficulty;
 
 
@@ -32,6 +34,14 @@ public class SettingsViewModel extends ViewModel {
 
     public boolean isTimer() {
         return timer;
+    }
+
+    public void setAutoSave(boolean autoSave) {
+        this.autoSave = autoSave;
+    }
+
+    public boolean isAutoSave() {
+        return autoSave;
     }
 
     @Override

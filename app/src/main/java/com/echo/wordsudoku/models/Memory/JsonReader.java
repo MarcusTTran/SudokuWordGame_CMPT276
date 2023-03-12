@@ -171,8 +171,10 @@ public class JsonReader {
             // parse mistakes
             int mistakes = (jsonObject.getInt("mistakes"));
 
+            int timer = (jsonObject.getInt("timer"));
+
             // create the puzzle
-            Puzzle puzzle = new Puzzle(userBoard, solutionBoard, wordPairs, puzzleDimensions, language, mistakes);
+            Puzzle puzzle = new Puzzle(userBoard, solutionBoard, wordPairs, puzzleDimensions, language, mistakes,timer);
 
             //return the puzzle with completely read fields
             return puzzle;

@@ -67,6 +67,11 @@ If you encounter any difficulty translating the words featured in your puzzle, y
     <!-- Difficulty Preferences -->
     <string name="difficulty_header">Puzzle Difficulty</string>
 
+    <!-- AutoSave Preferences -->
+    <string name="auto_save_title">Auto Save</string>
+    <string name="auto_save_on">Auto Save is on</string>
+    <string name="auto_save_off">Auto Save is off</string>
+
 
     <string name="save_game_error">Failed to save the game</string>
     <string name="load_game_error">Failed to load the game</string>
@@ -97,11 +102,15 @@ If you encounter any difficulty translating the words featured in your puzzle, y
     <string name="msg_language_french">Restart required. Language changed to French</string>
     <string name="msg_language_english">Redémarrage requis. Langue changée en anglais</string>
 
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <!-- Save Game Dialog -->
+    <string name="save_game_dialog_title">Do you want to save the current puzzle?</string>
+    <string name="yes_button">Yes</string>
+    <string name="no_button">No</string>
+
+    <!-- Choose Custom Words -->
     <string name="board_language_custom_words">Board Language</string>
     <string name="button_language_custom_words">Button Language</string>
     <string name="choose_custom_puzzle_size_custom">Select Custom Puzzle Size</string>
-
     <string-array name="puzzle_sizes_spinner">
         <item>4x4 Puzzle</item>
         <item>6x6 Puzzle</item>

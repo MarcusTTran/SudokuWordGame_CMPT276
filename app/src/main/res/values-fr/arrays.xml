@@ -1,10 +1,10 @@
 <resources>
     <!-- Reply Preference -->
     <string-array name="difficulty_entries">
-        <item>Beginner</item>
+        <item>Débutant</item>
         <item>Novice</item>
-        <item>Intermediate</item>
-        <item>Advanced</item>
+        <item>Intermédiaire</item>
+        <item>Avancé</item>
         <item>Expert</item>
     </string-array>
 
