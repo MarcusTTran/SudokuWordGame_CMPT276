@@ -200,11 +200,13 @@ public class MainActivity extends AppCompatActivity implements SaveGameDialog.Sa
     @Override
     public void onSaveGame() {
         saveGame();
-        navController.navigate(R.id.quitPuzzleToMainMenuAction);
+//        navController.navigate(R.id.quitPuzzleToMainMenuAction);
+        navController.popBackStack();
     }
 
     @Override
     public void onNotSaveGame() {
-        navController.navigate(R.id.quitPuzzleToMainMenuAction);
+        navController.popBackStack();
+//        navController.navigate(R.id.quitPuzzleToMainMenuAction);
     }
 }

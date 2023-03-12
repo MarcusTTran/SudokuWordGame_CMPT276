@@ -55,7 +55,7 @@
             app:argType="boolean"
             android:defaultValue="true" />
         <argument
-            android:name="isCustom"
+            android:name="isCustomGame"
             app:argType="boolean"
             android:defaultValue="false" />
         <argument

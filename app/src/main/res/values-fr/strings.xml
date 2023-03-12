@@ -115,14 +115,9 @@ tous vos mots en vedette. Mais rappelez-vous, vous ne pouvez accéder à cette t
     <string name="no_button">Non</string>
 
     <!-- Choose Custom Words -->
-    <string name="board_language_custom_words">Langue du jeu</string>
-    <string name="button_language_custom_words">Langue du bouton</string>
+    <string name="english_custom_words">Mots anglais</string>
+    <string name="french_custom_words">Mots français</string>
     <string name="choose_custom_puzzle_size_custom">Sélectionner la taille du puzzle</string>
-    <string-array name="puzzle_sizes_spinner">
-        <item>4x4 Puzzle</item>
-        <item>6x6 Puzzle</item>
-        <item>9x9 Puzzle</item>
-        <item>12x12 Puzzle</item>
-    </string-array>
+
 
 </resources>

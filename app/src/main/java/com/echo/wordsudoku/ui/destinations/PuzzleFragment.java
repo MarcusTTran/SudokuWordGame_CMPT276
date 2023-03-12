@@ -82,14 +82,16 @@ public class PuzzleFragment extends Fragment {
         super.onViewStateRestored(savedInstanceState);
         boolean isRetry = PuzzleFragmentArgs.fromBundle(getArguments()).getIsRetry();
         boolean isGameTimed = mSettingsViewModel.isTimer();
+        boolean isCustomGame = PuzzleFragmentArgs.fromBundle(getArguments()).getIsCustomGame();
+
         if (isRetry) {
             retryPreviousGame(isGameTimed);
         } else {
             boolean isNewGame = PuzzleFragmentArgs.fromBundle(getArguments()).getIsNewGame();
-            puzzleDimension = PuzzleFragmentArgs.fromBundle(getArguments()).getPuzzleSize();
-            numberOfInitialWords = puzzleDimension * puzzleDimension - puzzleDimension;
             if (isNewGame) {
-                newGame(mSettingsViewModel.getDifficulty(),isGameTimed);
+                if (!isCustomGame)
+                    puzzleDimension = PuzzleFragmentArgs.fromBundle(getArguments()).getPuzzleSize();
+                newGame(mSettingsViewModel.getDifficulty(),isGameTimed,isCustomGame);
             } else {
                 loadGame(isGameTimed);
             }
@@ -146,12 +148,17 @@ public class PuzzleFragment extends Fragment {
         }).start();
     }
 
-    private void newGame(int difficulty, boolean isGameTimed) {
+    private void newGame(int difficulty, boolean isGameTimed,boolean isCustomGame) {
         List<WordPair> wordPairs;
-        try {
-            wordPairs = mPuzzleViewModel.getWordPairReader().getRandomWords(puzzleDimension);
-        } catch (JSONException e) {
-            throw new RuntimeException(e);
+        if (isCustomGame) {
+            wordPairs = mPuzzleViewModel.getCustomWordPair();
+           puzzleDimension = wordPairs.size();
+        } else {
+            try {
+                wordPairs = mPuzzleViewModel.getWordPairReader().getRandomWords(puzzleDimension);
+            } catch (JSONException e) {
+                throw new RuntimeException(e);
+            }
         }
 
         // Get the language setting from the SettingsViewModel and update respectively
@@ -280,7 +287,10 @@ public class PuzzleFragment extends Fragment {
                 return true;
             case R.id.options_main_menu_button:
                 //discardGame();
-                new SaveGameDialog().show(getChildFragmentManager(), SaveGameDialog.TAG);
+                if(!mPuzzleViewModel.isGameSaved())
+                    new SaveGameDialog().show(getChildFragmentManager(), SaveGameDialog.TAG);
+                else
+                    Navigation.findNavController(getView()).popBackStack();
                 return true;
             case R.id.options_exit_button:
                 getActivity().finish();
@@ -299,7 +309,7 @@ public class PuzzleFragment extends Fragment {
                 if(!mPuzzleViewModel.isGameSaved()) {
                     new SaveGameDialog().show(getChildFragmentManager(), "SaveGameDialog");
                 } else {
-                    Navigation.findNavController(getView()).navigate(R.id.quitPuzzleToMainMenuAction);
+                    Navigation.findNavController(getView()).popBackStack();
                 }
             }
         };

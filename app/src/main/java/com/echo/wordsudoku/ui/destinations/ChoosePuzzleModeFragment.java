@@ -15,6 +15,7 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
 import com.echo.wordsudoku.R;
+import com.echo.wordsudoku.ui.destinations.ChoosePuzzleModeFragmentDirections;
 import com.echo.wordsudoku.ui.dialogs.ChoosePuzzleSizeFragment;
 import com.echo.wordsudoku.ui.puzzleParts.PuzzleViewModel;
 
@@ -38,8 +39,8 @@ public class ChoosePuzzleModeFragment extends Fragment {
         classicButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                navController.popBackStack();
-                navController.navigate(R.id.puzzleFragment);
+//                navController.popBackStack();
+                navController.navigate(R.id.choosePuzzleModeToStartPuzzleAction);
             }
         });
 
@@ -49,8 +50,6 @@ public class ChoosePuzzleModeFragment extends Fragment {
         customButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-
                 ChoosePuzzleSizeFragment choosePuzzleSizeFragment = new ChoosePuzzleSizeFragment();
                 choosePuzzleSizeFragment.show(getFragmentManager(), "ChoosePuzzleSizeFragment");
             }
@@ -62,7 +61,9 @@ public class ChoosePuzzleModeFragment extends Fragment {
         customWords.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                ChoosePuzzleModeFragmentDirections.ChoosePuzzleModeToStartPuzzleAction action = ChoosePuzzleModeFragmentDirections.choosePuzzleModeToStartPuzzleAction();
+                action.setIsCustomGame(true);
+                navController.navigate(action);
             }
         });
 

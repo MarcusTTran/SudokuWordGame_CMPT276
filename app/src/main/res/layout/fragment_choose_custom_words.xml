@@ -22,7 +22,7 @@
         android:layout_weight="1"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintHorizontal_bias="0.4"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/enterPuzzleSizeTitle"
         app:layout_constraintVertical_bias="0.0" />
@@ -49,7 +49,7 @@
                 android:id="@+id/boardLanguageCustomHeader"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/board_language_custom_words" />
+                android:text="@string/english_custom_words" />
         </LinearLayout>
 
         <LinearLayout
@@ -67,7 +67,7 @@
                 android:id="@+id/buttonLanguageCustomHeader"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/button_language_custom_words" />
+                android:text="@string/french_custom_words" />
         </LinearLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>

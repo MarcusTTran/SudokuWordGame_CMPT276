@@ -43,12 +43,12 @@ public class ChooseCustomWordsFragment extends Fragment{
 
 
     //Store the ID of each EditText we dynamically create
-    private List<Integer> idBoardLanguageWords;
-    private List<Integer> idButtonLanguageWords;
+    private List<Integer> idEnglishWords;
+    private List<Integer> idFrenchWords;
 
     //Store any filled EditTexts when user rotates the screen
-    private List<String> prefilledBoardLanguageWords;
-    private List<String> prefilledButtonLanguageWords;
+    private List<String> prefilledEnglishWords;
+    private List<String> prefilledFrenchWords;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -65,10 +65,10 @@ public class ChooseCustomWordsFragment extends Fragment{
             Log.d(CC_WORDS_DEBUG_KEY, "Currentsize was: " + savedSize);
 
             List<String> buttonPrefilled = savedInstanceState.getStringArrayList(KEY_SAVE_BUTTON);
-            this.prefilledButtonLanguageWords = buttonPrefilled;
+            this.prefilledFrenchWords = buttonPrefilled;
 
             List<String> boardPrefilled = savedInstanceState.getStringArrayList(KEY_SAVE_BOARD);
-            this.prefilledBoardLanguageWords = boardPrefilled;
+            this.prefilledEnglishWords = boardPrefilled;
 
 
         } else {
@@ -76,12 +76,12 @@ public class ChooseCustomWordsFragment extends Fragment{
             Log.d(CC_WORDS_DEBUG_KEY, "No bundle previously saved" );
             this.currentSize = 4;
 
-            prefilledButtonLanguageWords = initializeBlankStringList();
-            prefilledBoardLanguageWords = initializeBlankStringList();
+            prefilledFrenchWords = initializeBlankStringList();
+            prefilledEnglishWords = initializeBlankStringList();
         }
 
-        idBoardLanguageWords = new ArrayList<>();
-        idButtonLanguageWords = new ArrayList<>();
+        idEnglishWords = new ArrayList<>();
+        idFrenchWords = new ArrayList<>();
     }
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -103,31 +103,14 @@ public class ChooseCustomWordsFragment extends Fragment{
         Log.d(CC_WORDS_DEBUG_KEY, "Prior to initializeEntryBoxes, currentSize is: " + this.currentSize);
 
         //Create the EditTexts
-        initializeEntryBoxes(root, this.currentSize);
+        addEditTexts(root, this.currentSize,true);
 
+        int[] dropDownIndexToSize = {4,6,9,12};
 
         dropdown.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if (position == 0) {
-                    //If first dropdown selected
-                    Log.d(CC_WORDS_DEBUG_KEY, "Value: " + position);
-                    fillLayoutsWithEditTexts(root, 4);
-                    currentSize = 4;
-                } else if (position == 1) {
-                    //If second dropdown selected
-                    Log.d(CC_WORDS_DEBUG_KEY, "Value: " + position);
-                    fillLayoutsWithEditTexts(root, 6);
-                    currentSize = 6;
-                } else if(position == 2) {
-                    Log.d(CC_WORDS_DEBUG_KEY, "Value: " + position);
-                    fillLayoutsWithEditTexts(root, 9);
-                    currentSize = 9;
-                } else {
-                    Log.d(CC_WORDS_DEBUG_KEY, "Value: " + position);
-                    fillLayoutsWithEditTexts(root, 12);
-                    currentSize = 12;
-                }
+                fillLayoutsWithEditTexts(root, dropDownIndexToSize[position]);
             }
 
             @Override
@@ -151,9 +134,9 @@ public class ChooseCustomWordsFragment extends Fragment{
                     List<WordPair> userEnteredWordList = new ArrayList<>();
                     for (int i = 0; i < currentSize; i++) {
                         //Entry Boxes under Board Language are first argument in WordPair
-                        EditText someEntryBox1 = root.findViewById(idBoardLanguageWords.get(i));
+                        EditText someEntryBox1 = root.findViewById(idEnglishWords.get(i));
                         //Entry Boxes under Button Language are second argument in WordPair
-                        EditText someEntryBox2 = root.findViewById(idButtonLanguageWords.get(i));
+                        EditText someEntryBox2 = root.findViewById(idFrenchWords.get(i));
 
                         //Validate Words are being read with Log.d
 //                        Log.d(CC_WORDS_DEBUG_KEY, "Board Language Words[" + i +"]: " + someEntryBox1.getText().toString());
@@ -194,7 +177,7 @@ public class ChooseCustomWordsFragment extends Fragment{
 
         for (int i = 0; i < numberToRemove; i++) {
             entryBoxHolder1.removeViewAt(entryBoxHolder1.getChildCount() - 1);
-            idBoardLanguageWords.remove(idBoardLanguageWords.size() - 1);
+            idEnglishWords.remove(idEnglishWords.size() - 1);
         }
 
         LinearLayout entryBoxHolder2 = root.findViewById(R.id.buttonLanguageEntries);
@@ -202,22 +185,26 @@ public class ChooseCustomWordsFragment extends Fragment{
 
         for (int i = 0; i < numberToRemove; i++) {
             entryBoxHolder2.removeViewAt(entryBoxHolder2.getChildCount() - 1);
-            idButtonLanguageWords.remove(idButtonLanguageWords.size() - 1);
+            idFrenchWords.remove(idFrenchWords.size() - 1);
         }
     }
 
     //Add certain amount of EditText
-    private void addEditTexts(View root, int numberToAdd) {
+    private void addEditTexts(View root, int numberToAdd,boolean isInitialize) {
         //Add EditTexts to Board Language table
         LinearLayout entryBoxHolder1 = root.findViewById(R.id.boardLanguageEntries);
 
         for (int i = 0; i < numberToAdd; i++) {
             EditText someEntryBox = new EditText(entryBoxHolder1.getContext());
-            someEntryBox.setText("");
+            if (!isInitialize) {
+                someEntryBox.setText("");
+            } else {
+                someEntryBox.setText(prefilledEnglishWords.get(i));
+            }
             someEntryBox.setEms(6);
             someEntryBox.setTextSize(15);
             someEntryBox.setId(View.generateViewId());
-            idBoardLanguageWords.add(someEntryBox.getId());
+            idEnglishWords.add(someEntryBox.getId());
             entryBoxHolder1.addView(someEntryBox);
         }
 
@@ -226,11 +213,15 @@ public class ChooseCustomWordsFragment extends Fragment{
 
         for (int i = 0; i < numberToAdd; i++) {
             EditText someEntryBox = new EditText(entryBoxHolder2.getContext());
-            someEntryBox.setText("");
+            if (!isInitialize) {
+                someEntryBox.setText("");
+            } else {
+                someEntryBox.setText(prefilledFrenchWords.get(i));
+            }
             someEntryBox.setEms(6);
             someEntryBox.setTextSize(15);
             someEntryBox.setId(View.generateViewId());
-            idButtonLanguageWords.add(someEntryBox.getId());
+            idFrenchWords.add(someEntryBox.getId());
             entryBoxHolder2.addView(someEntryBox);
         }
     }
@@ -239,19 +230,20 @@ public class ChooseCustomWordsFragment extends Fragment{
         //if currentSize < puzzleSize, add this many EditTexts to the tables
         //if currentSize > puzzleSize, remove this many EditTexts from the tables
         if (currentSize < puzzleSize) {
-            addEditTexts(root, puzzleSize - currentSize);
+            addEditTexts(root, puzzleSize - currentSize,false);
         } else if (currentSize > puzzleSize) {
             removeEditTexts(root, currentSize - puzzleSize);
         } else {
             //If same size selected, do nothing
         }
+        currentSize = puzzleSize;
     }
 
     //Check if entry boxes are full
     private boolean isEntryBoxesFull(View root) {
         //Check that Board Language table is full
         for (int i = 0; i < currentSize; i++) {
-            EditText someEntryBox = root.findViewById(idBoardLanguageWords.get(i));
+            EditText someEntryBox = root.findViewById(idEnglishWords.get(i));
             String someString = someEntryBox.getText().toString();
             if (someString.equals("") || someString == null) {
                 return false;
@@ -260,45 +252,13 @@ public class ChooseCustomWordsFragment extends Fragment{
 
         //Check that Button Language table is full
         for (int i = 0; i < currentSize; i++) {
-            EditText someEntryBox = root.findViewById(idButtonLanguageWords.get(i));
+            EditText someEntryBox = root.findViewById(idFrenchWords.get(i));
             String someString = someEntryBox.getText().toString();
             if (someString.equals("") || someString == null) {
                 return false;
             }
         }
         return true;
-    }
-
-
-    //Loaded in first time or on rotation
-    private void initializeEntryBoxes(View root, int puzzleSize) {
-        //Fill in the Board Language table with EditTexts
-        LinearLayout entryBoxHolder1 = root.findViewById(R.id.boardLanguageEntries);
-        for (int i = 0; i < puzzleSize; i++) {
-            EditText someEntryBox = new EditText(entryBoxHolder1.getContext());
-            someEntryBox.setText(prefilledBoardLanguageWords.get(i));
-            someEntryBox.setEms(6);
-            someEntryBox.setTextSize(15);
-            someEntryBox.setId(View.generateViewId());
-            idBoardLanguageWords.add(someEntryBox.getId());
-            entryBoxHolder1.addView(someEntryBox);
-        }
-
-        //Fill in the Button Language table with EditTexts
-        LinearLayout entryBoxHolder2 = root.findViewById(R.id.buttonLanguageEntries);
-        for (int i = 0; i < puzzleSize; i++) {
-            EditText someEntryBox = new EditText(entryBoxHolder2.getContext());
-            someEntryBox.setText(prefilledButtonLanguageWords.get(i));
-
-            Log.d(CC_WORDS_DEBUG_KEY, "Initializing Entry box as: " + prefilledButtonLanguageWords.get(i));
-
-
-            someEntryBox.setEms(6);
-            someEntryBox.setTextSize(15);
-            someEntryBox.setId(View.generateViewId());
-            idButtonLanguageWords.add(someEntryBox.getId());
-            entryBoxHolder2.addView(someEntryBox);
-        }
     }
 
     //Save our currentSize selected and any text that has been entered in an EditText
@@ -309,12 +269,9 @@ public class ChooseCustomWordsFragment extends Fragment{
         Log.d(CC_WORDS_DEBUG_KEY, "CurrentSize at the moment: " + currentSize);
         outState.putInt(KEY_SAVE_CURRENTSIZE, this.currentSize);
 //        savePrefilledEditTexts(root, idButtonLanguageWords);
-        outState.putStringArrayList(KEY_SAVE_BUTTON, savePrefilledEditTexts(root, idButtonLanguageWords));
+        outState.putStringArrayList(KEY_SAVE_BUTTON, savePrefilledEditTexts(root, idFrenchWords));
 
-        outState.putStringArrayList(KEY_SAVE_BOARD, savePrefilledEditTexts(root, idBoardLanguageWords));
-
-
-
+        outState.putStringArrayList(KEY_SAVE_BOARD, savePrefilledEditTexts(root, idEnglishWords));
     }
 
     //Helper method to save any filled EditTexts

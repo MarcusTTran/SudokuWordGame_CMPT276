@@ -15,4 +15,12 @@
         <item>4</item>
         <item>5</item>
     </string-array>
+
+    <string-array name="puzzle_sizes_spinner">
+        <item>4x4 Puzzle</item>
+        <item>6x6 Puzzle</item>
+        <item>9x9 Puzzle</item>
+        <item>12x12 Puzzle</item>
+    </string-array>
+
 </resources>

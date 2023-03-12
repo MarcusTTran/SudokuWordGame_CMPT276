@@ -65,7 +65,7 @@
             android:id="@+id/boardLanguageCustomHeader"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/board_language_custom_words"
+            android:text="@string/english_custom_words"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -94,7 +94,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="70dp"
-            android:text="@string/button_language_custom_words"
+            android:text="@string/french_custom_words"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/boardLanguageCustomHeader"
             app:layout_constraintStart_toStartOf="parent"
