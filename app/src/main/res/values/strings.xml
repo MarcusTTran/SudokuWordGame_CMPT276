@@ -13,6 +13,8 @@
     <string name="word_mistake_plural">mistakes</string>
     <string name="msg_win">You won!</string>
     <string name="retry_puzzle_btn">Retry Puzzle</string>
+    <string name="fail_msg">You Failed!</string>
+    <string name="confirm_msg">Confirm</string>
 
     <!-- Options Menu -->
     <string name="done_btn">Done</string>
@@ -104,5 +106,17 @@ If you encounter any difficulty translating the words featured in your puzzle, y
     <string name="save_game_dialog_title">Do you want to save the current puzzle?</string>
     <string name="yes_button">Yes</string>
     <string name="no_button">No</string>
+
+    <!-- Choose Custom Words -->
+    <string name="board_language_custom_words">Board Language</string>
+    <string name="button_language_custom_words">Button Language</string>
+    <string name="choose_custom_puzzle_size_custom">Select Custom Puzzle Size</string>
+    <string-array name="puzzle_sizes_spinner">
+        <item>4x4 Puzzle</item>
+        <item>6x6 Puzzle</item>
+        <item>9x9 Puzzle</item>
+        <item>12x12 Puzzle</item>
+    </string-array>
+
 
 </resources>
