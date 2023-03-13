@@ -120,8 +120,12 @@ public class MainActivity extends AppCompatActivity implements SaveGameDialog.Sa
     public boolean onSupportNavigateUp() {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         int currentPage = navController.getCurrentDestination().getId();
-        if (currentPage == R.id.puzzleFragment && !mPuzzleViewModel.isGameSaved()) {
-            new SaveGameDialog().show(getSupportFragmentManager(), SaveGameDialog.TAG);
+        if (currentPage == R.id.puzzleFragment) {
+            if(!mPuzzleViewModel.isGameSaved()) {
+                new SaveGameDialog().show(getSupportFragmentManager(), SaveGameDialog.TAG);
+            } else {
+                navController.navigate(R.id.backToMainMenuAction);
+            }
             return true;
         } else {
             return NavigationUI.navigateUp(navController, appBarConfiguration)
@@ -182,19 +186,6 @@ public class MainActivity extends AppCompatActivity implements SaveGameDialog.Sa
                 Toast.makeText(MainActivity.this,R.string.save_game_error , Toast.LENGTH_SHORT).show();
             }
         }).start();
-    }
-
-    @Override
-    public void onBackPressed() {
-        if (getOnBackPressedDispatcher().hasEnabledCallbacks()){
-            super.onBackPressed();
-        } else {
-            if (mDrawerLayout.isDrawerOpen(GravityCompat.START)) {
-                mDrawerLayout.closeDrawer(GravityCompat.START);
-            } else {
-                super.onBackPressed();
-            }
-        }
     }
 
 
