@@ -17,27 +17,27 @@
         <Button
             android:id="@+id/new_game_button"
             android:layout_width="202dp"
-            android:layout_height="84dp"
+            android:layout_height="wrap_content"
             android:layout_margin="10dp"
             android:text="@string/menu_new_game_btn" />
 
         <Button
             android:id="@+id/load_game_button"
             android:layout_width="202dp"
-            android:layout_height="84dp"
+            android:layout_height="wrap_content"
             android:layout_margin="10dp"
             android:text="@string/menu_load_game_btn" />
 
         <Button
             android:id="@+id/change_language_button"
             android:layout_width="202dp"
-            android:layout_height="84dp"
+            android:layout_height="wrap_content"
             android:layout_margin="10dp" />
 
         <Button
             android:id="@+id/exit_button"
             android:layout_width="202dp"
-            android:layout_height="84dp"
+            android:layout_height="wrap_content"
             android:layout_margin="10dp"
             android:text="@string/menu_exit_btn" />
 
