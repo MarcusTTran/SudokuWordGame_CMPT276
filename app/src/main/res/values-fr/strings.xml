@@ -81,12 +81,15 @@ tous vos mots en vedette. Mais rappelez-vous, vous ne pouvez accéder à cette t
     <string name="auto_save_off">L’enregistrement automatique est désactivé</string>
 
 
+    <string name="word_error">Erreur!</string>
     <string name="save_game_error">Echec de l’enregistrement du jeu</string>
     <string name="load_game_error">Impossible de charger le jeu</string>
     <string name="word_entry_successful">Word entré avec succès!</string>
     <string name="error_no_cell_selected">Aucune cellule sélectionnée</string>
     <string name="error_insert_in_initial_cell">Vous ne pouvez pas écrire dans le puzzle les cellules initiales</string>
     <string name="error_not_filled_puzzle">Vous n’avez pas rempli le puzzle!</string>
+    <string name="error_load_wordpair_database">Impossible de charger la base de données de paires de mots</string>
+
 
 
     <!-- Choose mode -->

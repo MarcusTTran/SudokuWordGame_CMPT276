@@ -1,5 +1,7 @@
 package com.echo.wordsudoku.ui.puzzleParts;
 
+import static com.echo.wordsudoku.models.utility.StringUtility.secondsToTimerLabel;
+
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,14 +10,14 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.echo.wordsudoku.R;
 import com.echo.wordsudoku.ui.SettingsViewModel;
 import com.echo.wordsudoku.ui.destinations.PuzzleFragment;
-
-import java.util.Locale;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -27,6 +29,8 @@ public class PuzzleTopMenuBarFragment extends Fragment {
     private SettingsViewModel mSettingsViewModel;
     private boolean pauseTimer = false;
 
+    private boolean isGameTimed = false;
+
     private TextView timerLabel;
 
     @Override
@@ -37,6 +41,7 @@ public class PuzzleTopMenuBarFragment extends Fragment {
         mPuzzleViewModel = new ViewModelProvider(requireActivity()).get(PuzzleViewModel.class);
         mSettingsViewModel = new ViewModelProvider(requireActivity()).get(SettingsViewModel.class);
 
+        isGameTimed = mSettingsViewModel.isTimer();
 
         String[] difficultyLevels = getResources().getStringArray(R.array.difficulty_entries);
         // The label that displays the timer
@@ -44,45 +49,43 @@ public class PuzzleTopMenuBarFragment extends Fragment {
         timerLabel.setText(difficultyLevels[mSettingsViewModel.getDifficulty()-1]);
 
         Button doneButton = view.findViewById(R.id.options_finish_button);
-        doneButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                PuzzleFragment puzzleFragment = (PuzzleFragment) getParentFragment();
-                puzzleFragment.finishButtonPressed();
-            }
+        doneButton.setOnClickListener(v -> {
+            PuzzleFragment puzzleFragment = (PuzzleFragment) getParentFragment();
+            puzzleFragment.finishButtonPressed();
         });
         ImageButton helpButton = view.findViewById(R.id.help_button);
-        helpButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                PuzzleFragment puzzleFragment = (PuzzleFragment) getParentFragment();
-                puzzleFragment.rulesButtonPressed();
-            }
+        helpButton.setOnClickListener(v -> {
+            PuzzleFragment puzzleFragment = (PuzzleFragment) getParentFragment();
+            puzzleFragment.rulesButtonPressed();
         });
         ImageButton dictionaryButton = view.findViewById(R.id.options_dictionary_help_button);
-        dictionaryButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                PuzzleFragment puzzleFragment = (PuzzleFragment) getParentFragment();
-                puzzleFragment.dictionaryButtonPressed();
-            }
+        dictionaryButton.setOnClickListener(v -> {
+            PuzzleFragment puzzleFragment = (PuzzleFragment) getParentFragment();
+            puzzleFragment.dictionaryButtonPressed();
         });
 
         Button restartButton = view.findViewById(R.id.options_reset_puzzle_button);
-        restartButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                PuzzleFragment puzzleFragment = (PuzzleFragment) getParentFragment();
-                puzzleFragment.resetGame(false);
-            }
+        restartButton.setOnClickListener(v -> {
+            PuzzleFragment puzzleFragment = (PuzzleFragment) getParentFragment();
+            puzzleFragment.resetGame();
         });
         return view;
     }
 
-    public void startTiming() {
-        timer = mPuzzleViewModel.getPuzzle().getTimer();
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
         timerLabel.setTextSize(20);
-        timerLabel.setText(secondsToTimerLabel(timer));
+        if(isGameTimed) {
+        this.timer = mPuzzleViewModel.getPuzzleTimer();
+            startTiming();
+            mPuzzleViewModel.getTimer().observe(getViewLifecycleOwner(), timer -> {
+                timerLabel.setText(secondsToTimerLabel(timer));
+            });
+        }
+    }
+
+    public void startTiming() {
         Timer timerThread = new Timer();
         timerThread.scheduleAtFixedRate(new TimerTask() {
             @Override
@@ -90,8 +93,7 @@ public class PuzzleTopMenuBarFragment extends Fragment {
                 if(pauseTimer) {
                     return;
                 }
-                timerLabel.post(() -> timerLabel.setText(secondsToTimerLabel(timer)));
-                mPuzzleViewModel.getPuzzle().setTimer(timer);
+                mPuzzleViewModel.postTimer(timer);
                 timer++;
             }
         }, 0, 1000);
@@ -107,16 +109,5 @@ public class PuzzleTopMenuBarFragment extends Fragment {
     public void onResume() {
         super.onResume();
         pauseTimer = false;
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
-    }
-
-    private String  secondsToTimerLabel(int timer) {
-        int minutes = timer / 60;
-        int seconds = timer % 60;
-        return String.format(Locale.getDefault(), "%02d:%02d", minutes, seconds);
     }
 }

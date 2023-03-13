@@ -6,6 +6,8 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.os.Bundle;
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.util.AttributeSet;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
@@ -112,8 +114,18 @@ public class SudokuBoard extends View {
     // We use the TypedArray object to get the attributes from the AttributeSet object
     // We then use the TypedArray object to get the attributes
 
+
+
+
+    @Override
+    protected void onRestoreInstanceState(Parcelable state) {
+        super.onRestoreInstanceState(state);
+    }
+
     public SudokuBoard(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
+
+        setSaveEnabled(true);
 
         mTouchHelper = new SudokuBoardTouchHelper(this);
         ViewCompat.setAccessibilityDelegate(this, mTouchHelper);
@@ -151,6 +163,8 @@ public class SudokuBoard extends View {
     // @param boxHeight - the height of the box (the number of rows in the box)
     // @param boxWidth - the width of the box (the number of columns in the box)
     public void setNewPuzzleDimensions(int boardSize, int boxHeight, int boxWidth) {
+        if(mBoardSize==boardSize)
+            return;
         this.mBoardSize = boardSize;
         this.mBoxHeight = boxHeight;
         this.mBoxWidth = boxWidth;
@@ -159,7 +173,6 @@ public class SudokuBoard extends View {
         this.immutable = new boolean[mBoardSize][mBoardSize];
         this.currentCellColumn = this.currentCellRow = -1;
     }
-
 
     @Override
     public boolean dispatchHoverEvent(MotionEvent event) {
@@ -426,8 +439,8 @@ public class SudokuBoard extends View {
         }
         for (int r=0; r<mBoardSize; r++) {
             for (int c=0; c<mBoardSize; c++) {
-                if (board[r][c] != "")
-                    immutable[r][c] = true;
+//                if (board[r][c] != "")
+//                    immutable[r][c] = true;
                 this.board[r][c] = board[r][c];
             }
         }

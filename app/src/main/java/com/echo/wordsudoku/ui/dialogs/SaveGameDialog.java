@@ -2,7 +2,6 @@ package com.echo.wordsudoku.ui.dialogs;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.content.Context;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -15,8 +14,8 @@ public class SaveGameDialog extends DialogFragment {
 
 
     public interface SaveGameDialogListener {
-        void onSaveGame();
-        void onNotSaveGame();
+        void onSaveDialogYes();
+        void onSaveDialogNo();
     }
 
     SaveGameDialogListener listener;
@@ -32,10 +31,10 @@ public class SaveGameDialog extends DialogFragment {
             throw new ClassCastException(getActivity().toString() + " must implement SaveGameDialogListener");
         }
         return new AlertDialog.Builder(requireContext()).setMessage(getString(R.string.save_game_dialog_title)).setPositiveButton(getString(R.string.yes_button), (dialog, which) -> {
-            listener.onSaveGame();
+            listener.onSaveDialogYes();
             //Save the game
         }).setNegativeButton(getString(R.string.no_button), (dialog, which) -> {
-            listener.onNotSaveGame();
+            listener.onSaveDialogNo();
         }).setNeutralButton(R.string.cancel_button,((dialog, which) -> {
             dismiss();
         })).create();

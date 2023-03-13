@@ -12,17 +12,20 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
-import androidx.navigation.fragment.NavHostFragment;
 
 import com.echo.wordsudoku.R;
-import com.echo.wordsudoku.models.BoardLanguage;
+import com.echo.wordsudoku.models.language.BoardLanguage;
 import com.echo.wordsudoku.models.Memory.JsonReader;
+import com.echo.wordsudoku.ui.MainActivity;
 import com.echo.wordsudoku.ui.SettingsViewModel;
+import com.echo.wordsudoku.ui.puzzleParts.PuzzleViewModel;
 
 public class MainMenuFragment extends Fragment {
 
 
     private static final String LOAD_MAIN_MENU = "com.echo.wordsudoku.load_main_menu";
+
+    private final int LOAD_PUZZLE_ACTION = R.id.loadPuzzleAction;
 
     // UI references.
     private Button mNewGameButton;
@@ -38,6 +41,7 @@ public class MainMenuFragment extends Fragment {
     private int mSettingsPuzzleLanguage;
 
     private SettingsViewModel mSettingsViewModel;
+    private PuzzleViewModel mPuzzleViewModel;
 
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -45,6 +49,7 @@ public class MainMenuFragment extends Fragment {
         View root = inflater.inflate(R.layout.fragment_main_menu, container, false);
 
         mSettingsViewModel = new ViewModelProvider(getActivity()).get(SettingsViewModel.class);
+        mPuzzleViewModel = new ViewModelProvider(getActivity()).get(PuzzleViewModel.class);
 
 
         // This is used to navigate to the different fragments
@@ -52,8 +57,6 @@ public class MainMenuFragment extends Fragment {
 
         mNewGameButton = root.findViewById(R.id.new_game_button);
         mNewGameButton.setOnClickListener(v -> {
-//                StartPuzzleAction action = MainMenuFragmentDirections.startPuzzleAction();
-//                action.setIsNewGame(true);
             navController.navigate(R.id.choosePuzzleModeFragment);
         });
 
@@ -63,9 +66,8 @@ public class MainMenuFragment extends Fragment {
                 Toast.makeText(getContext(), "No saved game found", Toast.LENGTH_SHORT).show();
                 return;
             }
-            MainMenuFragmentDirections.LoadPuzzleAction action = MainMenuFragmentDirections.loadPuzzleAction();
-            action.setIsNewGame(false);
-            navController.navigate(action);
+            ((MainActivity)requireActivity()).loadPuzzle();
+            navController.navigate(LOAD_PUZZLE_ACTION);
         });
 
 

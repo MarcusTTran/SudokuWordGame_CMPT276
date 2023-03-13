@@ -1,10 +1,8 @@
 package com.echo.wordsudoku.ui.destinations;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
@@ -23,7 +21,6 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.echo.wordsudoku.R;
 import com.echo.wordsudoku.models.words.WordPair;
-import com.echo.wordsudoku.ui.MainActivity;
 import com.echo.wordsudoku.ui.puzzleParts.PuzzleViewModel;
 
 import java.util.ArrayList;
@@ -153,7 +150,7 @@ public class ChooseCustomWordsFragment extends Fragment{
                     Log.d(CC_WORDS_DEBUG_KEY, "Size of WordPair list: " + userEnteredWordList.size());
 
                     //Set the PuzzleViewModel to store the WordPair list we made
-                    mPuzzleViewModel.setCustomWordPair(userEnteredWordList);
+                    mPuzzleViewModel.setCustomWordPairs(userEnteredWordList);
 
                     Toast.makeText(getContext(), "Words for Custom Puzzle have been successfully set.", Toast.LENGTH_LONG).show();
 
@@ -280,7 +277,6 @@ public class ChooseCustomWordsFragment extends Fragment{
         outState.putInt(KEY_SAVE_CURRENTSIZE, this.currentSize);
 //        savePrefilledEditTexts(root, idButtonLanguageWords);
         outState.putStringArrayList(KEY_SAVE_BUTTON, savePrefilledEditTexts(root, idFrenchWords));
-
         outState.putStringArrayList(KEY_SAVE_BOARD, savePrefilledEditTexts(root, idEnglishWords));
     }
 

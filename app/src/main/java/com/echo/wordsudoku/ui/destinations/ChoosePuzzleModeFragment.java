@@ -14,8 +14,11 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
 import com.echo.wordsudoku.R;
+import com.echo.wordsudoku.ui.SettingsViewModel;
 import com.echo.wordsudoku.ui.dialogs.ChoosePuzzleSizeFragment;
 import com.echo.wordsudoku.ui.puzzleParts.PuzzleViewModel;
+
+import org.json.JSONException;
 
 
 public class ChoosePuzzleModeFragment extends Fragment {
@@ -23,7 +26,9 @@ public class ChoosePuzzleModeFragment extends Fragment {
 
     private static final String TAG = "ChoosePuzzleModeFragment";
 
+    private final int CLASS_PUZZLE_SIZE = 9;
     private PuzzleViewModel mPuzzleViewModel;
+    private SettingsViewModel mSettingsViewModel;
 
     @Nullable
     @Override
@@ -31,6 +36,7 @@ public class ChoosePuzzleModeFragment extends Fragment {
         View view;
         view = inflater.inflate(R.layout.fragment_choose_puzzle_mode, container, false);
         mPuzzleViewModel = new ViewModelProvider(requireActivity()).get(PuzzleViewModel.class);
+        mSettingsViewModel = new ViewModelProvider(requireActivity()).get(SettingsViewModel.class);
 
         return view;
     }
@@ -39,9 +45,16 @@ public class ChoosePuzzleModeFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        int language = mSettingsViewModel.getPuzzleLanguage().getValue(), difficulty = mSettingsViewModel.getDifficulty();
+
         Button classicButton = view.findViewById(R.id.classic_puzzle_button);
         NavController navController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment);
         classicButton.setOnClickListener(v -> {
+            try {
+                mPuzzleViewModel.newPuzzle(CLASS_PUZZLE_SIZE,language, difficulty);
+            } catch (JSONException e) {
+                throw new RuntimeException(e);
+            }
             navController.navigate(R.id.startPuzzleModeAction);
         });
 
@@ -57,13 +70,11 @@ public class ChoosePuzzleModeFragment extends Fragment {
 
         customWords.setOnClickListener(v -> {
             // If user has not entered custom words, navigate to custom words fragment
-            if(mPuzzleViewModel.getCustomWordPair()==null){
+            if(mPuzzleViewModel.hasSetCustomWordPairs()){
                 navController.navigate(R.id.chooseCustomWordsFragment);
             } else {
-                //  If user has entered custom words, navigate to start puzzle fragment
-                ChoosePuzzleModeFragmentDirections.StartPuzzleModeAction action = ChoosePuzzleModeFragmentDirections.startPuzzleModeAction();
-                action.setIsCustomGame(true);
-                navController.navigate(action);
+                mPuzzleViewModel.newCustomPuzzle(language,difficulty);
+                navController.navigate(R.id.startPuzzleModeAction);
             }
         });
 

@@ -1,7 +1,7 @@
 package com.echo.wordsudoku.models.sudoku;
 
 
-import com.echo.wordsudoku.models.BoardLanguage;
+import com.echo.wordsudoku.models.language.BoardLanguage;
 import com.echo.wordsudoku.models.Memory.Writable;
 import com.echo.wordsudoku.models.words.WordPair;
 

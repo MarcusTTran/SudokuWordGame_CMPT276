@@ -10,6 +10,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+// TODO: Refactor this class to use a remote database instead of a json file
+
+
 // @class WordPairReader
 // @author eakbarib
 // @date    2023-2-20

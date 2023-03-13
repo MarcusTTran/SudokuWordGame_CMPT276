@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -29,34 +30,34 @@ public class PuzzleBoardFragment extends Fragment {
         mPuzzleViewModel = new ViewModelProvider(requireActivity()).get(PuzzleViewModel.class);
 
         // Going to fill the puzzle with loading while the puzzle is being loaded
+        loadingScreen();
+
+        return root;
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        setPuzzleViewSize(mPuzzleViewModel.getPuzzleDimensions());
+        mPuzzleViewModel.getPuzzleView().observe(getViewLifecycleOwner(), puzzleView -> {
+            if (puzzleView != null) {
+                mSudokuBoard.setBoard(puzzleView);
+            }
+        });
+
+        mSudokuBoard.setImmutability(mPuzzleViewModel.getImmutableCells());
+    }
+
+    public void loadingScreen() {
         for (int i = 0; i < mSudokuBoard.getBoardSize(); i++) {
             for (int j = 0; j < mSudokuBoard.getBoardSize(); j++) {
                 mSudokuBoard.setWordOfCell(i+1, j+1, "loading");
             }
         }
-
-//        mSudokuBoard.setNewPuzzleDimensions(6,2,3);
-//        mSudokuBoard.setBoard(mPuzzleViewModel.getPuzzle().getValue().toStringArray());
-        return root;
     }
 
     public void setPuzzleViewSize(PuzzleDimensions puzzleDimensions) {
         mSudokuBoard.setNewPuzzleDimensions(puzzleDimensions.getPuzzleDimension(), puzzleDimensions.getEachBoxDimension().getRows(), puzzleDimensions.getEachBoxDimension().getColumns());
-    }
-
-    private void setPuzzleViewImmutability() {
-        mSudokuBoard.setImmutability(mPuzzleViewModel.getPuzzle().getImmutabilityTable());
-    }
-
-    public void insertWordInBoardView(String word) {
-        mSudokuBoard.insertWord(word);
-    }
-
-    public void updateBoardWithPuzzleModel() {
-        PuzzleDimensions puzzleDimensions = mPuzzleViewModel.getPuzzle().getPuzzleDimension();
-        mSudokuBoard.setNewPuzzleDimensions(puzzleDimensions.getPuzzleDimension(), puzzleDimensions.getEachBoxDimension().getRows(), puzzleDimensions.getEachBoxDimension().getColumns());
-        mSudokuBoard.setBoard(mPuzzleViewModel.getPuzzle().toStringArray());
-        setPuzzleViewImmutability();
     }
 
     public Dimension getSelectedCell() {

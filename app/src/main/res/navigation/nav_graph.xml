@@ -55,7 +55,6 @@
         <action
             android:id="@+id/submitPuzzleAction"
             app:destination="@id/puzzleResultFragment"
-            app:popUpTo="@id/mainMenuFragment"
             />
         <argument
             android:name="isNewGame"
@@ -81,7 +80,7 @@
             tools:layout="@layout/fragment_puzzle_result">
             <action
                 android:id="@+id/retryPuzzleAction"
-                app:destination="@id/puzzleFragment"/>
+                app:popUpTo="@id/puzzleFragment" />
             <argument
                 android:name="isWin"
                 android:defaultValue="false"

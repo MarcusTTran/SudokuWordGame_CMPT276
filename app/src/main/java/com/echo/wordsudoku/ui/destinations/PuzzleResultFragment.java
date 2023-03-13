@@ -15,26 +15,33 @@ import androidx.navigation.Navigation;
 
 import com.echo.wordsudoku.R;
 import com.echo.wordsudoku.models.sudoku.GameResult;
+import com.echo.wordsudoku.ui.MainActivity;
 import com.echo.wordsudoku.ui.SettingsViewModel;
 import com.echo.wordsudoku.ui.destinations.PuzzleResultFragmentDirections;
+import com.echo.wordsudoku.ui.puzzleParts.PuzzleViewModel;
 
 public class PuzzleResultFragment extends Fragment {
 
+
+    private static final int RETRY_PUZZLE_ACTION = R.id.retryPuzzleAction;
+
     private GameResult mGameResult;
     private SettingsViewModel mSettingsViewModel;
+
+    private PuzzleViewModel mPuzzleViewModel;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_puzzle_result, container, false);
         mSettingsViewModel = new ViewModelProvider(requireActivity()).get(SettingsViewModel.class);
+        mPuzzleViewModel = new ViewModelProvider(requireActivity()).get(PuzzleViewModel.class);
+
         Button mainMenuButton = root.findViewById(R.id.main_menu_button);
         Button retryPuzzleButton = root.findViewById(R.id.result_retry_puzzle_button);
-        mainMenuButton.setOnClickListener(v -> Navigation.findNavController(v).navigate(R.id.backToMainMenuAction));
+        mainMenuButton.setOnClickListener(v -> ((MainActivity)requireActivity()).mainMenu());
 
         retryPuzzleButton.setOnClickListener(v -> {
-            PuzzleResultFragmentDirections.RetryPuzzleAction action = PuzzleResultFragmentDirections.retryPuzzleAction();
-            action.setIsRetry(true);
-            Navigation.findNavController(v).navigate(action);
+            Navigation.findNavController(v).navigate(RETRY_PUZZLE_ACTION);
         });
 
         return root;
@@ -44,8 +51,7 @@ public class PuzzleResultFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         String message,timerMessage;
         int imageResource;
-        mGameResult = new GameResult(PuzzleResultFragmentArgs.fromBundle(getArguments()).getIsWin(), PuzzleResultFragmentArgs.fromBundle(getArguments()).getMistakes());
-        int timer = PuzzleResultFragmentArgs.fromBundle(getArguments()).getTimer();
+        mGameResult = mPuzzleViewModel.getGameResult();
 
         if(mGameResult.getResult() == true) {
             message = getString(R.string.msg_win);
@@ -59,8 +65,8 @@ public class PuzzleResultFragment extends Fragment {
             imageResource = R.drawable.fail;
         }
 
-        if (timer != -1)
-            timerMessage = getString(R.string.msg_puzzle_timer) +" "+ timer+" "+ getString(R.string.word_seconds);
+        if (mSettingsViewModel.isTimer())
+            timerMessage = getString(R.string.msg_puzzle_timer) +" "+ mPuzzleViewModel.getTimer().getValue()+" "+ getString(R.string.word_seconds);
         else {
             timerMessage = "Difficulty: " + getResources().getStringArray(R.array.difficulty_entries)[mSettingsViewModel.getDifficulty()-1];
         }

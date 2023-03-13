@@ -1,4 +1,4 @@
-package com.echo.wordsudoku.models;
+package com.echo.wordsudoku.models.utility;
 
 import java.util.ArrayList;
 import java.util.List;

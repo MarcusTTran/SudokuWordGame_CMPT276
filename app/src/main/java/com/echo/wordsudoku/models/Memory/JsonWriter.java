@@ -63,9 +63,9 @@ public class JsonWriter {
      * @throws JSONException If there is an error converting the puzzle to a JSON object
      * @throws IOException If there is an error writing the JSON object to the file
      */
-    public void writePuzzle(Puzzle puzzle) throws JSONException, IOException {
+    public void writePuzzle(JSONObject puzzleJson) throws JSONException, IOException {
         PrintWriter writer = new PrintWriter(new File(destination));
-        JSONObject json = puzzle.toJson();
+        JSONObject json = puzzleJson;
         writer.print(json.toString(TAB));
         writer.close();
     }

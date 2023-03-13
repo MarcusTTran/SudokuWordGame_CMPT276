@@ -1,7 +1,7 @@
 package com.echo.wordsudoku.ui;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
@@ -12,12 +12,10 @@ import androidx.navigation.ui.NavigationUI;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.view.View;
-import android.view.inputmethod.InputMethodManager;
-import android.widget.Toast;
 
 import com.echo.wordsudoku.R;
-import com.echo.wordsudoku.models.BoardLanguage;
+import com.echo.wordsudoku.models.language.BoardLanguage;
+import com.echo.wordsudoku.models.Memory.JsonReader;
 import com.echo.wordsudoku.models.Memory.JsonWriter;
 import com.echo.wordsudoku.models.sudoku.Puzzle;
 import com.echo.wordsudoku.models.words.WordPairReader;
@@ -30,11 +28,11 @@ import org.json.JSONException;
 import java.io.IOException;
 import java.io.InputStream;
 
-import com.echo.wordsudoku.ui.destinations.ChoosePuzzleModeFragmentDirections;
-
 public class MainActivity extends AppCompatActivity implements SaveGameDialog.SaveGameDialogListener, ChoosePuzzleSizeFragment.OnPuzzleSizeSelectedListener {
 
     private static final String TAG = "Puzzle.MainActivity";
+
+    private final int MAIN_MENU_ACTION = R.id.backToMainMenuAction;
 
     private final String wordPairJsonFile = "words.json";
     private PuzzleViewModel mPuzzleViewModel;
@@ -77,14 +75,7 @@ public class MainActivity extends AppCompatActivity implements SaveGameDialog.Sa
         mSettingsViewModel = new ViewModelProvider(this).get(SettingsViewModel.class);
         mPreferences = getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE);
 
-        new Thread(() -> {
-            try {
-                InputStream jsonFile = getAssets().open(wordPairJsonFile);
-                mPuzzleViewModel.setWordPairReader(new WordPairReader(jsonFile));
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-        }).start();
+
 
         mPuzzleViewModel = new ViewModelProvider(this).get(PuzzleViewModel.class);
         mSettingsViewModel = new ViewModelProvider(this).get(SettingsViewModel.class);
@@ -98,14 +89,11 @@ public class MainActivity extends AppCompatActivity implements SaveGameDialog.Sa
         mSettingsPuzzleLanguage = mPreferences.getInt(getString(R.string.puzzle_language_key), BoardLanguage.ENGLISH);
         mSettingsViewModel.setPuzzleLanguage(mSettingsPuzzleLanguage);
 
-
-
+        loadJsonDatabase();
 
         NavHostFragment navHostFragment =
                 (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment);
         navController = navHostFragment.getNavController();
-
-        mDrawerLayout = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
 
         // Hooking the navigation with the drawer and the action bar
@@ -116,15 +104,28 @@ public class MainActivity extends AppCompatActivity implements SaveGameDialog.Sa
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
     }
 
+
+    private void loadJsonDatabase() {
+        // Load the wordpair reader from the json file
+        new Thread(() -> {
+            try {
+                InputStream jsonFile = getAssets().open(wordPairJsonFile);
+                mPuzzleViewModel.setWordPairReader(new WordPairReader(jsonFile));
+            } catch (IOException e) {
+                fatalErrorDialog(getString(R.string.error_load_wordpair_database));
+            }
+        }).start();
+    }
+
     @Override
     public boolean onSupportNavigateUp() {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         int currentPage = navController.getCurrentDestination().getId();
         if (currentPage == R.id.puzzleFragment) {
-            if(!mPuzzleViewModel.isGameSaved()) {
+            if(!mPuzzleViewModel.isPuzzleSaved()) {
                 new SaveGameDialog().show(getSupportFragmentManager(), SaveGameDialog.TAG);
             } else {
-                navController.navigate(R.id.backToMainMenuAction);
+                mainMenu();
             }
             return true;
         } else {
@@ -171,39 +172,76 @@ public class MainActivity extends AppCompatActivity implements SaveGameDialog.Sa
         saveSettings();
         // Save the puzzle to the json file before app closes
         if(mSettingsViewModel.isAutoSave())
-            saveGame();
+            savePuzzle();
     }
 
-    public void saveGame(){
+    public void savePuzzle(){
         new Thread(() -> {
             JsonWriter jsonWriter = new JsonWriter(MainActivity.this);
-            Puzzle puzzle = mPuzzleViewModel.getPuzzle();
-            if(puzzle == null) return;
+            if(mPuzzleViewModel.isPuzzleNonValid()) return;
             try {
-                jsonWriter.writePuzzle(puzzle);
-                mPuzzleViewModel.setGameSaved(true);
+                jsonWriter.writePuzzle(mPuzzleViewModel.getPuzzleJson());
+                mPuzzleViewModel.puzzleSaved();
             } catch (JSONException | IOException e) {
-                Toast.makeText(MainActivity.this,R.string.save_game_error , Toast.LENGTH_SHORT).show();
+                fatalErrorDialog(getString(R.string.save_game_error));
             }
         }).start();
     }
 
 
     @Override
-    public void onSaveGame() {
-        saveGame();
-        navController.navigate(R.id.backToMainMenuAction);
+    public void onSaveDialogYes() {
+        savePuzzle();
+        mainMenu();
     }
 
     @Override
-    public void onNotSaveGame() {
-        navController.navigate(R.id.backToMainMenuAction);
+    public void onSaveDialogNo() {
+        mainMenu();
     }
 
     @Override
     public void onPuzzleSizeSelected(int size) {
-        ChoosePuzzleModeFragmentDirections.StartPuzzleModeAction action = ChoosePuzzleModeFragmentDirections.startPuzzleModeAction();
-        action.setPuzzleSize(size);
-        navController.navigate(action);
+        try {
+            mPuzzleViewModel.newPuzzle(size, mSettingsViewModel.getPuzzleLanguage().getValue(),mSettingsViewModel.getDifficulty());
+        } catch (JSONException e) {
+            throw new RuntimeException(e);
+        }
+        navController.navigate(R.id.startPuzzleModeAction);
+    }
+
+    public void loadPuzzle() {
+        JsonReader jsonReader = new JsonReader(this);
+        new Thread(() -> {
+            // Load the puzzle from the file and update the class members
+            Puzzle puzzle;
+            try {
+                puzzle = jsonReader.readPuzzle();
+                // Update the PuzzleViewModel
+                if (puzzle != null) {
+                    mPuzzleViewModel.loadPuzzle(puzzle);
+                }
+            } catch (IOException | JSONException e) {
+                // run from main thread
+                runOnUiThread(() -> {
+                    fatalErrorDialog(getString(R.string.load_game_error));
+                });
+            }
+        }).start();
+    }
+
+    public void fatalErrorDialog(String message) {
+        new AlertDialog.Builder(this)
+                .setTitle(R.string.word_error)
+                .setMessage(message)
+                .setPositiveButton(R.string.done_btn, (dialog, which) -> {
+                    dialog.dismiss();
+                    mainMenu();
+                })
+                .show();
+    }
+
+    public void mainMenu() {
+        Navigation.findNavController(this, R.id.nav_host_fragment).navigate(MAIN_MENU_ACTION);
     }
 }

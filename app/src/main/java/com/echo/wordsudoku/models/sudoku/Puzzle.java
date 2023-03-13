@@ -1,6 +1,6 @@
 package com.echo.wordsudoku.models.sudoku;
 
-import com.echo.wordsudoku.models.BoardLanguage;
+import com.echo.wordsudoku.models.language.BoardLanguage;
 import com.echo.wordsudoku.models.Memory.Writable;
 import com.echo.wordsudoku.models.dimension.Dimension;
 import com.echo.wordsudoku.models.dimension.PuzzleDimensions;
@@ -108,10 +108,6 @@ public class Puzzle implements Writable {
         lockCells();
     }
 
-    private int getCellsToRemoveWithDifficulty(int difficulty) {
-        int size = puzzleDimension.getPuzzleDimension();
-        return (difficulty+1)*size*size/8;
-    }
 
 
     public Puzzle(List<WordPair> wordPairs,int dimension, int language, int numberOfStartCells) {
@@ -196,6 +192,15 @@ public class Puzzle implements Writable {
     }
 
 
+    public void setTimer(int timer) {
+        this.timer = timer;
+    }
+
+    public int getTimer() {
+        return timer;
+    }
+
+
     // End of getters and setters
 
 
@@ -251,6 +256,22 @@ public class Puzzle implements Writable {
         if (solutionBoard.getCellFromBigArray(i,j).isEqual(new Cell(word)) == false)
             mistakes++;
     }
+
+    public void setCell(int i, int j, String word) throws IllegalArgumentException {
+        for (WordPair wordPair : mWordPairs) {
+            if (wordPair.doesContain(word)) {
+                setCell(i, j, wordPair);
+                return;
+            }
+        }
+        throw new IllegalArgumentException("Word pair not found in the list of word pairs");
+    }
+
+    public void setCell(Dimension dimension, String word) throws IllegalArgumentException {
+        setCell(dimension.getRows(), dimension.getColumns(), word);
+    }
+
+
 
     /* @method
      *  Returns a String[][] representation of the user board
@@ -432,6 +453,33 @@ public class Puzzle implements Writable {
             timer = 0;
     }
 
+    public boolean isPuzzleBlank() {
+        boolean hasUserEnteredSomething = false;
+        for (int i = 0; i < userBoard.getRows(); i++) {
+            for (int j = 0; j < userBoard.getColumns(); j++) {
+                Cell cell = userBoard.getCellFromBigArray(i,j);
+                if (cell.isEditable() == true && cell.isEmpty() == false) {
+                    hasUserEnteredSomething = true;
+                    break;
+                }
+            }
+        }
+        return !hasUserEnteredSomething;
+    }
+
+    public boolean isPuzzleTotallyEmpty() {
+        boolean puzzleIsNonEmpty = false;
+        for (int i = 0; i < userBoard.getRows(); i++) {
+            for (int j = 0; j < userBoard.getColumns(); j++) {
+                if (userBoard.getCellFromBigArray(i,j).isEmpty() == false) {
+                    puzzleIsNonEmpty = true;
+                    break;
+                }
+            }
+        }
+        return !puzzleIsNonEmpty;
+    }
+
     public boolean[][] getImmutabilityTable() {
         boolean[][] result = new boolean[userBoard.getRows()][userBoard.getColumns()];
         for (int i = 0; i < userBoard.getRows(); i++) {
@@ -442,12 +490,10 @@ public class Puzzle implements Writable {
         return result;
     }
 
-    public void setTimer(int timer) {
-        this.timer = timer;
-    }
 
-    public int getTimer() {
-        return timer;
+    private int getCellsToRemoveWithDifficulty(int difficulty) {
+        int size = puzzleDimension.getPuzzleDimension();
+        return (difficulty+1)*size*size/8;
     }
 
     /*
