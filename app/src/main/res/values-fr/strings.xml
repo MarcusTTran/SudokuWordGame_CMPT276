@@ -30,7 +30,7 @@
     <string name="puzzle_language_key">com.echo.wordsudoku.puzzleLanguageKey</string>
     <string name="puzzle_difficulty_preference_key">com.echo.wordsudoku.puzzleDifficultyKey</string>
     <string name="puzzle_timer_preference_key">com.echo.wordsudoku.puzzleTimerKey</string>
-    <string name="puzzle_uiImmersion_preference_key">com.echo.wordsudoku.puzzleTimerKey</string>
+    <string name="puzzle_autosave_preference_key">com.echo.wordsudoku.autosave</string>
 
 
     <string name="RulesHeader">Les Règles de Mot Sudoku</string>
@@ -78,7 +78,7 @@ tous vos mots en vedette. Mais rappelez-vous, vous ne pouvez accéder à cette t
 
     <!-- AutoSave Preferences -->
     <string name="auto_save_title">Enregistrement automatique</string>
-    <string name="auto_save_on">L’enregistrement automatique est activén</string>
+    <string name="auto_save_on">L’enregistrement automatique est activén (Lorsque l’application se ferme, votre progression sera enregistrée)</string>
     <string name="auto_save_off">L’enregistrement automatique est désactivé</string>
 
 

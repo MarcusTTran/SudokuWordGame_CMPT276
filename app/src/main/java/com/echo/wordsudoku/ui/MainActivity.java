@@ -137,6 +137,9 @@ public class MainActivity extends AppCompatActivity implements SaveGameDialog.Sa
 
         boolean timer = mPreferences.getBoolean(getString(R.string.puzzle_timer_preference_key), false);
          mSettingsViewModel.setTimer(timer);
+
+        boolean autoSave = mPreferences.getBoolean(getString(R.string.puzzle_autosave_preference_key), false);
+        mSettingsViewModel.setAutoSave(autoSave);
     }
 
 
@@ -152,6 +155,7 @@ public class MainActivity extends AppCompatActivity implements SaveGameDialog.Sa
         editor.putInt(getString(R.string.puzzle_language_key), mSettingsPuzzleLanguage);
         editor.putInt(getString(R.string.puzzle_difficulty_preference_key), mSettingsPuzzleDifficulty);
         editor.putBoolean(getString(R.string.puzzle_timer_preference_key), mSettingsPuzzleTimer);
+        editor.putBoolean(getString(R.string.puzzle_autosave_preference_key), mSettingsViewModel.isAutoSave());
         editor.apply();
     }
 
