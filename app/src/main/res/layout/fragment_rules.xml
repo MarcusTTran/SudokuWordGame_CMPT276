@@ -5,18 +5,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:padding="10dp"
     tools:context=".ui.dialogs.RulesFragment">
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:paddingVertical="0dp"
-        custom:layout_constraintBottom_toBottomOf="parent"
-        custom:layout_constraintEnd_toEndOf="parent"
-        custom:layout_constraintStart_toStartOf="parent"
-        custom:layout_constraintTop_toTopOf="parent">
-
 
         <ImageButton
             android:id="@+id/rulesExitButton"
@@ -25,11 +15,8 @@
             android:padding="3dp"
             android:src="@android:drawable/ic_menu_close_clear_cancel"
             android:visibility="visible"
-            custom:layout_constraintBottom_toBottomOf="parent"
             custom:layout_constraintEnd_toEndOf="parent"
-            custom:layout_constraintStart_toEndOf="@+id/RulesHeader"
-            custom:layout_constraintTop_toTopOf="parent"
-            custom:layout_constraintVertical_bias="0.0" />
+            custom:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/RulesHeader"
@@ -45,7 +32,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
+            android:paddingTop="10dp"
             android:paddingLeft="20dp"
             android:paddingRight="20dp"
             android:paddingBottom="20dp"
@@ -54,10 +41,5 @@
             custom:layout_constraintEnd_toEndOf="parent"
             custom:layout_constraintStart_toStartOf="parent"
             custom:layout_constraintTop_toBottomOf="@+id/RulesHeader" />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

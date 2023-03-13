@@ -46,7 +46,6 @@ If you encounter any difficulty translating the words featured in your puzzle, y
     <string name="destination_puzzle">Puzzle</string>
     <string name="destination_puzzle_result">Puzzle Result</string>
     <string name="destination_choose_custom_words">Choose Custom Words</string>
-    <string name="destination_choose_custom_words_size">Choose Size for Puzzle with Custom Words</string>
     <string name="destination_settings">Settings</string>
     <string name="destination_choose_puzzle_mode">Choose Puzzle Mode</string>
 

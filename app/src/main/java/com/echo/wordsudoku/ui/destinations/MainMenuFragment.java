@@ -11,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 import androidx.navigation.fragment.NavHostFragment;
 
 import com.echo.wordsudoku.R;
@@ -47,9 +48,7 @@ public class MainMenuFragment extends Fragment {
 
 
         // This is used to navigate to the different fragments
-        NavHostFragment navHostFragment =
-                (NavHostFragment) getActivity().getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment);
-        NavController navController = navHostFragment.getNavController();
+        NavController navController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment);
 
         mNewGameButton = root.findViewById(R.id.new_game_button);
         mNewGameButton.setOnClickListener(v -> {

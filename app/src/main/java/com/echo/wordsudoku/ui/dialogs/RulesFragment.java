@@ -14,12 +14,12 @@ import com.echo.wordsudoku.R;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link RulesFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
 public class RulesFragment extends DialogFragment {
 
 
+    public static final String TAG = "RulesFragment";
     private ImageButton exitButton;
 
 
@@ -27,39 +27,16 @@ public class RulesFragment extends DialogFragment {
     public RulesFragment() {
         // Required empty public constructor
     }
-
-//     Use this factory method to create a new instance of
-//     this fragment using the provided parameters.
-//
-//     returns a new instance of fragment RulesFragment.
-    public static RulesFragment newInstance() {
-        RulesFragment fragment = new RulesFragment();
-        Bundle args = new Bundle();
-        fragment.setArguments(args);
-        return fragment;
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-    }
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view1 = inflater.inflate(R.layout.fragment_rules, container, false);
 
-        //set Listener onto button
+        //set Listener onto exit button
         exitButton = view1.findViewById(R.id.rulesExitButton);
-        exitButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //Log.d("HelpFragment", "ImageButton was pressed");
-                //Ends fragment when exit button tapped
-                getActivity().getSupportFragmentManager().beginTransaction().remove(RulesFragment.this).commit();
-            }
+        exitButton.setOnClickListener(v -> {
+            dismiss();
         });
         return view1;
     }

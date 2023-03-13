@@ -33,7 +33,7 @@
     <string name="puzzle_autosave_preference_key">com.echo.wordsudoku.autosave</string>
 
 
-    <string name="RulesHeader">Les Règles de Mot Sudoku</string>
+    <string name="RulesHeader">Les Règles</string>
     <string name="RulesText">Quand vous commencez un nouveau jeu de Mot Sudoku, vouz serez présenté avec une quadrillage carrée composée d\'un certain nombre des cellules.
 Pour chaque rangée, colonne, et sous-carré délimité, il ne doit y avoir aucun mot répétitif.
 \n<b>Hint:</b>
@@ -51,7 +51,6 @@ tous vos mots en vedette. Mais rappelez-vous, vous ne pouvez accéder à cette t
     <string name="destination_puzzle_result">Les Résultats</string>
     <string name="destination_choose_custom_words">Choisissez la taille du puzzle avec des mots personnalisés</string>
     <string name="destination_settings">Paramètres</string>
-    <string name="destination_choose_custom_words_size">Choisissez la Taille du Casse-Tête avec des Mots Personnalisés</string>
     <string name="destination_choose_puzzle_mode">Choisissez le mode Puzzle</string>
 
     <!-- change all of the below string resources to french -->

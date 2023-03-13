@@ -219,7 +219,7 @@ public class PuzzleFragment extends Fragment {
         //Toast.makeText(this, "Help Button pressed", Toast.LENGTH_LONG).show();
         //Create new instance of RulesFragment
         RulesFragment rulesFragment = new RulesFragment();
-        rulesFragment.show(getActivity().getSupportFragmentManager(), "RulesFragment");
+        rulesFragment.show(getActivity().getSupportFragmentManager(), RulesFragment.TAG);
 
     }
 
@@ -237,7 +237,7 @@ public class PuzzleFragment extends Fragment {
 
         //Create new instance of RulesFragment
         DictionaryFragment dictionaryFragment = DictionaryFragment.newInstance(LanguageList1, LanguageList2,dictionaryPopupLimit);
-        dictionaryFragment.show(getActivity().getSupportFragmentManager(), "DictionaryFragment");
+        dictionaryFragment.show(getActivity().getSupportFragmentManager(), DictionaryFragment.TAG);
         //Increase the dictionary pop up limit (limit is twice per game)
         dictionaryPopupLimit++;
 
@@ -254,7 +254,6 @@ public class PuzzleFragment extends Fragment {
             Toast.makeText(getActivity(), getString(R.string.error_not_filled_puzzle), Toast.LENGTH_LONG).show();
             return;
         }
-        // TODO: show a dialog to ask the user if he wants to finish the puzzle
 
         GameResult gameResult = puzzle.getGameResult();
         SubmitPuzzleAction action = PuzzleFragmentDirections.submitPuzzleAction();
@@ -293,7 +292,7 @@ public class PuzzleFragment extends Fragment {
                 if(!mPuzzleViewModel.isGameSaved())
                     new SaveGameDialog().show(getChildFragmentManager(), SaveGameDialog.TAG);
                 else
-                    Navigation.findNavController(getView()).popBackStack();
+                    Navigation.findNavController(getView()).navigate(R.id.backToMainMenuAction);
                 return true;
             case R.id.options_exit_button:
                 getActivity().finish();
@@ -303,6 +302,10 @@ public class PuzzleFragment extends Fragment {
         }
     }
 
+
+    // This method is called when the user presses the back button
+    // It checks if the user has saved the game
+    // If the user has not saved the game, it asks the user if he wants to save the game
     @Override
     public void onResume() {
         super.onResume();

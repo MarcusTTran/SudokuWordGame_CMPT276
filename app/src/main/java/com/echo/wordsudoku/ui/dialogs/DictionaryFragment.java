@@ -21,6 +21,8 @@ import com.echo.wordsudoku.R;
  */
 public class DictionaryFragment extends DialogFragment {
 
+    public static final String TAG = "DictionaryFragment";
+
 
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
