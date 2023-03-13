@@ -1,8 +1,6 @@
 package com.echo.wordsudoku.ui;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.app.AppCompatDelegate;
-import androidx.core.os.LocaleListCompat;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.lifecycle.ViewModelProvider;
@@ -11,14 +9,11 @@ import androidx.navigation.Navigation;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
-
-import android.app.LocaleManager;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.os.Build;
 import android.os.Bundle;
-import android.os.LocaleList;
-import android.util.Log;
+import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
 import com.echo.wordsudoku.R;
@@ -26,17 +21,18 @@ import com.echo.wordsudoku.models.BoardLanguage;
 import com.echo.wordsudoku.models.Memory.JsonWriter;
 import com.echo.wordsudoku.models.sudoku.Puzzle;
 import com.echo.wordsudoku.models.words.WordPairReader;
+import com.echo.wordsudoku.ui.destinations.ChoosePuzzleModeFragmentDirections;
+import com.echo.wordsudoku.ui.dialogs.ChoosePuzzleSizeFragment;
 import com.echo.wordsudoku.ui.dialogs.SaveGameDialog;
 import com.echo.wordsudoku.ui.puzzleParts.PuzzleViewModel;
 import com.google.android.material.navigation.NavigationView;
-
 import org.json.JSONException;
-
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.Locale;
 
-public class MainActivity extends AppCompatActivity implements SaveGameDialog.SaveGameDialogListener {
+import com.echo.wordsudoku.ui.destinations.ChoosePuzzleModeFragmentDirections;
+
+public class MainActivity extends AppCompatActivity implements SaveGameDialog.SaveGameDialogListener, ChoosePuzzleSizeFragment.OnPuzzleSizeSelectedListener {
 
     private static final String TAG = "Puzzle.MainActivity";
 
@@ -115,7 +111,7 @@ public class MainActivity extends AppCompatActivity implements SaveGameDialog.Sa
         // Hooking the navigation with the drawer and the action bar
 
         appBarConfiguration =
-                new AppBarConfiguration.Builder(R.id.mainMenuFragment,R.id.settingsFragment,R.id.chooseCustomWordsFragment).setDrawerLayout(mDrawerLayout).build();
+                new AppBarConfiguration.Builder(R.id.mainMenuFragment).build();
         NavigationUI.setupWithNavController(navigationView, navController);
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
     }
@@ -123,9 +119,10 @@ public class MainActivity extends AppCompatActivity implements SaveGameDialog.Sa
     @Override
     public boolean onSupportNavigateUp() {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
-        if (navController.getCurrentDestination().getId() == R.id.puzzleFragment && !mPuzzleViewModel.isGameSaved()) {
+        int currentPage = navController.getCurrentDestination().getId();
+        if (currentPage == R.id.puzzleFragment && !mPuzzleViewModel.isGameSaved()) {
             new SaveGameDialog().show(getSupportFragmentManager(), SaveGameDialog.TAG);
-            return false;
+            return true;
         } else {
             return NavigationUI.navigateUp(navController, appBarConfiguration)
                     || super.onSupportNavigateUp();
@@ -200,13 +197,21 @@ public class MainActivity extends AppCompatActivity implements SaveGameDialog.Sa
     @Override
     public void onSaveGame() {
         saveGame();
-//        navController.navigate(R.id.quitPuzzleToMainMenuAction);
-        navController.popBackStack();
+        navController.navigate(R.id.backToMainMenuAction);
     }
 
     @Override
     public void onNotSaveGame() {
-        navController.popBackStack();
-//        navController.navigate(R.id.quitPuzzleToMainMenuAction);
+        navController.navigate(R.id.backToMainMenuAction);
+    }
+
+    @Override
+    public void onPuzzleSizeSelected(int size) {
+        ChoosePuzzleModeFragmentDirections.StartPuzzleModeAction action = ChoosePuzzleModeFragmentDirections.startPuzzleModeAction();
+        action.setPuzzleSize(size);
+        NavHostFragment navHostFragment =
+                (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment);
+        NavController navController = navHostFragment.getNavController();
+        navController.navigate(action);
     }
 }

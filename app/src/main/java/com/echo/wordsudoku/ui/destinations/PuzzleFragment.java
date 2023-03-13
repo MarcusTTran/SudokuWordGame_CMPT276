@@ -260,6 +260,9 @@ public class PuzzleFragment extends Fragment {
         SubmitPuzzleAction action = PuzzleFragmentDirections.submitPuzzleAction();
         action.setIsWin(gameResult.getResult());
         action.setMistakes(gameResult.getMistakes());
+        if(mSettingsViewModel.isTimer()) {
+            action.setTimer(mPuzzleViewModel.getPuzzle().getTimer());
+        }
         Navigation.findNavController(getView()).navigate(action);
     }
 
@@ -307,9 +310,9 @@ public class PuzzleFragment extends Fragment {
             @Override
             public void handleOnBackPressed() {
                 if(!mPuzzleViewModel.isGameSaved()) {
-                    new SaveGameDialog().show(getChildFragmentManager(), "SaveGameDialog");
+                    new SaveGameDialog().show(getChildFragmentManager(), SaveGameDialog.TAG);
                 } else {
-                    Navigation.findNavController(getView()).popBackStack();
+                    Navigation.findNavController(getView()).navigate(R.id.backToMainMenuAction);
                 }
             }
         };

@@ -1,10 +1,13 @@
 package com.echo.wordsudoku.ui.destinations;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -20,6 +23,7 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.echo.wordsudoku.R;
 import com.echo.wordsudoku.models.words.WordPair;
+import com.echo.wordsudoku.ui.MainActivity;
 import com.echo.wordsudoku.ui.puzzleParts.PuzzleViewModel;
 
 import java.util.ArrayList;
@@ -90,6 +94,7 @@ public class ChooseCustomWordsFragment extends Fragment{
         Log.d(CC_WORDS_DEBUG_KEY,"onCreateView called");
 
         View root = inflater.inflate(R.layout.fragment_choose_custom_words, container, false);
+
         this.root = root;
 
         mPuzzleViewModel = new ViewModelProvider(requireActivity()).get(PuzzleViewModel.class);
@@ -191,6 +196,7 @@ public class ChooseCustomWordsFragment extends Fragment{
 
     //Add certain amount of EditText
     private void addEditTexts(View root, int numberToAdd,boolean isInitialize) {
+
         //Add EditTexts to Board Language table
         LinearLayout entryBoxHolder1 = root.findViewById(R.id.boardLanguageEntries);
 
@@ -204,6 +210,8 @@ public class ChooseCustomWordsFragment extends Fragment{
             someEntryBox.setEms(6);
             someEntryBox.setTextSize(15);
             someEntryBox.setId(View.generateViewId());
+            //Disable the keyboard from popping up when EditText is clicked (landscape mode)
+            someEntryBox.setImeOptions(EditorInfo.IME_FLAG_NO_EXTRACT_UI);
             idEnglishWords.add(someEntryBox.getId());
             entryBoxHolder1.addView(someEntryBox);
         }
@@ -221,6 +229,8 @@ public class ChooseCustomWordsFragment extends Fragment{
             someEntryBox.setEms(6);
             someEntryBox.setTextSize(15);
             someEntryBox.setId(View.generateViewId());
+            //Disable the keyboard from popping up when EditText is clicked (landscape mode)
+            someEntryBox.setImeOptions(EditorInfo.IME_FLAG_NO_EXTRACT_UI);
             idFrenchWords.add(someEntryBox.getId());
             entryBoxHolder2.addView(someEntryBox);
         }

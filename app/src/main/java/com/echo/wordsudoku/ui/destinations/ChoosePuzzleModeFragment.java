@@ -9,23 +9,28 @@ import android.widget.Button;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
 import com.echo.wordsudoku.R;
-import com.echo.wordsudoku.ui.destinations.ChoosePuzzleModeFragmentDirections;
 import com.echo.wordsudoku.ui.dialogs.ChoosePuzzleSizeFragment;
 import com.echo.wordsudoku.ui.puzzleParts.PuzzleViewModel;
 
+
 public class ChoosePuzzleModeFragment extends Fragment {
+
+
+    private static final String TAG = "ChoosePuzzleModeFragment";
+
+    private PuzzleViewModel mPuzzleViewModel;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view =  super.onCreateView(inflater, container, savedInstanceState);
+        View view;
         view = inflater.inflate(R.layout.fragment_choose_puzzle_mode, container, false);
-
+        mPuzzleViewModel = new ViewModelProvider(requireActivity()).get(PuzzleViewModel.class);
 
         return view;
     }
@@ -35,37 +40,34 @@ public class ChoosePuzzleModeFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         Button classicButton = view.findViewById(R.id.classic_puzzle_button);
-        NavController navController = Navigation.findNavController(getActivity(), R.id.nav_host_fragment);
-        classicButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-//                navController.popBackStack();
-                navController.navigate(R.id.choosePuzzleModeToStartPuzzleAction);
-            }
+        NavController navController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment);
+        classicButton.setOnClickListener(v -> {
+            navController.navigate(R.id.startPuzzleModeAction);
         });
 
 
         Button customButton = view.findViewById(R.id.custom_size_button);
 
-        customButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ChoosePuzzleSizeFragment choosePuzzleSizeFragment = new ChoosePuzzleSizeFragment();
-                choosePuzzleSizeFragment.show(getFragmentManager(), "ChoosePuzzleSizeFragment");
-            }
+        customButton.setOnClickListener(v -> {
+            ChoosePuzzleSizeFragment choosePuzzleSizeFragment = new ChoosePuzzleSizeFragment();
+            choosePuzzleSizeFragment.show(getChildFragmentManager(), ChoosePuzzleSizeFragment.TAG);
         });
 
 
         Button customWords = view.findViewById(R.id.custom_words_button);
 
-        customWords.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ChoosePuzzleModeFragmentDirections.ChoosePuzzleModeToStartPuzzleAction action = ChoosePuzzleModeFragmentDirections.choosePuzzleModeToStartPuzzleAction();
+        customWords.setOnClickListener(v -> {
+            // If user has not entered custom words, navigate to custom words fragment
+            if(mPuzzleViewModel.getCustomWordPair()==null){
+                navController.navigate(R.id.chooseCustomWordsFragment);
+            } else {
+                //  If user has entered custom words, navigate to start puzzle fragment
+                ChoosePuzzleModeFragmentDirections.StartPuzzleModeAction action = ChoosePuzzleModeFragmentDirections.startPuzzleModeAction();
                 action.setIsCustomGame(true);
                 navController.navigate(action);
             }
         });
 
     }
+
 }

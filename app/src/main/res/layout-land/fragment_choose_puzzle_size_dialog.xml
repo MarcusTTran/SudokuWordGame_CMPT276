@@ -1,36 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
-    <androidx.constraintlayout.widget.ConstraintLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:padding="10dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:padding="10dp"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toTopOf="parent">
 
         <TextView
-            android:layout_margin="20dp"
-            android:id="@+id/textView"
+            android:id="@+id/choose_puzzle_size_dialog_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/choose_size_title"
             android:textSize="15sp"
-            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_margin="20dp"
+            app:layout_constraintEnd_toStartOf="@id/size_radio_group"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/size_radio_group"
+            app:layout_constraintBottom_toBottomOf="parent"
             />
 
         <RadioGroup
             android:id="@+id/size_radio_group"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintBottom_toBottomOf="@id/choose_puzzle_size_dialog_buttonpad"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView">
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/choose_puzzle_size_dialog_buttonpad"
+            app:layout_constraintStart_toEndOf="@id/choose_puzzle_size_dialog_title"
+            app:layout_constraintTop_toTopOf="parent">
 
             <RadioButton
                 android:id="@+id/choose_12x12_puzzle"
@@ -59,22 +58,22 @@
 
         <LinearLayout
             android:layout_margin="20dp"
+            android:id="@+id/choose_puzzle_size_dialog_buttonpad"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/choose_puzzle_size_dialog_buttonpad"
+            android:orientation="vertical"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/size_radio_group"
+            app:layout_constraintStart_toEndOf="@id/size_radio_group"
+            app:layout_constraintTop_toTopOf="parent"
             >
-
         <Button
             android:id="@+id/done_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="10dp"
+            android:layout_marginVertical="10dp"
             android:text="@string/done_button"
-         />
+            />
         <Button
             android:id="@+id/cancel_button"
             android:layout_width="wrap_content"

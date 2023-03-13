@@ -2,18 +2,30 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/nav_graph"
+    android:id="@+id/puzzle_nav_graph"
     app:startDestination="@id/mainMenuFragment">
+
+
+    <action
+        android:id="@+id/backToMainMenuAction"
+        app:popUpTo="@id/mainMenuFragment" />
+
     <fragment
         android:id="@+id/mainMenuFragment"
         android:name="com.echo.wordsudoku.ui.destinations.MainMenuFragment"
         android:label="@string/destination_main_menu"
         tools:layout="@layout/fragment_main_menu">
         <action
-            android:id="@+id/startPuzzleAction"
+            android:id="@+id/startChoosePuzzleModeAction"
+            app:destination="@id/chooseCustomWordsFragment"/>
+        <action
+            android:id="@+id/loadPuzzleAction"
             app:destination="@id/puzzleFragment"/>
         <action
-            android:id="@+id/startChoosePuzzleModeAction"
+            android:id="@+id/startSettingsAction"
+            app:destination="@id/settingsFragment"/>
+        <action
+            android:id="@+id/startCustomWordsAction"
             app:destination="@id/chooseCustomWordsFragment"/>
     </fragment>
     <fragment
@@ -31,9 +43,8 @@
         android:label="@string/destination_choose_puzzle_mode"
         tools:layout="@layout/fragment_choose_puzzle_mode">
         <action
-            android:id="@+id/choosePuzzleModeToStartPuzzleAction"
-            app:destination="@id/puzzleFragment"
-            app:popUpTo="@id/mainMenuFragment"/>
+            android:id="@+id/startPuzzleModeAction"
+            app:destination="@id/puzzleFragment"/>
     </fragment>
 
     <fragment
@@ -44,12 +55,8 @@
         <action
             android:id="@+id/submitPuzzleAction"
             app:destination="@id/puzzleResultFragment"
-            app:popUpTo="@id/mainMenuFragment"/>
-        <action
-            android:id="@+id/quitPuzzleToMainMenuAction"
-            app:destination="@id/mainMenuFragment"
             app:popUpTo="@id/mainMenuFragment"
-            app:popUpToInclusive="true"/>
+            />
         <argument
             android:name="isNewGame"
             app:argType="boolean"
@@ -73,20 +80,18 @@
             android:label="@string/destination_puzzle_result"
             tools:layout="@layout/fragment_puzzle_result">
             <action
-                android:id="@+id/MainMenuAfterPuzzleAction"
-                app:destination="@id/mainMenuFragment"
-                app:popUpTo="@id/mainMenuFragment"
-                app:popUpToInclusive="true"/>
-            <action
                 android:id="@+id/retryPuzzleAction"
-                app:destination="@id/puzzleFragment"
-                app:popUpTo="@id/mainMenuFragment" />
+                app:destination="@id/puzzleFragment"/>
             <argument
                 android:name="isWin"
                 android:defaultValue="false"
                 app:argType="boolean" />
             <argument
                 android:name="mistakes"
+                android:defaultValue="-1"
+                app:argType="integer" />
+            <argument
+                android:name="timer"
                 android:defaultValue="-1"
                 app:argType="integer" />
         </fragment>

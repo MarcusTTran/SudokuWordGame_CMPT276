@@ -17,7 +17,6 @@ import com.echo.wordsudoku.R;
 import com.echo.wordsudoku.models.BoardLanguage;
 import com.echo.wordsudoku.models.Memory.JsonReader;
 import com.echo.wordsudoku.ui.SettingsViewModel;
-import com.echo.wordsudoku.ui.destinations.MainMenuFragmentDirections.StartPuzzleAction;
 
 public class MainMenuFragment extends Fragment {
 
@@ -28,6 +27,10 @@ public class MainMenuFragment extends Fragment {
     private Button mNewGameButton;
     private Button mLoadGameButton;
     private Button mExitButton;
+
+    private Button mSettingsButton;
+
+    private Button mChooseCustomWordsButton;
 
     private Button mChangeLanguageButton;
 
@@ -49,29 +52,21 @@ public class MainMenuFragment extends Fragment {
         NavController navController = navHostFragment.getNavController();
 
         mNewGameButton = root.findViewById(R.id.new_game_button);
-        mNewGameButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        mNewGameButton.setOnClickListener(v -> {
 //                StartPuzzleAction action = MainMenuFragmentDirections.startPuzzleAction();
 //                action.setIsNewGame(true);
-
-
-                navController.navigate(R.id.choosePuzzleModeFragment);
-            }
+            navController.navigate(R.id.choosePuzzleModeFragment);
         });
 
         mLoadGameButton = root.findViewById(R.id.load_game_button);
-        mLoadGameButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (!new JsonReader(getContext()).isFileExists()) {
-                    Toast.makeText(getContext(), "No saved game found", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                StartPuzzleAction action = MainMenuFragmentDirections.startPuzzleAction();
-                action.setIsNewGame(false);
-                navController.navigate(action);
+        mLoadGameButton.setOnClickListener(v -> {
+            if (!new JsonReader(getContext()).isFileExists()) {
+                Toast.makeText(getContext(), "No saved game found", Toast.LENGTH_SHORT).show();
+                return;
             }
+            MainMenuFragmentDirections.LoadPuzzleAction action = MainMenuFragmentDirections.loadPuzzleAction();
+            action.setIsNewGame(false);
+            navController.navigate(action);
         });
 
 
@@ -80,12 +75,7 @@ public class MainMenuFragment extends Fragment {
         // When the button is clicked, finish the activity
 
         mExitButton = root.findViewById(R.id.exit_button);
-        mExitButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                getActivity().finish();
-            }
-        });
+        mExitButton.setOnClickListener(v -> getActivity().finish());
 
         mChangeLanguageButton = root.findViewById(R.id.change_language_button);
 
@@ -95,18 +85,24 @@ public class MainMenuFragment extends Fragment {
             mChangeLanguageButton.setText(changeLanguageButtonText);
         });
 
-        mChangeLanguageButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                try {
-                    mSettingsPuzzleLanguage = BoardLanguage.getOtherLanguage(mSettingsPuzzleLanguage);
-                    mSettingsViewModel.setPuzzleLanguage(mSettingsPuzzleLanguage);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+        mChangeLanguageButton.setOnClickListener(v -> {
+            try {
+                mSettingsPuzzleLanguage = BoardLanguage.getOtherLanguage(mSettingsPuzzleLanguage);
+                mSettingsViewModel.setPuzzleLanguage(mSettingsPuzzleLanguage);
+            } catch (Exception e) {
+                e.printStackTrace();
             }
         });
 
+        mSettingsButton = root.findViewById(R.id.settings_button);
+        mSettingsButton.setOnClickListener(v -> {
+            navController.navigate(R.id.startSettingsAction);
+        });
+
+        mChooseCustomWordsButton = root.findViewById(R.id.custom_words_button);
+        mChooseCustomWordsButton.setOnClickListener(v -> {
+            navController.navigate(R.id.startCustomWordsAction);
+        });
         return root;
     }
 }

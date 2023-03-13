@@ -12,6 +12,8 @@
     <string name="msg_fail">Vous avez perdu! Vous avez fait </string>
     <string name="word_mistake_singular">erreur</string>
     <string name="word_mistake_plural">erreurs</string>
+    <string name="msg_puzzle_timer"> Ce jeu vous a pris </string>
+    <string name="word_seconds"> secondes</string>
     <string name="msg_win">Vous avez gagné!</string>
     <string name="retry_puzzle_btn">Réessayer</string>
     <string name="fail_msg">Vous avez échoué!</string>
@@ -89,7 +91,7 @@ tous vos mots en vedette. Mais rappelez-vous, vous ne pouvez accéder à cette t
 
 
     <!-- Choose mode -->
-    <string name="choose_mode_title">Choisissez le mode</string>
+    <string name="choose_mode_title">Puzzle classique : Un puzzle 9x9 avec des mots aléatoires\nTaille personnalisée : Un puzzle avec d’autres tailles (4-12)\nMots personnalisés : Un puzzle avec vos mots.</string>
     <string name="classic_puzzle">Puzzle classique</string>
     <string name="custom_size_puzzle">Taille personnalisée</string>
     <string name="custom_words_puzzle">Mots personnalisés</string>

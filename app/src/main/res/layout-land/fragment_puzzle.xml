@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:custom="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.MainActivity">
+
+    <androidx.fragment.app.FragmentContainerView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:name="com.echo.wordsudoku.ui.puzzleParts.PuzzleTopMenuBarFragment"
+        android:id="@+id/puzzle_top_menu_bar"
+        custom:layout_constraintBottom_toTopOf="@id/puzzle_input_buttons"
+        custom:layout_constraintTop_toTopOf="parent"
+        custom:layout_constraintLeft_toRightOf="@id/board"
+        custom:layout_constraintRight_toRightOf="parent"
+        tools:layout="@layout/fragment_puzzle_top_menu_bar" />
+
+    <androidx.fragment.app.FragmentContainerView
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:id="@+id/board"
+        android:name="com.echo.wordsudoku.ui.puzzleParts.PuzzleBoardFragment"
+        custom:layout_constraintTop_toTopOf="parent"
+        custom:layout_constraintBottom_toBottomOf="parent"
+        custom:layout_constraintLeft_toLeftOf="parent"
+        custom:layout_constraintRight_toLeftOf="@id/puzzle_top_menu_bar"
+        tools:layout="@layout/fragment_puzzle_board" />
+
+
+    <androidx.fragment.app.FragmentContainerView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/puzzle_input_buttons"
+        android:name="com.echo.wordsudoku.ui.puzzleParts.PuzzleInputButtonsFragment"
+        custom:layout_constraintLeft_toRightOf="@id/board"
+        custom:layout_constraintRight_toRightOf="parent"
+        custom:layout_constraintTop_toBottomOf="@id/puzzle_top_menu_bar"
+        custom:layout_constraintBottom_toBottomOf="parent"
+        tools:layout="@layout/fragment_puzzle_input_buttons" />
+
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

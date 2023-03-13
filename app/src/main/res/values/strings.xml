@@ -11,6 +11,8 @@
     <string name="msg_fail">You lost! You made </string>
     <string name="word_mistake_singular">mistake</string>
     <string name="word_mistake_plural">mistakes</string>
+    <string name="msg_puzzle_timer"> This game took you </string>
+    <string name="word_seconds"> seconds</string>
     <string name="msg_win">You won!</string>
     <string name="retry_puzzle_btn">Retry Puzzle</string>
     <string name="fail_msg">You Failed!</string>
@@ -82,7 +84,7 @@ If you encounter any difficulty translating the words featured in your puzzle, y
 
 
     <!-- Choose mode -->
-    <string name="choose_mode_title">Choose Mode</string>
+    <string name="choose_mode_title">Classic Puzzle : A 9x9 puzzle with random words\nCustom Size: A puzzle with other sizes (4-12)\nCustom Words: A puzzle with your words.</string>
     <string name="classic_puzzle">Classic Puzzle</string>
     <string name="custom_size_puzzle">Custom Sized</string>
     <string name="custom_words_puzzle">Custom Words</string>
