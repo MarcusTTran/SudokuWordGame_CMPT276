@@ -204,9 +204,6 @@ public class MainActivity extends AppCompatActivity implements SaveGameDialog.Sa
     public void onPuzzleSizeSelected(int size) {
         ChoosePuzzleModeFragmentDirections.StartPuzzleModeAction action = ChoosePuzzleModeFragmentDirections.startPuzzleModeAction();
         action.setPuzzleSize(size);
-        NavHostFragment navHostFragment =
-                (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment);
-        NavController navController = navHostFragment.getNavController();
         navController.navigate(action);
     }
 }

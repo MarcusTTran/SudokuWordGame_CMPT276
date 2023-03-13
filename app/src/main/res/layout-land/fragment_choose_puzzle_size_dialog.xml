@@ -35,6 +35,7 @@
                 android:id="@+id/choose_12x12_puzzle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:checked="false"
                 android:text="@string/option_12x12" />
 
             <RadioButton
@@ -47,6 +48,7 @@
                 android:id="@+id/choose_9x9_puzzle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:checked="true"
                 android:text="@string/option_9x9" />
 
             <RadioButton

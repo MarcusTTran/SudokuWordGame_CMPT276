@@ -25,19 +25,20 @@ public class ChoosePuzzleSizeFragment extends DialogFragment {
         void onPuzzleSizeSelected(int size);
     }
 
-    private int mPuzzleSize;
+    private int mPuzzleSize = 9;
 
     private OnPuzzleSizeSelectedListener listener;
 
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
+        if(listener!=null) return;
         try {
             // Instantiate the NoticeDialogListener so we can send events to the host
             listener = (OnPuzzleSizeSelectedListener) context;
         } catch (ClassCastException e) {
             // The activity doesn't implement the interface, throw exception
-            throw new ClassCastException(context.toString()
+            throw new ClassCastException(context
                     + " must implement NoticeDialogListener");
         }
     }

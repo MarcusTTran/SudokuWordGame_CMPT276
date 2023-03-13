@@ -49,8 +49,7 @@ public class ChoosePuzzleModeFragment extends Fragment {
         Button customButton = view.findViewById(R.id.custom_size_button);
 
         customButton.setOnClickListener(v -> {
-            ChoosePuzzleSizeFragment choosePuzzleSizeFragment = new ChoosePuzzleSizeFragment();
-            choosePuzzleSizeFragment.show(getChildFragmentManager(), ChoosePuzzleSizeFragment.TAG);
+                    new ChoosePuzzleSizeFragment().show(getChildFragmentManager(), ChoosePuzzleSizeFragment.TAG);
         });
 
 
