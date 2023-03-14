@@ -89,6 +89,7 @@ If you encounter any difficulty translating the words featured in your puzzle, y
     <string name="classic_puzzle">Classic Puzzle</string>
     <string name="custom_size_puzzle">Custom Sized</string>
     <string name="custom_words_puzzle">Custom Words</string>
+    <string name="error_enter_custom_words">Please enter custom words</string>
 
 
     <!-- Choose size dialogue -->

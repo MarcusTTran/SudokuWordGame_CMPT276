@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -70,8 +71,9 @@ public class ChoosePuzzleModeFragment extends Fragment {
 
         customWords.setOnClickListener(v -> {
             // If user has not entered custom words, navigate to custom words fragment
-            if(mPuzzleViewModel.hasSetCustomWordPairs()){
+            if(!mPuzzleViewModel.hasSetCustomWordPairs()){
                 navController.navigate(R.id.chooseCustomWordsFragment);
+                Toast.makeText(getContext(), R.string.error_enter_custom_words, Toast.LENGTH_SHORT).show();
             } else {
                 mPuzzleViewModel.newCustomPuzzle(language,difficulty);
                 navController.navigate(R.id.startPuzzleModeAction);

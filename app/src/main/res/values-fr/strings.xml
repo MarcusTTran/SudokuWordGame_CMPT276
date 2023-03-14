@@ -97,6 +97,8 @@ tous vos mots en vedette. Mais rappelez-vous, vous ne pouvez accéder à cette t
     <string name="classic_puzzle">Puzzle classique</string>
     <string name="custom_size_puzzle">Taille personnalisée</string>
     <string name="custom_words_puzzle">Mots personnalisés</string>
+    <string name="error_enter_custom_words">Veuillez entrer des mots personnalisés</string>
+
 
 
     <!-- Choose size dialogue -->

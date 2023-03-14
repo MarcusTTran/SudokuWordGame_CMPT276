@@ -307,13 +307,17 @@ public class SudokuBoard extends View {
         // Make the view a square by getting the minimum of the width and height
         int size = Math.min(this.getMeasuredWidth(), this.getMeasuredHeight());
 
-        // Calculate the dimensions of each cell
-        cellSize = size / mBoardSize;
-
         this.size = size;
 
         // Set the measured dimensions
         setMeasuredDimension(size, size);
+
+        if (this.mBoardSize == 0) {
+            return;
+        }
+        // Calculate the dimensions of each cell
+        cellSize = size / mBoardSize;
+
     }
 
 
@@ -322,14 +326,16 @@ public class SudokuBoard extends View {
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-        drawOutsideBorder(canvas);
-        // This will draw the selected cell and the highlighted column and row
-        colorCell(canvas, this.currentCellRow, this.currentCellColumn);
+        if(mBoardSize!=0) {
+            drawOutsideBorder(canvas);
+            // This will draw the selected cell and the highlighted column and row
+            colorCell(canvas, this.currentCellRow, this.currentCellColumn);
 
-        drawInnerLinesBoard(canvas);
+            drawInnerLinesBoard(canvas);
 
-        // This will draw the words in the cells
-        drawWord(canvas);
+            // This will draw the words in the cells
+            drawWord(canvas);
+        }
     }
 
 
@@ -535,26 +541,31 @@ public class SudokuBoard extends View {
     // It is called externally from PuzzleActivity
     // It will load the board initially when the user opens the puzzle using the unsolved puzzle from Board model.
     // Also used for testing purposes
-    public void setBoard(String[][] board) {
+    public boolean setBoard(String[][] board) {
         if (board.length != mBoardSize || board[0].length != mBoardSize) {
-            throw new IllegalArgumentException("Board size must be " + mBoardSize + "x" + mBoardSize);
+            return false;
         }
         for (int r=0; r<mBoardSize; r++) {
             for (int c=0; c<mBoardSize; c++) {
                 this.board[r][c] = board[r][c];
             }
         }
+        invalidate();
+        return true;
     }
 
-    public void setImmutability(boolean[][] immutability) {
+    public boolean setImmutability(boolean[][] immutability) {
         if (immutability.length != mBoardSize || immutability[0].length != mBoardSize) {
-            throw new IllegalArgumentException("Immutable size must be " + mBoardSize + "x" + mBoardSize);
+//            throw new IllegalArgumentException("Immutable size must be " + mBoardSize + "x" + mBoardSize);
+            return false;
         }
         for (int r=0; r<mBoardSize; r++) {
             for (int c=0; c<mBoardSize; c++) {
                 immutable[r][c] = immutability[r][c];
             }
         }
+        invalidate();
+        return true;
     }
 
     // Rows and columns are 1 indexed
