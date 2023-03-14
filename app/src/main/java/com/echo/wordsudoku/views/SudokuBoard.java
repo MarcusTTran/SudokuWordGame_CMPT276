@@ -115,10 +115,28 @@ public class SudokuBoard extends View {
     // We then use the TypedArray object to get the attributes
 
 
+    private final String SUPER_STATE_KEY = "superState";
+    private final String ROW_KEY = "x";
+    private final String COLUMN_KEY = "y";
 
+    @Nullable
+    @Override
+    protected Parcelable onSaveInstanceState() {
+        Bundle bundle = new Bundle();
+        bundle.putParcelable(SUPER_STATE_KEY,super.onSaveInstanceState());
+        bundle.putInt(ROW_KEY,this.currentCellRow);
+        bundle.putInt(COLUMN_KEY,this.currentCellColumn);
+        return bundle;
+    }
 
     @Override
     protected void onRestoreInstanceState(Parcelable state) {
+        if(state instanceof Bundle) {
+            Bundle bundle = (Bundle) state;
+            this.currentCellRow = bundle.getInt(ROW_KEY);
+            this.currentCellColumn = bundle.getInt(COLUMN_KEY);
+            state = bundle.getParcelable(SUPER_STATE_KEY);
+        }
         super.onRestoreInstanceState(state);
     }
 
