@@ -56,22 +56,6 @@
             android:id="@+id/submitPuzzleAction"
             app:destination="@id/puzzleResultFragment"
             />
-        <argument
-            android:name="isNewGame"
-            app:argType="boolean"
-            android:defaultValue="true" />
-        <argument
-            android:name="isCustomGame"
-            app:argType="boolean"
-            android:defaultValue="false" />
-        <argument
-            android:name="puzzleSize"
-            app:argType="integer"
-            android:defaultValue="9" />
-        <argument
-            android:name="isRetry"
-            app:argType="boolean"
-            android:defaultValue="false"/>
         </fragment>
         <fragment
             android:id="@+id/puzzleResultFragment"
@@ -80,19 +64,9 @@
             tools:layout="@layout/fragment_puzzle_result">
             <action
                 android:id="@+id/retryPuzzleAction"
-                app:popUpTo="@id/puzzleFragment" />
-            <argument
-                android:name="isWin"
-                android:defaultValue="false"
-                app:argType="boolean" />
-            <argument
-                android:name="mistakes"
-                android:defaultValue="-1"
-                app:argType="integer" />
-            <argument
-                android:name="timer"
-                android:defaultValue="-1"
-                app:argType="integer" />
+                app:destination="@id/puzzleFragment"
+                app:popUpTo="@id/puzzleFragment"
+                app:popUpToInclusive="true"/>
         </fragment>
 
 

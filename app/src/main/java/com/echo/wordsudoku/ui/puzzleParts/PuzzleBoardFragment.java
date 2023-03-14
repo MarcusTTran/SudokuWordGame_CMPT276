@@ -39,13 +39,16 @@ public class PuzzleBoardFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         setPuzzleViewSize(mPuzzleViewModel.getPuzzleDimensions());
+        mSudokuBoard.setImmutability(mPuzzleViewModel.getImmutableCells());
         mPuzzleViewModel.getPuzzleView().observe(getViewLifecycleOwner(), puzzleView -> {
             if (puzzleView != null) {
+                if(puzzleView.length != mSudokuBoard.getBoardSize()) {
+                    // The only reason the puzzle view size would be different is if the puzzle dimensions changed (because loading the puzzle from json is async)
+                    setPuzzleViewSize(mPuzzleViewModel.getPuzzleDimensions());
+                }
                 mSudokuBoard.setBoard(puzzleView);
             }
         });
-
-        mSudokuBoard.setImmutability(mPuzzleViewModel.getImmutableCells());
     }
 
     public void loadingScreen() {

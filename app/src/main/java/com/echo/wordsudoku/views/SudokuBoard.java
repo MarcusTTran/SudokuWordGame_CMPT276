@@ -541,8 +541,6 @@ public class SudokuBoard extends View {
         }
         for (int r=0; r<mBoardSize; r++) {
             for (int c=0; c<mBoardSize; c++) {
-//                if (board[r][c] != "")
-//                    immutable[r][c] = true;
                 this.board[r][c] = board[r][c];
             }
         }

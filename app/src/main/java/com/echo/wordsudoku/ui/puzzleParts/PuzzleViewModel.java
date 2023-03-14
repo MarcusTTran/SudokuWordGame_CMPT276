@@ -90,6 +90,7 @@ public class PuzzleViewModel extends ViewModel {
 
     public void loadPuzzle(Puzzle puzzle) {
         postPuzzle(puzzle);
+        puzzleSaved();
     }
 
     public void insertWord(Dimension dimension,String word) {

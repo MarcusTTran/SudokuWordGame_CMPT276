@@ -41,6 +41,7 @@ public class PuzzleResultFragment extends Fragment {
         mainMenuButton.setOnClickListener(v -> ((MainActivity)requireActivity()).mainMenu());
 
         retryPuzzleButton.setOnClickListener(v -> {
+            mPuzzleViewModel.resetPuzzle(true);
             Navigation.findNavController(v).navigate(RETRY_PUZZLE_ACTION);
         });
 
