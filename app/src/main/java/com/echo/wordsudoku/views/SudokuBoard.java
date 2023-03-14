@@ -116,28 +116,112 @@ public class SudokuBoard extends View {
 
 
     private final String SUPER_STATE_KEY = "superState";
-    private final String ROW_KEY = "x";
-    private final String COLUMN_KEY = "y";
+    private final String SELECTED_KEY = "selected";
+    private final String SIZES_KEY = "size";
+    private final String BOARD_KEY = "board";
+    private final String IMMUTABILITY_KEY = "immutable";
 
     @Nullable
     @Override
     protected Parcelable onSaveInstanceState() {
-        Bundle bundle = new Bundle();
-        bundle.putParcelable(SUPER_STATE_KEY,super.onSaveInstanceState());
-        bundle.putInt(ROW_KEY,this.currentCellRow);
-        bundle.putInt(COLUMN_KEY,this.currentCellColumn);
-        return bundle;
+        //begin boilerplate code that allows parent classes to save state
+        Parcelable superState = super.onSaveInstanceState();
+
+        SavedState ss = new SavedState(superState);
+        //end
+
+        ss.currentCellRow = this.currentCellRow;
+        ss.currentCellColumn = this.currentCellColumn;
+        ss.mBoardSize = this.mBoardSize;
+        ss.mBoxWidth = this.mBoxWidth;
+        ss.mBoxHeight = this.mBoxHeight;
+        ss.board = this.board;
+        ss.immutable = this.immutable;
+
+        return ss;
     }
 
     @Override
     protected void onRestoreInstanceState(Parcelable state) {
-        if(state instanceof Bundle) {
-            Bundle bundle = (Bundle) state;
-            this.currentCellRow = bundle.getInt(ROW_KEY);
-            this.currentCellColumn = bundle.getInt(COLUMN_KEY);
-            state = bundle.getParcelable(SUPER_STATE_KEY);
+        //begin boilerplate code so parent classes can restore state
+        if(!(state instanceof SavedState)) {
+            super.onRestoreInstanceState(state);
+            return;
         }
-        super.onRestoreInstanceState(state);
+
+        SavedState ss = (SavedState)state;
+        super.onRestoreInstanceState(ss.getSuperState());
+        //end
+
+        this.currentCellRow = ss.currentCellRow;
+        this.currentCellColumn = ss.currentCellColumn;
+        this.mBoardSize = ss.mBoardSize;
+        this.mBoxWidth = ss.mBoxWidth;
+        this.mBoxHeight = ss.mBoxHeight;
+        this.board = ss.board;
+        this.immutable = ss.immutable;
+    }
+
+    // Taken from https://stackoverflow.com/a/3542895
+    // Helps save data across configuration changes
+
+    private static class SavedState extends BaseSavedState {
+
+        int currentCellRow, currentCellColumn, mBoardSize, mBoxWidth, mBoxHeight ;
+        String[][] board;
+        boolean[][] immutable;
+
+        SavedState(Parcelable superState) {
+            super(superState);
+        }
+
+        private SavedState(Parcel in) {
+            super(in);
+            this.currentCellRow = in.readInt();
+            this.currentCellColumn = in.readInt();
+            this.mBoardSize = in.readInt();
+            this.mBoxWidth = in.readInt();
+            this.mBoxHeight = in.readInt();
+            int boardArraySize = in.readInt();
+            this.board = new String[boardArraySize][];
+            for (int i = 0; i < boardArraySize; i++) {
+                this.board[i]=in.createStringArray();
+            }
+            int immutableArraySize = in.readInt();
+            this.immutable = new boolean[immutableArraySize][];
+            for (int i = 0; i < immutableArraySize; i++) {
+                this.immutable[i]=in.createBooleanArray();
+            }
+        }
+
+        @Override
+        public void writeToParcel(Parcel out, int flags) {
+            super.writeToParcel(out, flags);
+            out.writeInt(this.currentCellRow);
+            out.writeInt(this.currentCellColumn);
+            out.writeInt(this.mBoardSize);
+            out.writeInt(this.mBoxWidth);
+            out.writeInt(this.mBoxHeight);
+            out.writeInt(this.board.length);
+            for (int i = 0;i<this.board.length;i++) {
+                out.writeStringArray(this.board[i]);
+            }
+            out.writeInt(this.immutable.length);
+            for (int i = 0;i<this.immutable.length;i++) {
+                out.writeBooleanArray(this.immutable[i]);
+            }
+        }
+
+        // required field that makes Parcelables from a Parcel
+        public static final Parcelable.Creator<SavedState> CREATOR =
+                new Parcelable.Creator<SavedState>() {
+                    public SavedState createFromParcel(Parcel in) {
+                        return new SavedState(in);
+                    }
+                    public SavedState[] newArray(int size) {
+                        return new SavedState[size];
+                    }
+                };
     }
 
     public SudokuBoard(Context context, @Nullable AttributeSet attrs) {
