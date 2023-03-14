@@ -10,7 +10,7 @@ import com.echo.wordsudoku.models.dimension.PuzzleDimensions;
 import com.echo.wordsudoku.models.sudoku.GameResult;
 import com.echo.wordsudoku.models.sudoku.Puzzle;
 import com.echo.wordsudoku.models.words.WordPair;
-import com.echo.wordsudoku.models.words.WordPairReader;
+import com.echo.wordsudoku.models.json.WordPairJsonReader;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -30,7 +30,7 @@ public class PuzzleViewModel extends ViewModel {
 
 
     private List<WordPair> customWordPairs;
-    private WordPairReader wordPairReader;
+    private WordPairJsonReader mWordPairJsonReader;
 
     public List<WordPair> getWordPairs() {
         if (isCustomPuzzle) {
@@ -65,8 +65,8 @@ public class PuzzleViewModel extends ViewModel {
         timer.postValue(puzzle.getTimer());
     }
 
-    public void setWordPairReader(WordPairReader wordPairReader) {
-        this.wordPairReader = wordPairReader;
+    public void setWordPairReader(WordPairJsonReader wordPairJsonReader) {
+        this.mWordPairJsonReader = wordPairJsonReader;
     }
 
     public boolean isPuzzleSaved() {
@@ -78,7 +78,7 @@ public class PuzzleViewModel extends ViewModel {
     }
 
     public void newPuzzle(int puzzleSize, int boardLanguage, int difficulty) throws JSONException {
-       setPuzzle(new Puzzle(wordPairReader.getRandomWords(puzzleSize),puzzleSize,boardLanguage,-1,difficulty));
+       setPuzzle(new Puzzle(mWordPairJsonReader.getRandomWords(puzzleSize),puzzleSize,boardLanguage,-1,difficulty));
        isPuzzleSaved = false;
     }
 

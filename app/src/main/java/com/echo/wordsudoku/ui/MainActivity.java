@@ -1,8 +1,9 @@
 package com.echo.wordsudoku.ui;
 
+import static com.echo.wordsudoku.file.FileUtils.inputStreamToString;
+
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -14,19 +15,22 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import com.echo.wordsudoku.R;
+import com.echo.wordsudoku.file.FileUtils;
 import com.echo.wordsudoku.models.language.BoardLanguage;
-import com.echo.wordsudoku.models.Memory.JsonReader;
-import com.echo.wordsudoku.models.Memory.JsonWriter;
+import com.echo.wordsudoku.models.json.PuzzleJsonReader;
 import com.echo.wordsudoku.models.sudoku.Puzzle;
-import com.echo.wordsudoku.models.words.WordPairReader;
-import com.echo.wordsudoku.ui.destinations.ChoosePuzzleModeFragmentDirections;
+import com.echo.wordsudoku.models.json.WordPairJsonReader;
 import com.echo.wordsudoku.ui.dialogs.ChoosePuzzleSizeFragment;
 import com.echo.wordsudoku.ui.dialogs.SaveGameDialog;
 import com.echo.wordsudoku.ui.puzzleParts.PuzzleViewModel;
 import com.google.android.material.navigation.NavigationView;
 import org.json.JSONException;
+
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.PrintWriter;
 
 public class MainActivity extends AppCompatActivity implements SaveGameDialog.SaveGameDialogListener, ChoosePuzzleSizeFragment.OnPuzzleSizeSelectedListener {
 
@@ -35,6 +39,13 @@ public class MainActivity extends AppCompatActivity implements SaveGameDialog.Sa
     private final int MAIN_MENU_ACTION = R.id.backToMainMenuAction;
 
     private final String wordPairJsonFile = "words.json";
+
+    // The file name to read the json object
+    private final String PUZZLE_JSON_SAVE_FILENAME = "wsudoku_puzzle.json";
+
+    // The number of spaces for indentation
+    private static final int JSON_OUTPUT_WHITESPACE = 4;
+
     private PuzzleViewModel mPuzzleViewModel;
 
     // This is used for accessing the shared preferences associated with this app
@@ -48,9 +59,9 @@ public class MainActivity extends AppCompatActivity implements SaveGameDialog.Sa
 
     private AppBarConfiguration appBarConfiguration;
 
-    private DrawerLayout mDrawerLayout;
-
     private NavController navController;
+
+    private File mPuzzleJsonFile;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,7 +85,7 @@ public class MainActivity extends AppCompatActivity implements SaveGameDialog.Sa
         mPuzzleViewModel = new ViewModelProvider(this).get(PuzzleViewModel.class);
         mSettingsViewModel = new ViewModelProvider(this).get(SettingsViewModel.class);
         mPreferences = getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE);
-
+        mPuzzleJsonFile = new File(getFilesDir(),PUZZLE_JSON_SAVE_FILENAME);
 
 
         mPuzzleViewModel = new ViewModelProvider(this).get(PuzzleViewModel.class);
@@ -110,7 +121,7 @@ public class MainActivity extends AppCompatActivity implements SaveGameDialog.Sa
         new Thread(() -> {
             try {
                 InputStream jsonFile = getAssets().open(wordPairJsonFile);
-                mPuzzleViewModel.setWordPairReader(new WordPairReader(jsonFile));
+                mPuzzleViewModel.setWordPairReader(new WordPairJsonReader(inputStreamToString(jsonFile)));
             } catch (IOException e) {
                 fatalErrorDialog(getString(R.string.error_load_wordpair_database));
             }
@@ -177,10 +188,9 @@ public class MainActivity extends AppCompatActivity implements SaveGameDialog.Sa
 
     public void savePuzzle(){
         new Thread(() -> {
-            JsonWriter jsonWriter = new JsonWriter(MainActivity.this);
             if(mPuzzleViewModel.isPuzzleNonValid()) return;
             try {
-                jsonWriter.writePuzzle(mPuzzleViewModel.getPuzzleJson());
+                FileUtils.stringToPrintWriter(new PrintWriter(mPuzzleJsonFile),mPuzzleViewModel.getPuzzleJson().toString(JSON_OUTPUT_WHITESPACE));
                 mPuzzleViewModel.puzzleSaved();
             } catch (JSONException | IOException e) {
                 fatalErrorDialog(getString(R.string.save_game_error));
@@ -210,18 +220,18 @@ public class MainActivity extends AppCompatActivity implements SaveGameDialog.Sa
         navController.navigate(R.id.startPuzzleModeAction);
     }
 
-    public void loadPuzzle() {
-        JsonReader jsonReader = new JsonReader(this);
+    public void loadPuzzle(){
         new Thread(() -> {
+            try{
             // Load the puzzle from the file and update the class members
             Puzzle puzzle;
-            try {
-                puzzle = jsonReader.readPuzzle();
-                // Update the PuzzleViewModel
+            PuzzleJsonReader puzzleJsonReader = new PuzzleJsonReader(FileUtils.inputStreamToString(new FileInputStream(mPuzzleJsonFile)));
+            puzzle = puzzleJsonReader.readPuzzle();
+            // Update the PuzzleViewModel
                 if (puzzle != null) {
                     mPuzzleViewModel.loadPuzzle(puzzle);
                 }
-            } catch (IOException | JSONException e) {
+            } catch (IOException e) {
                 // run from main thread
                 runOnUiThread(() -> {
                     fatalErrorDialog(getString(R.string.load_game_error));
@@ -243,5 +253,9 @@ public class MainActivity extends AppCompatActivity implements SaveGameDialog.Sa
 
     public void mainMenu() {
         Navigation.findNavController(this, R.id.nav_host_fragment).navigate(MAIN_MENU_ACTION);
+    }
+
+    public boolean doesPuzzleSaveFileExist() {
+        return mPuzzleJsonFile.exists();
     }
 }

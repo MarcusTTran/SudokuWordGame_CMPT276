@@ -15,7 +15,7 @@ import androidx.navigation.Navigation;
 
 import com.echo.wordsudoku.R;
 import com.echo.wordsudoku.models.language.BoardLanguage;
-import com.echo.wordsudoku.models.Memory.JsonReader;
+import com.echo.wordsudoku.models.json.PuzzleJsonReader;
 import com.echo.wordsudoku.ui.MainActivity;
 import com.echo.wordsudoku.ui.SettingsViewModel;
 import com.echo.wordsudoku.ui.puzzleParts.PuzzleViewModel;
@@ -62,7 +62,7 @@ public class MainMenuFragment extends Fragment {
 
         mLoadGameButton = root.findViewById(R.id.load_game_button);
         mLoadGameButton.setOnClickListener(v -> {
-            if (!new JsonReader(getContext()).isFileExists()) {
+            if (!((MainActivity)requireActivity()).doesPuzzleSaveFileExist()) {
                 Toast.makeText(getContext(), "No saved game found", Toast.LENGTH_SHORT).show();
                 return;
             }

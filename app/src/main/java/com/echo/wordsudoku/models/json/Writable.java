@@ -1,4 +1,4 @@
-package com.echo.wordsudoku.models.Memory;
+package com.echo.wordsudoku.models.json;
 
 import org.json.JSONException;
 import org.json.JSONObject;

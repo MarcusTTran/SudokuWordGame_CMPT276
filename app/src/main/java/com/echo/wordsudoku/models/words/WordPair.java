@@ -1,7 +1,7 @@
 package com.echo.wordsudoku.models.words;
 
 import com.echo.wordsudoku.models.language.BoardLanguage;
-import com.echo.wordsudoku.models.Memory.Writable;
+import com.echo.wordsudoku.models.json.Writable;
 
 import org.json.JSONException;
 import org.json.JSONObject;

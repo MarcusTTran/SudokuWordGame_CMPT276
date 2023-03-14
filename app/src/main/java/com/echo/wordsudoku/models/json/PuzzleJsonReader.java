@@ -1,4 +1,4 @@
-package com.echo.wordsudoku.models.Memory;
+package com.echo.wordsudoku.models.json;
 
 import android.content.Context;
 
@@ -15,9 +15,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
-import java.io.Closeable;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -47,85 +45,24 @@ import java.util.List;
  * @version 1.0
  */
 
-public class JsonReader {
+public class PuzzleJsonReader {
 
     // The source file name
-    private String source;
+    private JSONObject mPuzzleJsonObject;
 
-    // The file name to read the json object
-    private final String FILENAME = "puzzle.json";
 
-    // The file to read the JSON object from the file
-    private File file;
-
-    /**
-     * Constructs a new JsonReader that reads from the file with the given file name.
-     *
-     * @param context The context of the application
-     */
-    public JsonReader(Context context) {
+    public PuzzleJsonReader(String puzzleJson) {
         // The source file name accessed from the context
-        this.source = context.getFilesDir() + "/" + FILENAME;
+//        this.source = context.getFilesDir() + "/" + FILENAME;
         // initialize the file given the name
-        this.file = new File(context.getFilesDir(),FILENAME);
+//        this.file = new File(context.getFilesDir(),FILENAME);
         // initialize the file reader
-
-    }
-
-
-    /**
-     * Reads the puzzle from the source file and returns it.
-     *
-     * @return The puzzle
-     * @throws IOException If an I/O error occurs
-     * @throws JSONException If the JSON object is invalid
-     */
-    public Puzzle readPuzzle() throws IOException, JSONException {
-
-        // Read the file
-        String jsonData = readFile(source);
-        // Create a JSON object from the file (The BIG one)
-        JSONObject jsonObject = new JSONObject(jsonData);
-
-        // parse the whole puzzle and return it (many lines below)
-        return parsePuzzle(jsonObject);
-    }
-
-
-    /**
-     * Reads the file with the given file name and returns the content as a string.
-     * Inspired by : https://medium.com/@nayantala259/android-how-to-read-and-write-parse-data-from-json-file-226f821e957a
-     * @param source The file name to read
-     * @return The content of the file
-     * @throws IOException If an I/O error occurs
-     */
-    private String readFile(String source) throws IOException {
-        FileReader fileReader = new FileReader(source);
-        // Create a file reader
-        BufferedReader bufferedReader = new BufferedReader(fileReader);
-        // Create a string builder
-        StringBuilder stringBuilder = new StringBuilder();
-        // Read the first line
-        String line = bufferedReader.readLine();
-
-        // Read the file line by line
-        while (line != null){
-            // Append the line to the string builder
-            stringBuilder.append(line).append("\n");
-            // Read the next line
-            line = bufferedReader.readLine();
+        try {
+            mPuzzleJsonObject = new JSONObject(puzzleJson);
+        } catch (JSONException e) {
+            e.printStackTrace();
         }
-
-        // Close the reader
-        bufferedReader.close();
-        fileReader.close();
-
-        // This respond will have Json Format String
-        String content = stringBuilder.toString();
-
-        return content;
     }
-
 
     /**
      * Parses the given JSON object and returns a new Puzzle.
@@ -133,7 +70,7 @@ public class JsonReader {
      * @param jsonObject The JSON object to parse
      * @return The new Puzzle
      */
-    private Puzzle parsePuzzle(JSONObject jsonObject) {
+    public Puzzle readPuzzle() {
 
 
         /**
@@ -145,33 +82,34 @@ public class JsonReader {
          json.put("puzzleDimension", this.getPuzzleDimension().toJson());
          json.put("language", this.getLanguage());
          json.put("mistakes", this.getMistakes());
+         json.put("timer",this.getTimer());
          */
 
         try {
 
             // user board
-            JSONObject userBoardJSON = jsonObject.getJSONObject("userBoard");
+            JSONObject userBoardJSON = mPuzzleJsonObject.getJSONObject("userBoard");
             CellBox2DArray userBoard = parseCellBox2DArray(userBoardJSON);
 
             // solution board
-            JSONObject solutionBoardJSON = jsonObject.getJSONObject("solutionBoard");
+            JSONObject solutionBoardJSON = mPuzzleJsonObject.getJSONObject("solutionBoard");
             CellBox2DArray solutionBoard = parseCellBox2DArray(solutionBoardJSON);
 
             // word pairs
-            JSONArray wordPairsJSON = (jsonObject.getJSONArray("wordPairs"));
+            JSONArray wordPairsJSON = (mPuzzleJsonObject.getJSONArray("wordPairs"));
             List<WordPair> wordPairs= parseWordPairs(wordPairsJSON);
 
             // PuzzleDimension
-            JSONObject puzzleDimensionJSON = (jsonObject.getJSONObject("puzzleDimensions"));
+            JSONObject puzzleDimensionJSON = (mPuzzleJsonObject.getJSONObject("puzzleDimensions"));
             PuzzleDimensions puzzleDimensions = parsePuzzleDimension(puzzleDimensionJSON);
 
             // parse language
-            int language = (jsonObject.getInt("language"));
+            int language = (mPuzzleJsonObject.getInt("language"));
 
             // parse mistakes
-            int mistakes = (jsonObject.getInt("mistakes"));
+            int mistakes = (mPuzzleJsonObject.getInt("mistakes"));
 
-            int timer = (jsonObject.getInt("timer"));
+            int timer = (mPuzzleJsonObject.getInt("timer"));
 
             // create the puzzle
             Puzzle puzzle = new Puzzle(userBoard, solutionBoard, wordPairs, puzzleDimensions, language, mistakes,timer);
@@ -184,9 +122,6 @@ public class JsonReader {
         }
     }
 
-    public boolean isFileExists() {
-        return file.exists();
-    }
 
 
     /**
@@ -428,12 +363,6 @@ public class JsonReader {
         int col = eachBoxDimensionJSON.getInt("columns");
         // create the dimension object
         return new Dimension(row, col);
-    }
-
-
-    // getter for the source file name
-    public String getSource() {
-        return this.source;
     }
 
 }

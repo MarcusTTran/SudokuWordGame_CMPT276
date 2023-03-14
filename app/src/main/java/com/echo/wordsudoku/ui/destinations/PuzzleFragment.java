@@ -11,17 +11,12 @@ import android.widget.Toast;
 
 import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 
 import com.echo.wordsudoku.R;
-import com.echo.wordsudoku.models.Memory.JsonReader;
-import com.echo.wordsudoku.models.Memory.JsonWriter;
 import com.echo.wordsudoku.models.dimension.Dimension;
-import com.echo.wordsudoku.models.sudoku.GameResult;
-import com.echo.wordsudoku.models.sudoku.Puzzle;
 import com.echo.wordsudoku.models.words.WordPair;
 import com.echo.wordsudoku.ui.MainActivity;
 import com.echo.wordsudoku.ui.SettingsViewModel;
@@ -32,9 +27,6 @@ import java.util.List;
 
 import com.echo.wordsudoku.ui.dialogs.SaveGameDialog;
 import com.echo.wordsudoku.ui.puzzleParts.PuzzleBoardFragment;
-import com.echo.wordsudoku.ui.destinations.PuzzleFragmentDirections.SubmitPuzzleAction;
-import com.echo.wordsudoku.ui.puzzleParts.PuzzleInputButtonsFragment;
-import com.echo.wordsudoku.ui.puzzleParts.PuzzleTopMenuBarFragment;
 import com.echo.wordsudoku.ui.puzzleParts.PuzzleViewModel;
 
 public class PuzzleFragment extends Fragment {
@@ -48,18 +40,13 @@ public class PuzzleFragment extends Fragment {
 
     private PuzzleViewModel mPuzzleViewModel;
 
-    private SettingsViewModel mSettingsViewModel;
-
-    private JsonWriter mJsonWriter = null;
-
-    private JsonReader mJsonReader;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         setHasOptionsMenu(true);
 
         mPuzzleViewModel = new ViewModelProvider(requireActivity()).get(PuzzleViewModel.class);
-        mSettingsViewModel = new ViewModelProvider(requireActivity()).get(SettingsViewModel.class);
+        SettingsViewModel settingsViewModel = new ViewModelProvider(requireActivity()).get(SettingsViewModel.class);
 
         View root = inflater.inflate(R.layout.fragment_puzzle, container, false);
         return root;
