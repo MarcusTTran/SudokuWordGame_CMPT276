@@ -136,7 +136,7 @@ public class PuzzleFragment extends Fragment {
                 return true;
             case R.id.options_main_menu_button:
                 //discardGame();
-                if(!mPuzzleViewModel.isPuzzleSaved())
+                if(!((MainActivity)requireActivity()).isGameSaved())
                     new SaveGameDialog().show(getChildFragmentManager(), SaveGameDialog.TAG);
                 else
                     ((MainActivity)requireActivity()).mainMenu();
@@ -159,7 +159,7 @@ public class PuzzleFragment extends Fragment {
         OnBackPressedCallback callback = new OnBackPressedCallback(true) {
             @Override
             public void handleOnBackPressed() {
-                if(!mPuzzleViewModel.isPuzzleSaved()) {
+                if(!((MainActivity)requireActivity()).isGameSaved()) {
                     new SaveGameDialog().show(getChildFragmentManager(), SaveGameDialog.TAG);
                 } else {
                     ((MainActivity)requireActivity()).mainMenu();

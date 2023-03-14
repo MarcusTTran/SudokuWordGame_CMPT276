@@ -31,6 +31,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintWriter;
+import java.util.Arrays;
 
 public class MainActivity extends AppCompatActivity implements SaveGameDialog.SaveGameDialogListener, ChoosePuzzleSizeFragment.OnPuzzleSizeSelectedListener {
 
@@ -62,6 +63,8 @@ public class MainActivity extends AppCompatActivity implements SaveGameDialog.Sa
     private NavController navController;
 
     private File mPuzzleJsonFile;
+
+    private String[][] latestSavedPuzzle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -133,7 +136,7 @@ public class MainActivity extends AppCompatActivity implements SaveGameDialog.Sa
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         int currentPage = navController.getCurrentDestination().getId();
         if (currentPage == R.id.puzzleFragment) {
-            if(!mPuzzleViewModel.isPuzzleSaved()) {
+            if(!isGameSaved()) {
                 new SaveGameDialog().show(getSupportFragmentManager(), SaveGameDialog.TAG);
             } else {
                 mainMenu();
@@ -186,12 +189,16 @@ public class MainActivity extends AppCompatActivity implements SaveGameDialog.Sa
             savePuzzle();
     }
 
+    public boolean isGameSaved() {
+        return Arrays.deepEquals(mPuzzleViewModel.getPuzzleView().getValue(), latestSavedPuzzle);
+    }
+
     public void savePuzzle(){
         new Thread(() -> {
             if(mPuzzleViewModel.isPuzzleNonValid()) return;
             try {
                 FileUtils.stringToPrintWriter(new PrintWriter(mPuzzleJsonFile),mPuzzleViewModel.getPuzzleJson().toString(JSON_OUTPUT_WHITESPACE));
-                mPuzzleViewModel.puzzleSaved();
+                latestSavedPuzzle = mPuzzleViewModel.getPuzzleView().getValue();
             } catch (JSONException | IOException e) {
                 fatalErrorDialog(getString(R.string.save_game_error));
             }
@@ -230,6 +237,7 @@ public class MainActivity extends AppCompatActivity implements SaveGameDialog.Sa
             // Update the PuzzleViewModel
                 if (puzzle != null) {
                     mPuzzleViewModel.loadPuzzle(puzzle);
+                    latestSavedPuzzle = puzzle.toStringArray();
                 }
             } catch (IOException e) {
                 // run from main thread

@@ -26,8 +26,6 @@ public class PuzzleViewModel extends ViewModel {
 
     private boolean isCustomPuzzle = false;
 
-    private boolean isPuzzleSaved = true;
-
 
     private List<WordPair> customWordPairs;
     private WordPairJsonReader mWordPairJsonReader;
@@ -68,42 +66,28 @@ public class PuzzleViewModel extends ViewModel {
     public void setWordPairReader(WordPairJsonReader wordPairJsonReader) {
         this.mWordPairJsonReader = wordPairJsonReader;
     }
-
-    public boolean isPuzzleSaved() {
-        return isPuzzleSaved;
-    }
-
-    public void puzzleSaved() {
-        isPuzzleSaved = true;
-    }
-
     public void newPuzzle(int puzzleSize, int boardLanguage, int difficulty) throws JSONException {
        setPuzzle(new Puzzle(mWordPairJsonReader.getRandomWords(puzzleSize),puzzleSize,boardLanguage,-1,difficulty));
-       isPuzzleSaved = false;
     }
 
     public void newCustomPuzzle(int puzzleLanguage, int difficulty) {
         setPuzzle(new Puzzle(customWordPairs, customWordPairs.size(),puzzleLanguage,-1,difficulty));
         isCustomPuzzle = true;
-        isPuzzleSaved = false;
     }
 
     public void loadPuzzle(Puzzle puzzle) {
         postPuzzle(puzzle);
-        puzzleSaved();
     }
 
     public void insertWord(Dimension dimension,String word) {
         puzzle.setCell(dimension, word);
         setPuzzleView(puzzle.toStringArray());
-        isPuzzleSaved = false;
     }
 
     public void resetPuzzle(boolean isRetry) {
         if (!puzzle.isPuzzleBlank()) {
             puzzle.resetPuzzle(isRetry);
             setPuzzleView(puzzle.toStringArray());
-            isPuzzleSaved = false;
         }
     }
 
