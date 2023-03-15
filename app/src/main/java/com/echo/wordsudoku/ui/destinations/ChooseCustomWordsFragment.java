@@ -18,9 +18,12 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 
 import com.echo.wordsudoku.R;
 import com.echo.wordsudoku.models.words.WordPair;
+import com.echo.wordsudoku.ui.SettingsViewModel;
 import com.echo.wordsudoku.ui.puzzleParts.PuzzleViewModel;
 
 import java.util.ArrayList;
@@ -30,6 +33,8 @@ import java.util.List;
 public class ChooseCustomWordsFragment extends Fragment{
 
     private PuzzleViewModel mPuzzleViewModel;
+
+    private SettingsViewModel mSettingsViewModel;
 
     private final String CC_WORDS_DEBUG_KEY = "CCUSTOM_WORDS_DEBUG_KEY";
 
@@ -95,6 +100,7 @@ public class ChooseCustomWordsFragment extends Fragment{
         this.root = root;
 
         mPuzzleViewModel = new ViewModelProvider(requireActivity()).get(PuzzleViewModel.class);
+        mSettingsViewModel = new ViewModelProvider(requireActivity()).get(SettingsViewModel.class);
 
         //Create our dropdown and fill each selection with values from resource file
         Spinner dropdown = root.findViewById(R.id.puzzleSizeCustomDropdown);
@@ -140,19 +146,16 @@ public class ChooseCustomWordsFragment extends Fragment{
                         //Entry Boxes under Button Language are second argument in WordPair
                         EditText someEntryBox2 = root.findViewById(idFrenchWords.get(i));
 
-                        //Validate Words are being read with Log.d
-//                        Log.d(CC_WORDS_DEBUG_KEY, "Board Language Words[" + i +"]: " + someEntryBox1.getText().toString());
-//                        Log.d(CC_WORDS_DEBUG_KEY, "Button Language Words[" + i +"]: " + someEntryBox2.getText().toString());
-
                         //Add in each word to WordPair list
                         userEnteredWordList.add(new WordPair(someEntryBox1.getText().toString(), someEntryBox2.getText().toString()));
                     }
-                    Log.d(CC_WORDS_DEBUG_KEY, "Size of WordPair list: " + userEnteredWordList.size());
 
                     //Set the PuzzleViewModel to store the WordPair list we made
                     mPuzzleViewModel.setCustomWordPairs(userEnteredWordList);
+                    mPuzzleViewModel.newCustomPuzzle(mSettingsViewModel.getPuzzleLanguage().getValue(), mSettingsViewModel.getDifficulty());
 
-                    Toast.makeText(getContext(), "Words for Custom Puzzle have been successfully set.", Toast.LENGTH_LONG).show();
+                    Navigation.findNavController(root).navigate(R.id.startCustomPuzzleAction);
+                    //Toast.makeText(getContext(), "Words for Custom Puzzle have been successfully set.", Toast.LENGTH_LONG).show();
 
                 } else {
                     Toast.makeText(getContext(), "Please fill in all entry boxes!", Toast.LENGTH_SHORT).show();

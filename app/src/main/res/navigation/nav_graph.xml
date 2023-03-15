@@ -37,7 +37,11 @@
         android:id="@+id/chooseCustomWordsFragment"
         android:name="com.echo.wordsudoku.ui.destinations.ChooseCustomWordsFragment"
         android:label="@string/destination_choose_custom_words"
-        tools:layout="@layout/fragment_choose_custom_words"/>
+        tools:layout="@layout/fragment_choose_custom_words">
+        <action
+            android:id="@+id/startCustomPuzzleAction"
+            app:destination="@id/puzzleFragment"/>
+    </fragment>
     <fragment android:id="@+id/choosePuzzleModeFragment"
         android:name="com.echo.wordsudoku.ui.destinations.ChoosePuzzleModeFragment"
         android:label="@string/destination_choose_puzzle_mode"
