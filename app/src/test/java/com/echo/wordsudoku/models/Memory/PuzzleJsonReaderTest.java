@@ -18,7 +18,6 @@ import org.junit.jupiter.api.Test;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -80,7 +79,7 @@ public class PuzzleJsonReaderTest {
     void testFourByFourPuzzle () {
 
         try {
-            assertTrue(testPuzzleReaderWithValidPuzzle(constructPuzzle(FOUR)));
+            assertTrue(isPuzzleTheReadPuzzleTheSameAfterSave(constructPuzzle(FOUR)));
         } catch (JSONException e) {
             fail("json must be valid");
 
@@ -99,7 +98,7 @@ public class PuzzleJsonReaderTest {
     @Test
     void testNineByNinePuzzle () {
         try {
-            assertTrue(testPuzzleReaderWithValidPuzzle(constructPuzzle(NINE)));
+            assertTrue(isPuzzleTheReadPuzzleTheSameAfterSave(constructPuzzle(NINE)));
         } catch (JSONException e) {
             fail("json must be valid");
 
@@ -112,7 +111,7 @@ public class PuzzleJsonReaderTest {
     @Test
     void testSixBySixPuzzle () {
         try {
-            assertTrue(testPuzzleReaderWithValidPuzzle(constructPuzzle(SIX)));
+            assertTrue(isPuzzleTheReadPuzzleTheSameAfterSave(constructPuzzle(SIX)));
         } catch (JSONException e) {
             fail("json must be valid");
 
@@ -124,7 +123,7 @@ public class PuzzleJsonReaderTest {
     void testTwelveByTwelvePuzzle () {
 
         try {
-            assertTrue(testPuzzleReaderWithValidPuzzle(constructPuzzle(TWELVE)));
+            assertTrue(isPuzzleTheReadPuzzleTheSameAfterSave(constructPuzzle(TWELVE)));
         } catch (JSONException e) {
             fail("json must be valid");
 
@@ -164,14 +163,13 @@ public class PuzzleJsonReaderTest {
 
 
     // test if a valid puzzle saved correctly
-    boolean testPuzzleReaderWithValidPuzzle(Puzzle puzzle) throws IOException, JSONException {
+    boolean isPuzzleTheReadPuzzleTheSameAfterSave(Puzzle puzzle) throws IOException, JSONException {
 
         // create a JsonObject out of puzzle
         JSONObject jsonObject = puzzle.toJson();
 
         // write the string Object into the file
         FileUtils.stringToPrintWriter(new PrintWriter(file_saved),jsonObject.toString(TAB));
-
 
         // file loaded
         File file_loaded = new File(context.getFilesDir(),PUZZLE_JSON_SAVE_FILENAME);
