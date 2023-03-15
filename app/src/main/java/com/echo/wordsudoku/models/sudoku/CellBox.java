@@ -304,7 +304,7 @@ public class CellBox implements Writable {
         }
 
         for (int i = 0; i < one.length; i++) {
-            for (int j = 0; j < one.length; j++) {
+            for (int j = 0; j < one[i].length; j++) {
                 if (!one[i][j].equals(two[i][j])) {
                     return false;
                 }

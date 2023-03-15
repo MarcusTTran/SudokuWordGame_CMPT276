@@ -52,11 +52,7 @@ public class PuzzleJsonReader {
 
 
     public PuzzleJsonReader(String puzzleJson) {
-        // The source file name accessed from the context
-//        this.source = context.getFilesDir() + "/" + FILENAME;
-        // initialize the file given the name
-//        this.file = new File(context.getFilesDir(),FILENAME);
-        // initialize the file reader
+
         try {
             mPuzzleJsonObject = new JSONObject(puzzleJson);
         } catch (JSONException e) {
@@ -67,7 +63,6 @@ public class PuzzleJsonReader {
     /**
      * Parses the given JSON object and returns a new Puzzle.
      *
-     * @param jsonObject The JSON object to parse
      * @return The new Puzzle
      */
     public Puzzle readPuzzle() {

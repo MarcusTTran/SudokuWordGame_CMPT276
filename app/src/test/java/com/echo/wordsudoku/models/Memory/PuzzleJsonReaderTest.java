@@ -18,10 +18,13 @@ import org.junit.jupiter.api.Test;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
+
+
 
 public class PuzzleJsonReaderTest {
 
@@ -36,10 +39,21 @@ public class PuzzleJsonReaderTest {
 
     private Context context;
 
+    private File file_saved;
+
+
 
     @BeforeEach
     void setUpContext() {
         this.context = Mockito.mock(Context.class);
+        // set a temporary directory for testing
+        Mockito.when(context.getFilesDir()).thenReturn(new File("/tmp"));
+
+        // test if the directory is not null
+        assertNotNull(context.getFilesDir());
+
+        // create file
+        this.file_saved = new File(context.getFilesDir(),PUZZLE_JSON_SAVE_FILENAME);
     }
 
     Puzzle constructPuzzle(int dimension){
@@ -62,22 +76,95 @@ public class PuzzleJsonReaderTest {
         return puzzle;
     }
 
+    @Test
+    void testFourByFourPuzzle () {
+
+        try {
+            assertTrue(testPuzzleReaderWithValidPuzzle(constructPuzzle(FOUR)));
+        } catch (JSONException e) {
+            fail("json must be valid");
+
+        } catch (IOException e) {
+            fail("file should be found");
+        }
+
+    }
+
+
+    @Test
+    void testInvalidAddress() {
+
+    }
+
+    @Test
+    void testNineByNinePuzzle () {
+        try {
+            assertTrue(testPuzzleReaderWithValidPuzzle(constructPuzzle(NINE)));
+        } catch (JSONException e) {
+            fail("json must be valid");
+
+        } catch (IOException e) {
+            fail("file should be found");
+        }
+
+    }
+
+    @Test
+    void testSixBySixPuzzle () {
+        try {
+            assertTrue(testPuzzleReaderWithValidPuzzle(constructPuzzle(SIX)));
+        } catch (JSONException e) {
+            fail("json must be valid");
+
+        } catch (IOException e) {
+            fail("file should be found");
+        }
+    }
+    @Test
+    void testTwelveByTwelvePuzzle () {
+
+        try {
+            assertTrue(testPuzzleReaderWithValidPuzzle(constructPuzzle(TWELVE)));
+        } catch (JSONException e) {
+            fail("json must be valid");
+
+        } catch (IOException e) {
+            fail("file should be found");
+        }
+    }
+
+
+    // test null string
+    @Test
+    void testInvalidJsonObjectNullObject() {
+        try {
+            PuzzleJsonReader puzzleJsonReader = new PuzzleJsonReader(null);
+            fail("PuzzleJsonReader shouldn't read empty json string");
+        } catch (NullPointerException e){
+            //expected
+
+        }
+
+    }
+
+
+    // test improperly formatted json puzzle
+    @Test
+    void testInvalidPuzzleJsonObject() {
+        try {
+            PuzzleJsonReader puzzleJsonReader = new PuzzleJsonReader("{puzzleInvalid} : bad");
+            Puzzle puzzle = puzzleJsonReader.readPuzzle();
+        } catch (Exception e){ // JsonException is caught and RunTimeException is Thrown
+            //expected
+            e.printStackTrace();
+
+        }
+
+    }
 
 
     // test if a valid puzzle saved correctly
-    @Test
-    public void testPuzzleReaderWithValidPuzzle() throws IOException, JSONException {
-        // set a temporary directory for testing
-        Mockito.when(context.getFilesDir()).thenReturn(new File("/tmp"));
-
-        // test if the directory is not null
-        assertNotNull(context.getFilesDir());
-
-        //construct the puzzle
-        Puzzle puzzle = constructPuzzle(NINE);
-
-        // create file
-        File file_saved = new File(context.getFilesDir(),PUZZLE_JSON_SAVE_FILENAME);
+    boolean testPuzzleReaderWithValidPuzzle(Puzzle puzzle) throws IOException, JSONException {
 
         // create a JsonObject out of puzzle
         JSONObject jsonObject = puzzle.toJson();
@@ -90,12 +177,16 @@ public class PuzzleJsonReaderTest {
         File file_loaded = new File(context.getFilesDir(),PUZZLE_JSON_SAVE_FILENAME);
 
         Puzzle puzzleSaved;
+
         // retrieving the saved puzzle
-        PuzzleJsonReader puzzleJsonReader = new PuzzleJsonReader(FileUtils.inputStreamToString(new FileInputStream(file_loaded)));
+        PuzzleJsonReader puzzleJsonReader =
+                new PuzzleJsonReader(FileUtils.inputStreamToString(new FileInputStream(file_loaded)));
 
         puzzleSaved = puzzleJsonReader.readPuzzle();
 
-        assertTrue(puzzle.equals(puzzleSaved));
-
+        // the loaded Puzzle must be the same as what was saved
+        return (puzzle.equals(puzzleSaved));
     }
+
+
 }
