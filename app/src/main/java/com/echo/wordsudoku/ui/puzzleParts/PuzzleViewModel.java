@@ -24,18 +24,12 @@ public class PuzzleViewModel extends ViewModel {
 
     private final MutableLiveData<Integer> timer = new MutableLiveData<>();
 
-    private boolean isCustomPuzzle = false;
-
 
     private List<WordPair> customWordPairs;
     private WordPairJsonReader mWordPairJsonReader;
 
     public List<WordPair> getWordPairs() {
-        if (isCustomPuzzle) {
-            return customWordPairs;
-        } else {
-            return puzzle.getWordPairs();
-        }
+        return puzzle.getWordPairs();
     }
 
     public boolean hasSetCustomWordPairs() {
@@ -72,7 +66,6 @@ public class PuzzleViewModel extends ViewModel {
 
     public void newCustomPuzzle(int puzzleLanguage, int difficulty) {
         setPuzzle(new Puzzle(customWordPairs, customWordPairs.size(),puzzleLanguage,-1,difficulty));
-        isCustomPuzzle = true;
     }
 
     public void loadPuzzle(Puzzle puzzle) {
