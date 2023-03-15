@@ -248,8 +248,5 @@ public class Cell implements Writable {
         return isEmpty == cell.isEmpty && isEditable == cell.isEditable && language == cell.language && content.equals(cell.content);
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(content, isEmpty, isEditable, language);
-    }
+
 }

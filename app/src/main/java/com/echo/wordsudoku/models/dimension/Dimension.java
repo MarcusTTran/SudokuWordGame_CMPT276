@@ -101,6 +101,7 @@ public class Dimension implements Writable {
     // End of getters and setters
 
 
+    // equals method for testing
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

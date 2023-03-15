@@ -24,13 +24,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-
+/**
+ * Test the PuzzleJsonReader class
+ * @author Kousha Amouzesh
+ * @version 1.0
+ *
+ */
 public class PuzzleJsonReaderTest {
 
-    final static int TWELVE = 12;
-    final static int NINE = 9;
-    final static int SIX = 6;
-    final static int FOUR = 4;
+    final static int TWELVE_BY_TWELVE = 12;
+    final static int NINE_BY_NINE = 9;
+    final static int SIX_BY_SIX = 6;
+    final static int FOUR_BY_FOUR = 4;
 
     private final String PUZZLE_JSON_SAVE_FILENAME = "wsudoku_puzzleTest.json";
 
@@ -39,7 +44,6 @@ public class PuzzleJsonReaderTest {
     private Context context;
 
     private File file_saved;
-
 
 
     @BeforeEach
@@ -79,7 +83,7 @@ public class PuzzleJsonReaderTest {
     void testFourByFourPuzzle () {
 
         try {
-            assertTrue(isPuzzleTheReadPuzzleTheSameAfterSave(constructPuzzle(FOUR)));
+            assertTrue(isPuzzleTheReadPuzzleTheSameAfterSave(constructPuzzle(FOUR_BY_FOUR)));
         } catch (JSONException e) {
             fail("json must be valid");
 
@@ -98,7 +102,7 @@ public class PuzzleJsonReaderTest {
     @Test
     void testNineByNinePuzzle () {
         try {
-            assertTrue(isPuzzleTheReadPuzzleTheSameAfterSave(constructPuzzle(NINE)));
+            assertTrue(isPuzzleTheReadPuzzleTheSameAfterSave(constructPuzzle(NINE_BY_NINE)));
         } catch (JSONException e) {
             fail("json must be valid");
 
@@ -111,7 +115,7 @@ public class PuzzleJsonReaderTest {
     @Test
     void testSixBySixPuzzle () {
         try {
-            assertTrue(isPuzzleTheReadPuzzleTheSameAfterSave(constructPuzzle(SIX)));
+            assertTrue(isPuzzleTheReadPuzzleTheSameAfterSave(constructPuzzle(SIX_BY_SIX)));
         } catch (JSONException e) {
             fail("json must be valid");
 
@@ -123,7 +127,7 @@ public class PuzzleJsonReaderTest {
     void testTwelveByTwelvePuzzle () {
 
         try {
-            assertTrue(isPuzzleTheReadPuzzleTheSameAfterSave(constructPuzzle(TWELVE)));
+            assertTrue(isPuzzleTheReadPuzzleTheSameAfterSave(constructPuzzle(TWELVE_BY_TWELVE)));
         } catch (JSONException e) {
             fail("json must be valid");
 
