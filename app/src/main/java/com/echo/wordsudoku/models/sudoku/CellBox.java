@@ -46,6 +46,9 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.Arrays;
+import java.util.Objects;
+
 public class CellBox implements Writable {
 
     // cells: the 2D array of cells.
@@ -274,6 +277,41 @@ public class CellBox implements Writable {
         }
 
         return jsonArray;
+    }
+
+
+    // equals method for comparison in testing
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        CellBox cellBox = (CellBox) o;
+
+        boolean CellsEqual = areCellsEqual(this.getCells(), cellBox.getCells());
+
+        return CellsEqual && dimension.equals(cellBox.dimension);
+    }
+
+    private boolean areCellsEqual(Cell[][] one, Cell[][] two) {
+
+        if (one.length != two.length)
+            return false;
+
+        for (int n = 0; n < one.length; n++) {
+            if (one[n].length != two[n].length) {
+                return false;
+            }
+        }
+
+        for (int i = 0; i < one.length; i++) {
+            for (int j = 0; j < one.length; j++) {
+                if (!one[i][j].equals(two[i][j])) {
+                    return false;
+                }
+            }
+        }
+
+        return true;
     }
 
 

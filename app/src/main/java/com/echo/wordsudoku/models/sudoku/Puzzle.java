@@ -13,6 +13,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
 /* This class is used to store the puzzle dimensions
  *  It uses CellBox2DArray to store the puzzle (one puzzle as the completely solved puzzle and the other as the user's puzzle)
@@ -527,4 +528,39 @@ public class Puzzle implements Writable {
 
         return jsonArray;
     }
+
+
+    // equals method for comparison in testing
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Puzzle puzzle = (Puzzle) o;
+
+        boolean solBoardAreEqual = this.solutionBoard.equals(puzzle.solutionBoard);
+
+
+        boolean wordPairsAreEqual = areWordPairsEqual(this.getWordPairs(), puzzle.getWordPairs());
+        boolean puzzleDimensionIsEqual = this.puzzleDimension.equals(puzzle.puzzleDimension);
+
+        return language == puzzle.language && mistakes == puzzle.mistakes &&
+                timer == puzzle.timer && puzzleDimensionIsEqual &&
+                solBoardAreEqual && wordPairsAreEqual;
+    }
+
+    // compare two Lists of wordPairs
+    private boolean areWordPairsEqual(List<WordPair> one, List<WordPair> two) {
+        if (one.size() != two.size()) {
+            return false;
+        }
+
+        for (int n = 0; n < one.size(); n++) {
+            if (!one.get(n).equals(two.get(n))) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
 }

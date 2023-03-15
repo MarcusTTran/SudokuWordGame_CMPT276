@@ -8,6 +8,8 @@ import com.echo.wordsudoku.models.words.WordPair;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.Objects;
+
 /**
  * The Cell class represents a cell in the board.
  * It contains the content of the cell (content: WordPair), whether the cell is editable or not (isEditable: boolean), whether the cell is empty or not (isEmpty: boolean),
@@ -235,5 +237,19 @@ public class Cell implements Writable {
         json.put("isEmpty", this.isEmpty());
         json.put("isEditable", this.isEditable());
         return json;
+    }
+
+    // equals method for comparison in testing
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Cell cell = (Cell) o;
+        return isEmpty == cell.isEmpty && isEditable == cell.isEditable && language == cell.language && content.equals(cell.content);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(content, isEmpty, isEditable, language);
     }
 }

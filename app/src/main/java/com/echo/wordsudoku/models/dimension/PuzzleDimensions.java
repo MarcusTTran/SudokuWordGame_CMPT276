@@ -47,6 +47,8 @@ import com.echo.wordsudoku.models.sudoku.Puzzle;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.Objects;
+
 public class PuzzleDimensions implements Writable {
 
     // The dimension of the puzzle. A 6x6 puzzle has a puzzle dimension of 6.
@@ -152,4 +154,16 @@ public class PuzzleDimensions implements Writable {
         json.put("boxesInPuzzleDimension", this.getBoxesInPuzzleDimension().toJson());
         return json;
     }
+
+
+    // generate equals method for testing
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        PuzzleDimensions that = (PuzzleDimensions) o;
+        return puzzleDimension == that.puzzleDimension && Objects.equals(eachBoxDimension, that.eachBoxDimension) && Objects.equals(boxesInPuzzleDimension, that.boxesInPuzzleDimension);
+    }
+
+
 }

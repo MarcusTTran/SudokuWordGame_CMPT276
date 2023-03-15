@@ -6,6 +6,8 @@ import com.echo.wordsudoku.models.json.Writable;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.Objects;
+
 /**
  *  ========================================= WORDPAIR =========================================
  *  DESCRIPTION OF FIELDS AND FEATURES
@@ -82,4 +84,13 @@ public class WordPair implements Writable {
         json.put("fre", this.getFrench());
         return json;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        WordPair wordPair = (WordPair) o;
+        return eng.equals(wordPair.eng) && fre.equals(wordPair.fre);
+    }
+
 }

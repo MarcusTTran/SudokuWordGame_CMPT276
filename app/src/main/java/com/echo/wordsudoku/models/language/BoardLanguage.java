@@ -77,4 +77,6 @@ public class BoardLanguage {
     public static int defaultLanguage() {
         return ENGLISH;
     }
+
+
 }
