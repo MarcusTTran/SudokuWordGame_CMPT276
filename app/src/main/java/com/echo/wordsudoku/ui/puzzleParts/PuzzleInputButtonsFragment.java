@@ -82,6 +82,7 @@ public class PuzzleInputButtonsFragment extends Fragment {
                     button.setLayoutParams(params);
                     // Set ID for every button (used by uiautomator)
                     button.setId(intButtonIds[(i * rows_of_button) + j]);
+
                     linearLayout.addView(button);
                     buttons[i * columns_of_button + j] = button;
                 }

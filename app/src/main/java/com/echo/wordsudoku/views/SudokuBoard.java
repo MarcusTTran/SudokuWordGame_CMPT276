@@ -644,7 +644,16 @@ public class SudokuBoard extends View {
             }
             int row = getRowColumnForVirtualViewId(virtualViewId)[0];
             int column = getRowColumnForVirtualViewId(virtualViewId)[1];
-            node.setContentDescription("Cell [" + (row+1) + "] [" + (column+1)+"] contains "+board[row][column]);
+
+            //Add descriptions and text for each view for uiautomator
+            if (board[row][column].equals("")) {
+                node.setText("EMPTYCELL");
+                node.setContentDescription("CELL[" + (row+1) + "][" + (column+1)+"] " + "contains EMPTYCELL");
+            } else {
+                node.setText(board[row][column]);
+                node.setContentDescription("CELL[" + (row+1) + "][" + (column+1)+"] contains text: " + board[row][column]);
+            }
+
             if (currentCellRow-1 == row && currentCellColumn-1 == column) {
                 node.setSelected(true);
             } else {
