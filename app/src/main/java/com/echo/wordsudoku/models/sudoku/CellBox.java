@@ -68,11 +68,11 @@ public class CellBox implements Writable {
      * @param content: the content of the cells. The content of all cells will be the same.
      *
      * */
-    public CellBox(WordPair content, int rows, int columns, int language) {
-        this.dimension = new Dimension(rows, columns);
-        this.cells = new Cell[rows][columns];
-        fillCellsWith(new Cell(content,language));
-    }
+//    public CellBox(WordPair content, int rows, int columns, int language) {
+//        this.dimension = new Dimension(rows, columns);
+//        this.cells = new Cell[rows][columns];
+//        fillCellsWith(new Cell(content,language));
+//    }
 
     /*
      * @constructor
@@ -124,9 +124,9 @@ public class CellBox implements Writable {
      * The language of the words in the cells will be the default language which is set by the Cell constructor.
      * @param dimension: the dimension of the 2D array of cells.
      */
-    public CellBox(Dimension dimension) {
-        this(dimension.getRows(), dimension.getColumns());
-    }
+//    public CellBox(Dimension dimension) {
+//        this(dimension.getRows(), dimension.getColumns());
+//    }
 
     /*
      * @constructor

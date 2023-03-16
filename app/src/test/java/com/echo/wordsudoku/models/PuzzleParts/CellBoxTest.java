@@ -145,6 +145,13 @@ class CellBoxTest {
         }
     }
 
+    @Test
+    void testEquals() {
+        CellBox otherCellBox = new CellBox(this.wordPair, 3, 3);
+        CellBox differentCellBox = new CellBox(new WordPair("e","f"), 3, 3);
+        assertTrue(otherCellBox.equals(this.cellBox));
+        assertFalse(differentCellBox.equals(this.cellBox));
+    }
 
 
 }

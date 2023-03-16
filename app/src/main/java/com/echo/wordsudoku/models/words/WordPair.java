@@ -90,6 +90,11 @@ public class WordPair implements Writable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         WordPair wordPair = (WordPair) o;
+
+        // if both are null
+        if (this == null && wordPair == null) {
+            return true;
+        }
         return eng.equals(wordPair.eng) && fre.equals(wordPair.fre);
     }
 

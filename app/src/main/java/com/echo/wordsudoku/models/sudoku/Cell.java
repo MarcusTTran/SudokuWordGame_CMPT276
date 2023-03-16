@@ -79,7 +79,6 @@ public class Cell implements Writable {
      * @param language: the language of the cell
      * Creates a cell with the given content and the language of the cell
      */
-
     public Cell(WordPair content, int language) throws NullPointerException {
         if (content == null) {
             throw new NullPointerException("You cannot pass null to the constructor to initialize the content of the cell to null. Use Cell(language) instead.");
@@ -118,7 +117,6 @@ public class Cell implements Writable {
      * @param cell: the cell to be copied
      * Performs a deep copy of the given cell
      */
-
     public Cell(Cell cell) {
         if (cell.getContent()!=null) {
             setContent(cell.getContent());
@@ -204,10 +202,12 @@ public class Cell implements Writable {
         }
     }
 
+    // isEmpty() returns true if the content of the cell is null, false otherwise
     public boolean isEmpty() {
         return isEmpty;
     }
 
+    // clear() sets the content of the cell to null and sets the cell to be empty
     public void clear() {
         content = null;
         this.isEmpty = true;
@@ -245,7 +245,18 @@ public class Cell implements Writable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Cell cell = (Cell) o;
-        return isEmpty == cell.isEmpty && isEditable == cell.isEditable && language == cell.language && content.equals(cell.content);
+
+        boolean contentEquals;
+
+        if (content == null) {
+            contentEquals =  cell.content == null;
+        } else if (cell.content == null) {
+            contentEquals = false;
+        } else {
+            contentEquals = content.equals(cell.content);
+        }
+
+        return isEmpty == cell.isEmpty && isEditable == cell.isEditable && language == cell.language && contentEquals;
     }
 
 
