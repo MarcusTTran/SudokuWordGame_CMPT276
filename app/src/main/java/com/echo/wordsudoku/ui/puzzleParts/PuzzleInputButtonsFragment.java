@@ -1,5 +1,6 @@
 package com.echo.wordsudoku.ui.puzzleParts;
 
+import android.content.res.TypedArray;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -60,6 +61,15 @@ public class PuzzleInputButtonsFragment extends Fragment {
             Button[] buttons = new Button[puzzleDimension.getPuzzleDimension()];
             int rows_of_button = Math.max(puzzleDimension.getEachBoxDimension().getRows(), puzzleDimension.getEachBoxDimension().getColumns());
             int columns_of_button = Math.min(puzzleDimension.getEachBoxDimension().getRows(), puzzleDimension.getEachBoxDimension().getColumns());
+
+            //Retrieve resource ids for buttons (used by uiautomator)
+            TypedArray typedButtonIds = getResources().obtainTypedArray(R.array.inputButtonIds);
+            int[] intButtonIds = new int[typedButtonIds.length()];
+            for (int i = 0; i < typedButtonIds.length(); i++) {
+                intButtonIds[i] = typedButtonIds.getResourceId(i, 0);
+            }
+            typedButtonIds.recycle();
+
             for (int i = 0; i < rows_of_button; i++) {
                 LinearLayout linearLayout = new LinearLayout(getContext());
                 linearLayout.setOrientation(LinearLayout.HORIZONTAL);
@@ -70,6 +80,8 @@ public class PuzzleInputButtonsFragment extends Fragment {
                     params.width = 0;
                     params.weight = 1;
                     button.setLayoutParams(params);
+                    // Set ID for every button (used by uiautomator)
+                    button.setId(intButtonIds[(i * rows_of_button) + j]);
                     linearLayout.addView(button);
                     buttons[i * columns_of_button + j] = button;
                 }
