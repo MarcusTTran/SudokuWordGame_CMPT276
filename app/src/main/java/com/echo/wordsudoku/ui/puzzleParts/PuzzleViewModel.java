@@ -40,6 +40,10 @@ public class PuzzleViewModel extends ViewModel {
         this.customWordPairs = customWordPairs;
     }
 
+    public List<WordPair> getCustomWordPairs() {
+        return customWordPairs;
+    }
+
     private void setPuzzleView(String[][] content) {
         puzzleView.setValue(content);
     }
