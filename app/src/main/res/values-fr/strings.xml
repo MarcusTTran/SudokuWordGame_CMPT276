@@ -124,5 +124,8 @@ tous vos mots en vedette. Mais rappelez-vous, vous ne pouvez accéder à cette t
     <string name="english_custom_words">Mots anglais</string>
     <string name="french_custom_words">Mots français</string>
     <string name="choose_custom_puzzle_size_custom">Sélectionner la taille du puzzle</string>
+    <string name="button_clear_custom_words">Clair</string>
+    <string name="error_custom_words_msg">Veuillez remplir toutes les cases de saisie et vous assurer que les mots ne contiennent que des caractères !</string>
+    <string name="error">Erreur</string>
 
 </resources>

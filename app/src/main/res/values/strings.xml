@@ -115,5 +115,9 @@ If you encounter any difficulty translating the words featured in your puzzle, y
     <string name="english_custom_words">English Words</string>
     <string name="french_custom_words">French Words</string>
     <string name="choose_custom_puzzle_size_custom">Select Custom Puzzle Size</string>
+    <string name="button_clear_custom_words">Clear</string>
+    <string name="error_custom_words_msg">Please fill in all entry boxes and ensure that words contain only characters!</string>
+    <string name="error">Error</string>
+
 
 </resources>
