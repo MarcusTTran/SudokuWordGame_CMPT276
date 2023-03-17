@@ -46,7 +46,6 @@ dependencies {
     implementation 'androidx.navigation:navigation-ui:2.5.3'
     androidTestImplementation 'androidx.test.uiautomator:uiautomator:2.2.0'
 
-    //V is the old version
     testImplementation 'junit:junit:4.13.2'
 
     testImplementation 'org.junit.jupiter:junit-jupiter:5.9.2'
