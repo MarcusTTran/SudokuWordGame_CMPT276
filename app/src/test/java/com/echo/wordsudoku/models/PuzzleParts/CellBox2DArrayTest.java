@@ -4,6 +4,7 @@ import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertThrows;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
@@ -19,7 +20,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.io.ByteArrayOutputStream;
-import java.io.PrintStream;
 
 public class CellBox2DArrayTest {
 
@@ -43,7 +43,7 @@ public class CellBox2DArrayTest {
     }
 
     @Test
-    public void testConstructor1() {
+    public void testConstructorBoxesAndLanguage() {
         // Test the first constructor
         CellBox[][] cellBoxes = new CellBox[9][9];
 
@@ -75,7 +75,10 @@ public class CellBox2DArrayTest {
         assertNotNull(cellBox2DArray.getCellBoxes());
 
         // Check that the cells are empty
-        assertTrue(testAllCellsAreEmpty(cellBox2DArray));
+        assertTrue(areAllCellsAreEmpty(cellBox2DArray));
+
+        // check cells language to be English
+        assertTrue(checkCellSetAtLanguage(BoardLanguage.ENGLISH, cellBox2DArray));
     }
 
 
@@ -92,7 +95,7 @@ public class CellBox2DArrayTest {
         assertNotNull(cellBox2DArray.getCellBoxes());
 
         // Check that the cells are empty
-        assertTrue(testAllCellsAreEmpty(cellBox2DArray));
+        assertTrue(areAllCellsAreEmpty(cellBox2DArray));
     }
 
 
@@ -108,7 +111,7 @@ public class CellBox2DArrayTest {
         assertNotNull(cellBox2DArray.getCellBoxes());
 
         // Check that the cells are empty
-        assertTrue(testAllCellsAreEmpty(cellBox2DArray));
+        assertTrue(areAllCellsAreEmpty(cellBox2DArray));
     }
 
 
@@ -129,7 +132,7 @@ public class CellBox2DArrayTest {
         assertNotNull(cellBox2DArray.getCellBoxes());
 
         // Check that the cells are empty
-        assertTrue(testAllCellsAreEmpty(cellBox2DArray));
+        assertTrue(areAllCellsAreEmpty(cellBox2DArray));
     }
 
 
@@ -182,27 +185,301 @@ public class CellBox2DArrayTest {
                 cellBoxes[i][j] = new CellBox(new WordPair("e", "f"), 3, 3);
             }
         }
-
-
-
         cellBox2DArray.setCellBoxes(cellBoxes);
         assertNotNull(cellBox2DArray.getCellBoxes());
 
         // the cellBox2DArray must throw array out of bound exception however this exception
         // is caught within the model method and only the cells within the bounds are filled
         // therefor the cells won't be empty
-        assertFalse(testAllCellsAreEmpty(cellBox2DArray));
+        assertFalse(areAllCellsAreEmpty(cellBox2DArray));
 
+    }
+
+
+    @Test
+    void testGetSetBoxDimension() {
+        CellBox2DArray cellBox2DArray = new CellBox2DArray(this.boxes, this.cells);
+        Dimension dimension = new Dimension(4, 4);
+        cellBox2DArray.setBoxDimensions(dimension);
+        assertTrue(dimension.equals(cellBox2DArray.getBoxDimensions()));
+    }
+
+    @Test
+    void testGetSetCellDimension() {
+        CellBox2DArray cellBox2DArray = new CellBox2DArray(this.boxes, this.cells);
+        Dimension dimension = new Dimension(4, 4);
+        cellBox2DArray.setCellDimensions(dimension);
+        assertTrue(dimension.equals(cellBox2DArray.getCellDimensions()));
+    }
+
+    @Test
+    void testGetCellBox() {
+        CellBox2DArray cellBox2DArray = new CellBox2DArray(this.boxes, this.cells);
+        CellBox cellBox = cellBox2DArray.getCellBox(0, 0);
+        assertNotNull(cellBox);
+        assertEquals(cellBox, cellBox2DArray.getCellBoxes()[0][0]);
+    }
+
+
+    // test index out of bound exception with get Cell box
+    @Test
+    void testGetCellBoxOutOfBound() {
+        CellBox2DArray cellBox2DArray = new CellBox2DArray(this.boxes, this.cells);
+        assertThrows(ArrayIndexOutOfBoundsException.class, () -> cellBox2DArray.getCellBox(10, 10));
+        assertThrows(ArrayIndexOutOfBoundsException.class, () -> cellBox2DArray.getCellBox(11, 11));
+        assertThrows(ArrayIndexOutOfBoundsException.class, () -> cellBox2DArray.getCellBox(-1, -1));
+    }
+
+
+    @Test
+    void testGetCellBoxWithDimension() {
+        CellBox2DArray cellBox2DArray = new CellBox2DArray(this.boxes, this.cells);
+        CellBox cellBox = cellBox2DArray.getCellBox(new Dimension(1,1));
+        assertNotNull(cellBox);
+        assertEquals(cellBox, cellBox2DArray.getCellBoxes()[0][0]);
+    }
+
+    @Test
+    void testGetCellBoxWithDimensionOutOfBound() {
+        CellBox2DArray cellBox2DArray = new CellBox2DArray(this.boxes, this.cells);
+        assertThrows(ArrayIndexOutOfBoundsException.class, () -> cellBox2DArray.getCellBox(new Dimension(9, 9)));
+        assertThrows(ArrayIndexOutOfBoundsException.class, () -> cellBox2DArray.getCellBox(new Dimension(11, 11)));
+        assertThrows(ArrayIndexOutOfBoundsException.class, () -> cellBox2DArray.getCellBox(new Dimension(-1, -1)));
+    }
+
+    /*
+    public Cell getCellFromBigArray(int i, int j) {
+        int boxRow = i / cellDimensions.getRows();
+        int boxColumn = j / cellDimensions.getColumns();
+        int inBoxRow = i % cellDimensions.getRows();
+        int inBoxColumn = j % cellDimensions.getColumns();
+        return getCellBox(boxRow, boxColumn).getCell(inBoxRow, inBoxColumn);
+    }
+     */
+
+
+    @Test
+    void testGetCellFromBigArray() {
+        CellBox2DArray cellBox2DArray = new CellBox2DArray(this.boxes, this.cells);
+        Cell cellFirst = cellBox2DArray.getCellFromBigArray(0, 0);
+        Cell cellLast = cellBox2DArray.getCellFromBigArray(8, 8);
+        assertNotNull(cellFirst);
+        assertNotNull(cellLast);
+        assertEquals(cellFirst, cellBox2DArray.getCellBoxes()[0][0].getCells()[0][0]);
+        assertEquals(cellLast, cellBox2DArray.getCellBoxes()[0][0].getCells()[8][8]);
+
+    }
+
+
+    @Test
+    void testGetCellFromBigArrayOutOfBound() {
+        CellBox2DArray cellBox2DArray = new CellBox2DArray(this.boxes, this.cells);
+        assertThrows(IndexOutOfBoundsException.class, () -> cellBox2DArray.getCellFromBigArray(81, 81));
+        assertThrows(IndexOutOfBoundsException.class, () -> cellBox2DArray.getCellFromBigArray(-1, -1));
+    }
+
+
+    @Test
+    void testGetCellsFromBigArrayWithDimension() {
+        CellBox2DArray cellBox2DArray = new CellBox2DArray(this.boxes, this.cells);
+        Cell cellFirst = cellBox2DArray.getCellFromBigArray(new Dimension(0, 0));
+        Cell cellLast = cellBox2DArray.getCellFromBigArray(new Dimension(8, 8));
+        assertNotNull(cellFirst);
+        assertNotNull(cellLast);
+        assertEquals(cellFirst, cellBox2DArray.getCellBoxes()[0][0].getCells()[0][0]);
+        assertEquals(cellLast, cellBox2DArray.getCellBoxes()[0][0].getCells()[8][8]);
+
+    }
+
+    @Test
+    void getCellsFromBigArrayOutOfBound() {
+        CellBox2DArray cellBox2DArray = new CellBox2DArray(this.boxes, this.cells);
+        assertThrows(IndexOutOfBoundsException.class, () -> cellBox2DArray.getCellFromBigArray(new Dimension(81, 81)));
+        assertThrows(IndexOutOfBoundsException.class, () -> cellBox2DArray.getCellFromBigArray(new Dimension(-1, -1)));
+    }
+
+
+    @Test
+    void testSetCellsFromBigArray() {
+        CellBox2DArray cellBox2DArray = new CellBox2DArray(this.boxes, this.cells);
+        WordPair wordPair = new WordPair("test", "test");
+        cellBox2DArray.setCellFromBigArray(0, 0, wordPair);
+        assertEquals(wordPair, cellBox2DArray.getCellBoxes()[0][0].getCells()[0][0].getContent());
+    }
+
+    @Test
+    void testSetCellFromBigArrayOutOfBound() {
+        CellBox2DArray cellBox2DArray = new CellBox2DArray(this.boxes, this.cells);
+        WordPair wordPair = new WordPair("test", "test");
+        assertThrows(IndexOutOfBoundsException.class, () -> cellBox2DArray.setCellFromBigArray(81, 81, wordPair));
+        assertThrows(IndexOutOfBoundsException.class, () -> cellBox2DArray.setCellFromBigArray(-1, -1, wordPair));
+    }
+
+
+    @Test
+    void testSetCellFromBigArrayWithDimension() {
+        CellBox2DArray cellBox2DArray = new CellBox2DArray(this.boxes, this.cells);
+        WordPair wordPair = new WordPair("test", "test");
+        cellBox2DArray.setCellFromBigArray(new Dimension(0, 0), wordPair);
+        assertEquals(wordPair, cellBox2DArray.getCellBoxes()[0][0].getCells()[0][0].getContent());
+    }
+
+
+    @Test
+    void testSetCellFromBigArrayWithDimensionOutOfBound() {
+        CellBox2DArray cellBox2DArray = new CellBox2DArray(this.boxes, this.cells);
+        WordPair wordPair = new WordPair("test", "test");
+        assertThrows(IndexOutOfBoundsException.class, () -> cellBox2DArray.setCellFromBigArray(new Dimension(81, 81), wordPair));
+        assertThrows(IndexOutOfBoundsException.class, () -> cellBox2DArray.setCellFromBigArray(new Dimension(-1, -1), wordPair));
+    }
+
+    @Test
+    void testSetCellClearFromBigArray() {
+        CellBox2DArray cellBox2DArray = new CellBox2DArray(this.boxes, this.cells);
+        WordPair wordPair = new WordPair("test", "test");
+
+        // set cell to wordPair content
+        cellBox2DArray.setCellFromBigArray(0, 0, wordPair);
+        assertEquals(wordPair, cellBox2DArray.getCellBoxes()[0][0].getCells()[0][0].getContent());
+
+        // clear the cell of the same coordinate
+        cellBox2DArray.setCellFromBigArray(0,0);
+
+        // the cell should be like this after clear() is called
+        Cell clearedCell = new Cell(null, true, BoardLanguage.ENGLISH, true);
+        assertEquals(clearedCell, cellBox2DArray.getCellBoxes()[0][0].getCells()[0][0]);
+    }
+
+
+    @Test
+    void testSetCellClearFromBigArrayOutOfBound() {
+        CellBox2DArray cellBox2DArray = new CellBox2DArray(this.boxes, this.cells);
+        WordPair wordPair = new WordPair("test", "test");
+
+        // set cell to wordPair content
+        cellBox2DArray.setCellFromBigArray(0, 0, wordPair);
+        assertEquals(wordPair, cellBox2DArray.getCellBoxes()[0][0].getCells()[0][0].getContent());
+
+        assertThrows(IndexOutOfBoundsException.class, () -> cellBox2DArray.setCellFromBigArray(81, 81));
+        assertThrows(IndexOutOfBoundsException.class, () -> cellBox2DArray.setCellFromBigArray(-1, -1));
+
+        // but now try with valid coordinate
+        cellBox2DArray.setCellFromBigArray(0,0);
+
+
+        Cell clearedCell = new Cell(null, true, BoardLanguage.ENGLISH, true);
+        assertEquals(clearedCell, cellBox2DArray.getCellBoxes()[0][0].getCells()[0][0]);
+
+    }
+
+
+    @Test
+    void testSetCellClearFromBigArrayWhenAlreadyCleared() {
+        CellBox2DArray cellBox2DArray = new CellBox2DArray(this.boxes, this.cells);
+        cellBox2DArray.setCellFromBigArray(0,0);
+        Cell clearedCell = new Cell(null, true, BoardLanguage.ENGLISH, true);
+
+        // the cell should be cleared regardless and no change will happen to the content in the cell
+        assertEquals(clearedCell, cellBox2DArray.getCellBoxes()[0][0].getCells()[0][0]);
+    }
+
+    @Test
+    void testGetColumnsRows() {
+        // 9 x 9
+        CellBox2DArray cellBox2DArrayNine = new CellBox2DArray(this.boxes, this.cells);
+        assertEquals(81,  cellBox2DArrayNine.getColumns());
+        assertEquals(81,  cellBox2DArrayNine.getRows());
+
+        // 12 x 12
+        CellBox2DArray cellBox2DArrayTwelve = new CellBox2DArray(new Dimension(12, 12), new Dimension(12, 12));
+        assertEquals(144,  cellBox2DArrayTwelve.getColumns());
+        assertEquals(144,  cellBox2DArrayTwelve.getRows());
+
+        // 6 x 6
+        CellBox2DArray cellBox2DArraySix = new CellBox2DArray(new Dimension(6, 6), new Dimension(6, 6));
+        assertEquals(36,  cellBox2DArraySix.getColumns());
+        assertEquals(36,  cellBox2DArraySix.getRows());
+
+        // 4 x 4
+        CellBox2DArray cellBox2DArrayFour = new CellBox2DArray(new Dimension(4, 4), new Dimension(4, 4));
+        assertEquals(16,  cellBox2DArrayFour.getColumns());
+        assertEquals(16,  cellBox2DArrayFour.getRows());
+    }
+
+
+    @Test
+    void testLanguage() {
+        CellBox2DArray cellBox2DArrayEnglish = new CellBox2DArray(this.boxes, this.cells);
+        assertTrue(checkCellSetAtLanguage(BoardLanguage.ENGLISH, cellBox2DArrayEnglish));
+        CellBox2DArray cellBox2DArrayFrench = new CellBox2DArray(this.boxes, this.cells, BoardLanguage.FRENCH);
+        assertTrue(checkCellSetAtLanguage(BoardLanguage.FRENCH, cellBox2DArrayFrench));
+    }
+
+
+    boolean checkCellSetAtLanguage(int language, CellBox2DArray cellBox2DArray){
+        
+        for (int i = 0; i < cellBox2DArray.getCellBoxes().length; i++) {
+            for (int j = 0; j < cellBox2DArray.getCellBoxes().length; j++) {
+                if (cellBox2DArray.getCellBox(i, j).getCell(i,j).getLanguage() != language){
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+
+    @Test
+    void testIsFilled() {
+        CellBox2DArray cellBox2DArrayFilled = new CellBox2DArray(this.boxes, this.cells);
+        CellBox2DArray cellBox2DArrayNotFilled = new CellBox2DArray(this.boxes, this.cells);
+
+        // fill all cells
+        for (int x = 0; x < cellBox2DArrayFilled.getRows(); x++) {
+            for (int y = 0; y < cellBox2DArrayFilled.getColumns(); y++) {
+                // leave one empty for one of the cell boxes
+                if (y != 80) {
+                    cellBox2DArrayNotFilled.setCellFromBigArray(x, y, new WordPair("test", "test"));
+                }
+                cellBox2DArrayFilled.setCellFromBigArray(x, y, new WordPair("test", "test"));
+            }
+        }
+
+        // check filled and not filled cellBoxes
+        assertTrue(cellBox2DArrayFilled.isFilled());
+        assertFalse(cellBox2DArrayNotFilled.isFilled());
+    }
+
+
+    @Test
+    void testEquals() {
+        CellBox2DArray cellBox2DArray = new CellBox2DArray(this.boxes, this.cells);
+        CellBox2DArray cellBox2DArrayCopy = new CellBox2DArray(this.boxes, this.cells);
+        CellBox2DArray notEqualCellBox2DArray = new CellBox2DArray(this.boxes, this.cells);
+
+        // fill all cells with same content
+        cellBox2DArray = fillAllCells(cellBox2DArray);
+        cellBox2DArrayCopy = fillAllCells(cellBox2DArrayCopy);
+        // check if the two cellBox2DArray are equal
+        assertTrue(cellBox2DArray.equals(cellBox2DArrayCopy));
+        assertFalse(cellBox2DArray.equals(notEqualCellBox2DArray));
+    }
+
+    CellBox2DArray fillAllCells(CellBox2DArray cellBox2DArray){
+        for (int x = 0; x < cellBox2DArray.getRows(); x++) {
+            for (int y = 0; y < cellBox2DArray.getColumns(); y++) {
+                cellBox2DArray.setCellFromBigArray(x, y, new WordPair("test", "test"));
+            }
+        }
+        return cellBox2DArray;
     }
 
 
 
 
 
-
-
     // helper method for checking whether all cells are empty or not
-    boolean testAllCellsAreEmpty(CellBox2DArray cellBox2DArray){
+    boolean areAllCellsAreEmpty(CellBox2DArray cellBox2DArray){
         for (int i = 0; i < cellBox2DArray.getCellBoxes().length; i++) {
             for (int j = 0; j < cellBox2DArray.getCellBoxes()[i].length; j++) {
                 if(!cellBox2DArray.getCellBoxes()[i][j].getCells()[i][j].equals(new Cell())){
@@ -212,5 +489,7 @@ public class CellBox2DArrayTest {
         }
         return true;
     }
+
+
 
 }

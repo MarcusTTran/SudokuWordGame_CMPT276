@@ -297,18 +297,19 @@ public class CellBox2DArray implements Writable {
         return boxDimensions.getColumns() * cellDimensions.getColumns();
     }
 
-    /* @method
-     * Sets the language of all cells to the given language.
-     * @param language: The language that will be set to all cells
-     * Usage: cellBox2DArray.setCellsLanguage(BoardLanguage.ENGLISH);
-     */
-    public void setCellsLanguage(int language){
-        for (int i = 0; i < getRows(); i++) {
-            for (int j = 0; j < getColumns(); j++) {
-                getCellBox(i,j).setCellsLanguage(language);
-            }
-        }
-    }
+    //NOT USED
+//    /* @method
+//     * Sets the language of all cells to the given language.
+//     * @param language: The language that will be set to all cells
+//     * Usage: cellBox2DArray.setCellsLanguage(BoardLanguage.ENGLISH);
+//     */
+//    public void setCellsLanguage(int language){
+//        for (int i = 0; i < getRows(); i++) {
+//            for (int j = 0; j < getColumns(); j++) {
+//                getCellBox(i,j).setCellsLanguage(language);
+//            }
+//        }
+//    }
 
     /* @method
      *  Checks if all cells are filled. If all cells are filled, this method returns true. Otherwise, it returns false.

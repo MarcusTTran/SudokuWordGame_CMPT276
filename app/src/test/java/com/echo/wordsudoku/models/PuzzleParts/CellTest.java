@@ -159,6 +159,18 @@ public class CellTest {
         assertEquals(this.cellWithContent.getLanguage(), FRENCH);
     }
 
+    @Test
+    void testSetLanguageInvalid() {
+        try {
+            this.cellWithContent = new Cell(this.content);
+            assertEquals(this.cellWithContent.getLanguage(), ENGLISH);
+            this.cellWithContent.setLanguage(3);
+            fail("IllegalArgumentException not thrown");
+        } catch (IllegalArgumentException e){
+            //expected
+        }
+    }
+
 
     @Test
     void testEquals() {
