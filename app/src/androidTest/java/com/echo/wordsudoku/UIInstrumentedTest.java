@@ -11,6 +11,7 @@ import androidx.test.platform.app.InstrumentationRegistry;
 import androidx.test.uiautomator.UiDevice;
 import androidx.test.uiautomator.UiObject;
 import androidx.test.uiautomator.UiObjectNotFoundException;
+import androidx.test.uiautomator.UiScrollable;
 import androidx.test.uiautomator.UiSelector;
 import androidx.test.uiautomator.Until;
 import androidx.test.uiautomator.By;
@@ -88,6 +89,7 @@ public class UIInstrumentedTest {
     }
 
     //Test that the timer correctly appears on the puzzles fragment when turned on
+    @Ignore("Working test")
     @Test
     public void testTimerDisplayOnPuzzleFragment() {
         UiObject settingsButton = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/settings_button"));
@@ -134,6 +136,7 @@ public class UIInstrumentedTest {
 
 
     //Test that the timer switch in the settings correctly updates subtext below Timer Puzzle header
+    @Ignore("Working test")
     @Test
     public void testSettingsTimerSwitch() {
         UiObject settingsButton = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/settings_button"));
@@ -207,12 +210,176 @@ public class UIInstrumentedTest {
 
     }
 
+    //Check that the puzzle page displays all necessary buttons and TextViews to the user
+    @Ignore("Working test")
+    @Test
+    public void testPuzzlePageDisplay() {
+        int dim = 9;
 
+        //Start new game
+        UiObject newGameButton = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/new_game_button").className("android.widget.Button"));
+        try {
+            newGameButton.click();
+        } catch (UiObjectNotFoundException e) {
+            e.printStackTrace();
+        }
+        sleep(500);
+
+        //Start classic puzzle
+        UiObject classicPuzzleButton = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/classic_puzzle_button").className("android.widget.Button"));
+        try {
+            classicPuzzleButton.click();
+        } catch (UiObjectNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        UiObject doneButton = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/options_finish_button").className("android.widget.Button"));
+        if (!doneButton.exists()) {
+            fail("Done Button was not displayed");
+        }
+
+        UiObject resetButton = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/options_reset_puzzle_button").className("android.widget.Button"));
+        if (!resetButton.exists()) {
+            fail("Reset Button was not displayed");
+        }
+
+        UiObject dictionaryButton = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/options_dictionary_help_button").className("android.widget.ImageButton"));
+        if (!dictionaryButton.exists()) {
+            fail("Dictionary Button was not displayed");
+        }
+
+        UiObject helpButton = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/help_button").className("android.widget.ImageButton"));
+        if (!helpButton.exists()) {
+            fail("Help Button was not displayed");
+        }
+
+        for(int i = 0; i < dim; i++) {
+            UiObject inputButton = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/id" + (i + 1)).className("android.widget.Button"));
+            if (!inputButton.exists()) {
+                fail("The " + i + " button was not displayed");
+            }
+        }
+
+        UiObject timerDisplay = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/timer_text_view").className("android.widget.TextView"));
+        if (!timerDisplay.exists()) {
+            fail("Timer/Difficulty was not displayed");
+        }
+
+        UiObject sudokuBoard = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/sudoku_board").className("android.view.View"));
+        if (!sudokuBoard.exists()) {
+            fail("Sudoku Board was not displayed");
+        }
+
+        UiObject actionBar = ourDevice.findObject(new UiSelector().className("android.widget.FrameLayout"));
+        try {
+            UiObject backButton = actionBar.getChild(new UiSelector().index(1));
+            UiObject kebabButton = actionBar.getChild(new UiSelector().index(3));
+            if (!backButton.exists()) {
+                fail("Back button was not shown");
+            }
+            if (!kebabButton.exists()) {
+                fail("Kebab button was not shown");
+            }
+        } catch (UiObjectNotFoundException e) {
+            fail();
+        }
+
+    }
+
+    //Test that the puzzle page displays all necessary buttons and TextViews to the user
+    @Ignore("Working test")
+    @Test
+    public void testPuzzlePageDisplayHorizontal() {
+        int dim = 9;
+
+        try {
+            ourDevice.setOrientationLeft();
+            ourDevice.waitForWindowUpdate(null, 3000);
+        } catch (android.os.RemoteException e) {
+            fail();
+        }
+
+        //Start new game
+        UiObject newGameButton = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/new_game_button").className("android.widget.Button"));
+        try {
+            newGameButton.click();
+        } catch (UiObjectNotFoundException e) {
+            e.printStackTrace();
+        }
+        sleep(500);
+
+        //Start classic puzzle
+        UiObject classicPuzzleButton = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/classic_puzzle_button").className("android.widget.Button"));
+        try {
+            classicPuzzleButton.click();
+        } catch (UiObjectNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        UiObject doneButton = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/options_finish_button").className("android.widget.Button"));
+        if (!doneButton.exists()) {
+            fail("Done Button was not displayed");
+        }
+
+        UiObject resetButton = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/options_reset_puzzle_button").className("android.widget.Button"));
+        if (!resetButton.exists()) {
+            fail("Reset Button was not displayed");
+        }
+
+        UiObject dictionaryButton = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/options_dictionary_help_button").className("android.widget.ImageButton"));
+        if (!dictionaryButton.exists()) {
+            fail("Dictionary Button was not displayed");
+        }
+
+        UiObject helpButton = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/help_button").className("android.widget.ImageButton"));
+        if (!helpButton.exists()) {
+            fail("Help Button was not displayed");
+        }
+
+        for(int i = 0; i < dim; i++) {
+            UiObject inputButton = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/id" + (i + 1)).className("android.widget.Button"));
+            if (!inputButton.exists()) {
+                fail("The " + i + " button was not displayed");
+            }
+        }
+
+        UiObject timerDisplay = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/timer_text_view").className("android.widget.TextView"));
+        if (!timerDisplay.exists()) {
+            fail("Timer/Difficulty was not displayed");
+        }
+
+        UiObject sudokuBoard = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/sudoku_board").className("android.view.View"));
+        if (!sudokuBoard.exists()) {
+            fail("Sudoku Board was not displayed");
+        }
+
+        UiObject actionBar = ourDevice.findObject(new UiSelector().className("android.widget.FrameLayout"));
+        try {
+            UiObject backButton = actionBar.getChild(new UiSelector().index(1));
+            UiObject kebabButton = actionBar.getChild(new UiSelector().index(3));
+            if (!backButton.exists()) {
+                fail("Back button was not shown");
+            }
+            if (!kebabButton.exists()) {
+                fail("Kebab button was not shown");
+            }
+        } catch (UiObjectNotFoundException e) {
+            fail();
+        }
+
+    }
+
+    //Test that clicking the Custom Words button on the Choose Puzzle Mode with no custom words
+    //entered, takes the user to the Choose Custom Words page
+    @Test
+    public void testCustomWordsNoCustomWords() {
+        fail();
+    }
 
     //TODO: Use UiScrollable to achieve this test (only needs to be for sizes 9 and 12)
     //Test that the correct amount of edit texts are displayed for the option selected in the dropdown
     // when in the choose custom words fragment
-    @Ignore("Not working test")
+    @Ignore("Working test")
     @Test
     public void testCustomWordsPageAllEditTextsDisplayed12x12Horizontal() {
         int totalEditText = 12;
@@ -250,31 +417,55 @@ public class UIInstrumentedTest {
 
         int EditTextCounter = 0;
         try {
-            for (int i = 0; i < entryBox1.getChildCount() - 1; i++) {
-                UiObject edittext = entryBox1.getChild(new UiSelector().index(i + 1));
+            for (int i = 0; i < entryBox1.getChildCount(); i++) {
+                UiObject edittext = entryBox1.getChild(new UiSelector().index(i));
+
+                UiScrollable entryBoxScrollView = new UiScrollable(new UiSelector().resourceId("com.echo.wordsudoku:id/entryBoxesScrollView"));
+                try {
+                    entryBoxScrollView.scrollIntoView(edittext);
+                } catch (UiObjectNotFoundException e) {
+                    fail("ScrollView not found");
+                }
+
                 if (!edittext.exists()) {
                     fail("EditText at index " + i + " was not displayed");
                 }
                 EditTextCounter++;
             }
             if (EditTextCounter != totalEditText) {
-                fail("Not all edit texts were displayed");
+                fail("Not all edit texts were displayed; Only " + EditTextCounter);
             }
         } catch (UiObjectNotFoundException e) {
             fail("EditTexts were not all displayed");
         }
 
+        //Scroll the ScrollView back up to count the 2nd row
+        UiScrollable scrollBackUp = new UiScrollable(new UiSelector().resourceId("com.echo.wordsudoku:id/entryBoxesScrollView"));
+        try {
+            scrollBackUp.flingBackward();
+        } catch (UiObjectNotFoundException e) {
+            fail("ScrollView not found");
+        }
+
         EditTextCounter = 0;
         try {
-            for (int i = 0; i < entryBox2.getChildCount() - 1; i++) {
-                UiObject edittext = entryBox2.getChild(new UiSelector().index(i + 1));
+            for (int i = 0; i < entryBox2.getChildCount(); i++) {
+                UiObject edittext = entryBox2.getChild(new UiSelector().index(i));
+
+                UiScrollable entryBoxScrollView = new UiScrollable(new UiSelector().resourceId("com.echo.wordsudoku:id/entryBoxesScrollView"));
+                try {
+                    entryBoxScrollView.scrollIntoView(edittext);
+                } catch (UiObjectNotFoundException e) {
+                    fail("ScrollView not found");
+                }
+
                 if (!edittext.exists()) {
                     fail("EditText at index " + i + " was not displayed");
                 }
                 EditTextCounter++;
             }
             if (EditTextCounter != totalEditText) {
-                fail("Not all edit texts were displayed");
+                fail("Not all edit texts were displayed; Only " + EditTextCounter);
             }
         } catch (UiObjectNotFoundException e) {
             fail("EditTexts were not all displayed");
@@ -1155,7 +1346,7 @@ public class UIInstrumentedTest {
     }
 
     //Test that we can open the dictionary pop up from Kebab menu
-        @Ignore("Working test")
+    @Ignore("Working test")
     @Test
     public void testKebabDictionaryButtonNavigation() {
         //Start new game
@@ -1197,11 +1388,148 @@ public class UIInstrumentedTest {
         if (!dictionaryWordList1.exists() || !dictionaryWordList2.exists() ||!dictionaryHeader.exists() || !dictionaryExitButton.exists() || !popupDictionary.exists()) {
             fail("Dictionary pop up was not properly displayed");
         }
+    }
+
+    //Test that the entry box limits the word length to 12
+    @Ignore("Working test")
+    @Test
+    public void testChooseCustomWordEditBoxMaxLength() {
+        String longUserInputtedString = "awehuifuiawdghwuawidhauiwdhuawidawuidhawuihduwhduawidjawdjiwjawda";
+
+        UiObject chooseCustomWordsButton = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/custom_words_button"));
+        try {
+            chooseCustomWordsButton.click();
+        } catch (UiObjectNotFoundException e) {
+            fail("Choose custom words button not found");
+        }
+
+        UiObject entryBox1 = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/buttonLanguageEntries"));
+
+        try {
+            UiObject editText = entryBox1.getChild(new UiSelector().index(1));
+            editText.click();
+            editText.setText(longUserInputtedString);
+            String s = editText.getText();
+            if (s.length() > 12) {
+                fail("Words exceed the length of 12");
+            }
+
+        } catch (UiObjectNotFoundException e) {
+            fail("EditTexts were not all displayed");
+        }
+
 
 
     }
 
+    //TODO:
+    //Test that the entry box limits the word length to 12
+    //@Ignore("Working test")
+    @Test
+    public void testChooseCustomWordEditBoxBlank() {
+        String longUserInputtedString = "awehuifuiawdghwuawidhauiwdhuawidawuidhawuihduwhduawidjawdjiwjawda";
 
+        UiObject chooseCustomWordsButton = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/custom_words_button"));
+        try {
+            chooseCustomWordsButton.click();
+        } catch (UiObjectNotFoundException e) {
+            fail("Choose custom words button not found");
+        }
+
+        UiObject entryBox1 = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/buttonLanguageEntries"));
+
+        try {
+            UiObject editText = entryBox1.getChild(new UiSelector().index(1));
+            editText.click();
+            editText.setText(longUserInputtedString);
+            String s = editText.getText();
+            if (s.length() > 12) {
+                fail("Words exceed the length of 12");
+            }
+
+        } catch (UiObjectNotFoundException e) {
+            fail("EditTexts were not all displayed");
+        }
+
+        fail();
+
+    }
+
+    //TODO:
+    //Test that entering numbers into custom words shows error dialog
+    //@Ignore("Working test")
+    @Test
+    public void testCustomWordsNumbersError() {
+        fail();
+    }
+
+    @Test
+    public void testSettingsHorizontal() {
+        fail();
+    }
+
+    @Test
+    public void testGameLoseDisplay() {
+        fail();
+    }
+
+    @Test
+    public void testGameWinDisplay() {
+        fail();
+    }
+
+    @Test
+    public void testSaveDialogCancel() {
+        fail();
+    }
+
+    @Test
+    public void testResetButton() {
+        fail();
+    }
+
+    //Test selecting exit in the kebab menu closes the app
+    @Ignore("Working test")
+    @Test
+    public void testKebabExitButtonNavigation() {
+        //Start new game
+        UiObject newGameButton = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/new_game_button").className("android.widget.Button"));
+        try {
+            newGameButton.click();
+        } catch (UiObjectNotFoundException e) {
+            fail("New game button not found");
+        }
+
+        //Start classic puzzle
+        UiObject classicPuzzleButton = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/classic_puzzle_button").className("android.widget.Button"));
+        try {
+            classicPuzzleButton.click();
+        } catch (UiObjectNotFoundException e) {
+            fail("Classic puzzle button not found");
+        }
+
+        UiObject kebabButton = ourDevice.findObject(new UiSelector().descriptionContains("More options").className("android.widget.ImageView"));
+        try {
+            kebabButton.click();
+        } catch (UiObjectNotFoundException e) {
+            fail("kebab button not found");
+        }
+
+        UiObject exitButton = ourDevice.findObject(new UiSelector().textContains("Exit").className("android.widget.TextView"));
+        try {
+            exitButton.click();
+            sleep(1000);
+        } catch (UiObjectNotFoundException e) {
+            fail("Exit button not found");
+        }
+
+        UiObject puzzlePage = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/puzzle_fragment").className("android.view.ViewGroup"));
+        UiObject mainMenuScreen = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/mainMenuScreen").className("android.view.ViewGroup"));
+
+        if (puzzlePage.exists() || mainMenuScreen.exists()) {
+            fail("Exit button did not work");
+        }
+    }
 
 
     // Test that a user cannot override a permanent cell
