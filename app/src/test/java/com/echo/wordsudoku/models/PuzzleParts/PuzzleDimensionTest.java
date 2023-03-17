@@ -10,6 +10,11 @@ import com.echo.wordsudoku.models.dimension.PuzzleDimensions;
 
 import org.junit.jupiter.api.Test;
 
+/**
+ * Unit test for PuzzleDimensions
+ * @version 1.0
+ */
+
 public class PuzzleDimensionTest {
 
     @Test
@@ -63,8 +68,6 @@ public class PuzzleDimensionTest {
         assertEquals(new Dimension(2, 3), pdSix.getEachBoxDimension());
         PuzzleDimensions pdTwelve = new PuzzleDimensions(12);
         assertEquals(new Dimension(3, 4), pdTwelve.getEachBoxDimension());
-
-
     }
 
 
