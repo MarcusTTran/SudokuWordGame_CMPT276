@@ -70,6 +70,7 @@ public class PuzzleInputButtonsFragment extends Fragment {
             }
             typedButtonIds.recycle();
 
+            int idCounter = 0;
             for (int i = 0; i < rows_of_button; i++) {
                 LinearLayout linearLayout = new LinearLayout(getContext());
                 linearLayout.setOrientation(LinearLayout.HORIZONTAL);
@@ -81,7 +82,7 @@ public class PuzzleInputButtonsFragment extends Fragment {
                     params.weight = 1;
                     button.setLayoutParams(params);
                     // Set ID for every button (used by uiautomator)
-                    button.setId(intButtonIds[(i * rows_of_button) + j]);
+                    button.setId(intButtonIds[idCounter++]);
 
                     linearLayout.addView(button);
                     buttons[i * columns_of_button + j] = button;
