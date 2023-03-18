@@ -93,12 +93,12 @@ If you encounter any difficulty translating the words featured in your puzzle, y
 
 
     <!-- Choose size dialogue -->
-    <string name = "choose_size_title">Choose Size</string>
-    <string name = "option_4x4"> 4 x 4 </string>
-    <string name = "option_6x6"> 6 x 6 </string>
-    <string name = "option_9x9"> 9 x 9 </string>
-    <string name = "option_12x12">12x12</string>
-    <string name = "done_button">Done</string>
+    <string name="choose_size_title">Choose Size</string>
+    <string name="option_4x4"> 4 x 4 </string>
+    <string name="option_6x6"> 6 x 6 </string>
+    <string name="option_9x9"> 9 x 9 </string>
+    <string name="option_12x12">12x12</string>
+    <string name="done_button">Done</string>
     <string name="cancel_button">Cancel</string>
 
 
@@ -118,6 +118,8 @@ If you encounter any difficulty translating the words featured in your puzzle, y
     <string name="button_clear_custom_words">Clear</string>
     <string name="error_custom_words_msg">Please fill in all entry boxes and ensure that words contain only characters!</string>
     <string name="error">Error</string>
+    <string name="blank">blank</string>
+    <string name="ok">OK</string>
 
 
 </resources>

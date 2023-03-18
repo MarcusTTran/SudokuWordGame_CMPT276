@@ -1,6 +1,5 @@
 package com.echo.wordsudoku.ui.destinations;
 
-import android.content.res.Configuration;
 import android.os.Bundle;
 import android.text.InputFilter;
 import android.util.Log;
@@ -14,7 +13,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -25,7 +23,7 @@ import androidx.navigation.Navigation;
 import com.echo.wordsudoku.R;
 import com.echo.wordsudoku.models.words.WordPair;
 import com.echo.wordsudoku.ui.SettingsViewModel;
-import com.echo.wordsudoku.ui.dialogs.ChooseCustomWordsDialog;
+import com.echo.wordsudoku.ui.dialogs.WarningDialog;
 import com.echo.wordsudoku.ui.puzzleParts.PuzzleViewModel;
 
 import java.util.ArrayList;
@@ -200,7 +198,9 @@ public class ChooseCustomWordsFragment extends Fragment{
                     //Toast.makeText(getContext(), "Words for Custom Puzzle have been successfully set.", Toast.LENGTH_LONG).show();
 
                 } else {
-                    ChooseCustomWordsDialog errorFragment = ChooseCustomWordsDialog.newInstance(getString(R.string.error_custom_words_msg), getString(R.string.error));
+//                    ChooseCustomWordsDialog errorFragment = ChooseCustomWordsDialog.newInstance(getString(R.string.error_custom_words_msg), getString(R.string.error));
+//                    errorFragment.show(getActivity().getSupportFragmentManager(), "Error Dialog");
+                    WarningDialog errorFragment = WarningDialog.newInstance(getString(R.string.error), getString(R.string.error_custom_words_msg), getString(R.string.ok));
                     errorFragment.show(getActivity().getSupportFragmentManager(), "Error Dialog");
                 }
             }

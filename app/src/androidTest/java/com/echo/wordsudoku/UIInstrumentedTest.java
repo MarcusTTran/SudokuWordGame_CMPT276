@@ -42,6 +42,8 @@ public class UIInstrumentedTest {
     //DUE TO SLOW SPEED OF UI TESTS I HAVE DISABLED SOME OF MY TESTS FOR NOW SO THAT I CAN WRITE AND TEST EACH INDIVIDUAL TEST MORE EFFICIENTLY
     //THE TESTS THAT ARE WORKING HAVE BEEN HIGHLIGHTED WITH THE GREEN TO-DO AS "WORKING TEST"
 
+    int[] puzzleSizes = new int[] {4, 6, 9, 12};
+
     private UiDevice ourDevice;
     final String INSTRUTEST = "INSTRU_TESTING";
 
@@ -1427,7 +1429,6 @@ public class UIInstrumentedTest {
     //@Ignore("Working test")
     @Test
     public void testChooseCustomWordEditBoxBlank() {
-        String longUserInputtedString = "awehuifuiawdghwuawidhauiwdhuawidawuidhawuihduwhduawidjawdjiwjawda";
 
         UiObject chooseCustomWordsButton = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/custom_words_button"));
         try {
@@ -1436,22 +1437,15 @@ public class UIInstrumentedTest {
             fail("Choose custom words button not found");
         }
 
-        UiObject entryBox1 = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/buttonLanguageEntries"));
+        UiObject confirmButton = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/buttonConfirmCustomWords"));
 
         try {
-            UiObject editText = entryBox1.getChild(new UiSelector().index(1));
-            editText.click();
-            editText.setText(longUserInputtedString);
-            String s = editText.getText();
-            if (s.length() > 12) {
-                fail("Words exceed the length of 12");
-            }
-
+            confirmButton.click();
         } catch (UiObjectNotFoundException e) {
-            fail("EditTexts were not all displayed");
+            fail("Confirm button does not exist");
         }
 
-        fail();
+
 
     }
 
