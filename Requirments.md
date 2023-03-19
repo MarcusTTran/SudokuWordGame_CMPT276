@@ -1,4 +1,4 @@
-<b>{+Identification of the implementation of specific user stories and TDDs listed in iteration 1 will be found in the "User Stories and TDDs:" section marked with IMPLEMENTED: +}</b><br/>
+<b>{+Identification of the implementation of specific user stories and TDDs listed in iteration 1 and 2 will be found in the "User Stories and TDDs:" section marked with IMPLEMENTED: +}</b><br/>
 
 <b>Previously implemented features: Iteration 2 quick list of implemented features:</b><br/>
 
@@ -24,7 +24,7 @@
 - App supports layouts for horizontal orientation
 - Set difficulty of puzzles
 - Create puzzles with user entered words
-- Save current puzzle and load puzzle to allow users to continue where they left off
+- Manually Save current puzzle and load puzzle to allow users to continue where they left off
 - Time puzzles
 - UI immersion mode to set UI language to French
 - Auto-save puzzles
