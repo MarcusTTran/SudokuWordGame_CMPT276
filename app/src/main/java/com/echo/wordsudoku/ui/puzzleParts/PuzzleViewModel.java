@@ -4,6 +4,11 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.echo.wordsudoku.exceptions.IllegalDimensionException;
+import com.echo.wordsudoku.exceptions.IllegalLanguageException;
+import com.echo.wordsudoku.exceptions.IllegalWordPairException;
+import com.echo.wordsudoku.exceptions.NegativeNumberException;
+import com.echo.wordsudoku.exceptions.TooBigNumberException;
 import com.echo.wordsudoku.models.language.BoardLanguage;
 import com.echo.wordsudoku.models.dimension.Dimension;
 import com.echo.wordsudoku.models.dimension.PuzzleDimensions;
@@ -49,7 +54,7 @@ public class PuzzleViewModel extends ViewModel {
     }
 
 
-    private void setPuzzle(Puzzle puzzle) {
+    private void setPuzzle(Puzzle puzzle) throws NegativeNumberException {
         this.puzzle = new Puzzle(puzzle);
         setPuzzleView(puzzle.toStringArray());
         postTimer(puzzle.getTimer());
@@ -64,11 +69,11 @@ public class PuzzleViewModel extends ViewModel {
     public void setWordPairReader(WordPairJsonReader wordPairJsonReader) {
         this.mWordPairJsonReader = wordPairJsonReader;
     }
-    public void newPuzzle(int puzzleSize, int boardLanguage, int difficulty) throws JSONException {
+    public void newPuzzle(int puzzleSize, int boardLanguage, int difficulty) throws JSONException, IllegalLanguageException, TooBigNumberException, NegativeNumberException, IllegalWordPairException, IllegalDimensionException {
        setPuzzle(new Puzzle(mWordPairJsonReader.getRandomWords(puzzleSize),puzzleSize,boardLanguage,-1,difficulty));
     }
 
-    public void newCustomPuzzle(int puzzleLanguage, int difficulty) {
+    public void newCustomPuzzle(int puzzleLanguage, int difficulty) throws IllegalLanguageException, TooBigNumberException, NegativeNumberException, IllegalWordPairException, IllegalDimensionException {
         setPuzzle(new Puzzle(customWordPairs, customWordPairs.size(),puzzleLanguage,-1,difficulty));
     }
 
@@ -76,7 +81,7 @@ public class PuzzleViewModel extends ViewModel {
         postPuzzle(puzzle);
     }
 
-    public void insertWord(Dimension dimension,String word) {
+    public void insertWord(Dimension dimension,String word) throws IllegalWordPairException, IllegalDimensionException {
         puzzle.setCell(dimension, word);
         setPuzzleView(puzzle.toStringArray());
     }
@@ -100,7 +105,7 @@ public class PuzzleViewModel extends ViewModel {
         return puzzle.isPuzzleFilled();
     }
 
-    public int getPuzzleInputLanguage() {
+    public int getPuzzleInputLanguage() throws IllegalLanguageException {
         return BoardLanguage.getOtherLanguage(puzzle.getLanguage());
     }
 
@@ -112,7 +117,7 @@ public class PuzzleViewModel extends ViewModel {
         return puzzle.getTimer();
     }
 
-    public void postTimer(int seconds) {
+    public void postTimer(int seconds) throws NegativeNumberException {
         puzzle.setTimer(seconds);
         timer.postValue(seconds);
     }
@@ -134,6 +139,6 @@ public class PuzzleViewModel extends ViewModel {
     }
 
     public PuzzleDimensions getPuzzleDimensions() {
-        return puzzle.getPuzzleDimension();
+        return puzzle.getPuzzleDimensions();
     }
 }

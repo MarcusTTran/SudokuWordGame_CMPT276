@@ -1,9 +1,15 @@
 package com.echo.wordsudoku.models.sudoku;
 
+import com.echo.wordsudoku.exceptions.IllegalDimensionException;
+import com.echo.wordsudoku.exceptions.IllegalLanguageException;
+import com.echo.wordsudoku.exceptions.IllegalWordPairException;
+import com.echo.wordsudoku.exceptions.NegativeNumberException;
+import com.echo.wordsudoku.exceptions.TooBigNumberException;
 import com.echo.wordsudoku.models.language.BoardLanguage;
 import com.echo.wordsudoku.models.json.Writable;
 import com.echo.wordsudoku.models.dimension.Dimension;
 import com.echo.wordsudoku.models.dimension.PuzzleDimensions;
+import com.echo.wordsudoku.models.utility.MathUtils;
 import com.echo.wordsudoku.models.words.WordPair;
 
 import org.json.JSONArray;
@@ -12,6 +18,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
 
 /* This class is used to store the puzzle dimensions
@@ -36,8 +43,24 @@ import java.util.List;
 
 public class Puzzle implements Writable {
 
+    public final static int NO_NUMBER_OF_START_CELLS_USE_DIFFICULTY = -2147483648;
+
     // Acceptable dimensions for the puzzle, you cannot create a puzzle with a dimension that is not in this list
     public static final List<Integer> ACCEPTABLE_DIMENSIONS = Arrays.asList(4,6,9,12);
+    public static final List<PuzzleDimensions> ACCEPTABLE_PUZZLE_DIMENSIONS;
+
+    static {
+        try {
+            ACCEPTABLE_PUZZLE_DIMENSIONS = new ArrayList<>(Arrays.asList(new PuzzleDimensions[]{
+                    new PuzzleDimensions(4),
+                    new PuzzleDimensions(6),
+                    new PuzzleDimensions(9),
+                    new PuzzleDimensions(12)
+            }));
+        } catch (IllegalDimensionException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
     // The user board is the board that the user sees and enters the words in
     private CellBox2DArray userBoard;
@@ -60,25 +83,28 @@ public class Puzzle implements Writable {
     private int timer = 0;
 
     /* @constructor
-     * @param wordPairs: the word pairs that are used in the puzzle
+     * @param wordPairs: the word pairs that are used in the puzzle. no repetition is allowed
      * @param dimension: the dimension of the puzzle
      * @param language: the language of the puzzle
+     * @param difficulty: the difficulty of the puzzle (1-5)
      * @param numberOfStartCells: the number of cells that are not removed from the solution board and user starts with them
      */
-    public Puzzle(List<WordPair> wordPairs,int dimension, int language, int numberOfStartCells, int difficulty) {
+    public Puzzle(List<WordPair> wordPairs,int dimension, int language, int numberOfStartCells, int difficulty) throws IllegalDimensionException, IllegalWordPairException, IllegalLanguageException, TooBigNumberException, NegativeNumberException {
 
         // If the word pairs are null, we throw an exception
         if (wordPairs == null)
-            throw new IllegalArgumentException("Word pairs cannot be null");
+            throw new IllegalWordPairException();
         // If the word pairs are less than the dimension, we throw an exception
         if (wordPairs.size()<dimension)
-            throw new IllegalArgumentException("Word pairs cannot be less than puzzle dimension");
+            throw new IllegalWordPairException();
+        if (WordPair.doesListContainRepeatingWordPairs(wordPairs))
+            throw new IllegalWordPairException();
         // Otherwise we set the word pairs
         this.mWordPairs = wordPairs;
 
         // If the dimension is not in the list of acceptable dimensions, we throw an exception
         if (ACCEPTABLE_DIMENSIONS.contains(dimension) == false)
-            throw new IllegalArgumentException("Invalid dimension");
+            throw new IllegalDimensionException();
         this.puzzleDimension = new PuzzleDimensions(dimension);
 
         // End of setting the puzzle dimension and box dimension
@@ -88,20 +114,23 @@ public class Puzzle implements Writable {
 
         // We set the language of the board opposite to the language of the puzzle
         this.solutionBoard = new CellBox2DArray(puzzleDimension,language);
+        // TODO: Make the solution board cells all of them isEditable = false
 
         // First we create a solved board
-        SolveBoard(this.solutionBoard);
+        SolveBoard(this.solutionBoard,mWordPairs);
 
         int numberOfCellsToRemove;
 
-        if(numberOfStartCells!=-1)
+        if(numberOfStartCells!=NO_NUMBER_OF_START_CELLS_USE_DIFFICULTY)
             numberOfCellsToRemove = solutionBoard.getRows()*solutionBoard.getColumns() - numberOfStartCells;
-        else
+        else if(difficulty<=5 && difficulty>0)
             numberOfCellsToRemove = getCellsToRemoveWithDifficulty(difficulty);
+        else
+            throw new IllegalArgumentException("Invalid difficulty and number of start cells");
         // Calculate the number of cells to remove from the solution board
 
         // Then we remove a certain number of cells from the solution board and set the user board to the result
-        CellBox2DArray userBoard = getTrimmedBoard(numberOfCellsToRemove);
+        CellBox2DArray userBoard = getTrimmedBoard(getSolutionBoard(),numberOfCellsToRemove,BoardLanguage.getOtherLanguage(language));
         setUserBoard(userBoard);
 
         // We lock the cells that are not empty so the user cannot change them
@@ -110,7 +139,8 @@ public class Puzzle implements Writable {
 
 
 
-    public Puzzle(List<WordPair> wordPairs,int dimension, int language, int numberOfStartCells) {
+
+    public Puzzle(List<WordPair> wordPairs,int dimension, int language, int numberOfStartCells) throws IllegalWordPairException, IllegalDimensionException, IllegalLanguageException, TooBigNumberException, NegativeNumberException {
         this(wordPairs,dimension,language,numberOfStartCells,0);
     }
 
@@ -121,7 +151,7 @@ public class Puzzle implements Writable {
         this.userBoard = new CellBox2DArray(puzzle.getUserBoard());
         this.solutionBoard = new CellBox2DArray(puzzle.getSolutionBoard());
         this.mWordPairs = new ArrayList<>(puzzle.getWordPairs());
-        this.puzzleDimension = new PuzzleDimensions(puzzle.getPuzzleDimension());
+        this.puzzleDimension = new PuzzleDimensions(puzzle.getPuzzleDimensions());
         this.language = puzzle.getLanguage();
         this.mistakes = puzzle.getMistakes();
         this.timer = puzzle.getTimer();
@@ -136,11 +166,13 @@ public class Puzzle implements Writable {
     @param language: the language
     @param mistakes: the number of mistakes
      */
-    public Puzzle(CellBox2DArray userBoard, CellBox2DArray solutionBoard, List<WordPair> wordPairs, PuzzleDimensions puzzleDimension, int language, int mistakes, int timer) {
-        this.userBoard = userBoard;
-        this.solutionBoard = solutionBoard;
-        this.mWordPairs = wordPairs;
-        this.puzzleDimension = puzzleDimension;
+    public Puzzle(CellBox2DArray userBoard, CellBox2DArray solutionBoard, List<WordPair> wordPairs, PuzzleDimensions puzzleDimension, int language, int mistakes, int timer) throws IllegalDimensionException {
+        if (ACCEPTABLE_PUZZLE_DIMENSIONS.contains(puzzleDimension) == false)
+            throw new IllegalDimensionException();
+        this.userBoard = new CellBox2DArray(userBoard);
+        this.solutionBoard = new CellBox2DArray(solutionBoard);
+        this.mWordPairs = new ArrayList<>(wordPairs);
+        this.puzzleDimension = new PuzzleDimensions(puzzleDimension);
         this.language = language;
         this.mistakes = mistakes;
         this.timer = timer;
@@ -153,12 +185,6 @@ public class Puzzle implements Writable {
         return userBoard;
     }
 
-    public void setUserBoard(CellBox2DArray userBoard) {
-        if (userBoard.getBoxDimensions()!=(puzzleDimension.getBoxesInPuzzleDimension()) || userBoard.getCellDimensions() != (puzzleDimension.getEachBoxDimension()))
-            throw new IllegalArgumentException("Invalid dimensions for the user board");
-        this.userBoard = new CellBox2DArray(userBoard);
-    }
-
     public CellBox2DArray getSolutionBoard() {
         return solutionBoard;
     }
@@ -167,13 +193,7 @@ public class Puzzle implements Writable {
         return mistakes;
     }
 
-    public void setSolutionBoard(CellBox2DArray solutionBoard) {
-        if (solutionBoard.getBoxDimensions()!=(puzzleDimension.getBoxesInPuzzleDimension()) || solutionBoard.getCellDimensions() != (puzzleDimension.getEachBoxDimension()))
-            throw new IllegalArgumentException("Invalid dimensions for the user board");
-        this.solutionBoard = new CellBox2DArray(solutionBoard);
-    }
-
-    public PuzzleDimensions getPuzzleDimension() {
+    public PuzzleDimensions getPuzzleDimensions() {
         return puzzleDimension;
     }
 
@@ -185,22 +205,32 @@ public class Puzzle implements Writable {
         return mWordPairs;
     }
 
-    public void setLanguage(int language) throws IllegalArgumentException {
-        if(!BoardLanguage.isValidLanguage(language))
-            throw new IllegalArgumentException("Invalid language name");
-        this.language = language;
-    }
-
-
-    public void setTimer(int timer) {
-        this.timer = timer;
-    }
-
     public int getTimer() {
         return timer;
     }
 
+    public void setLanguage(int language) throws IllegalArgumentException, IllegalLanguageException {
+        if(!BoardLanguage.isValidLanguage(language))
+            throw new IllegalLanguageException();
+        this.language = language;
+    }
 
+    public void setTimer(int timer) throws NegativeNumberException {
+        if (timer < 0)
+            throw new NegativeNumberException("Timer cannot be negative");
+        this.timer = timer;
+    }
+    public void setUserBoard(CellBox2DArray userBoard) throws IllegalDimensionException {
+        if (userBoard.getBoxDimensions()!=(puzzleDimension.getBoxesInPuzzleDimension()) || userBoard.getCellDimensions() != (puzzleDimension.getEachBoxDimension()))
+            throw new IllegalDimensionException();
+        this.userBoard = new CellBox2DArray(userBoard);
+    }
+
+    public void setSafeUserBoard(CellBox2DArray userBoard) throws IllegalDimensionException, IllegalWordPairException {
+        if (!new HashSet<>(userBoard.getAllWordPairs()).equals(new HashSet<>(this.userBoard.getAllWordPairs())))
+            throw new IllegalWordPairException();
+        setUserBoard(userBoard);
+    }
     // End of getters and setters
 
 
@@ -216,16 +246,23 @@ public class Puzzle implements Writable {
      * Checks if the puzzle is solved. If there is a cell that is not equal to the solution board, it returns false, otherwise it returns true
      * @return: true if the puzzle is solved, false otherwise
      */
-    private boolean isPuzzleSolved() {
+    public boolean isPuzzleSolved() {
         for (int i = 0; i < userBoard.getRows(); i++) {
             for (int j = 0; j < userBoard.getColumns(); j++) {
-                if (!userBoard.getCellFromBigArray(i,j).isEqual(solutionBoard.getCellFromBigArray(i,j)))
+                if (!solutionBoard.getCellFromBigArray(i,j).isContentEqual(userBoard.getCellFromBigArray(i,j)))
                     return false;
             }
         }
         return true;
     }
 
+
+    /* @method
+     * Returns the game result. If the puzzle is solved, it returns a GameResult object with the result set to true, otherwise it returns a GameResult object with the result set to false and the number of mistakes
+     * If the puzzle is not completed, the number of mistakes is the number of cells that have been inserted in the user board and are not equal to the corresponding ones in the solution board.
+     * If the user has not entered any word pair, the number of mistakes is 0
+     * @return: a GameResult object
+     */
     public GameResult getGameResult() {
         GameResult result = new GameResult();
         if (isPuzzleSolved())
@@ -245,29 +282,37 @@ public class Puzzle implements Writable {
      * @param word: the word pair to be inserted
      * @throws IllegalArgumentException: if the word pair is not in the list of word pairs, if the cell coordinates are invalid or if the cell is locked
      */
-    public void setCell(int i, int j, WordPair word) throws IllegalArgumentException {
+    public void setCell(int i, int j, WordPair word) throws IllegalDimensionException, IllegalWordPairException {
         if (mWordPairs.contains(word) == false)
-            throw new IllegalArgumentException("Word pair not found in the list of word pairs");
+            throw new IllegalWordPairException("Word pair not found in the list of word pairs");
         if (i < 0 || i >= userBoard.getRows() || j < 0 || j >= userBoard.getColumns())
-            throw new IllegalArgumentException("Invalid cell coordinates");
+            throw new IllegalDimensionException("Invalid cell coordinates");
         if (!userBoard.getCellFromBigArray(i,j).isEditable())
-            throw new RuntimeException("Trying to change a locked cell");
+            throw new IllegalDimensionException("Trying to change a locked cell");
         userBoard.setCellFromBigArray(i,j,word);
-        if (solutionBoard.getCellFromBigArray(i,j).isEqual(new Cell(word)) == false)
+        if (solutionBoard.getCellFromBigArray(i,j).isContentEqual(new Cell(word)) == false)
             mistakes++;
     }
 
-    public void setCell(int i, int j, String word) throws IllegalArgumentException {
+    public void setCell(int i, int j, String word) throws IllegalWordPairException, IllegalDimensionException {
         for (WordPair wordPair : mWordPairs) {
             if (wordPair.doesContain(word)) {
                 setCell(i, j, wordPair);
                 return;
             }
         }
-        throw new IllegalArgumentException("Word pair not found in the list of word pairs");
+        throw new IllegalWordPairException("Word pair not found in the list of word pairs");
     }
 
-    public void setCell(Dimension dimension, String word) throws IllegalArgumentException {
+    public void setCell(Dimension dimension, String word) throws IllegalWordPairException, IllegalDimensionException {
+        if (dimension==null)
+            throw new IllegalDimensionException("Dimension is null");
+        setCell(dimension.getRows(), dimension.getColumns(), word);
+    }
+
+    public void setCell(Dimension dimension, WordPair word) throws IllegalWordPairException, IllegalDimensionException {
+        if (dimension==null)
+            throw new IllegalDimensionException("Dimension is null");
         setCell(dimension.getRows(), dimension.getColumns(), word);
     }
 
@@ -305,9 +350,11 @@ public class Puzzle implements Writable {
      * @throws IllegalArgumentException: if the row is invalid
      */
 
-    public static boolean isIthRowContaining(CellBox2DArray cellBox2DArray ,int i, WordPair wordPair) {
+    public static boolean isIthRowNotContaining(CellBox2DArray cellBox2DArray , int i, WordPair wordPair) throws IllegalDimensionException, IllegalWordPairException {
         if (i < 0 || i >= cellBox2DArray.getRows())
-            throw new IllegalArgumentException("Invalid row number");
+            throw new IllegalDimensionException("Invalid row number");
+        if (wordPair == null)
+            throw new IllegalWordPairException("Word pair is null");
         int columns = cellBox2DArray.getColumns();
         for (int j = 0; j < columns; j++) {
             WordPair wordPair1 = cellBox2DArray.getCellFromBigArray(i,j).getContent();
@@ -328,9 +375,11 @@ public class Puzzle implements Writable {
      * @return: true if the column contains the word pair, false otherwise
      * @throws IllegalArgumentException: if the column is invalid
      */
-    public static boolean isJthColumnContaining(CellBox2DArray cellBox2DArray,int j,WordPair wordPair) {
+    public static boolean isJthColumnNotContaining(CellBox2DArray cellBox2DArray, int j, WordPair wordPair) throws IllegalWordPairException, IllegalDimensionException {
         if (j < 0 || j >= cellBox2DArray.getColumns())
-            throw new IllegalArgumentException("Invalid column number");
+            throw new IllegalDimensionException("Invalid column number");
+        if (wordPair == null)
+            throw new IllegalWordPairException("Word pair is null");
         int rows = cellBox2DArray.getRows();
         for (int i = 0; i < rows; i++) {
             WordPair wordPair1 = cellBox2DArray.getCellFromBigArray(i,j).getContent();
@@ -338,6 +387,46 @@ public class Puzzle implements Writable {
                 if (wordPair1.isEqual(wordPair)) {
                     return false;
                 }
+            }
+        }
+        return true;
+    }
+
+    public static boolean isJthColumnValid(CellBox2DArray cellBox2DArray,int j) throws IllegalDimensionException {
+        if (j < 0 || j >= cellBox2DArray.getColumns())
+            throw new IllegalDimensionException("Invalid column number");
+        int rows = cellBox2DArray.getRows();
+        List<WordPair> wordPairs = new ArrayList<>();
+        for (int i = 0; i < rows; i++) {
+            WordPair cellContent = cellBox2DArray.getCellFromBigArray(i,j).getContent();
+            if(wordPairs.contains(cellContent))
+                return false;
+            wordPairs.add(cellContent);
+        }
+        return true;
+    }
+    public static boolean isIthRowValid(CellBox2DArray cellBox2DArray,int i) throws IllegalDimensionException {
+        if (i < 0 || i >= cellBox2DArray.getColumns())
+            throw new IllegalDimensionException("Invalid column number");
+        int rows = cellBox2DArray.getRows();
+        List<WordPair> wordPairs = new ArrayList<>();
+        for (int j = 0; j < rows; j++) {
+            WordPair cellContent = cellBox2DArray.getCellFromBigArray(i,j).getContent();
+            if(wordPairs.contains(cellContent))
+                return false;
+            wordPairs.add(cellContent);
+        }
+        return true;
+    }
+
+    public static boolean isCellBoxValid(CellBox cellBox) {
+        List<WordPair> wordPairs = new ArrayList<>();
+        for (int i = 0; i < cellBox.getDimension().getRows(); i++) {
+            for (int j = 0; j < cellBox.getDimension().getRows(); j++) {
+                WordPair cellContent = cellBox.getCell(i,j).getContent();
+                if(wordPairs.contains(cellContent))
+                    return false;
+                wordPairs.add(cellContent);
             }
         }
         return true;
@@ -353,7 +442,7 @@ public class Puzzle implements Writable {
      *
      *  Inspired by https://www.geeksforgeeks.org/sudoku-backtracking-7/
      */
-    public boolean SolveBoard(CellBox2DArray board) {
+    public static boolean SolveBoard(CellBox2DArray board, List<WordPair> wordPairs) throws IllegalWordPairException, IllegalDimensionException {
         Dimension emptyCell = findEmptyCell(board);
         if (emptyCell == null) {
             // Puzzle is solved
@@ -361,18 +450,37 @@ public class Puzzle implements Writable {
         }
         int x = emptyCell.getRows();
         int y = emptyCell.getColumns();
-        for (WordPair word: mWordPairs) {
-            if (isIthRowContaining(board,x,word) && isJthColumnContaining(board,y,word) &&
-                    (board.getCellBox(x/board.getCellDimensions().getRows(),y/board.getCellDimensions().getColumns()).isContaining(word)==false)) {
+        for (WordPair word: wordPairs) {
+            if (isIthRowNotContaining(board,x,word) && isJthColumnNotContaining(board,y,word) &&
+                    (!board.getCellBox(x / board.getCellDimensions().getRows(), y / board.getCellDimensions().getColumns()).isContaining(word))) {
                 board.setCellFromBigArray(emptyCell, word);
-                if (SolveBoard(board)) {
+                if (SolveBoard(board,wordPairs)) {
                     return true;
                 }
-                board.setCellFromBigArray(emptyCell.getRows(), emptyCell.getColumns());
+                board.clearCellFromBigArray(emptyCell.getRows(), emptyCell.getColumns());
             }
         }
         return false;
     }
+
+    public static boolean isSudokuValid(CellBox2DArray board,List<WordPair> wordPairList) throws IllegalWordPairException, IllegalDimensionException {
+        if (wordPairList == null)
+            throw new IllegalWordPairException("Word pair list is null");
+        if(wordPairList.size()!=board.getRows())
+            throw new IllegalWordPairException("Word pair list size is not equal to board size");
+        if (board == null)
+            throw new NullPointerException("Board is null");
+        if(board.getRows() != board.getColumns())
+            throw new IllegalDimensionException("Board is not square");
+        int size = board.getRows();
+        boolean valid = true;
+        for (int i =0;i<size;i++) {
+            valid = valid && isIthRowValid(board,i) && isJthColumnValid(board,i) && isCellBoxValid(board.getCellBox(i/ board.getCellDimensions().getRows(),i/ board.getCellDimensions().getColumns()));
+        }
+        return valid;
+    }
+
+
 
     /* @method
      *  Finds the next empty cell in the board
@@ -380,7 +488,7 @@ public class Puzzle implements Writable {
      * @return: a Dimension object containing the coordinates of the next empty cell
      * @return: null if there are no empty cells (Puzzle is solved)
      */
-    private Dimension findEmptyCell(CellBox2DArray puzzle) {
+    public static Dimension findEmptyCell(CellBox2DArray puzzle) {
         for (int i = 0; i < puzzle.getRows(); i++) {
             for (int j = 0; j < puzzle.getColumns(); j++) {
                 if (puzzle.getCellFromBigArray(i,j).isEmpty())
@@ -397,13 +505,13 @@ public class Puzzle implements Writable {
      * @param cellsToRemove: the number of cells to be removed from the solution board
      * @return: a trimmed version of the solution board
      */
-    private CellBox2DArray getTrimmedBoard(int cellsToRemove) {
+    public static CellBox2DArray getTrimmedBoard(CellBox2DArray solutionBoard,int cellsToRemove,int inputLanguage) throws IllegalLanguageException, NegativeNumberException, TooBigNumberException {
         // Create a copy of the solution board
-        CellBox2DArray result = new CellBox2DArray(getSolutionBoard());
+        CellBox2DArray result = new CellBox2DArray(solutionBoard);
         if (cellsToRemove < 0)
-            throw new IllegalArgumentException("Number of cells to remove cannot be negative");
+            throw new NegativeNumberException("Number of cells to remove cannot be negative");
         if (cellsToRemove > result.getRows() * result.getColumns())
-            throw new IllegalArgumentException("Number of cells to remove cannot be greater than the number of cells in the board");
+            throw new TooBigNumberException("Number of cells to remove cannot be greater than the number of cells in the board");
         for (int i = 0; i < cellsToRemove; i++) {
             Dimension cellToRemove = new Dimension(
                     (int) (Math.random() * result.getRows()),
@@ -416,7 +524,7 @@ public class Puzzle implements Writable {
                 );
             }
             Cell cellThatIsGoingToBeRemoved = result.getCellFromBigArray(cellToRemove);
-            cellThatIsGoingToBeRemoved.setLanguage(BoardLanguage.getOtherLanguage(getLanguage()));
+            cellThatIsGoingToBeRemoved.setLanguage(BoardLanguage.getOtherLanguage(inputLanguage));
             cellThatIsGoingToBeRemoved.clear();
         }
         return result;
@@ -507,7 +615,7 @@ public class Puzzle implements Writable {
         json.put("userBoard", this.getUserBoard().toJson());
         json.put("solutionBoard", this.getSolutionBoard().toJson());
         json.put("wordPairs", convertWordPairsToJson());
-        json.put("puzzleDimensions", this.getPuzzleDimension().toJson());
+        json.put("puzzleDimensions", this.getPuzzleDimensions().toJson());
         json.put("language", this.getLanguage());
         json.put("mistakes", this.getMistakes());
         json.put("timer", this.getTimer());
@@ -527,4 +635,66 @@ public class Puzzle implements Writable {
 
         return jsonArray;
     }
+
+
+    // equals method for comparison in testing
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Puzzle puzzle = (Puzzle) o;
+
+        boolean solBoardAreEqual = this.solutionBoard.equals(puzzle.solutionBoard);
+
+
+        boolean wordPairsAreEqual = new HashSet<>(this.getWordPairs()).equals(new HashSet<>(puzzle.getWordPairs()));
+        boolean puzzleDimensionIsEqual = this.puzzleDimension.equals(puzzle.puzzleDimension);
+
+        return language == puzzle.language && mistakes == puzzle.mistakes &&
+                timer == puzzle.timer && puzzleDimensionIsEqual &&
+                solBoardAreEqual && wordPairsAreEqual;
+    }
+
+    public void unlockCells() {
+        for (int i = 0; i < userBoard.getRows(); i++) {
+            for (int j = 0; j < userBoard.getColumns(); j++) {
+                userBoard.getCellFromBigArray(i,j).setEditable(true);
+            }
+        }
+    }
+
+    public void fillUserBoardRandomly() throws IllegalWordPairException, IllegalDimensionException {
+        for (int i = 0; i < userBoard.getRows(); i++) {
+            for (int j = 0; j < userBoard.getColumns(); j++) {
+                if (userBoard.getCellFromBigArray(i,j).isEditable()) {
+                   setCell(i,j,getWordPairs().get(MathUtils.getRandomNumberBetweenIncluding(0,getWordPairs().size()-1)));
+                }
+            }
+        }
+    }
+
+    public void solve() throws IllegalWordPairException, IllegalDimensionException {
+        if(!isPuzzleSolved()) {
+            for (int i = 0; i < userBoard.getRows(); i++) {
+                for (int j = 0; j < userBoard.getColumns(); j++) {
+                    if (userBoard.getCellFromBigArray(i, j).isEditable()) {
+                        setCell(i, j, solutionBoard.getCellFromBigArray(i,j).getContent());
+                    }
+                }
+            }
+        }
+    }
+
+    public int numberOfFilledCells() {
+        int result = 0;
+        for (int i = 0; i < userBoard.getRows(); i++) {
+            for (int j = 0; j < userBoard.getColumns(); j++) {
+                if (userBoard.getCellFromBigArray(i,j).isEmpty() == false)
+                    result++;
+            }
+        }
+        return result;
+    }
+
+
 }

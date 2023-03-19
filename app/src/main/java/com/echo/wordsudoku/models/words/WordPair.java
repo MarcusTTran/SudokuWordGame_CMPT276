@@ -6,6 +6,8 @@ import com.echo.wordsudoku.models.json.Writable;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.List;
+
 /**
  *  ========================================= WORDPAIR =========================================
  *  DESCRIPTION OF FIELDS AND FEATURES
@@ -82,4 +84,40 @@ public class WordPair implements Writable {
         json.put("fre", this.getFrench());
         return json;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        WordPair wordPair = (WordPair) o;
+
+        // if both are null
+        if (this == null && wordPair == null) {
+            return true;
+        }
+        return eng.equals(wordPair.eng) && fre.equals(wordPair.fre);
+    }
+
+    public static boolean doesListContainRepeatingWordPairs(List<WordPair> wordPairs) {
+        for (int i = 0; i < wordPairs.size(); i++) {
+            for (int j = i+1; j < wordPairs.size(); j++) {
+                if (wordPairs.get(i).equals(wordPairs.get(j))) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    public static boolean doesListContainThisWordPair(List<WordPair> wordPairs, WordPair wordPair) {
+        for (WordPair wp : wordPairs) {
+            if(wordPair!=null) {
+                if (wordPair.equals(wp)) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
 }

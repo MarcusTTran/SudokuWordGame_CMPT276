@@ -77,7 +77,6 @@ public class Cell implements Writable {
      * @param language: the language of the cell
      * Creates a cell with the given content and the language of the cell
      */
-
     public Cell(WordPair content, int language) throws NullPointerException {
         if (content == null) {
             throw new NullPointerException("You cannot pass null to the constructor to initialize the content of the cell to null. Use Cell(language) instead.");
@@ -116,14 +115,13 @@ public class Cell implements Writable {
      * @param cell: the cell to be copied
      * Performs a deep copy of the given cell
      */
-
     public Cell(Cell cell) {
+        this.isEmpty = true;
         if (cell.getContent()!=null) {
             setContent(cell.getContent());
         }
         setEditable(cell.isEditable());
         setLanguage(cell.getLanguage());
-        this.isEmpty = cell.isEmpty();
     }
 
     /* @constructor
@@ -194,7 +192,10 @@ public class Cell implements Writable {
      * It calls the isEqual() method of the WordPair class to compare the content of the cells
      * @see WordPair#isEqual(WordPair)
      *  */
-    public boolean isEqual(Cell cell) throws NullPointerException {
+    public boolean isContentEqual(Cell cell) throws NullPointerException {
+        if (cell == null || cell.content==null || this.content==null) {
+            return false;
+        }
         try {
             return content.isEqual(cell.getContent());
         } catch (NullPointerException e) {
@@ -202,10 +203,12 @@ public class Cell implements Writable {
         }
     }
 
+    // isEmpty() returns true if the content of the cell is null, false otherwise
     public boolean isEmpty() {
         return isEmpty;
     }
 
+    // clear() sets the content of the cell to null and sets the cell to be empty
     public void clear() {
         content = null;
         this.isEmpty = true;
@@ -236,4 +239,26 @@ public class Cell implements Writable {
         json.put("isEditable", this.isEditable());
         return json;
     }
+
+    // equals method for comparison in testing
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Cell cell = (Cell) o;
+
+        boolean contentEquals;
+
+        if (content == null) {
+            contentEquals =  cell.content == null;
+        } else if (cell.content == null) {
+            contentEquals = false;
+        } else {
+            contentEquals = content.equals(cell.content);
+        }
+
+        return isEmpty == cell.isEmpty && isEditable == cell.isEditable && language == cell.language && contentEquals;
+    }
+
+
 }

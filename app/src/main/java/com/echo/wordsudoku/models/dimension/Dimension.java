@@ -5,6 +5,8 @@ import com.echo.wordsudoku.models.json.Writable;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.Objects;
+
 /**
  * The Dimension class represents the x,y dimensions.
  * It can represent the number of rows and columns in a 2D array (e.g. a CellBox object) or
@@ -97,6 +99,24 @@ public class Dimension implements Writable {
     }
 
     // End of getters and setters
+
+
+    // equals method for testing
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Dimension dimension = (Dimension) o;
+        return rows == dimension.rows && columns == dimension.columns;
+    }
+
+    public Dimension conjugate() {
+        return new Dimension(this.getColumns(), this.getRows());
+    }
+
+    public boolean doesHaveNegativeValues() {
+        return this.getRows() < 0 || this.getColumns() < 0;
+    }
 
 
 }

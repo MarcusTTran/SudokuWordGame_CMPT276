@@ -7,7 +7,18 @@ import com.echo.wordsudoku.models.words.WordPair;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-class WordPairTest {
+import java.util.ArrayList;
+import java.util.List;
+
+public class WordPairTest {
+
+    public static List<WordPair> makeRandomWordPairList(int size) {
+        List<WordPair> wordPairList = new ArrayList<>();
+        for (int i = 0; i < size; i++) {
+            wordPairList.add(new WordPair(TestUtils.makeRandomEnglishWord(), TestUtils.makeRandomFrenchWord()));
+        }
+        return wordPairList;
+    }
 
     @Test
     void getEnglish() {

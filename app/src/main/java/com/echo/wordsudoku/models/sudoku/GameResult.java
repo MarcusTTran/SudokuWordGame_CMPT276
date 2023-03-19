@@ -39,4 +39,6 @@ public class GameResult {
     public void setMistakes(int mistakes) {
         this.mistakes = mistakes;
     }
+
+
 }

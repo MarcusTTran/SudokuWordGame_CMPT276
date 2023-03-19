@@ -15,6 +15,11 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
 import com.echo.wordsudoku.R;
+import com.echo.wordsudoku.exceptions.IllegalDimensionException;
+import com.echo.wordsudoku.exceptions.IllegalLanguageException;
+import com.echo.wordsudoku.exceptions.IllegalWordPairException;
+import com.echo.wordsudoku.exceptions.NegativeNumberException;
+import com.echo.wordsudoku.exceptions.TooBigNumberException;
 import com.echo.wordsudoku.ui.SettingsViewModel;
 import com.echo.wordsudoku.ui.dialogs.ChoosePuzzleSizeFragment;
 import com.echo.wordsudoku.ui.puzzleParts.PuzzleViewModel;
@@ -55,6 +60,16 @@ public class ChoosePuzzleModeFragment extends Fragment {
                 mPuzzleViewModel.newPuzzle(CLASS_PUZZLE_SIZE,language, difficulty);
             } catch (JSONException e) {
                 throw new RuntimeException(e);
+            } catch (IllegalLanguageException e) {
+                throw new RuntimeException(e);
+            } catch (TooBigNumberException e) {
+                throw new RuntimeException(e);
+            } catch (NegativeNumberException e) {
+                throw new RuntimeException(e);
+            } catch (IllegalWordPairException e) {
+                throw new RuntimeException(e);
+            } catch (IllegalDimensionException e) {
+                throw new RuntimeException(e);
             }
             navController.navigate(R.id.startPuzzleModeAction);
         });
@@ -75,7 +90,19 @@ public class ChoosePuzzleModeFragment extends Fragment {
                 navController.navigate(R.id.chooseCustomWordsFragment);
                 Toast.makeText(getContext(), R.string.error_enter_custom_words, Toast.LENGTH_SHORT).show();
             } else {
-                mPuzzleViewModel.newCustomPuzzle(language,difficulty);
+                try {
+                    mPuzzleViewModel.newCustomPuzzle(language,difficulty);
+                } catch (IllegalLanguageException e) {
+                    throw new RuntimeException(e);
+                } catch (TooBigNumberException e) {
+                    throw new RuntimeException(e);
+                } catch (NegativeNumberException e) {
+                    throw new RuntimeException(e);
+                } catch (IllegalWordPairException e) {
+                    throw new RuntimeException(e);
+                } catch (IllegalDimensionException e) {
+                    throw new RuntimeException(e);
+                }
                 navController.navigate(R.id.startPuzzleModeAction);
             }
         });
