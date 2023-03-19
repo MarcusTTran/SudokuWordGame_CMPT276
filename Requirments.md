@@ -1,6 +1,6 @@
 <b>{+Identification of the implementation of specific user stories and TDDs listed in iteration 1 will be found in the "User Stories and TDDs:" section marked with IMPLEMENTED: +}</b><br/>
 
-<b>Iteration 2 quick list of implemented features:</b><br/>
+<b>Previously implemented features: Iteration 2 quick list of implemented features:</b><br/>
 
 - App randomly generates 9x9 Sudoku word puzzles.
 - App prevents users from overriding generated puzzles pre-filled cells.
@@ -16,6 +16,19 @@
 - Users can open the rules window to read the rules of Word Sudoku.
 - App highlights user-selected cell.
 - App highlights the cells in the row and column of the user-selected cell.
+
+<b><b>{+Iteration 3 quick list of implemented features: +}</b> </b><br/>
+- Create puzzles of sizes of 4x4, 6x6, 12x12
+- 4x4, 6x6, 12x12 puzzles are randomly generated
+- Set difficulty of puzzles
+- Create puzzles with user entered words
+- Save current puzzle and load puzzle to allow users to continue where they left off
+- Time puzzles
+- UI immersion mode to set UI language to French
+- Auto-save puzzles
+- Kebab menu on puzzle page for quick app navigation
+- Load in user entered words on custom words page for quick modifications
+- App supports layouts for tablets
 
 
 <h1>User Stories and TDDs:</h1>
@@ -74,32 +87,42 @@
 <h2>Expert User:</h2>
 <h3>User Story</h3>
 <ul>
-<li><b>To Be Implemented: </b> As an expert user, I want my unfinished puzzle to be savable so that I can finish more difficult time-consuming puzzles over several sessions without losing my progress. </li>
-<li><b>To Be Implemented: </b> As an expert user, I want my puzzles to be timed so that I can improve my puzzle-solving performance under time constraints.</li>
+<li><b>{+IMPLEMENTED: +}</b> As an expert user, I want my unfinished puzzle to be savable so that I can finish more difficult time-consuming puzzles over several sessions without losing my progress. </li>
+<li><b>{+IMPLEMENTED: +}</b> As an expert user, I want my puzzles to be timed so that I can improve my puzzle-solving performance under time constraints.</li>
 </ul>
 
 <h3>TDD</h3>
 
-- <b>To Be Implemented: </b> The game should have saving features for recoverability (for instance when the app crashes or the user stops the app process manually) but below is an explanation of the saving feature when the user wants to leave the game.
+- <b>{+IMPLEMENTED: +}</b> The game should have saving features for recoverability (for instance when the app crashes or the user stops the app process manually) but below is an explanation of the saving feature when the user wants to leave the game.
 
-- <b>To Be Implemented: </b> When the user taps on the Gear button, a pop-up will appear displaying 2 options (Statistics and Quit).  If the user taps the Quit button, another pop-up should appear asking to confirm whether the user wants to save the current game's progress with 2 options (YES or NO). If the user selects YES, the current game should be saved and the user will be brought back to the main menu. Users should be able to continue the saved puzzle by tapping the "Resume" button from the main menu. If the user selected NO, the puzzle progress will be deleted and there will be no "Resume" option on the main menu.
+- <b>{+IMPLEMENTED: +}</b>  When the user taps on the back button, a pop-up will appear asking if the user wishes to save their game before exiting.  If the user taps the YES button, the current game should be saved and the user will be brought back to the main menu. Users should be able to continue the saved puzzle by tapping the "Load Saved Game" button from the main menu. If the user selected NO, the puzzle progress will be deleted and the user will be brought to the main menu. If the user selects cancel the dialog is dismissed and the user can continue with their puzzle.
 
-<img src="https://i.imgur.com/BWtlF0M.png"  width="24%">
-<img src="https://i.imgur.com/jdXPAzf.png"  width="24%">
-<img src="https://i.imgur.com/I9q6mkZ.png"  width="24%">
-<img src="https://i.imgur.com/pcDfMsy.png"  width="24%">
+<img src="https://i.imgur.com/IpfntRo.png"  width="24%">
+<img src="https://i.imgur.com/O9nfS8J.png"  width="24%">
+<img src="https://i.imgur.com/0MQk7Gf.png"  width="24%">
+<img src="https://i.imgur.com/w6u8PNI.png"  width="24%">
 <br/>
 
-1. <i>User taps ⚙ to pause the game and see the options.</i>
+1. <i>User taps ← to open the exit game save game dialog.</i>
 
-2. <i>User taps Quit to exit the current game.</i>
+2. <i>User taps YES to save the game and exit the puzzle.</i>
 
-3. <i>User is prompted to save the game. If they select NO current game will be lost.</i>
+3. <i>User can then access their saved game through the Load Saved Game button.</i>
 
-4. <i>If the user selected YES to save THE game, they have the option to RESUME their game</i>
+4. <i>Their previous game is loaded in </i>
    <br/>
 
-- <b>To Be Implemented: </b> When the user enables the timer option in the settings page of the app, the puzzle-solving screen should feature a timer on at the top right corner of the screen. The timer must count the number of minutes and seconds users have spent on the puzzle. The timer must pause when users exit the app or close the app and resumes when users resume their puzzle. The timer ends when users complete the puzzle or quit the puzzle and the time spent on the puzzle is displayed in a pop-up at the end of the game.
+- Alternatively the user can select the kebab button on the puzzle page to open a menu which they can use to save their puzzle progress.
+
+<img src="https://i.imgur.com/57HNdBU.png"  width="24%">
+<img src="https://i.imgur.com/A7Wt8Hb.png"  width="24%">
+
+<br/>
+<br/>
+
+
+
+- <b>{+IMPLEMENTED: +}</b>  When the user enables the timer option in the settings page of the app, the puzzle-solving screen should feature a timer on at the top right corner of the screen. The timer must count the number of minutes and seconds users have spent on the puzzle. The timer must pause when users exit the app or close the app and resumes when users resume their puzzle. The timer ends when users complete the puzzle or quit the puzzle and the time spent on the puzzle is displayed in a pop-up at the end of the game.
 
 <img src="https://i.imgur.com/3koBafM.png"  width="24%">
 <img src="https://i.imgur.com/Gjmt42C.png"  width="24%">
@@ -174,11 +197,11 @@
 <h2>Intermediate Language Learners:</h2>
 <h3>User Story</h3>
 
-- <b>To Be Implemented: </b> As an intermediate learner of French, I want an option to set my game’s UI in French so that I can further immerse myself in French.
+- <b>{+IMPLEMENTED: +}</b>  As an intermediate learner of French, I want an option to set my game’s UI in French so that I can further immerse myself in French.
 
 - <b>{+IMPLEMENTED: +}</b> As a beginner language learner, I want to be able to select which language the Sudoku puzzle uses so that I can practice solving puzzles with either French or English words.
 
-- <b>To Be Implemented: </b> As a vocabulary learner taking the bus and Skytrain, I want to use my phone in landscape mode for Sudoku vocabulary practice so that longer words are displayed in a larger font than in standard portrait mode.
+- <b>{+IMPLEMENTED: +}</b>  As a vocabulary learner taking the bus and Skytrain, I want to use my phone in landscape mode for Sudoku vocabulary practice so that longer words are displayed in a larger font than in standard portrait mode.
 
 
 <h3>TDD</h3>
@@ -233,7 +256,7 @@
    <br/>
 
 
-- <b>To Be Implemented: </b> When the user flips their phone to landscape mode, the game flips accordingly to match their screen orientation. Also, longer words will be displayed in larger font relative to the new screen length. The sudoku grid and the buttons will be moved so that the grid is to the left of the list of words.
+- <b>{+IMPLEMENTED: +}</b>  When the user flips their phone to landscape mode, the game flips accordingly to match their screen orientation. Also, longer words will be displayed in larger font relative to the new screen length. The sudoku grid and the buttons will be moved so that the grid is to the left of the list of words.
 
 <img src="https://i.imgur.com/36AGqWb.jpg"  width="40%">
 <img src="https://i.imgur.com/QpQGDNz.jpg"  width="40%">
@@ -251,9 +274,9 @@
 
 - <b>To Be Implemented: </b> As an advanced learner, I want to have access to more difficult topic-specific words so that the puzzles can challenge the range of my vocabulary.
 
-- <b>Semi-Implemented: </b> As a vocabulary learner practicing at home, I want to use my tablet for Sudoku vocabulary practice so that the words will be conveniently displayed in larger, easier-to-read fonts.
+- <b>{+IMPLEMENTED: +}</b>  As a vocabulary learner practicing at home, I want to use my tablet for Sudoku vocabulary practice so that the words will be conveniently displayed in larger, easier-to-read fonts.
 
-- <b>To Be Implemented: </b> As an advanced language learner who wants an extra challenging mode, I want a 12x12 version of Sudoku to play on my tablet. The overall grid should be divided into rectangles of 12 cells each (3x4 or 4x3).
+- <b>{+IMPLEMENTED: +}</b>  As an advanced language learner who wants an extra challenging mode, I want a 12x12 version of Sudoku to play on my tablet. The overall grid should be divided into rectangles of 12 cells each (3x4 or 4x3).
 
 
 <h3>TDD</h3>
@@ -276,7 +299,7 @@
    <br/>
 
 
-- <b>To Be Implemented: </b> If a user loads the app on a larger screen, such as a tablet, the puzzle will be scaled to fit the screen. If the tablet is twice as large as a phone in measurements, the sudoku grid will be twice the area. Consequently, the font of the words and the buttons will also be scaled in size accordingly, allowing for increased clarity.
+- <b>{+IMPLEMENTED: +}</b>  If a user loads the app on a larger screen, such as a tablet, the puzzle will be scaled to fit the screen. If the tablet is twice as large as a phone in measurements, the sudoku grid will be twice the area. Consequently, the font of the words and the buttons will also be scaled in size accordingly, allowing for increased clarity.
 <br>
   <img src="https://i.imgur.com/ZDYIsy0.jpg"  width="24%">
   <img src="https://i.imgur.com/T6EgU4U.jpg"  width="40%">
@@ -287,7 +310,7 @@
 2. <i>User creates a default 9x9 sudoku game while on a tablet in landscape mode.</i>
    <br>
 
-- <b>To Be Implemented: </b> Refer to <i>Language Teacher TDD #3</i> for further explained annotations and instructions on how a user would create this 12x12 sudoku grid.
+- <b>{+IMPLEMENTED: +}</b>  Refer to <i>Language Teacher TDD #3</i> for further explained annotations and instructions on how a user would create this 12x12 sudoku grid.
   <br>
 
 <img src="https://i.imgur.com/jfoLga8.jpg"  width="24%">
@@ -307,9 +330,9 @@
 <h2>French teacher:</h2>
 <h3>User Story</h3>
 
-- <b>To Be Implemented: </b> As a French teacher, I want to be able to select the word pairs that will be used to generate the Sudoku puzzle so that I can use the app to teach my students any of the specified words that I choose.
+- <b>{+IMPLEMENTED: +}</b>  As a French teacher, I want to be able to select the word pairs that will be used to generate the Sudoku puzzle so that I can use the app to teach my students any of the specified words that I choose.
 
-- <b>To Be Implemented: </b> As a French teacher of elementary and junior high school children, I want scaled versions of Sudoku that use 4x4 and 6x6 grids. In the 6x6 grid version, the overall grid should be divided into rectangles of six cells each (2x3 or 3x2).
+- <b>{+IMPLEMENTED: +}</b>  As a French teacher of elementary and junior high school children, I want scaled versions of Sudoku that use 4x4 and 6x6 grids. In the 6x6 grid version, the overall grid should be divided into rectangles of six cells each (2x3 or 3x2).
 
 
 <h3>TDD</h3>
@@ -330,7 +353,7 @@
 4. <i>After setting the words, the Teacher is shown a confirmation dialog to build the custom puzzle.</i>
    <br>
 
-- <b>To Be Implemented: </b> In the main menu screen of the app, when the user clicks on the “new game” button, they will be taken to an options page where they can choose the difficulty of the puzzles as well as a “custom” difficulty where they can create sudoku puzzles of size 4x4 and 6x6.
+- <b>{+IMPLEMENTED: +}</b>  In the main menu screen of the app, when the user clicks on the “new game” button, they will be taken to an options page where they can choose the difficulty of the puzzles as well as a “custom” difficulty where they can create sudoku puzzles of size 4x4 and 6x6.
 
 <img src="https://i.imgur.com/jfoLga8.jpg"  width="24%">
 <img src="https://i.imgur.com/TotOYKH.jpg"  width="24%">
@@ -344,7 +367,7 @@
 3. <i>User enters 6 into both the row and column in order to make a 6x6 sudoku puzzle.</i>
    <br>
 
-- <b>To Be Implemented: </b> When the user taps on the “custom” difficulty button they will brought to a screen that asks the user to enter the dimension of the "custom" difficulty puzzle. Users can create custom sized puzzle with rows and columns of any value between 1 and 12, which is noted in the entry boxes. A button located at the bottom of the screen will say “Start Game”. When the user taps this after entering valid dimensions for the sudoku board, it will start the game. If incorrect values are entered, it will prompt the user to retry through a pop-up message.
+- <b>{+IMPLEMENTED: +}</b>  When the user taps on the “custom” difficulty button they will brought to a screen that asks the user to enter the dimension of the "custom" difficulty puzzle. Users can create custom sized puzzle with rows and columns of any value between 1 and 12, which is noted in the entry boxes. A button located at the bottom of the screen will say “Start Game”. When the user taps this after entering valid dimensions for the sudoku board, it will start the game. If incorrect values are entered, it will prompt the user to retry through a pop-up message.
 
 
 <img src="https://i.imgur.com/TotOYKH.jpg"  width="24%">
