@@ -74,7 +74,7 @@ public class PuzzleViewModel extends ViewModel {
     }
 
     public void newCustomPuzzle(int puzzleLanguage, int difficulty) throws IllegalLanguageException, TooBigNumberException, NegativeNumberException, IllegalWordPairException, IllegalDimensionException {
-        setPuzzle(new Puzzle(customWordPairs, customWordPairs.size(),puzzleLanguage,-1,difficulty));
+        setPuzzle(new Puzzle(customWordPairs, customWordPairs.size(),puzzleLanguage,Puzzle.NO_NUMBER_OF_START_CELLS_USE_DIFFICULTY,difficulty));
     }
 
     public void loadPuzzle(Puzzle puzzle) {
