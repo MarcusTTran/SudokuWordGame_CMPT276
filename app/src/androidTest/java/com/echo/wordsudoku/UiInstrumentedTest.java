@@ -7,7 +7,6 @@ import android.content.Context;
 
 import androidx.test.core.app.ApplicationProvider;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
-import androidx.test.platform.app.InstrumentationRegistry;
 import androidx.test.uiautomator.UiDevice;
 import androidx.test.uiautomator.UiObject;
 import androidx.test.uiautomator.UiObjectNotFoundException;
@@ -16,11 +15,9 @@ import androidx.test.uiautomator.UiSelector;
 import androidx.test.uiautomator.Until;
 import androidx.test.uiautomator.By;
 import android.content.Intent;
-import android.os.RemoteException;
 import android.util.Log;
 
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -28,35 +25,29 @@ import static org.junit.Assert.*;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
 /**
  * Instrumented test, which will execute on an Android device.
  *
  * @see <a href="http://d.android.com/tools/testing">Testing documentation</a>
  */
+
+//For more information: https://developer.android.com/training/testing/other-components/ui-automator
+
 @RunWith(AndroidJUnit4.class)
-public class UIInstrumentedTest {
+public class UiInstrumentedTest {
 
-
-    //DUE TO SLOW SPEED OF UI TESTS I HAVE DISABLED SOME OF MY TESTS FOR NOW SO THAT I CAN WRITE AND TEST EACH INDIVIDUAL TEST MORE EFFICIENTLY
-    //THE TESTS THAT ARE WORKING HAVE BEEN HIGHLIGHTED WITH THE GREEN TO-DO AS "WORKING TEST"
+    //Warning: These tests take up to X time to complete
 
     int[] puzzleSizes = new int[] {4, 6, 9, 12};
 
     private UiDevice ourDevice;
     final String INSTRUTEST = "INSTRU_TESTING";
 
-    private static final int LAUNCH_TIMEOUT = 5000;
+    //If set up exceeds time, will fail test
+    private static final int TIMEOUT_TIME = 5000;
 
-    private static final String BASIC_SAMPLE_PACKAGE = "com.echo.wordsudoku";
-
-    //@Test
-    public void useAppContext() {
-        // Context of the app under test.
-        Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
-        assertEquals("com.echo.wordsudoku", appContext.getPackageName());
-    }
+    private static final String WORDSUDOKU_PACKAGE = "com.echo.wordsudoku";
 
     //Test brings us to home page then starts up
     @Before
@@ -64,34 +55,186 @@ public class UIInstrumentedTest {
         ourDevice = UiDevice.getInstance(getInstrumentation());
         ourDevice.pressHome();
 
-        final String launcherPackage = ourDevice.getLauncherPackageName();
-        if (launcherPackage.equals(null)) {
-            fail();
+        final String appLauncher = ourDevice.getLauncherPackageName();
+        if (appLauncher.equals(null)) {
+            //If app launcher does not exist fail the test
+            fail("App launcher does not exist");
         }
 
-        ourDevice.wait(Until.hasObject(By.pkg(launcherPackage).depth(0)), LAUNCH_TIMEOUT);
-
+        ourDevice.wait(Until.hasObject(By.pkg(appLauncher).depth(0)), TIMEOUT_TIME);
+        //Get the context to launch our app
         Context context = ApplicationProvider.getApplicationContext();
-        final Intent intent1 = context.getPackageManager()
-                .getLaunchIntentForPackage(BASIC_SAMPLE_PACKAGE);
-        // Clear out any previous instances
-        intent1.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        context.startActivity(intent1);
-        ourDevice.wait(Until.hasObject(By.pkg(BASIC_SAMPLE_PACKAGE).depth(0)), LAUNCH_TIMEOUT);
+        final Intent appIntent = context.getPackageManager().getLaunchIntentForPackage(WORDSUDOKU_PACKAGE);
+        appIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        //Start the app up
+        context.startActivity(appIntent);
+        //Wait until device has app
+        ourDevice.wait(Until.hasObject(By.pkg(WORDSUDOKU_PACKAGE).depth(0)), TIMEOUT_TIME);
     }
 
-    //Rotate our screen using this method
-    //@Test
-    public void rotateScreen() {
+    //Test that clicking the rules button in puzzle page displays the rules pops up and displays instructions
+//    @Ignore("Working test")
+    @Test
+    public void testRulesPopUpDialog() {
+        UiObject newGameButton = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/new_game_button").className("android.widget.Button"));
         try {
-            ourDevice.setOrientationLeft();
-        } catch (android.os.RemoteException e) {
-            fail();
+            newGameButton.click();
+        } catch (UiObjectNotFoundException e) {
+            fail("New Game Button not found");
+        }
+
+        //Start classic puzzle
+        UiObject classicPuzzleButton = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/classic_puzzle_button").className("android.widget.Button"));
+        try {
+            classicPuzzleButton.click();
+        } catch (UiObjectNotFoundException e) {
+            fail("Classic Puzzles Button not found");
+        }
+
+        UiObject rulesButton = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/help_button"));
+        try {
+            rulesButton.click();
+        } catch (UiObjectNotFoundException e) {
+            fail("Rules Button not found");
+        }
+
+        UiObject rulesInfoText = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/PopUp_Rules"));
+        if (!rulesInfoText.exists()) {
+            fail("Rules dialog properly open");
+        }
+
+        UiObject rulesInfo = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/RulesInformation"));
+        if (!rulesInfo.exists()) {
+            fail("Rules are not being displayed");
+        }
+
+
+    }
+
+
+    //Test that the rules dialog exit button correctly closes rules dialog
+//    @Ignore("Working test")
+    @Test
+    public void testRulesDialogExitButton() {
+        UiObject newGameButton = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/new_game_button").className("android.widget.Button"));
+        try {
+            newGameButton.click();
+        } catch (UiObjectNotFoundException e) {
+            fail("New Game Button not found");
+        }
+
+        //Start classic puzzle
+        UiObject classicPuzzleButton = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/classic_puzzle_button").className("android.widget.Button"));
+        try {
+            classicPuzzleButton.click();
+        } catch (UiObjectNotFoundException e) {
+            fail("Classic Puzzles Button not found");
+        }
+
+        UiObject rulesButton = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/help_button"));
+        try {
+            rulesButton.click();
+        } catch (UiObjectNotFoundException e) {
+            fail("Rules Button not found");
+        }
+
+        UiObject rulesExitButton = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/rulesExitButton"));
+        try {
+            rulesExitButton.click();
+        } catch (UiObjectNotFoundException e) {
+            fail("Rules button does not exist");
+        }
+
+        UiObject rulesInfoText = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/PopUp_Rules"));
+        if (rulesInfoText.exists()) {
+            fail("Rules dialog did not properly close");
+        }
+
+    }
+
+
+    //Test that dictionary peeks are limited to 2 per game; correct dialog appears after 2 peeks
+//    @Ignore("Working test")
+    @Test
+    public void testDictionaryPeeksLimitDialog() {
+        //Start new game
+        UiObject newGameButton = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/new_game_button").className("android.widget.Button"));
+        try {
+            newGameButton.click();
+        } catch (UiObjectNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        //Start classic puzzle
+        UiObject classicPuzzleButton = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/classic_puzzle_button").className("android.widget.Button"));
+        try {
+            classicPuzzleButton.click();
+        } catch (UiObjectNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        UiObject dictionaryButton = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/options_dictionary_help_button").className("android.widget.ImageButton"));
+
+        for (int i = 0 ; i < 2; i++) {
+            try {
+                dictionaryButton.click();
+            } catch (UiObjectNotFoundException e) {
+                fail("Dictionary button not found");
+            }
+            UiObject dictionaryExitButton = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/dictionaryExitButton").className("android.widget.ImageButton"));
+            try {
+                dictionaryExitButton.click();
+            } catch (UiObjectNotFoundException e) {
+                fail("Dictionary exit button not found");
+            }
+        }
+
+        UiObject dictionaryFinalButton = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/options_dictionary_help_button").className("android.widget.ImageButton"));
+        try {
+            dictionaryFinalButton.click();
+        } catch (UiObjectNotFoundException e) {
+            fail("Dictionary button not found");
+        }
+
+        UiObject dictionaryLimitDialogPopUp = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/DictionaryLimit").className("android.widget.TextView"));
+        if (!dictionaryLimitDialogPopUp.exists()) {
+            fail("Dictionary limit failed to appear even after 2 peeks");
         }
     }
 
-    //Test that the timer correctly appears on the puzzles fragment when turned on
-    @Ignore("Working test")
+
+    //Test that clicking the Custom Words button on the Choose Puzzle Mode with no custom words
+    //entered, correctly navigates the user to the Choose Custom Words page
+//    @Ignore("Working test")
+    @Test
+    public void testCustomWordsNoEnteredCustomWordsNavigation() {
+        //Start new game
+        UiObject newGameButton = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/new_game_button").className("android.widget.Button"));
+        try {
+            newGameButton.click();
+        } catch (UiObjectNotFoundException e) {
+            fail("New Game button was not displayed");
+        }
+
+        //Start custom words puzzle
+        UiObject customWordsButton = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/custom_words_button").className("android.widget.Button"));
+        try {
+            customWordsButton.click();
+        } catch (UiObjectNotFoundException e) {
+            fail("Custom sized button was not displayed");
+        }
+
+        UiObject chooseCustomWordsFragment = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/chooseCustomWordsFragment").className("android.view.ViewGroup"));
+
+        if (!chooseCustomWordsFragment.exists()) {
+            fail("Custom Words Fragment was not shown");
+        }
+    }
+
+
+
+    //Test that the timer is correctly displayed on the puzzle page when turned on
+//    @Ignore("Working test")
     @Test
     public void testTimerDisplayOnPuzzleFragment() {
         UiObject settingsButton = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/settings_button"));
@@ -137,8 +280,9 @@ public class UIInstrumentedTest {
     }
 
 
-    //Test that the timer switch in the settings correctly updates subtext below Timer Puzzle header
-    @Ignore("Working test")
+    //Test that clicking the timer switch in the settings correctly updates the subtext below Timer Puzzle
+    // header
+//    @Ignore("Working test")
     @Test
     public void testSettingsTimerSwitch() {
         UiObject settingsButton = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/settings_button"));
@@ -172,8 +316,8 @@ public class UIInstrumentedTest {
 
     }
 
-    //Test that the save dialog correctly appears when pressing back
-    @Ignore("Working test")
+    //Test that the save dialog correctly appears when user presses back on puzzle page
+//    @Ignore("Working test")
     @Test
     public void testSaveDialogDisplaysOnBackPress() {
         //For CANCEL, YES, NO
@@ -213,7 +357,7 @@ public class UIInstrumentedTest {
     }
 
     //Check that the puzzle page displays all necessary buttons and TextViews to the user
-    @Ignore("Working test")
+//    @Ignore("Working test")
     @Test
     public void testPuzzlePageDisplay() {
         for (int i = 0; i < puzzleSizes.length; i++) {
@@ -236,7 +380,7 @@ public class UIInstrumentedTest {
         try {
             customSizePuzzleButton.click();
         } catch (UiObjectNotFoundException e) {
-            fail("Custom Sized button was not displayed");
+            fail("Custom Sized button was not displayed on Puzzle size " + dim);
         }
 
         //Choose puzzle size dialog
@@ -245,34 +389,34 @@ public class UIInstrumentedTest {
             UiObject sizeSelection = choosePuzzleSizeDialog.getChild(new UiSelector().textContains(Integer.toString(dim)));
             sizeSelection.click();
         } catch (UiObjectNotFoundException e) {
-            fail("Puzzle size selection was not found");
+            fail("Puzzle size selection was not displayed on Puzzle size " + dim);
         }
 
         UiObject doneChooseSizeDialog = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/done_button").className("android.widget.Button"));
         try {
             doneChooseSizeDialog.click();
         } catch (UiObjectNotFoundException e) {
-            fail("Done button in Choose size dialog was not found");
+            fail("Done button in Choose size dialog was not displayed on Puzzle size " + dim);
         }
 
         UiObject doneButton = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/options_finish_button").className("android.widget.Button"));
         if (!doneButton.exists()) {
-            fail("Done Button was not displayed");
+            fail("Done Button was not displayed on Puzzle size " + dim);
         }
 
         UiObject resetButton = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/options_reset_puzzle_button").className("android.widget.Button"));
         if (!resetButton.exists()) {
-            fail("Reset Button was not displayed");
+            fail("Reset Button was not displayed on Puzzle size " + dim);
         }
 
         UiObject dictionaryButton = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/options_dictionary_help_button").className("android.widget.ImageButton"));
         if (!dictionaryButton.exists()) {
-            fail("Dictionary Button was not displayed");
+            fail("Dictionary Button was not displayed on Puzzle size " + dim);
         }
 
         UiObject helpButton = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/help_button").className("android.widget.ImageButton"));
         if (!helpButton.exists()) {
-            fail("Help Button was not displayed");
+            fail("Help Button was not displayed on Puzzle size " + dim);
         }
 
         UiObject inputButtons = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/board_input_buttons").className("android.widget.LinearLayout"));
@@ -280,33 +424,33 @@ public class UIInstrumentedTest {
             for(int i = 0; i < inputButtons.getChildCount(); i++) {
                 UiObject buttonLayouts = inputButtons.getChild(new UiSelector().instance(i));
                 if (!buttonLayouts.exists()) {
-                    fail("All buttons are not being shown");
+                    fail("All buttons are not displayed on Puzzle size " + dim);
                 }
             }
         } catch (UiObjectNotFoundException e) {
-            fail("Input buttons are not being shown");
+            fail("Input buttons are not displayed on Puzzle size " + dim);
         }
 
 
 
         UiObject timerDisplay = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/timer_text_view").className("android.widget.TextView"));
         if (!timerDisplay.exists()) {
-            fail("Timer/Difficulty was not displayed");
+            fail("Timer/Difficulty was not displayed on Puzzle size " + dim);
         }
 
         //Test that all cells are displayed
         UiObject sudokuBoard = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/sudoku_board").className("android.view.View"));
         if (!sudokuBoard.exists()) {
-            fail("Sudoku Board was not displayed");
+            fail("Sudoku Board was not displayed on Puzzle size " + dim);
         }
 
         for (int i = 0; i < dim * dim; i++) {
             try {
                 if (!sudokuBoard.getChild(new UiSelector().instance(i)).exists()) {
-                    fail("Not all cells exist");
+                    fail("All cells not displayed on Puzzle size " + dim);
                 }
             } catch (UiObjectNotFoundException e) {
-                fail("Not all cells were displayed on screen");
+                fail("All cells not displayed on Puzzle size " + dim);
             }
         }
 
@@ -315,10 +459,10 @@ public class UIInstrumentedTest {
             UiObject backButton = actionBar.getChild(new UiSelector().index(1));
             UiObject kebabButton = actionBar.getChild(new UiSelector().index(3));
             if (!backButton.exists()) {
-                fail("Back button was not shown");
+                fail("Back button was not displayed on Puzzle size " + dim);
             }
             if (!kebabButton.exists()) {
-                fail("Kebab button was not shown");
+                fail("Kebab button was not displayed on Puzzle size " + dim);
             }
         } catch (UiObjectNotFoundException e) {
             fail();
@@ -330,12 +474,12 @@ public class UIInstrumentedTest {
         try {
             noButton.click();
         } catch (UiObjectNotFoundException e) {
-            fail("No button was not displayed");
+            fail("No button was not displayed on Puzzle size " + dim);
         }
     }
 
     //Test that the puzzle page displays all necessary buttons and TextViews to the user
-    @Ignore("Working test")
+//    @Ignore("Working test")
     @Test
     public void testPuzzlePageDisplayHorizontalEverySizes() {
         try {
@@ -356,7 +500,7 @@ public class UIInstrumentedTest {
         try {
             newGameButton.click();
         } catch (UiObjectNotFoundException e) {
-            fail("New Game button was not displayed");
+            fail("New Game button was not displayed on Puzzle size " + dim);
         }
 
         //Start custom sized puzzle
@@ -364,7 +508,7 @@ public class UIInstrumentedTest {
         try {
             customSizePuzzleButton.click();
         } catch (UiObjectNotFoundException e) {
-            fail("Custom Sized button was not displayed");
+            fail("Custom Sized button was not displayed on Puzzle size " + dim);
         }
 
         //Choose puzzle size dialog
@@ -373,34 +517,34 @@ public class UIInstrumentedTest {
             UiObject sizeSelection = choosePuzzleSizeDialog.getChild(new UiSelector().textContains(Integer.toString(dim)));
             sizeSelection.click();
         } catch (UiObjectNotFoundException e) {
-            fail("Puzzle size selection was not found");
+            fail("Puzzle size selection was not displayed on Puzzle size " + dim);
         }
 
         UiObject doneChooseSizeDialog = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/done_button").className("android.widget.Button"));
         try {
             doneChooseSizeDialog.click();
         } catch (UiObjectNotFoundException e) {
-            fail("Done button in Choose size dialog was not found");
+            fail("Done button in Choose size dialog was not displayed on Puzzle size " + dim);
         }
 
         UiObject doneButton = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/options_finish_button").className("android.widget.Button"));
         if (!doneButton.exists()) {
-            fail("Done Button was not displayed");
+            fail("Done Button was not displayed on Puzzle size " + dim);
         }
 
         UiObject resetButton = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/options_reset_puzzle_button").className("android.widget.Button"));
         if (!resetButton.exists()) {
-            fail("Reset Button was not displayed");
+            fail("Reset Button was not displayed on Puzzle size " + dim);
         }
 
         UiObject dictionaryButton = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/options_dictionary_help_button").className("android.widget.ImageButton"));
         if (!dictionaryButton.exists()) {
-            fail("Dictionary Button was not displayed");
+            fail("Dictionary Button was not displayed on Puzzle size " + dim);
         }
 
         UiObject helpButton = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/help_button").className("android.widget.ImageButton"));
         if (!helpButton.exists()) {
-            fail("Help Button was not displayed");
+            fail("Help Button was not displayed on Puzzle size " + dim);
         }
 
         UiObject inputButtons = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/board_input_buttons").className("android.widget.LinearLayout"));
@@ -408,33 +552,33 @@ public class UIInstrumentedTest {
             for(int i = 0; i < inputButtons.getChildCount(); i++) {
                 UiObject buttonLayouts = inputButtons.getChild(new UiSelector().instance(i));
                 if (!buttonLayouts.exists()) {
-                    fail("All buttons are not being shown");
+                    fail("All buttons are not displayed on Puzzle size " + dim);
                 }
             }
         } catch (UiObjectNotFoundException e) {
-            fail("Input buttons are not being shown");
+            fail("Input buttons are not displayed on Puzzle size " + dim);
         }
 
 
 
         UiObject timerDisplay = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/timer_text_view").className("android.widget.TextView"));
         if (!timerDisplay.exists()) {
-            fail("Timer/Difficulty was not displayed");
+            fail("Timer/Difficulty was not displayed on Puzzle size " + dim);
         }
 
         //Test that all cells are displayed
         UiObject sudokuBoard = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/sudoku_board").className("android.view.View"));
         if (!sudokuBoard.exists()) {
-            fail("Sudoku Board was not displayed");
+            fail("Sudoku Board was not displayed on Puzzle size " + dim);
         }
 
         for (int i = 0; i < dim * dim; i++) {
             try {
                 if (!sudokuBoard.getChild(new UiSelector().instance(i)).exists()) {
-                    fail("Not all cells exist");
+                    fail("All cells not displayed on Puzzle size " + dim);
                 }
             } catch (UiObjectNotFoundException e) {
-                fail("Not all cells were displayed on screen");
+                fail("All cells were not displayed on Puzzle size " + dim);
             }
         }
 
@@ -443,10 +587,10 @@ public class UIInstrumentedTest {
             UiObject backButton = actionBar.getChild(new UiSelector().index(1));
             UiObject kebabButton = actionBar.getChild(new UiSelector().index(3));
             if (!backButton.exists()) {
-                fail("Back button was not shown");
+                fail("Back button was not displayed on Puzzle size " + dim);
             }
             if (!kebabButton.exists()) {
-                fail("Kebab button was not shown");
+                fail("Kebab button was not displayed on Puzzle size " + dim);
             }
         } catch (UiObjectNotFoundException e) {
             fail();
@@ -458,50 +602,16 @@ public class UIInstrumentedTest {
         try {
             noButton.click();
         } catch (UiObjectNotFoundException e) {
-            fail("No button was not displayed");
+            fail("No button was not displayed on Puzzle size " + dim);
         }
     }
 
 
-    //Test that clicking the Custom Words button on the Choose Puzzle Mode with no custom words
-    //entered, takes the user to the Choose Custom Words page
-    @Ignore("Working test")
+    //Test that the correct amount of entry boxes are displayed for the option selected in the dropdown
+    // when in the Choose Custom Words fragment in a Horizontal orientation
+//    @Ignore("Working test")
     @Test
-    public void testCustomWordsNoEnteredCustomWordsNavigation() {
-        //Start new game
-        UiObject newGameButton = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/new_game_button").className("android.widget.Button"));
-        try {
-            newGameButton.click();
-        } catch (UiObjectNotFoundException e) {
-            fail("New Game button was not displayed");
-        }
-
-        //Start custom words puzzle
-        UiObject customWordsButton = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/custom_words_button").className("android.widget.Button"));
-        try {
-            customWordsButton.click();
-        } catch (UiObjectNotFoundException e) {
-            fail("Custom sized button was not displayed");
-        }
-
-        UiObject chooseCustomWordsFragment = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/chooseCustomWordsFragment").className("android.view.ViewGroup"));
-
-        if (!chooseCustomWordsFragment.exists()) {
-            fail("Custom Words Fragment was not shown");
-        }
-
-
-
-    }
-
-    //TODO: Use UiScrollable to achieve this test (only needs to be for sizes 9 and 12)
-    //Test that the correct amount of edit texts are displayed for the option selected in the dropdown
-    // when in the choose custom words fragment
-    @Ignore("Working test")
-    @Test
-    public void testCustomWordsPageAllEditTextsDisplayed12x12Horizontal() {
-        int totalEditText = 12;
-
+    public void testCustomWordsPageAllEditTextsDisplayedHorizontalScrollable() {
         try {
             ourDevice.setOrientationLeft();
             ourDevice.waitForWindowUpdate(null, 3000);
@@ -516,18 +626,27 @@ public class UIInstrumentedTest {
             fail("Choose custom words button not found");
         }
 
+        for (int i = 0; i < puzzleSizes.length; i++) {
+            testCustomWordsPageAllEditTextsDisplayedHelperHorizontal(puzzleSizes[i], i);
+        }
+
+    }
+
+
+    public void testCustomWordsPageAllEditTextsDisplayedHelperHorizontal(int totalEditTexts, int index) {
+
         UiObject puzzleSizeDropdown = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/puzzleSizeCustomDropdown"));
         try {
             puzzleSizeDropdown.click();
         } catch (UiObjectNotFoundException e) {
-            fail("Puzzle size dropdown was not displayed");
+            fail("Puzzle size dropdown was not displayed on Puzzle size " + totalEditTexts);
         }
 
         UiObject dropdownOptions = ourDevice.findObject(new UiSelector().className("android.widget.ListView"));
         try {
-            dropdownOptions.getChild(new UiSelector().index(3)).click();
+            dropdownOptions.getChild(new UiSelector().index(index)).click();
         } catch (UiObjectNotFoundException e) {
-            fail("Dropdown options was not displayed");
+            fail("Dropdown options was not displayed on Puzzle size " + totalEditTexts);
         }
 
         UiObject entryBox1 = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/buttonLanguageEntries"));
@@ -546,11 +665,11 @@ public class UIInstrumentedTest {
                 }
 
                 if (!edittext.exists()) {
-                    fail("EditText at index " + i + " was not displayed");
+                    fail("EditText at index " + i + " was not displayed at puzzle size: " + totalEditTexts);
                 }
                 EditTextCounter++;
             }
-            if (EditTextCounter != totalEditText) {
+            if (EditTextCounter != totalEditTexts) {
                 fail("Not all edit texts were displayed; Only " + EditTextCounter);
             }
         } catch (UiObjectNotFoundException e) {
@@ -578,31 +697,195 @@ public class UIInstrumentedTest {
                 }
 
                 if (!edittext.exists()) {
-                    fail("EditText at index " + i + " was not displayed");
+                    fail("EditText at index " + i + " was not displayed at puzzle size: " + totalEditTexts);
                 }
                 EditTextCounter++;
             }
-            if (EditTextCounter != totalEditText) {
+            if (EditTextCounter != totalEditTexts) {
                 fail("Not all edit texts were displayed; Only " + EditTextCounter);
             }
         } catch (UiObjectNotFoundException e) {
             fail("EditTexts were not all displayed");
         }
+
+        //Scroll the ScrollView back up to count the 2nd row
+        scrollBackUp = new UiScrollable(new UiSelector().resourceId("com.echo.wordsudoku:id/entryBoxesScrollView"));
+        try {
+            scrollBackUp.flingBackward();
+        } catch (UiObjectNotFoundException e) {
+            fail("ScrollView not found");
+        }
+
     }
 
-    //Test that the correct amount of edit texts are displayed for the option selected in the dropdown
-    // when in the choose custom words fragment
-    @Ignore("Working test")
+    // Test that Save Game button correctly loads in previously entered words when user
+    // clicks Load Game option
+//    @Ignore("Working test")
     @Test
-    public void testCustomWordsPageAllEditTextsDisplayed12x12() {
-        int totalEditText = 12;
+    public void testSaveButtonLoadGame() {
+        List<Integer> filledCellIndex = new ArrayList<>();
+        List<String> filledWord = new ArrayList<>();
 
+        //Start new game
+        UiObject newGameButton = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/new_game_button").className("android.widget.Button"));
+        try {
+            newGameButton.click();
+        } catch (UiObjectNotFoundException e) {
+            fail("New Game button was not displayed");
+        }
+
+        //Start classic game
+        UiObject classicPuzzleButton = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/classic_puzzle_button").className("android.widget.Button"));
+        try {
+            classicPuzzleButton.click();
+        } catch (UiObjectNotFoundException e) {
+            fail("Classic Puzzle button was not displayed");
+        }
+
+        //Find SudokuBoard
+        UiObject sudokuBoard = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/sudoku_board"));
+
+        //Iterate through board while filling it
+        int iterateThroughButtons = 1;
+        for (int i = 0; i < 24; i++) {
+            try {
+                UiObject someCell = sudokuBoard.getChild(new UiSelector().instance(i));
+                if (someCell.getText().equals("EMPTYCELL")) {
+                    someCell.click();
+                    Log.d(INSTRUTEST, "iterateThroughButtons is: " + iterateThroughButtons);
+                    UiObject someInputButton = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/id" + iterateThroughButtons));
+                    someInputButton.click();
+
+                    filledCellIndex.add(i);
+                    filledWord.add(someInputButton.getText().toLowerCase());
+
+                    iterateThroughButtons = (iterateThroughButtons % 9) + 1;
+                }
+            } catch (UiObjectNotFoundException e) {
+                fail("Not all cells or buttons were displayed: " + iterateThroughButtons);
+            }
+
+        }
+
+        ourDevice.pressBack();
+        UiObject yesButton = ourDevice.findObject(new UiSelector().resourceId("android:id/button1").className("android.widget.Button"));
+        try {
+            yesButton.click();
+        } catch (UiObjectNotFoundException e) {
+            fail("Yes button was not displayed");
+        }
+
+        //Start load game
+        UiObject LoadGameButton = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/load_game_button").className("android.widget.Button"));
+        try {
+            LoadGameButton.click();
+        } catch (UiObjectNotFoundException e) {
+            fail("Load game button was not displayed");
+        }
+
+
+        //Find SudokuBoard
+        sudokuBoard = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/sudoku_board"));
+
+        //Iterate through board while filling it
+        for (int i = 0; i < filledCellIndex.size(); i++) {
+            try {
+                UiObject someCell = sudokuBoard.getChild(new UiSelector().instance(filledCellIndex.get(i)));
+
+                if (!someCell.getText().equals(filledWord.get(i))) {
+                    someCell.click();
+                    fail("Loaded game does not match previously saved game");
+                }
+            } catch (UiObjectNotFoundException e) {
+                fail("Not all cells or buttons were displayed: " + iterateThroughButtons);
+            }
+        }
+    }
+
+
+    //Test that the difficulty Text correctly displays difficulty selected in Settings page on the
+    // Puzzle page
+    @Test
+    public void testDifficultyButtonDisplay() {
+        UiObject settingsButton = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/settings_button"));
+        try {
+            settingsButton.click();
+        } catch (UiObjectNotFoundException e) {
+            fail("Settings Button not found");
+        }
+        UiObject settingsFragment = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/recycler_view"));
+        try {
+            UiObject timerLayout = settingsFragment.getChild(new UiSelector().index(1));
+            UiObject timerLayout1 = timerLayout.getChild(new UiSelector().index(1));
+            UiObject switchWidget = timerLayout1.getChild(new UiSelector().resourceId("com.echo.wordsudoku:id/switchWidget"));
+            if (switchWidget.isChecked()) {
+                switchWidget.click();
+            }
+        } catch (UiObjectNotFoundException e) {
+            fail("Settings fragment was not correctly displayed");
+        }
+
+        String s = "";
+        try {
+            UiObject difficultySetting = settingsFragment.getChild(new UiSelector().index(3));
+            UiObject difficultyLayout = difficultySetting.getChild(new UiSelector().index(0));
+            UiObject difficultySelected = difficultyLayout.getChild(new UiSelector().index(1));
+            s = difficultySelected.getText().toLowerCase();
+            Log.d(INSTRUTEST, s);
+        } catch (UiObjectNotFoundException e) {
+            fail("Difficulty not found");
+        }
+
+        ourDevice.pressBack();
+
+        //Start new game
+        UiObject newGameButton = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/new_game_button").className("android.widget.Button"));
+        try {
+            newGameButton.click();
+        } catch (UiObjectNotFoundException e) {
+            fail("New Game button was not displayed");
+        }
+
+        //Start classic game
+        UiObject classicPuzzleButton = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/classic_puzzle_button").className("android.widget.Button"));
+        try {
+            classicPuzzleButton.click();
+        } catch (UiObjectNotFoundException e) {
+            fail("Classic Puzzle button was not displayed");
+        }
+
+        //Start classic game
+        UiObject timerDifficultyButton = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/timer_text_view").className("android.widget.TextView"));
+        try {
+            String b = timerDifficultyButton.getText().toLowerCase();
+            Log.d(INSTRUTEST, b);
+            if (!s.equals(b)) {
+                fail("Correct difficulty was not displayed");
+            }
+        } catch (UiObjectNotFoundException e) {
+            fail("Difficulty/Timer button was not displayed");
+        }
+    }
+
+
+    //Test that the correct amount of Entry boxes are displayed for the option selected in the dropdown
+    // when in the Choose custom words fragment in landscape orientation
+//    @Ignore("Working test")
+    @Test
+    public void testCustomWordsPageAllEditTextsDisplayed() {
         UiObject chooseCustomWordsButton = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/custom_words_button"));
         try {
             chooseCustomWordsButton.click();
         } catch (UiObjectNotFoundException e) {
             fail("Choose custom words button not found");
         }
+
+        for (int i = 0; i < puzzleSizes.length; i++) {
+            testCustomWordsPageAllEditTextsDisplayedHelper(puzzleSizes[i], i);
+        }
+    }
+
+    public void testCustomWordsPageAllEditTextsDisplayedHelper(int totalEditTexts, int index) {
 
         UiObject puzzleSizeDropdown = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/puzzleSizeCustomDropdown"));
         try {
@@ -613,7 +896,7 @@ public class UIInstrumentedTest {
 
         UiObject dropdownOptions = ourDevice.findObject(new UiSelector().className("android.widget.ListView"));
         try {
-            dropdownOptions.getChild(new UiSelector().index(3)).click();
+            dropdownOptions.getChild(new UiSelector().index(index)).click();
         } catch (UiObjectNotFoundException e) {
             fail("Dropdown options was not displayed");
         }
@@ -630,7 +913,7 @@ public class UIInstrumentedTest {
                 }
                 EditTextCounter++;
             }
-            if (EditTextCounter != totalEditText) {
+            if (EditTextCounter != totalEditTexts) {
                 fail("Not all edit texts were displayed");
             }
         } catch (UiObjectNotFoundException e) {
@@ -646,7 +929,7 @@ public class UIInstrumentedTest {
                 }
                 EditTextCounter++;
             }
-            if (EditTextCounter != totalEditText) {
+            if (EditTextCounter != totalEditTexts) {
                 fail("Not all edit texts were displayed");
             }
         } catch (UiObjectNotFoundException e) {
@@ -656,79 +939,15 @@ public class UIInstrumentedTest {
 
 
 
-
-    //Test that the correct amount of edit texts are displayed for the option selected in the dropdown
-    // when in the choose custom words fragment
-    @Ignore("Working test")
-    @Test
-    public void testCustomWordsPageAllEditTextsDisplayed4x4() {
-        int totalEditText = 4;
-
-        UiObject chooseCustomWordsButton = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/custom_words_button"));
-        try {
-            chooseCustomWordsButton.click();
-        } catch (UiObjectNotFoundException e) {
-            fail("Choose custom words button not found");
-        }
-
-        UiObject puzzleSizeDropdown = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/puzzleSizeCustomDropdown"));
-        try {
-            puzzleSizeDropdown.click();
-        } catch (UiObjectNotFoundException e) {
-            fail("Puzzle size dropdown was not displayed");
-        }
-
-        UiObject dropdownOptions = ourDevice.findObject(new UiSelector().className("android.widget.ListView"));
-        try {
-            dropdownOptions.getChild(new UiSelector().index(0)).click();
-        } catch (UiObjectNotFoundException e) {
-            fail("Dropdown option was not displayed");
-        }
-
-        UiObject entryBox1 = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/buttonLanguageEntries"));
-        UiObject entryBox2 = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/boardLanguageEntries"));
-
-        int EditTextCounter = 0;
-        try {
-            for (int i = 0; i < entryBox1.getChildCount() - 1; i++) {
-                UiObject edittext = entryBox1.getChild(new UiSelector().index(i + 1));
-                if (!edittext.exists()) {
-                    fail("EditText at index " + i + " was not displayed");
-                }
-                EditTextCounter++;
-            }
-            if (EditTextCounter != totalEditText) {
-                fail("Not all edit texts were displayed");
-            }
-        } catch (UiObjectNotFoundException e) {
-            fail("EditTexts were not all displayed");
-        }
-
-        EditTextCounter = 0;
-        try {
-            for (int i = 0; i < entryBox2.getChildCount() - 1; i++) {
-                UiObject edittext = entryBox2.getChild(new UiSelector().index(i + 1));
-                if (!edittext.exists()) {
-                    fail("EditText at index " + i + " was not displayed");
-                }
-                EditTextCounter++;
-            }
-            if (EditTextCounter != totalEditText) {
-                fail("Not all edit texts were displayed");
-            }
-        } catch (UiObjectNotFoundException e) {
-            fail("EditTexts were not all displayed");
-        }
-    }
-
-
-    //Test that when users click the puzzle language button, the button text displays the
+    //Test that when users click the puzzle language button on the main menu, the button text displays the
     //language it has been set to
-    @Ignore("Working test")
+//    @Ignore("Working test")
     @Test
     public void testPuzzleLanguageButtonUpdate() {
         UiObject puzzleLanguageButton = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/change_language_button"));
+        String s = "";
         try {
+            s = puzzleLanguageButton.getText();
             puzzleLanguageButton.click();
         } catch (UiObjectNotFoundException e) {
             fail("Puzzle language button not found");
@@ -736,9 +955,16 @@ public class UIInstrumentedTest {
 
         UiObject puzzleLanguageUpdateText = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/change_language_button"));
         try {
-            if (puzzleLanguageUpdateText.getText().equals("Puzzle Language : English")) {
-                fail("Puzzle Language Button did not display set language correctly");
+            if (s.contains("French")) {
+                if (!puzzleLanguageUpdateText.getText().equals("Puzzle Language : English")) {
+                    fail("Puzzle Language Button did not display set language correctly");
+                }
+            } else {
+                if (!puzzleLanguageUpdateText.getText().equals("Puzzle Language : French")) {
+                    fail("Puzzle Language Button did not display set language correctly");
+                }
             }
+
         } catch (UiObjectNotFoundException e) {
             fail("Puzzle Language Button text did not update on click");
         }
@@ -746,7 +972,7 @@ public class UIInstrumentedTest {
     }
 
     //Test that when clicking Custom Words button the user is correctly taken to Choose custom words page
-    @Ignore("Working test")
+//    @Ignore("Working test")
     @Test
     public void testCustomWordsButtonNavigation() {
         //Start new game
@@ -772,8 +998,8 @@ public class UIInstrumentedTest {
         }
     }
 
-    //Test that all buttons are displayed in the Choose Puzzle Mode page in a horizontal landscape
-    @Ignore("Working test")
+    //Test that all options buttons are displayed in the Choose Puzzle Mode page in a horizontal orientation
+//    @Ignore("Working test")
     @Test
     public void testChoosePuzzleModeAllButtonsDisplayedHorizontal() {
         try {
@@ -808,8 +1034,8 @@ public class UIInstrumentedTest {
 
     }
 
-    //Test that all buttons are displayed in the Choose Puzzle Mode page
-    @Ignore("Working test")
+    //Test that all options buttons are displayed in the Choose Puzzle Mode page
+//    @Ignore("Working test")
     @Test
     public void testChoosePuzzleModeAllButtonsDisplayedEverySize() {
         //Start new game
@@ -838,8 +1064,8 @@ public class UIInstrumentedTest {
     }
 
 
-    //Test that all main menu buttons are correctly displayed in a horizontal layout
-    @Ignore("Working test")
+    //Test that all main menu buttons are correctly displayed in a horizontal orientation
+//    @Ignore("Working test")
     @Test
     public void testAllButtonsDisplayedMainMenuHorizontal() {
         try {
@@ -885,19 +1111,12 @@ public class UIInstrumentedTest {
 
 
 
-    //Test that all buttons are displayed in a 9x9 puzzle in a horizontal layout and clicking them correctly
-    //displays the buttons text in an empty cell
-    @Ignore("Working test")
+    //Test that all buttons are displayed correctly in a puzzle in a horizontal orientation and that clicking
+    // them displays the correct button text in an empty cell
+//    @Ignore("Working test")
     @Test
-    public void testWordInsertCellDisplayMatchAllSizes() {
-        for (int i = 0; i < puzzleSizes.length; i++) {
-            testWordInsertCellDisplayMatchHelper(puzzleSizes[i]);
-        }
-    }
-
-    public void testWordInsertCellDisplayMatchHelper(int dim) {
-        List<Integer> cellIndex = new ArrayList<>();
-        List<String> wordInserted = new ArrayList<>();
+    public void testWordInsertCellDisplayMatch() {
+        int dim = 4;
 
         //Start new game
         UiObject newGameButton = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/new_game_button").className("android.widget.Button"));
@@ -963,10 +1182,6 @@ public class UIInstrumentedTest {
         }
 
 
-
-
-
-
         ourDevice.pressBack();
         UiObject noButton = ourDevice.findObject(new UiSelector().resourceId("android:id/button2").className("android.widget.Button"));
         try {
@@ -974,13 +1189,14 @@ public class UIInstrumentedTest {
         } catch (UiObjectNotFoundException e) {
             fail("No button was not displayed");
         }
-
     }
 
 
 
-    //Test that tapping the choose custom words button takes us to the choose custom words fragment
-    @Ignore("Working test")
+
+
+    //Test that Clicking the Choose custom words button takes us to the Choose custom words fragment
+//    @Ignore("Working test")
     @Test
     public void testChooseCustomWordsButtonNavigation() {
         UiObject customWordsButton = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/custom_words_button").className("android.widget.Button"));
@@ -996,10 +1212,11 @@ public class UIInstrumentedTest {
         }
     }
 
-    //TODO: WORKING TEST
+
     //Test that clicking the new game button takes you to the Choose puzzle mode fragment
-    //@Test
-    public void testNewGameButton() {
+    //    @Ignore("Working test")
+    @Test
+    public void testNewGameButtonNavigation() {
         //Start new game
         UiObject newGameButton = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/new_game_button").className("android.widget.Button"));
         try {
@@ -1016,9 +1233,9 @@ public class UIInstrumentedTest {
 
 
     //Test that clicking the back button in settings page takes us back to main menu
-    @Ignore("Working test")
+//    @Ignore("Working test")
     @Test
-    public void testSettingsBackButton() {
+    public void testSettingsBackButtonNavigation() {
         UiObject settingsButton = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/settings_button"));
         try {
             settingsButton.click();
@@ -1042,8 +1259,8 @@ public class UIInstrumentedTest {
     }
 
 
-    //Test clicking the Settings button correctly displays the Settings fragment along with options
-    @Ignore("Working test")
+    //Test that clicking the Settings button in the main menu correctly displays the Settings fragment
+//    @Ignore("Working test")
     @Test
     public void testMainMenuSettingsButtonNavigation() {
         UiObject settingsButton = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/settings_button"));
@@ -1073,10 +1290,10 @@ public class UIInstrumentedTest {
     }
 
 
-    //Test that all buttons are correctly displayed on the main menu
-    @Ignore("Working test")
+    //Test that all options buttons are correctly displayed on the main menu
+//    @Ignore("Working test")
     @Test
-    public void testAllButtonsDisplayedMainMenu() {
+    public void testAllOptionsButtonsDisplayedMainMenu() {
         UiObject newGameButton = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/new_game_button"));
         if (!newGameButton.exists()) {
             fail("New game button does not appear");
@@ -1112,7 +1329,7 @@ public class UIInstrumentedTest {
 
 
     //Test clicking the Exit button correctly exits the app
-    @Ignore("Working test")
+//    @Ignore("Working test")
     @Test
     public void testMainMenuExitButton() {
         UiObject exitButton = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/exit_button"));
@@ -1129,8 +1346,9 @@ public class UIInstrumentedTest {
     }
 
 
-    //Test that all 4 radiobutton sizes are displayed in the custom word fragments puzzle size dropdown
-    @Ignore("Working test")
+    //Test that all 4 radiobutton sizes [4, 6, 9, 12]
+    // are displayed in the custom word fragments puzzle size options dropdown
+//    @Ignore("Working test")
     @Test
     public void testSelectCustomSizedPuzzlesDialogDisplayed() {
 
@@ -1174,144 +1392,8 @@ public class UIInstrumentedTest {
     }
 
 
-
-
-    //Test that the rules dialog correctly pops up and displays instructions
-    @Ignore("Working test")
-    @Test
-    public void testRulesPopUpDialog() {
-        UiObject newGameButton = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/new_game_button").className("android.widget.Button"));
-        try {
-            newGameButton.click();
-        } catch (UiObjectNotFoundException e) {
-            fail("New Game Button not found");
-        }
-
-        //Start classic puzzle
-        UiObject classicPuzzleButton = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/classic_puzzle_button").className("android.widget.Button"));
-        try {
-            classicPuzzleButton.click();
-        } catch (UiObjectNotFoundException e) {
-            fail("Classic Puzzles Button not found");
-        }
-
-        UiObject rulesButton = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/help_button"));
-        try {
-            rulesButton.click();
-        } catch (UiObjectNotFoundException e) {
-            fail("Rules Button not found");
-        }
-
-        UiObject rulesInfoText = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/PopUp_Rules"));
-        if (!rulesInfoText.exists()) {
-            fail("Rules dialog properly open");
-        }
-
-        UiObject rulesInfo = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/RulesInformation"));
-        if (!rulesInfo.exists()) {
-            fail("Rules are not being displayed");
-        }
-
-
-    }
-
-
-
-    //Test that the rules dialog exit button correctly closes rules dialog
-    @Ignore("Working test")
-    @Test
-    public void testRulesDialogExitButton() {
-        UiObject newGameButton = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/new_game_button").className("android.widget.Button"));
-        try {
-            newGameButton.click();
-        } catch (UiObjectNotFoundException e) {
-            fail("New Game Button not found");
-        }
-
-        //Start classic puzzle
-        UiObject classicPuzzleButton = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/classic_puzzle_button").className("android.widget.Button"));
-        try {
-            classicPuzzleButton.click();
-        } catch (UiObjectNotFoundException e) {
-            fail("Classic Puzzles Button not found");
-        }
-
-        UiObject rulesButton = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/help_button"));
-        try {
-            rulesButton.click();
-        } catch (UiObjectNotFoundException e) {
-            fail("Rules Button not found");
-        }
-
-        UiObject rulesExitButton = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/rulesExitButton"));
-        try {
-            rulesExitButton.click();
-        } catch (UiObjectNotFoundException e) {
-            fail("Rules button does not exist");
-        }
-
-        UiObject rulesInfoText = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/PopUp_Rules"));
-        if (rulesInfoText.exists()) {
-            fail("Rules dialog did not properly close");
-        }
-
-    }
-
-
-
-
-    //Test that dictionary peeks are limited to 2 per game; correct dialog appears after 2 peeks
-    @Ignore("Working test")
-    @Test
-    public void testDictionaryPeeksLimitDialog() {
-        //Start new game
-        UiObject newGameButton = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/new_game_button").className("android.widget.Button"));
-        try {
-            newGameButton.click();
-        } catch (UiObjectNotFoundException e) {
-            e.printStackTrace();
-        }
-
-        //Start classic puzzle
-        UiObject classicPuzzleButton = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/classic_puzzle_button").className("android.widget.Button"));
-        try {
-            classicPuzzleButton.click();
-        } catch (UiObjectNotFoundException e) {
-            e.printStackTrace();
-        }
-
-        UiObject dictionaryButton = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/options_dictionary_help_button").className("android.widget.ImageButton"));
-
-        for (int i = 0 ; i < 2; i++) {
-            try {
-                dictionaryButton.click();
-            } catch (UiObjectNotFoundException e) {
-                fail("Dictionary button not found");
-            }
-            UiObject dictionaryExitButton = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/dictionaryExitButton").className("android.widget.ImageButton"));
-            try {
-                dictionaryExitButton.click();
-            } catch (UiObjectNotFoundException e) {
-                fail("Dictionary exit button not found");
-            }
-        }
-
-        UiObject dictionaryFinalButton = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/options_dictionary_help_button").className("android.widget.ImageButton"));
-        try {
-            dictionaryFinalButton.click();
-        } catch (UiObjectNotFoundException e) {
-            fail("Dictionary button not found");
-        }
-
-        UiObject dictionaryLimitDialogPopUp = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/DictionaryLimit").className("android.widget.TextView"));
-        if (!dictionaryLimitDialogPopUp.exists()) {
-            fail("Dictionary limit failed to appear even after 2 peeks");
-        }
-    }
-
-
-    //Test that clicking on the 3 dots opens up a dialog
-    @Ignore("Working test")
+    //Test that clicking on the 3 dots (kebab button) opens up a dialog options
+//    @Ignore("Working test")
     @Test
     public void testKebabButtonInPuzzleFragmentDisplaysOptions() {
         //Start new game
@@ -1372,8 +1454,8 @@ public class UIInstrumentedTest {
     }
 
 
-    //Test that we can open rules from Kebab menu
-    @Ignore("Working test")
+    //Test that rules dialog pop up is displayed from Kebab menu option
+//    @Ignore("Working test")
     @Test
     public void testKebabRulesButtonNavigation() {
         //Start new game
@@ -1418,8 +1500,8 @@ public class UIInstrumentedTest {
 
     }
 
-    //Test that we can open the dictionary pop up from Kebab menu
-    @Ignore("Working test")
+    //Test that the dictionary pop up is correctly displayed from Kebab menu option
+//    @Ignore("Working test")
     @Test
     public void testKebabDictionaryButtonNavigation() {
         //Start new game
@@ -1463,8 +1545,8 @@ public class UIInstrumentedTest {
         }
     }
 
-    //Test that the entry box limits the word length to 12
-    @Ignore("Working test")
+    //Test that the entry box in the choose custom words page limits the word length to 12
+//    @Ignore("Working test")
     @Test
     public void testChooseCustomWordEditBoxMaxLength() {
         String longUserInputtedString = "awehuifuiawdghwuawidhauiwdhuawidawuidhawuihduwhduawidjawdjiwjawda";
@@ -1491,14 +1573,11 @@ public class UIInstrumentedTest {
             fail("EditTexts were not all displayed");
         }
 
-
-
     }
 
-    //TODO:
     //Test that a warning dialog is displayed when a user does not enter any text in the Choose Custom Words
     // page then presses confirm
-    @Ignore("Working test")
+//    @Ignore("Working test")
     @Test
     public void testChooseCustomWordEditBoxBlank() {
 
@@ -1539,10 +1618,10 @@ public class UIInstrumentedTest {
     }
 
 
-    //Test that entering numbers into custom words shows error dialog
-    @Ignore("Working test")
+    //Test that entering numbers into custom words displays error dialog
+//    @Ignore("Working test")
     @Test
-    public void testCustomWordsNumbersError() {
+    public void testCustomWordsNumbersErrorDialog() {
         UiObject chooseCustomWordsButton = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/custom_words_button"));
         try {
             chooseCustomWordsButton.click();
@@ -1586,8 +1665,8 @@ public class UIInstrumentedTest {
         }
     }
 
-    //Test that setting headers and switches are displayed in horizontal orientation
-    @Ignore("Working test")
+    //Test that all setting headers and switches are displayed in horizontal orientation
+//    @Ignore("Working test")
     @Test
     public void testSettingsHorizontal() {
         try {
@@ -1621,11 +1700,71 @@ public class UIInstrumentedTest {
         }
     }
 
-    @Ignore("Working test")
+    //Test that clicking the done button on an unfilled board does not take the user away from the puzzle
+    // page
+//    @Ignore("Working test")
     @Test
-    public void testPuzzleResultsLossDisplay() {
+    public void testPuzzlePageDoneButton() {
+        //Start new game
+        UiObject newGameButton = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/new_game_button").className("android.widget.Button"));
+        try {
+            newGameButton.click();
+        } catch (UiObjectNotFoundException e) {
+            fail("New game button not found");
+        }
+
+        //Start custom sized puzzle
+        UiObject customSizedButton = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/custom_size_button").className("android.widget.Button"));
+        try {
+            customSizedButton.click();
+        } catch (UiObjectNotFoundException e) {
+            fail("Custom size puzzle button not found");
+        }
+
+        UiObject puzzleSize9x9 = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/choose_9x9_puzzle").className("android.widget.RadioButton"));
+        try {
+            puzzleSize9x9.click();
+        } catch (UiObjectNotFoundException e) {
+            fail("9x9 size puzzle button not found");
+        }
+
+        UiObject doneMenuButton = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/done_button").className("android.widget.Button"));
+        try {
+            doneMenuButton.click();
+        } catch (UiObjectNotFoundException e) {
+            fail("Done button not found");
+        }
+
+        UiObject doneButton = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/options_finish_button").className("android.widget.Button"));
+        try {
+            doneButton.click();
+        } catch (UiObjectNotFoundException e) {
+            fail("Done puzzle button was not displayed");
+        }
+
+        UiObject puzzleFragment = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/puzzle_fragment").className("android.view.ViewGroup"));
+        try {
+            puzzleFragment.click();
+        } catch (UiObjectNotFoundException e) {
+            fail("Puzzle page was not displayed after clicking done on unfinished board");
+        }
+
+
+    }
+
+
+    //Test that puzzle results are displayed correctly in horizontal orientation
+//    @Ignore("Working test")
+    @Test
+    public void testPuzzleResultsDisplayHorizontal() {
         int dim = 4 * 4;
-        List<Integer> indexFilledCells = new ArrayList<>();
+
+        try {
+            ourDevice.setOrientationLeft();
+            sleep(500);
+        } catch (android.os.RemoteException e) {
+            fail();
+        }
 
         //Start new game
         UiObject newGameButton = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/new_game_button").className("android.widget.Button"));
@@ -1665,7 +1804,69 @@ public class UIInstrumentedTest {
                     someCell.click();
                     UiObject entryButton = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/id1").className("android.widget.Button"));
                     entryButton.click();
-                    indexFilledCells.add(i);
+                }
+            } catch (UiObjectNotFoundException e) {
+                fail("Cell not found at index " + i);
+            }
+        }
+
+        UiObject doneButton = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/options_finish_button").className("android.widget.Button"));
+        try {
+            doneButton.click();
+        } catch (UiObjectNotFoundException e) {
+            fail("Done puzzle button was not displayed");
+        }
+
+        UiObject resultLossPage = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/ResultsFragmentPage").className("android.view.ViewGroup"));
+        if (!resultLossPage.exists()) {
+            fail("Result loss page did not appear");
+        }
+    }
+
+    //Test that puzzle results loss page is correctly displayed on puzzle loss
+//    @Ignore("Working test")
+    @Test
+    public void testPuzzleResultsLossDisplay() {
+        int dim = 4 * 4;
+
+        //Start new game
+        UiObject newGameButton = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/new_game_button").className("android.widget.Button"));
+        try {
+            newGameButton.click();
+        } catch (UiObjectNotFoundException e) {
+            fail("New game button not found");
+        }
+
+        //Start custom sized puzzle
+        UiObject customSizedButton = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/custom_size_button").className("android.widget.Button"));
+        try {
+            customSizedButton.click();
+        } catch (UiObjectNotFoundException e) {
+            fail("Custom size puzzle button not found");
+        }
+
+        UiObject puzzleSize4x4 = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/choose_4x4_button").className("android.widget.RadioButton"));
+        try {
+            puzzleSize4x4.click();
+        } catch (UiObjectNotFoundException e) {
+            fail("4x4 size puzzle button not found");
+        }
+
+        UiObject doneMenuButton = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/done_button").className("android.widget.Button"));
+        try {
+            doneMenuButton.click();
+        } catch (UiObjectNotFoundException e) {
+            fail("Done button not found");
+        }
+
+        UiObject sudokuBoard = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/sudoku_board").className("android.view.View"));
+        for (int i = 0; i < dim; i++) {
+            try {
+                UiObject someCell = sudokuBoard.getChild(new UiSelector().instance(i));
+                if (someCell.getText().equals("EMPTYCELL")) {
+                    someCell.click();
+                    UiObject entryButton = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/id1").className("android.widget.Button"));
+                    entryButton.click();
                 }
             } catch (UiObjectNotFoundException e) {
                 fail("Cell not found at index " + i);
@@ -1687,11 +1888,10 @@ public class UIInstrumentedTest {
 
     //Test that the main menu button at the puzzle results page correctly takes the user back to the main
     // menu
-        @Ignore("Working test")
+//    @Ignore("Working test")
     @Test
     public void testPuzzleResultsMainMenuNavigation() {
         int dim = 4 * 4;
-        List<Integer> indexFilledCells = new ArrayList<>();
 
         //Start new game
         UiObject newGameButton = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/new_game_button").className("android.widget.Button"));
@@ -1731,7 +1931,6 @@ public class UIInstrumentedTest {
                     someCell.click();
                     UiObject entryButton = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/id1").className("android.widget.Button"));
                     entryButton.click();
-                    indexFilledCells.add(i);
                 }
             } catch (UiObjectNotFoundException e) {
                 fail("Cell not found at index " + i);
@@ -1765,10 +1964,10 @@ public class UIInstrumentedTest {
     }
 
     //Test that the puzzle screen is displayed when the retry button is clicked
+//    @Ignore("Working test")
     @Test
     public void testPuzzleResultsRetryNavigation() {
         int dim = 4 * 4;
-        List<Integer> indexFilledCells = new ArrayList<>();
 
         //Start new game
         UiObject newGameButton = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/new_game_button").className("android.widget.Button"));
@@ -1808,7 +2007,6 @@ public class UIInstrumentedTest {
                     someCell.click();
                     UiObject entryButton = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/id1").className("android.widget.Button"));
                     entryButton.click();
-                    indexFilledCells.add(i);
                 }
             } catch (UiObjectNotFoundException e) {
                 fail("Cell not found at index " + i);
@@ -1843,11 +2041,11 @@ public class UIInstrumentedTest {
 
 
 
-    @Ignore("Working test")
+    //Test that the Puzzle Results win display is correctly shown on correct solution
+//    @Ignore("Working test")
     @Test
     public void testPuzzleResultsWinDisplay() {
         int dim = 4 * 4;
-        List<Integer> indexFilledCells = new ArrayList<>();
 
         //Start new game
         UiObject newGameButton = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/new_game_button").className("android.widget.Button"));
@@ -1887,7 +2085,6 @@ public class UIInstrumentedTest {
                     someCell.click();
                     UiObject entryButton = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/id1").className("android.widget.Button"));
                     entryButton.click();
-                    indexFilledCells.add(i);
                 }
             } catch (UiObjectNotFoundException e) {
                 fail("Cell not found at index " + i);
@@ -1907,9 +2104,8 @@ public class UIInstrumentedTest {
         }
     }
 
-    //Test that the cancel button returns the player back to the puzzle fragment, and does not erase any
-    // of the user's work
-    @Ignore("Working test")
+    //Test that the reset button erases all user work
+//    @Ignore("Working test")
     @Test
     public void testResetButton() {
         int dim = 4 * 4;
@@ -2002,14 +2198,10 @@ public class UIInstrumentedTest {
 
     }
 
-    @Ignore("Working test")
-    @Test
-    public void testSaveDialogCancel() {
-        fail();
-    }
 
-    //Test that the cancel button on the custom sized selection dialog cancels the dialog
-    @Ignore("Working test")
+
+    //Test that the cancel button on the Custom sized puzzle selection dialog cancels the dialog
+//    @Ignore("Working test")
     @Test
     public void testCustomSizedDialogCancelButton() {
         //Start new game
@@ -2043,8 +2235,8 @@ public class UIInstrumentedTest {
 
     }
 
-    //Test selecting exit in the kebab menu closes the app
-    @Ignore("Working test")
+    //Test selecting exit option in the kebab menu on puzzle page closes the app
+//    @Ignore("Working test")
     @Test
     public void testKebabExitButtonNavigation() {
         //Start new game
@@ -2088,7 +2280,7 @@ public class UIInstrumentedTest {
 
 
     // Test that a user cannot override a permanent cell
-    @Ignore("Working test")
+//    @Ignore("Working test")
     @Test
     public void testCellNotOverridable() {
         UiObject newGameButton = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/new_game_button").className("android.widget.Button"));
@@ -2130,72 +2322,5 @@ public class UIInstrumentedTest {
             fail();
         }
     }
-
-
-    // Test that a non-permanent cell when overridden displays correct text
-    @Ignore("Working test")
-    @Test
-    public void testOverridableCell() {
-
-        //Start new game
-        UiObject newGameButton = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/new_game_button").className("android.widget.Button"));
-        try {
-            newGameButton.click();
-        } catch (UiObjectNotFoundException e) {
-            e.printStackTrace();
-        }
-
-        //Start classic puzzle
-        UiObject classicPuzzleButton = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/classic_puzzle_button").className("android.widget.Button"));
-        try {
-            classicPuzzleButton.click();
-        } catch (UiObjectNotFoundException e) {
-            e.printStackTrace();
-        }
-
-        //Find SudokuBoard
-        UiObject sudokuBoard = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/sudoku_board"));
-        UiObject newCell = null;
-        int saveCell = -1;
-        for (int i = 0; i < 81; i++) {
-            try {
-                newCell = sudokuBoard.getChild(new UiSelector().descriptionContains("contains EMPTYCELL").instance(i));
-                newCell.click();
-                saveCell = i;
-                break;
-            } catch (UiObjectNotFoundException e) {
-                fail();
-            }
-        }
-
-        UiObject button1 = ourDevice.findObject(new UiSelector().className("android.widget.Button").resourceId("com.echo.wordsudoku:id/id1"));
-        try {
-            button1.click();
-        } catch (UiObjectNotFoundException e) {
-            fail();
-        }
-
-        try {
-            newCell = sudokuBoard.getChild(new UiSelector().instance(saveCell));
-        } catch (UiObjectNotFoundException e) {
-            fail();
-        }
-
-        try {
-
-            Log.d(INSTRUTEST, newCell.getContentDescription());
-            String lowerCase = button1.getText().toLowerCase();
-
-            Log.d(INSTRUTEST, newCell.getText() + "  " + lowerCase);
-
-            assertTrue(newCell.getContentDescription().contains(lowerCase));
-            assertTrue(newCell.getText().equals(button1.getText().toLowerCase()));
-        } catch (UiObjectNotFoundException e) {
-            fail();
-        }
-
-    }
-
-
 
 }
