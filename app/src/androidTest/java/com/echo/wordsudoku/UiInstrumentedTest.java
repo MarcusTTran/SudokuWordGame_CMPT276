@@ -359,7 +359,7 @@ public class UiInstrumentedTest {
     //Check that the puzzle page displays all necessary buttons and TextViews to the user
 //    @Ignore("Working test")
     @Test
-    public void testPuzzlePageDisplay() {
+    public void testPuzzlePageDisplayAllPuzzleSizes() {
         for (int i = 0; i < puzzleSizes.length; i++) {
             testPuzzlePageDisplayHelper(puzzleSizes[i]);
         }
@@ -481,7 +481,7 @@ public class UiInstrumentedTest {
     //Test that the puzzle page displays all necessary buttons and TextViews to the user
 //    @Ignore("Working test")
     @Test
-    public void testPuzzlePageDisplayHorizontalEverySizes() {
+    public void testPuzzlePageDisplayHorizontalAllPuzzleSizes() {
         try {
             ourDevice.setOrientationLeft();
             ourDevice.waitForWindowUpdate(null, 3000);
