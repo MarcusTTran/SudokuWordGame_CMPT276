@@ -314,7 +314,7 @@
 
 <img src="https://i.imgur.com/64mM4mI.png"  width="24%">
 <img src="https://i.imgur.com/nQOfGwS.png"  width="24%">
-<img src="https://i.imgur.com/aZd6vRM.png"  width="24%">
+<img src="https://i.imgur.com/YLjnfoH.png"  width="24%">
 <br>
 <img src="https://i.imgur.com/s0BxF1Y.png"  width="24%">
 <img src="https://i.imgur.com/I9ncbb5.png"  width="40%">
@@ -332,6 +332,8 @@
 
 - <b>{+IMPLEMENTED: +}</b>  As a French teacher of elementary and junior high school children, I want scaled versions of Sudoku that use 4x4 and 6x6 grids. In the 6x6 grid version, the overall grid should be divided into rectangles of six cells each (2x3 or 3x2).
 
+- <b>{+IMPLEMENTED: +}</b>  As a French teacher in highschool, I want to be able to select the difficulty of my puzzles so I can give easier on harder puzzles depending on the age and grade of my students.
+
 
 <h3>TDD</h3>
 
@@ -339,34 +341,52 @@
 
   <img src="https://i.imgur.com/KPEncKC.png"  width="24%">
   <img src="https://i.imgur.com/JjrfkKm.png"  width="24%">
-  <img src="https://i.imgur.com/wooUQd3.png"  width="24%">
-  <img src="https://i.imgur.com/kpZzWsE.png"  width="24%">
+  <img src="https://i.imgur.com/OHorbGu.png"  width="24%">
+  <img src="https://i.imgur.com/Gf5A7Db.png"  width="24%">
   <br>
 
 1. <i>Teacher clicks CUSTOM WORDS button to change game settings</i>
 
 2. <i>Teacher selects the puzzle size they wish to enter custom words into.</i>
 
-3. <i>Teacher enters the words for this custom puzzle and taps SET WORDS.</i>
+3. <i>Teacher enters the words for this custom puzzle and taps CONFIRM.</i>
 
-4. <i>After setting the words, the Teacher is shown a confirmation dialog to build the custom puzzle.</i>
+4. <i>The teacher is then brought to the custom puzzle page where his puzzle is displayed.</i>
    <br>
 
 - <b>{+IMPLEMENTED: +}</b>  In the main menu screen of the app, when the user clicks on the “new game” button, they will be taken to an options page where they can choose the difficulty of the puzzles as well as a “custom” difficulty where they can create sudoku puzzles of size 4x4 and 6x6.
 
-<img src="https://i.imgur.com/jfoLga8.jpg"  width="24%">
-<img src="https://i.imgur.com/TotOYKH.jpg"  width="24%">
-<img src="https://i.imgur.com/STUXsQq.jpg"  width="24%">
+<img src="https://i.imgur.com/iT7c5yX.png"  width="24%">
+<img src="https://i.imgur.com/nQOfGwS.png"  width="24%">
+<img src="https://i.imgur.com/aZd6vRM.png"  width="24%">
 <br>
 
 1. <i>In the main menu screen, the user taps on New Game.</i>
 
-2. <i>A Choose difficulty menu appears, and the user can tap on custom difficulty.</i>
+2. <i>User clicks the Custom Sized button.</i>
 
-3. <i>User enters 6 into both the row and column in order to make a 6x6 sudoku puzzle.</i>
+3. <i>User can select to create 4x4 and 6x6 puzzles.</i>
    <br>
 
-- <b>{+IMPLEMENTED: +}</b>  When the user taps on the “custom” difficulty button they will brought to a screen that asks the user to enter the dimension of the "custom" difficulty puzzle. Users can create custom sized puzzle with rows and columns of any value between 1 and 12, which is noted in the entry boxes. A button located at the bottom of the screen will say “Start Game”. When the user taps this after entering valid dimensions for the sudoku board, it will start the game. If incorrect values are entered, it will prompt the user to retry through a pop-up message.
+
+- <b>{+IMPLEMENTED: +}</b>  In the main menu screen of the app, when the user clicks on the SETTINGS button, they will be taken to an SETTINGS page where they can choose the difficulty of the puzzle generated. Once the difficulty has been set, any newly created puzzles will be generated to use the difficulty set.
+
+<img src="https://i.imgur.com/WVdCjEl.png"  width="24%">
+<img src="https://i.imgur.com/yl0gyjt.png"  width="24%">
+<img src="https://i.imgur.com/ZxGkgjm.png"  width="24%">
+<img src="https://i.imgur.com/bFbUQ9f.png"  width="24%">
+<br>
+
+1. <i>In the main menu screen, the user taps the SETTINGS button.</i>
+
+2. <i>User taps difficulty.</i>
+
+3. <i>User the user sets the difficulty of the puzzles.</i>
+
+4. <i>The difficulty is displayed on the puzzle page.</i>
+   <br>
+
+<!-- - <b>{+IMPLEMENTED: +}</b>  When the user taps on the “custom” difficulty button they will brought to a screen that asks the user to enter the dimension of the "custom" difficulty puzzle. Users can create custom sized puzzle with rows and columns of any value between 1 and 12, which is noted in the entry boxes. A button located at the bottom of the screen will say “Start Game”. When the user taps this after entering valid dimensions for the sudoku board, it will start the game. If incorrect values are entered, it will prompt the user to retry through a pop-up message.
 
 
 <img src="https://i.imgur.com/TotOYKH.jpg"  width="24%">
@@ -387,4 +407,4 @@
 4. <i>The puzzle screen if the user taps on start game after deciding to create a 6x6 sudoku board.</i>
 
 5. <i>The puzzle screen if the user taps on start game after deciding to create a 4x4 sudoku board.</i>
-   <br>
+   <br> -->
