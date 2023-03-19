@@ -70,7 +70,7 @@ public class PuzzleViewModel extends ViewModel {
         this.mWordPairJsonReader = wordPairJsonReader;
     }
     public void newPuzzle(int puzzleSize, int boardLanguage, int difficulty) throws JSONException, IllegalLanguageException, TooBigNumberException, NegativeNumberException, IllegalWordPairException, IllegalDimensionException {
-       setPuzzle(new Puzzle(mWordPairJsonReader.getRandomWords(puzzleSize),puzzleSize,boardLanguage,-1,difficulty));
+       setPuzzle(new Puzzle(mWordPairJsonReader.getRandomWords(puzzleSize),puzzleSize,boardLanguage,Puzzle.NO_NUMBER_OF_START_CELLS_USE_DIFFICULTY,difficulty));
     }
 
     public void newCustomPuzzle(int puzzleLanguage, int difficulty) throws IllegalLanguageException, TooBigNumberException, NegativeNumberException, IllegalWordPairException, IllegalDimensionException {

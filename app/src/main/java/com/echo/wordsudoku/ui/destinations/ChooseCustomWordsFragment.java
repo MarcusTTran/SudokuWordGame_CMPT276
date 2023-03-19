@@ -194,7 +194,11 @@ public class ChooseCustomWordsFragment extends Fragment{
 
                     //Set the PuzzleViewModel to store the WordPair list we made
                     mPuzzleViewModel.setCustomWordPairs(userEnteredWordList);
-                    mPuzzleViewModel.newCustomPuzzle(mSettingsViewModel.getPuzzleLanguage().getValue(), mSettingsViewModel.getDifficulty());
+                    try {
+                        mPuzzleViewModel.newCustomPuzzle(mSettingsViewModel.getPuzzleLanguage().getValue(), mSettingsViewModel.getDifficulty());
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
 
                     Navigation.findNavController(root).navigate(R.id.startCustomPuzzleAction);
                     //Toast.makeText(getContext(), "Words for Custom Puzzle have been successfully set.", Toast.LENGTH_LONG).show();
