@@ -127,5 +127,7 @@ tous vos mots en vedette. Mais rappelez-vous, vous ne pouvez accéder à cette t
     <string name="button_clear_custom_words">Clair</string>
     <string name="error_custom_words_msg">Veuillez remplir toutes les cases de saisie et vous assurer que les mots ne contiennent que des caractères !</string>
     <string name="error">Erreur</string>
+    <string name="blank">blanc</string>
+    <string name="ok">OK</string>
 
 </resources>
