@@ -279,6 +279,8 @@
 
 - <b>{+IMPLEMENTED: +}</b>  As an advanced language learner who wants an extra challenging mode, I want a 12x12 version of Sudoku to play on my tablet. The overall grid should be divided into rectangles of 12 cells each (3x4 or 4x3).
 
+- <b>{+IMPLEMENTED: +}</b>  As an advanced language learner who lives an active life, I want the app to auto-save my work so that I don't have to worry about manually saving my progress as I go about my day.
+
 
 <h3>TDD</h3>
 
@@ -326,6 +328,35 @@
 
 2. <i>The 12x12 sudoku game in landscape mode on a tablet.</i>
 
+- <b>{+IMPLEMENTED: +}</b>  If the user goes to the SETTINGS page, they can tap on the Auto-Save switch to turn on the auto-save feature. Once the Auto-Save feature has been turned on, the user can exit their puzzles from the kebab menu EXIT option in the puzzle page and later load in the saved puzzle without needing to manually save their progress.
+  <br>
+
+<img src="https://i.imgur.com/f1vZdWD.png"  width="24%">
+<img src="https://i.imgur.com/YgKCwmr.png"  width="24%">
+<img src="https://i.imgur.com/Fsr2JlZ.png"  width="24%">
+<br>
+<br>
+
+1. <i>The user taps on the SETTINGS button.</i>
+
+2. <i>The Auto-Save feature can be turned on with toggle.</i>
+
+3. <i>The Auto-Save feature has been turned on.</i>
+
+<br>
+<img src="https://i.imgur.com/ATwxv4b.png"  width="24%">
+<img src="https://i.imgur.com/jpEqWxJ.png"  width="24%">
+<img src="https://i.imgur.com/llwsvwC.png"  width="24%">
+<img src="https://i.imgur.com/SHoVpsm.png"  width="24%">
+<br>
+
+4. <i>The user taps on the kebab menu to open navigation options.</i>
+
+5. <i>The user taps on Exit to exit the app.</i>
+
+6. <i>The user opens the app again and taps Load Saved Game.</i>
+
+7. <i>The user's saved game is loaded along with their progress.</i>
 
 <h2>French teacher:</h2>
 <h3>User Story</h3>
