@@ -20,6 +20,8 @@
 <b><b>{+Iteration 3 quick list of implemented features: +}</b> </b><br/>
 - Create puzzles of sizes of 4x4, 6x6, 12x12
 - 4x4, 6x6, 12x12 puzzles are randomly generated
+- App supports layouts for tablets
+- App supports layouts for horizontal orientation
 - Set difficulty of puzzles
 - Create puzzles with user entered words
 - Save current puzzle and load puzzle to allow users to continue where they left off
@@ -28,7 +30,7 @@
 - Auto-save puzzles
 - Kebab menu on puzzle page for quick app navigation
 - Load in user entered words on custom words page for quick modifications
-- App supports layouts for tablets
+
 
 
 <h1>User Stories and TDDs:</h1>
