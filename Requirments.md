@@ -112,11 +112,11 @@
 4. <i>Their previous game is loaded in </i>
    <br/>
 
-- Alternatively the user can select the kebab button on the puzzle page to open a menu which they can use to save their puzzle progress.
+- Alternatively the user can select the kebab button on the puzzle page to open a menu which they can use to save their puzzle progress while still remaining on the puzzle page
 
 <img src="https://i.imgur.com/57HNdBU.png"  width="24%">
 <img src="https://i.imgur.com/A7Wt8Hb.png"  width="24%">
-
+<img src="https://i.imgur.com/wVXBJla.png"  width="24%">
 <br/>
 <br/>
 
@@ -124,29 +124,28 @@
 
 - <b>{+IMPLEMENTED: +}</b>  When the user enables the timer option in the settings page of the app, the puzzle-solving screen should feature a timer on at the top right corner of the screen. The timer must count the number of minutes and seconds users have spent on the puzzle. The timer must pause when users exit the app or close the app and resumes when users resume their puzzle. The timer ends when users complete the puzzle or quit the puzzle and the time spent on the puzzle is displayed in a pop-up at the end of the game.
 
-<img src="https://i.imgur.com/3koBafM.png"  width="24%">
-<img src="https://i.imgur.com/Gjmt42C.png"  width="24%">
-<img src="https://i.imgur.com/8VetPzl.png"  width="24%">
-<img src="https://i.imgur.com/ocrFfrw.png"  width="24%">
+<img src="https://i.imgur.com/YV9CtSK.png"  width="24%">
+<img src="https://i.imgur.com/SUhOOsG.png"  width="24%">
+<img src="https://i.imgur.com/baIr7R2.png"  width="24%">
 <br/>
 
-1. <i>User taps OPTIONS to modify the game settings.</i>
+1. <i>User taps OPTIONS button to modify the game settings.</i>
 
-2. <i>User taps TIMER to go to timer settings.</i>
+2. <i>User turns the timer on by selecting ON.</i>
 
-3. <i>User turns the timer on by selecting ON.</i>
-
-4. <i>With the timer on, they can see their current game's time.</i>
+3. <i>With the timer on, they can see their current game's time.</i>
    <br/>
-   When the user saves the game and exits to the main menu, the timer should be stopped.
+   When the user saves the game and exits to the main menu, the timer stops.
    <br/>
-   <img src="https://i.imgur.com/pMiPllg.png"  width="24%">
-   <img src="https://i.imgur.com/3hClUkd.png"  width="24%">
+   <img src="https://i.imgur.com/RmQw1aR.png"  width="24%">
+   <img src="https://i.imgur.com/KeBt9Tn.png"  width="24%">
+   <img src="https://i.imgur.com/0MQk7Gf.png"  width="24%">
+   <img src="https://i.imgur.com/35Yc7h2.png"  width="24%">
    <br/>
 
 1. <i>When the user saves current game and exits to main menu, the timer should be stopped.</i>
 
-2. <i>If the user finishes the puzzle fast and sets a new record they will be prompted at the end of the game.</i>
+2. <i>Loading the saved game will continue their timer where they left off.</i>
    <br/>
    <h2>Beginner Language Learners:</h2>
    <h3>User Story</h3>
@@ -206,21 +205,21 @@
 
 <h3>TDD</h3>
 
-- <b>To Be Implemented: </b> In the OPTIONS menu, there should be a button called “Language” that allows the user to select the app's UI language. Menu options and pieces of text on-screen should turn to the selected language except for the word pairs involved in the puzzle.
+- <b>{+IMPLEMENTED: +}</b> If the user goes to the SETTINGS menu, they click on the “Set UI Immersion” button to change the app's UI language to either French or English. 
 
-<img src="https://i.imgur.com/3koBafM.png"  width="24%">
-<img src="https://i.imgur.com/UPxFYa3.png"  width="24%">
-<img src="https://i.imgur.com/enQcz7L.png"  width="24%">
-<img src="https://i.imgur.com/ISWEM7s.png"  width="24%">
+<img src="https://i.imgur.com/YV9CtSK.png"  width="24%">
+<img src="https://i.imgur.com/Bzk8wh6.png"  width="24%">
+<img src="https://i.imgur.com/SB5mFcd.png"  width="24%">
+<img src="https://i.imgur.com/Jk37Zy1.png"  width="24%">
 <br/>
 
-1. <i>User taps the OPTIONS button to change game settings.</i>
+1. <i>User taps the SETTINGS button to change game settings.</i>
 
-2. <i>User clicks LANGUAGE to change the app language.</i>
+2. <i>User clicks SET UI IMMERSION to change the app language.</i>
 
-3. <i>User selects English as the app language.</i>
+3. <i>The App is now in French.</i>
 
-4. <i>User selects French as the app language</i>
+4. <i>The main menu in French</i>
    <br/>
 
 <!--COMMENTED OUT FOR NOW --> <!--COMMENTED OUT FOR NOW --> 
@@ -256,10 +255,10 @@
    <br/>
 
 
-- <b>{+IMPLEMENTED: +}</b>  When the user flips their phone to landscape mode, the game flips accordingly to match their screen orientation. Also, longer words will be displayed in larger font relative to the new screen length. The sudoku grid and the buttons will be moved so that the grid is to the left of the list of words.
+- <b>{+IMPLEMENTED: +}</b>  When the user flips their phone to landscape mode, the game flips accordingly to match their screen orientation. The sudoku board and words are displayed in a larger font in accord to the devices screen size. The sudoku grid and the buttons is moved so that the grid is to the left of the list of words.
 
-<img src="https://i.imgur.com/36AGqWb.jpg"  width="40%">
-<img src="https://i.imgur.com/QpQGDNz.jpg"  width="40%">
+<img src="https://i.imgur.com/TwUixsw.png"  width="40%">
+<img src="https://i.imgur.com/ic2Hde9.png"  width="40%">
 <br>
 
 1. <i>The main menu screen when the device is in landscape mode.</i>
@@ -272,7 +271,7 @@
 <h2>Advanced Language Learners:</h2>
 <h3>User Story</h3>
 
-- <b>To Be Implemented: </b> As an advanced learner, I want to have access to more difficult topic-specific words so that the puzzles can challenge the range of my vocabulary.
+<!-- - <b>To Be Implemented: </b> As an advanced learner, I want to have access to more difficult topic-specific words so that the puzzles can challenge the range of my vocabulary. -->
 
 - <b>{+IMPLEMENTED: +}</b>  As a vocabulary learner practicing at home, I want to use my tablet for Sudoku vocabulary practice so that the words will be conveniently displayed in larger, easier-to-read fonts.
 
@@ -281,7 +280,7 @@
 
 <h3>TDD</h3>
 
-- <b>To Be Implemented: </b> When a user selects a difficulty level that is 'medium' or higher, the user can select whether subsequent puzzles are generated from random or themed (topic-specific) word pairs.
+<!-- - <b>To Be Implemented: </b> When a user selects a difficulty level that is 'medium' or higher, the user can select whether subsequent puzzles are generated from random or themed (topic-specific) word pairs.
 <br>
   <img src="https://i.imgur.com/3koBafM.png"  width="24%">
   <img src="https://i.imgur.com/DXoRdSe.png"  width="24%">
@@ -296,16 +295,16 @@
 3. <i>User can select the difficulty on a scale of 1 (Easy) to 5 (Hard).</i>
 
 4. <i>Users can set the puzzles to the THEMED mode for more difficulty. </i>
-   <br/>
+   <br/> -->
 
 
 - <b>{+IMPLEMENTED: +}</b>  If a user loads the app on a larger screen, such as a tablet, the puzzle will be scaled to fit the screen. If the tablet is twice as large as a phone in measurements, the sudoku grid will be twice the area. Consequently, the font of the words and the buttons will also be scaled in size accordingly, allowing for increased clarity.
 <br>
-  <img src="https://i.imgur.com/ZDYIsy0.jpg"  width="24%">
-  <img src="https://i.imgur.com/T6EgU4U.jpg"  width="40%">
+  <img src="https://i.imgur.com/CHzhZwl.png"  width="30%">
+  <img src="https://i.imgur.com/3JbdrIW.png"  width="40%">
   <br>
 
-1. <i>User creates a custom 12x12 sudoku game while on a tablet in portrait mode.</i>
+1. <i>User creates a custom 4x4 sudoku game while on a tablet in portrait mode.</i>
 
 2. <i>User creates a default 9x9 sudoku game while on a tablet in landscape mode.</i>
    <br>
@@ -313,13 +312,12 @@
 - <b>{+IMPLEMENTED: +}</b>  Refer to <i>Language Teacher TDD #3</i> for further explained annotations and instructions on how a user would create this 12x12 sudoku grid.
   <br>
 
-<img src="https://i.imgur.com/jfoLga8.jpg"  width="24%">
-<img src="https://i.imgur.com/TotOYKH.jpg"  width="24%">
-<img src="https://i.imgur.com/wIkaMqN.jpg"  width="24%">
-<img src="https://i.imgur.com/lyS5jEp.png"  width="24%">
+<img src="https://i.imgur.com/64mM4mI.png"  width="24%">
+<img src="https://i.imgur.com/nQOfGwS.png"  width="24%">
+<img src="https://i.imgur.com/aZd6vRM.png"  width="24%">
 <br>
-<img src="https://i.imgur.com/ZDYIsy0.jpg"  width="24%">
-<img src="https://i.imgur.com/vgyC5IU.jpg"  width="40%">
+<img src="https://i.imgur.com/s0BxF1Y.png"  width="24%">
+<img src="https://i.imgur.com/I9ncbb5.png"  width="40%">
 <br>
 
 1. <i>The 12x12 sudoku game in portrait mode on a tablet.</i>
@@ -337,16 +335,17 @@
 
 <h3>TDD</h3>
 
-- <b>To Be Implemented: </b> In the main menu of the app, the user can tap on "options" and then “create custom puzzle” which will prompt the user to enter 9 different English and French word pairs. Then, these word pairs will be used in the next generated puzzle.
-  <img src="https://i.imgur.com/3koBafM.png"  width="24%">
-  <img src="https://i.imgur.com/O9CQEZE.png"  width="24%">
+- <b>{+IMPLEMENTED: +}</b> In the main menu of the app, the user can tap on "options" and then “create custom puzzle” which will prompt the user to enter 9 different English and French word pairs. Then, these word pairs will be used in the next generated puzzle.
+
+  <img src="https://i.imgur.com/KPEncKC.png"  width="24%">
+  <img src="https://i.imgur.com/JjrfkKm.png"  width="24%">
   <img src="https://i.imgur.com/wooUQd3.png"  width="24%">
   <img src="https://i.imgur.com/kpZzWsE.png"  width="24%">
   <br>
 
-1. <i>Teacher clicks OPTIONS button to change game settings</i>
+1. <i>Teacher clicks CUSTOM WORDS button to change game settings</i>
 
-2. <i>Teacher clicks CREATE CUSTOM PUZZLE to build a custom puzzle.</i>
+2. <i>Teacher selects the puzzle size they wish to enter custom words into.</i>
 
 3. <i>Teacher enters the words for this custom puzzle and taps SET WORDS.</i>
 
