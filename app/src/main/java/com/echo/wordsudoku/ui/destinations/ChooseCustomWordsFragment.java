@@ -22,6 +22,11 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
 import com.echo.wordsudoku.R;
+import com.echo.wordsudoku.exceptions.IllegalDimensionException;
+import com.echo.wordsudoku.exceptions.IllegalLanguageException;
+import com.echo.wordsudoku.exceptions.IllegalWordPairException;
+import com.echo.wordsudoku.exceptions.NegativeNumberException;
+import com.echo.wordsudoku.exceptions.TooBigNumberException;
 import com.echo.wordsudoku.models.words.WordPair;
 import com.echo.wordsudoku.ui.SettingsViewModel;
 import com.echo.wordsudoku.ui.puzzleParts.PuzzleViewModel;
@@ -129,37 +134,45 @@ public class ChooseCustomWordsFragment extends Fragment{
         });
 
         Button confirmButton = root.findViewById(R.id.buttonConfirmCustomWords);
-        confirmButton.setOnClickListener(new View.OnClickListener() {
+        //On Confirm button click
+        confirmButton.setOnClickListener(v -> {
 
-            //On Confirm button click
-            @Override
-            public void onClick(View v) {
+            //Check if all EntryBoxes are full
+            if (isEntryBoxesFull(root)) {
+                Log.d(CC_WORDS_DEBUG_KEY, "clicked on Confirm");
+                //Take all words entered in the EntryBoxes and use them to make a WordPair List
+                List<WordPair> userEnteredWordList = new ArrayList<>();
+                for (int i = 0; i < currentSize; i++) {
+                    //Entry Boxes under Board Language are first argument in WordPair
+                    EditText someEntryBox1 = root.findViewById(idEnglishWords.get(i));
+                    //Entry Boxes under Button Language are second argument in WordPair
+                    EditText someEntryBox2 = root.findViewById(idFrenchWords.get(i));
 
-                //Check if all EntryBoxes are full
-                if (isEntryBoxesFull(root)) {
-                    Log.d(CC_WORDS_DEBUG_KEY, "clicked on Confirm");
-                    //Take all words entered in the EntryBoxes and use them to make a WordPair List
-                    List<WordPair> userEnteredWordList = new ArrayList<>();
-                    for (int i = 0; i < currentSize; i++) {
-                        //Entry Boxes under Board Language are first argument in WordPair
-                        EditText someEntryBox1 = root.findViewById(idEnglishWords.get(i));
-                        //Entry Boxes under Button Language are second argument in WordPair
-                        EditText someEntryBox2 = root.findViewById(idFrenchWords.get(i));
-
-                        //Add in each word to WordPair list
-                        userEnteredWordList.add(new WordPair(someEntryBox1.getText().toString(), someEntryBox2.getText().toString()));
-                    }
-
-                    //Set the PuzzleViewModel to store the WordPair list we made
-                    mPuzzleViewModel.setCustomWordPairs(userEnteredWordList);
-                    mPuzzleViewModel.newCustomPuzzle(mSettingsViewModel.getPuzzleLanguage().getValue(), mSettingsViewModel.getDifficulty());
-
-                    Navigation.findNavController(root).navigate(R.id.startCustomPuzzleAction);
-                    //Toast.makeText(getContext(), "Words for Custom Puzzle have been successfully set.", Toast.LENGTH_LONG).show();
-
-                } else {
-                    Toast.makeText(getContext(), "Please fill in all entry boxes!", Toast.LENGTH_SHORT).show();
+                    //Add in each word to WordPair list
+                    userEnteredWordList.add(new WordPair(someEntryBox1.getText().toString(), someEntryBox2.getText().toString()));
                 }
+
+                //Set the PuzzleViewModel to store the WordPair list we made
+                mPuzzleViewModel.setCustomWordPairs(userEnteredWordList);
+                try {
+                    mPuzzleViewModel.newCustomPuzzle(mSettingsViewModel.getPuzzleLanguage().getValue(), mSettingsViewModel.getDifficulty());
+                } catch (IllegalLanguageException e) {
+                    throw new RuntimeException(e);
+                } catch (TooBigNumberException e) {
+                    throw new RuntimeException(e);
+                } catch (NegativeNumberException e) {
+                    throw new RuntimeException(e);
+                } catch (IllegalWordPairException e) {
+                    throw new RuntimeException(e);
+                } catch (IllegalDimensionException e) {
+                    throw new RuntimeException(e);
+                }
+
+                Navigation.findNavController(root).navigate(R.id.startCustomPuzzleAction);
+                //Toast.makeText(getContext(), "Words for Custom Puzzle have been successfully set.", Toast.LENGTH_LONG).show();
+
+            } else {
+                Toast.makeText(getContext(), "Please fill in all entry boxes!", Toast.LENGTH_SHORT).show();
             }
         });
 

@@ -47,6 +47,7 @@ package com.echo.wordsudoku.models.sudoku;
  *
  * */
 
+import com.echo.wordsudoku.exceptions.NegativeNumberException;
 import com.echo.wordsudoku.models.json.Writable;
 import com.echo.wordsudoku.models.dimension.Dimension;
 import com.echo.wordsudoku.models.dimension.PuzzleDimensions;
@@ -56,8 +57,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.Arrays;
-import java.util.Objects;
+import java.util.ArrayList;
+import java.util.List;
 
 public class CellBox2DArray implements Writable {
 
@@ -95,7 +96,7 @@ public class CellBox2DArray implements Writable {
      * @param cells: The number of rows and the number of columns of the cells in a CellBox in a Dimension object
      * @param language: The language to set cells in
      * */
-    public CellBox2DArray(Dimension boxes, Dimension cells,int language) {
+    public CellBox2DArray(Dimension boxes, Dimension cells,int language) throws NegativeNumberException {
         initializeCellBox(boxes, cells, new CellBox(cells.getRows(), cells.getColumns(),language));
     }
 
@@ -106,7 +107,7 @@ public class CellBox2DArray implements Writable {
      * @param boxes: The number of rows and the number of columns of the 2D array of CellBoxes in a Dimension object
      * @param cells: The number of rows and the number of columns of the cells in a CellBox in a Dimension object
      */
-    public CellBox2DArray(Dimension boxes, Dimension cells) {
+    public CellBox2DArray(Dimension boxes, Dimension cells) throws NegativeNumberException {
         initializeCellBox(boxes, cells, new CellBox(cells.getRows(), cells.getColumns()));
     }
 
@@ -116,7 +117,7 @@ public class CellBox2DArray implements Writable {
      * @param puzzleDimensions: The appropriate sudoku puzzle dimensions passed as a PuzzleDimensions object
      * @param language: The language to set cells in
      * */
-    public CellBox2DArray(PuzzleDimensions puzzleDimensions, int language) {
+    public CellBox2DArray(PuzzleDimensions puzzleDimensions, int language) throws NegativeNumberException {
         this(puzzleDimensions.getBoxesInPuzzleDimension(), puzzleDimensions.getEachBoxDimension(),language);
         setBoxDimensions(puzzleDimensions.getBoxesInPuzzleDimension());
         setCellDimensions(puzzleDimensions.getEachBoxDimension());
@@ -127,7 +128,7 @@ public class CellBox2DArray implements Writable {
      * Takes the appropriate sudoku puzzle dimensions and initializes the CellBox2DArray object with empty CellBox objects (language is set to English as a default).
      * @param puzzleDimensions: The appropriate sudoku puzzle dimensions passed as a PuzzleDimensions object
      */
-    public CellBox2DArray(PuzzleDimensions puzzleDimensions) {
+    public CellBox2DArray(PuzzleDimensions puzzleDimensions) throws NegativeNumberException {
         this(puzzleDimensions.getBoxesInPuzzleDimension(), puzzleDimensions.getEachBoxDimension());
         setBoxDimensions(puzzleDimensions.getBoxesInPuzzleDimension());
         setCellDimensions(puzzleDimensions.getEachBoxDimension());
@@ -271,7 +272,7 @@ public class CellBox2DArray implements Writable {
      * Usage: cellBox2DArray.setCellFromBigArray(3,8);
      * // Sets the content of the Cell object at the fourth row and ninth column of the puzzle to null
      */
-    public void setCellFromBigArray(int i, int j) {
+    public void clearCellFromBigArray(int i, int j) {
         getCellFromBigArray(i,j).clear();
     }
 
@@ -332,7 +333,10 @@ public class CellBox2DArray implements Writable {
      *  Used in the constructors.
      *  Used in the setCellBox method.
      */
-    private void initializeCellBox(Dimension boxes, Dimension cells, CellBox cellBox) {
+    private void initializeCellBox(Dimension boxes, Dimension cells, CellBox cellBox) throws NegativeNumberException {
+        if (boxes.doesHaveNegativeValues() || cells.doesHaveNegativeValues()) {
+            throw new NegativeNumberException("The dimensions of the CellBox2DArray cannot have negative values.");
+        }
         int rowsOfBoxes = boxes.getRows();
         int columnsOfBoxes = boxes.getColumns();
         CellBox[][] puzzle = new CellBox[rowsOfBoxes][columnsOfBoxes];
@@ -419,6 +423,20 @@ public class CellBox2DArray implements Writable {
         }
 
         return true;
+    }
+
+    public List<WordPair> getAllWordPairs() {
+        List<WordPair> wordPairs = new ArrayList<>();
+        for (int i = 0; i < getRows(); i++) {
+            for (int j = 0; j < getColumns(); j++) {
+                WordPair wordPair = getCellFromBigArray(i,j).getContent();
+                if(wordPair != null) {
+                    if (!WordPair.doesListContainThisWordPair(wordPairs, wordPair))
+                        wordPairs.add(wordPair);
+                }
+            }
+        }
+        return wordPairs;
     }
 
 

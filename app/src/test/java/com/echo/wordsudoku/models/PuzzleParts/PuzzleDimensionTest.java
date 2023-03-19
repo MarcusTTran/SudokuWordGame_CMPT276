@@ -5,6 +5,7 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertThrows;
 import static org.junit.Assert.assertTrue;
 
+import com.echo.wordsudoku.exceptions.IllegalDimensionException;
 import com.echo.wordsudoku.models.dimension.Dimension;
 import com.echo.wordsudoku.models.dimension.PuzzleDimensions;
 
@@ -18,7 +19,7 @@ import org.junit.jupiter.api.Test;
 public class PuzzleDimensionTest {
 
     @Test
-    void testConstructorValidInput() {
+    void testConstructorValidInput() throws IllegalDimensionException {
         // Test valid input
         PuzzleDimensions pd = new PuzzleDimensions(4);
         assertEquals(4, pd.getPuzzleDimension());
@@ -28,7 +29,7 @@ public class PuzzleDimensionTest {
 
 
     @Test
-    void testConstructorWithPuzzleDimension() {
+    void testConstructorWithPuzzleDimension() throws IllegalDimensionException {
         PuzzleDimensions pd = new PuzzleDimensions(6);
         PuzzleDimensions copy = new PuzzleDimensions(pd);
         assertEquals(pd, copy);
@@ -54,7 +55,7 @@ public class PuzzleDimensionTest {
 
 
     @Test
-    void testGetBoxesInPuzzleDimension() {
+    void testGetBoxesInPuzzleDimension() throws IllegalDimensionException {
         PuzzleDimensions pdSix = new PuzzleDimensions(6);
         assertEquals(new Dimension(3, 2), pdSix.getBoxesInPuzzleDimension());
         PuzzleDimensions pdTwelve = new PuzzleDimensions(12);
@@ -63,7 +64,7 @@ public class PuzzleDimensionTest {
 
 
     @Test
-    void testGetEachBoxDimension() {
+    void testGetEachBoxDimension() throws IllegalDimensionException {
         PuzzleDimensions pdSix = new PuzzleDimensions(6);
         assertEquals(new Dimension(2, 3), pdSix.getEachBoxDimension());
         PuzzleDimensions pdTwelve = new PuzzleDimensions(12);
@@ -74,7 +75,7 @@ public class PuzzleDimensionTest {
 
 
     @Test
-    void testSetPuzzleDimension() {
+    void testSetPuzzleDimension() throws IllegalDimensionException {
         // Test setting valid puzzle dimensions
         PuzzleDimensions pd = new PuzzleDimensions(4);
         pd.setPuzzleDimension(6);
@@ -100,7 +101,7 @@ public class PuzzleDimensionTest {
 
 
     @Test
-    void testEquals() {
+    void testEquals() throws IllegalDimensionException {
         PuzzleDimensions pd1 = new PuzzleDimensions(6);
         PuzzleDimensions pd2 = new PuzzleDimensions(6);
         PuzzleDimensions pd3 = new PuzzleDimensions(9);
@@ -115,7 +116,6 @@ public class PuzzleDimensionTest {
         // Check that pd1 is not equal to pd3 and pd3 is not equal to pd1
         assertFalse(pd1.equals(pd3));
         assertFalse(pd3.equals(pd1));
-
 
     }
 

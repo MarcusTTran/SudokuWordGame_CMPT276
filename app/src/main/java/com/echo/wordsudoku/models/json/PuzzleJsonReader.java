@@ -2,6 +2,7 @@ package com.echo.wordsudoku.models.json;
 
 import android.content.Context;
 
+import com.echo.wordsudoku.exceptions.IllegalDimensionException;
 import com.echo.wordsudoku.models.dimension.Dimension;
 import com.echo.wordsudoku.models.dimension.PuzzleDimensions;
 import com.echo.wordsudoku.models.sudoku.Cell;
@@ -113,6 +114,8 @@ public class PuzzleJsonReader {
             return puzzle;
 
         } catch (JSONException e) {
+            throw new RuntimeException(e);
+        } catch (IllegalDimensionException e) {
             throw new RuntimeException(e);
         }
     }

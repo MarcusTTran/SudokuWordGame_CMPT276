@@ -189,8 +189,8 @@ public class CellTest {
         Cell cellWithContentSame = new Cell(this.content);
         this.cellWithContent = new Cell(this.content);
 
-        assertFalse(cellWithContent.isEqual(cellWithDifferentConent));
-        assertTrue(cellWithContentSame.isEqual(cellWithContent));
+        assertFalse(cellWithContent.isContentEqual(cellWithDifferentConent));
+        assertTrue(cellWithContentSame.isContentEqual(cellWithContent));
     }
 
 

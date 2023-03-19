@@ -8,8 +8,6 @@ import com.echo.wordsudoku.models.words.WordPair;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.Objects;
-
 /**
  * The Cell class represents a cell in the board.
  * It contains the content of the cell (content: WordPair), whether the cell is editable or not (isEditable: boolean), whether the cell is empty or not (isEmpty: boolean),
@@ -118,12 +116,12 @@ public class Cell implements Writable {
      * Performs a deep copy of the given cell
      */
     public Cell(Cell cell) {
+        this.isEmpty = true;
         if (cell.getContent()!=null) {
             setContent(cell.getContent());
         }
         setEditable(cell.isEditable());
         setLanguage(cell.getLanguage());
-        this.isEmpty = cell.isEmpty();
     }
 
     /* @constructor
@@ -194,7 +192,10 @@ public class Cell implements Writable {
      * It calls the isEqual() method of the WordPair class to compare the content of the cells
      * @see WordPair#isEqual(WordPair)
      *  */
-    public boolean isEqual(Cell cell) throws NullPointerException {
+    public boolean isContentEqual(Cell cell) throws NullPointerException {
+        if (cell == null || cell.content==null || this.content==null) {
+            return false;
+        }
         try {
             return content.isEqual(cell.getContent());
         } catch (NullPointerException e) {

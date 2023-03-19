@@ -15,6 +15,11 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import com.echo.wordsudoku.R;
+import com.echo.wordsudoku.exceptions.IllegalDimensionException;
+import com.echo.wordsudoku.exceptions.IllegalLanguageException;
+import com.echo.wordsudoku.exceptions.IllegalWordPairException;
+import com.echo.wordsudoku.exceptions.NegativeNumberException;
+import com.echo.wordsudoku.exceptions.TooBigNumberException;
 import com.echo.wordsudoku.file.FileUtils;
 import com.echo.wordsudoku.models.language.BoardLanguage;
 import com.echo.wordsudoku.models.json.PuzzleJsonReader;
@@ -222,6 +227,16 @@ public class MainActivity extends AppCompatActivity implements SaveGameDialog.Sa
         try {
             mPuzzleViewModel.newPuzzle(size, mSettingsViewModel.getPuzzleLanguage().getValue(),mSettingsViewModel.getDifficulty());
         } catch (JSONException e) {
+            throw new RuntimeException(e);
+        } catch (IllegalLanguageException e) {
+            throw new RuntimeException(e);
+        } catch (TooBigNumberException e) {
+            throw new RuntimeException(e);
+        } catch (NegativeNumberException e) {
+            throw new RuntimeException(e);
+        } catch (IllegalWordPairException e) {
+            throw new RuntimeException(e);
+        } catch (IllegalDimensionException e) {
             throw new RuntimeException(e);
         }
         navController.navigate(R.id.startPuzzleModeAction);

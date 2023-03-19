@@ -26,6 +26,8 @@ package com.echo.wordsudoku.models.language;
 * TODO: Use enums instead of integer constants? Maybe iteration 3?
 *  */
 
+import com.echo.wordsudoku.exceptions.IllegalLanguageException;
+
 public class BoardLanguage {
     // The language names
     // SUGGESTION: Use enums instead of integer constants? Maybe iteration 3?
@@ -37,13 +39,13 @@ public class BoardLanguage {
     // @param language: the language name
     // @return the other language name
     // @throws IllegalArgumentException if the given language name is invalid
-    public static int getOtherLanguage(int language) {
+    public static int getOtherLanguage(int language) throws IllegalLanguageException {
         if (language == ENGLISH) {
             return FRENCH;
         } else if (language == FRENCH) {
             return ENGLISH;
         } else {
-            throw new IllegalArgumentException("Invalid language name");
+            throw new IllegalLanguageException();
         }
     }
 
@@ -52,13 +54,13 @@ public class BoardLanguage {
     // @param language: the language name
     // @return the language name
     // @throws IllegalArgumentException if the given language name is invalid
-    public static String getLanguageName(int language) {
+    public static String getLanguageName(int language) throws IllegalLanguageException {
         if (language == ENGLISH) {
             return "English";
         } else if (language == FRENCH) {
             return "French";
         } else {
-            throw new IllegalArgumentException("Invalid language name");
+            throw new IllegalLanguageException();
         }
     }
 

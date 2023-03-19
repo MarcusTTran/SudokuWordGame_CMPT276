@@ -16,6 +16,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.echo.wordsudoku.R;
+import com.echo.wordsudoku.exceptions.NegativeNumberException;
 import com.echo.wordsudoku.ui.SettingsViewModel;
 import com.echo.wordsudoku.ui.destinations.PuzzleFragment;
 import java.util.Timer;
@@ -93,7 +94,11 @@ public class PuzzleTopMenuBarFragment extends Fragment {
                 if(pauseTimer) {
                     return;
                 }
-                mPuzzleViewModel.postTimer(timer);
+                try {
+                    mPuzzleViewModel.postTimer(timer);
+                } catch (NegativeNumberException e) {
+                    throw new RuntimeException(e);
+                }
                 timer++;
             }
         }, 0, 1000);

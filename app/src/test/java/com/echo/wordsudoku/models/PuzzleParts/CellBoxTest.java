@@ -2,6 +2,7 @@ package com.echo.wordsudoku.models.PuzzleParts;
 
 import static org.junit.Assert.*;
 
+import com.echo.wordsudoku.exceptions.NegativeNumberException;
 import com.echo.wordsudoku.models.dimension.Dimension;
 import com.echo.wordsudoku.models.sudoku.Cell;
 import com.echo.wordsudoku.models.sudoku.CellBox;
@@ -17,10 +18,12 @@ import org.junit.jupiter.api.Test;
  */
 class CellBoxTest {
 
+    public static int[][] illegalCellBoxSizes = {{-10,10},{0,0}};
+
     private CellBox cellBox;
     private WordPair wordPair;
     @BeforeEach
-    public void setUp() {
+    public void setUp() throws NegativeNumberException {
         this.wordPair = new WordPair("english", "french");
         this.cellBox = new CellBox(wordPair, 3, 3);
     }
@@ -72,7 +75,7 @@ class CellBoxTest {
     }
 
     @Test
-    public void testSetCell() {
+    public void testSetCell() throws NegativeNumberException {
         // Initialize a 2x2 CellBox with default language
         CellBox cellBox = new CellBox(new WordPair("eng", "fre"), 2, 2);
 
@@ -92,7 +95,7 @@ class CellBoxTest {
     }
 
     @Test
-    public void testSetCellUnequalSize() {
+    public void testSetCellUnequalSize() throws NegativeNumberException {
 
         // Initialize a 2x2 CellBox with default language
         CellBox cellBox = new CellBox(new WordPair("eng", "fre"), 2, 2);
@@ -119,7 +122,7 @@ class CellBoxTest {
 
 
     @Test
-    public void testSetCellsLanguage() {
+    public void testSetCellsLanguage() throws NegativeNumberException {
         // Create a cell box with 2x2 dimensions and fill it with words
         this.wordPair = new WordPair("hello", "bonjour");
         CellBox cellBox = new CellBox(wordPair, 2, 2);
@@ -146,7 +149,7 @@ class CellBoxTest {
     }
 
     @Test
-    void testEquals() {
+    void testEquals() throws NegativeNumberException {
         CellBox otherCellBox = new CellBox(this.wordPair, 3, 3);
         CellBox differentCellBox = new CellBox(new WordPair("e","f"), 3, 3);
         assertTrue(otherCellBox.equals(this.cellBox));

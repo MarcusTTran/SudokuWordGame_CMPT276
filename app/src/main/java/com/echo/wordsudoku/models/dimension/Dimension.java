@@ -110,7 +110,13 @@ public class Dimension implements Writable {
         return rows == dimension.rows && columns == dimension.columns;
     }
 
+    public Dimension conjugate() {
+        return new Dimension(this.getColumns(), this.getRows());
+    }
 
+    public boolean doesHaveNegativeValues() {
+        return this.getRows() < 0 || this.getColumns() < 0;
+    }
 
 
 }

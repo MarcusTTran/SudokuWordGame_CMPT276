@@ -16,6 +16,8 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 
 import com.echo.wordsudoku.R;
+import com.echo.wordsudoku.exceptions.IllegalDimensionException;
+import com.echo.wordsudoku.exceptions.IllegalWordPairException;
 import com.echo.wordsudoku.models.dimension.Dimension;
 import com.echo.wordsudoku.models.words.WordPair;
 import com.echo.wordsudoku.ui.MainActivity;
@@ -56,7 +58,7 @@ public class PuzzleFragment extends Fragment {
         mPuzzleViewModel.resetPuzzle(false);
     }
 
-    public void enterWordInBoard(String word) {
+    public void enterWordInBoard(String word) throws IllegalWordPairException, IllegalDimensionException {
         PuzzleBoardFragment puzzleViewFragment = (PuzzleBoardFragment) getChildFragmentManager().findFragmentById(R.id.board);
         Dimension currentCell = puzzleViewFragment.getSelectedCell();
         if(currentCell.getColumns()==-2 || currentCell.getRows()==-2){

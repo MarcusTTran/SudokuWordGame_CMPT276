@@ -6,6 +6,7 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 import com.echo.wordsudoku.models.dimension.Dimension;
+import com.echo.wordsudoku.models.utility.MathUtils;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -21,6 +22,12 @@ public class DimensionTest {
 
     private Dimension dimensionWithRowAndColumn;
     private Dimension dimensionWithDimension;
+
+
+    // Makes a random dimension with the given puzzle size
+    public static Dimension makeRandomDimension(int size) {
+        return new Dimension(MathUtils.getRandomNumberBetweenIncluding(0, size-1), MathUtils.getRandomNumberBetweenIncluding(0, size-1));
+    }
 
     @BeforeEach
     void setUp() {

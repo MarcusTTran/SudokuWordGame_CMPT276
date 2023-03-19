@@ -12,6 +12,9 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.echo.wordsudoku.R;
+import com.echo.wordsudoku.exceptions.IllegalDimensionException;
+import com.echo.wordsudoku.exceptions.IllegalLanguageException;
+import com.echo.wordsudoku.exceptions.IllegalWordPairException;
 import com.echo.wordsudoku.models.dimension.PuzzleDimensions;
 import com.echo.wordsudoku.models.words.WordPair;
 import com.echo.wordsudoku.ui.MainActivity;
@@ -38,19 +41,27 @@ public class PuzzleInputButtonsFragment extends Fragment {
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         if (mPuzzleViewModel.getWordPairs()!=null) {
-            if (!createButtons())
-                ((MainActivity)requireActivity()).fatalErrorDialog("Error in creating buttons");
+            try {
+                if (!createButtons())
+                    ((MainActivity)requireActivity()).fatalErrorDialog("Error in creating buttons");
+            } catch (IllegalLanguageException e) {
+                throw new RuntimeException(e);
+            }
         } else {
             mPuzzleViewModel.getPuzzleView().observe(getViewLifecycleOwner(), puzzleView -> {
                 if (puzzleView != null) {
-                    if (!createButtons())
-                        ((MainActivity)requireActivity()).fatalErrorDialog("Error in creating buttons");
+                    try {
+                        if (!createButtons())
+                            ((MainActivity)requireActivity()).fatalErrorDialog("Error in creating buttons");
+                    } catch (IllegalLanguageException e) {
+                        throw new RuntimeException(e);
+                    }
                 }
             });
         }
     }
 
-    public boolean createButtons() {
+    public boolean createButtons() throws IllegalLanguageException {
         PuzzleDimensions puzzleDimension = mPuzzleViewModel.getPuzzleDimensions();
         if (puzzleDimension != null) {
             mLinearLayout = view.findViewById(R.id.board_input_buttons);
@@ -85,7 +96,13 @@ public class PuzzleInputButtonsFragment extends Fragment {
                     buttons[i].setOnClickListener(v -> {
                         PuzzleFragment puzzleFragment = (PuzzleFragment) getParentFragment();
                         Button button = (Button) v;
-                        puzzleFragment.enterWordInBoard(button.getText().toString());
+                        try {
+                            puzzleFragment.enterWordInBoard(button.getText().toString());
+                        } catch (IllegalWordPairException e) {
+                            throw new RuntimeException(e);
+                        } catch (IllegalDimensionException e) {
+                            throw new RuntimeException(e);
+                        }
                     });
                 }
                 return true;

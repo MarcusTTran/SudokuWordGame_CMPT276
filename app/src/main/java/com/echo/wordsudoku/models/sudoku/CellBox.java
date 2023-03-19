@@ -38,6 +38,7 @@ package com.echo.wordsudoku.models.sudoku;
 
  */
 
+import com.echo.wordsudoku.exceptions.NegativeNumberException;
 import com.echo.wordsudoku.models.json.Writable;
 import com.echo.wordsudoku.models.dimension.Dimension;
 import com.echo.wordsudoku.models.words.WordPair;
@@ -46,7 +47,9 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Objects;
 
 public class CellBox implements Writable {
@@ -54,9 +57,17 @@ public class CellBox implements Writable {
     // cells: the 2D array of cells.
     private Cell[][] cells;
 
+    public Dimension getDimension() {
+        return dimension;
+    }
+
+    public void setDimension(Dimension dimension) {
+        this.dimension = dimension;
+    }
+
     // dimension: the number of rows and the number of columns of the 2D array of cells in a Dimension object.
     // it is defined to be final so that we avoid the errors caused by changing the dimension of the cells while the array has not been resized.
-    private final Dimension dimension;
+    public Dimension dimension;
 
 
     /*
@@ -83,9 +94,8 @@ public class CellBox implements Writable {
      * @param content: the content of the cells. The content of all cells will be the same.
      * */
 
-    public CellBox(WordPair content,int rows, int columns) {
-        this.dimension = new Dimension(rows, columns);
-        this.cells = new Cell[rows][columns];
+    public CellBox(WordPair content,int rows, int columns) throws NegativeNumberException {
+        initializeCells(rows, columns);
         fillCellsWith(new Cell(content));
     }
 
@@ -97,9 +107,8 @@ public class CellBox implements Writable {
      * @param columns: the number of columns of the 2D array of cells.
      * @param language: the language of the words in the cells.
      */
-    public CellBox(int rows, int columns,int language) {
-        this.dimension = new Dimension(rows, columns);
-        this.cells = new Cell[rows][columns];
+    public CellBox(int rows, int columns,int language) throws NegativeNumberException {
+        initializeCells(rows, columns);
         fillCellsWith(new Cell(language));
     }
 
@@ -111,10 +120,16 @@ public class CellBox implements Writable {
      * @param columns: the number of columns of the 2D array of cells.
      */
 
-    public CellBox(int rows, int columns) {
-        this.dimension = new Dimension(rows, columns);
-        this.cells = new Cell[rows][columns];
+    public CellBox(int rows, int columns) throws NegativeNumberException {
+        initializeCells(rows, columns);
         fillCellsWith(new Cell());
+    }
+
+    private void initializeCells(int rows, int columns) throws NegativeNumberException {
+        this.dimension = new Dimension(rows, columns);
+        if(dimension.doesHaveNegativeValues())
+            throw new NegativeNumberException("The number of rows and columns of a CellBox cannot be negative.");
+        this.cells = new Cell[rows][columns];
     }
 
 
@@ -312,6 +327,19 @@ public class CellBox implements Writable {
         }
 
         return true;
+    }
+
+    public List<WordPair> getWordPairs() {
+        List<WordPair> wordPairs = new ArrayList<>();
+        for (int i = 0; i < this.dimension.getRows(); i++) {
+            for (int j = 0; j < this.dimension.getColumns(); j++) {
+                WordPair content = cells[i][j].getContent();
+                if(content!=null) {
+                    wordPairs.add(content);
+                }
+            }
+        }
+        return wordPairs;
     }
 
 

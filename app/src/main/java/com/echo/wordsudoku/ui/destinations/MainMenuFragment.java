@@ -14,6 +14,7 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
 import com.echo.wordsudoku.R;
+import com.echo.wordsudoku.exceptions.IllegalLanguageException;
 import com.echo.wordsudoku.models.language.BoardLanguage;
 import com.echo.wordsudoku.models.json.PuzzleJsonReader;
 import com.echo.wordsudoku.ui.MainActivity;
@@ -82,7 +83,12 @@ public class MainMenuFragment extends Fragment {
 
         mSettingsViewModel.getPuzzleLanguage().observe(getViewLifecycleOwner(), language -> {
             mSettingsPuzzleLanguage = language;
-            String changeLanguageButtonText = "Puzzle Language : " + BoardLanguage.getLanguageName(mSettingsPuzzleLanguage);
+            String changeLanguageButtonText = null;
+            try {
+                changeLanguageButtonText = "Puzzle Language : " + BoardLanguage.getLanguageName(mSettingsPuzzleLanguage);
+            } catch (IllegalLanguageException e) {
+                throw new RuntimeException(e);
+            }
             mChangeLanguageButton.setText(changeLanguageButtonText);
         });
 

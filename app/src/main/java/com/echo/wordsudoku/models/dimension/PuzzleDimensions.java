@@ -40,6 +40,7 @@ package com.echo.wordsudoku.models.dimension;
  *
  */
 
+import com.echo.wordsudoku.exceptions.IllegalDimensionException;
 import com.echo.wordsudoku.models.utility.MathUtils;
 import com.echo.wordsudoku.models.json.Writable;
 import com.echo.wordsudoku.models.sudoku.Puzzle;
@@ -71,7 +72,7 @@ public class PuzzleDimensions implements Writable {
      * @param: puzzleDimension: int
      * @throws: IllegalArgumentException if puzzleDimension is a prime number or if puzzleDimension is not in Puzzle.ACCEPTABLE_DIMENSIONS = {4,6,9,12}
      */
-    public PuzzleDimensions(int puzzleDimension) {
+    public PuzzleDimensions(int puzzleDimension) throws IllegalDimensionException {
         setPuzzleDimension(puzzleDimension);
     }
 
@@ -110,11 +111,11 @@ public class PuzzleDimensions implements Writable {
     // Set the puzzle dimension and prepare the correct dimensions for the requested puzzle dimension by calling the helper methods that calculate the dimensions using math.
     // @param: puzzleDimension: int (The dimension of the puzzle)
     // @throws: IllegalArgumentException if puzzleDimension is a prime number or if puzzleDimension is not in Puzzle.ACCEPTABLE_DIMENSIONS = {4,6,9,12}
-    public void setPuzzleDimension(int puzzleDimension) {
+    public void setPuzzleDimension(int puzzleDimension) throws IllegalDimensionException {
         if (MathUtils.isPrimeNumber(puzzleDimension))
-            throw new IllegalArgumentException("Puzzle dimension cannot be a prime number");
+            throw new IllegalDimensionException("Puzzle dimension cannot be a prime number");
         if (Puzzle.ACCEPTABLE_DIMENSIONS.contains(puzzleDimension) == false)
-            throw new IllegalArgumentException("Invalid puzzle dimension. Check Puzzle.ACCEPTABLE_DIMENSIONS for acceptable dimensions");
+            throw new IllegalDimensionException("Invalid puzzle dimension. Check Puzzle.ACCEPTABLE_DIMENSIONS for acceptable dimensions");
         this.puzzleDimension = puzzleDimension;
         this.eachBoxDimension = getBoxDimension(puzzleDimension);
         this.boxesInPuzzleDimension = getBoxesInPuzzleDimension(puzzleDimension);

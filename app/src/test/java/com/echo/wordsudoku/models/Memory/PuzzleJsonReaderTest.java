@@ -4,6 +4,11 @@ import static org.junit.Assert.*;
 
 import android.content.Context;
 
+import com.echo.wordsudoku.exceptions.IllegalDimensionException;
+import com.echo.wordsudoku.exceptions.IllegalLanguageException;
+import com.echo.wordsudoku.exceptions.IllegalWordPairException;
+import com.echo.wordsudoku.exceptions.NegativeNumberException;
+import com.echo.wordsudoku.exceptions.TooBigNumberException;
 import com.echo.wordsudoku.file.FileUtils;
 import com.echo.wordsudoku.models.json.PuzzleJsonReader;
 import com.echo.wordsudoku.models.sudoku.Puzzle;
@@ -59,7 +64,7 @@ public class PuzzleJsonReaderTest {
         this.file_saved = new File(context.getFilesDir(),PUZZLE_JSON_SAVE_FILENAME);
     }
 
-    Puzzle constructPuzzle(int dimension){
+    Puzzle constructPuzzle(int dimension) throws IllegalLanguageException, TooBigNumberException, NegativeNumberException, IllegalWordPairException, IllegalDimensionException {
 
         int difficulty = 1; // easy
         int puzzleLanguage = 1;
@@ -80,7 +85,7 @@ public class PuzzleJsonReaderTest {
     }
 
     @Test
-    void testFourByFourPuzzle () {
+    void testFourByFourPuzzle () throws IllegalLanguageException, TooBigNumberException, NegativeNumberException, IllegalWordPairException, IllegalDimensionException {
 
         try {
             assertTrue(isPuzzleTheReadPuzzleTheSameAfterSave(constructPuzzle(FOUR_BY_FOUR)));
@@ -100,7 +105,7 @@ public class PuzzleJsonReaderTest {
     }
 
     @Test
-    void testNineByNinePuzzle () {
+    void testNineByNinePuzzle () throws IllegalLanguageException, TooBigNumberException, NegativeNumberException, IllegalWordPairException, IllegalDimensionException {
         try {
             assertTrue(isPuzzleTheReadPuzzleTheSameAfterSave(constructPuzzle(NINE_BY_NINE)));
         } catch (JSONException e) {
@@ -113,7 +118,7 @@ public class PuzzleJsonReaderTest {
     }
 
     @Test
-    void testSixBySixPuzzle () {
+    void testSixBySixPuzzle () throws IllegalLanguageException, TooBigNumberException, NegativeNumberException, IllegalWordPairException, IllegalDimensionException {
         try {
             assertTrue(isPuzzleTheReadPuzzleTheSameAfterSave(constructPuzzle(SIX_BY_SIX)));
         } catch (JSONException e) {
@@ -124,7 +129,7 @@ public class PuzzleJsonReaderTest {
         }
     }
     @Test
-    void testTwelveByTwelvePuzzle () {
+    void testTwelveByTwelvePuzzle () throws IllegalLanguageException, TooBigNumberException, NegativeNumberException, IllegalWordPairException, IllegalDimensionException {
 
         try {
             assertTrue(isPuzzleTheReadPuzzleTheSameAfterSave(constructPuzzle(TWELVE_BY_TWELVE)));

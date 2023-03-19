@@ -6,7 +6,7 @@ import com.echo.wordsudoku.models.json.Writable;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.Objects;
+import java.util.List;
 
 /**
  *  ========================================= WORDPAIR =========================================
@@ -96,6 +96,28 @@ public class WordPair implements Writable {
             return true;
         }
         return eng.equals(wordPair.eng) && fre.equals(wordPair.fre);
+    }
+
+    public static boolean doesListContainRepeatingWordPairs(List<WordPair> wordPairs) {
+        for (int i = 0; i < wordPairs.size(); i++) {
+            for (int j = i+1; j < wordPairs.size(); j++) {
+                if (wordPairs.get(i).equals(wordPairs.get(j))) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    public static boolean doesListContainThisWordPair(List<WordPair> wordPairs, WordPair wordPair) {
+        for (WordPair wp : wordPairs) {
+            if(wordPair!=null) {
+                if (wordPair.equals(wp)) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
 }

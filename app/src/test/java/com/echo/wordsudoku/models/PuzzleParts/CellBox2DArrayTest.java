@@ -8,6 +8,8 @@ import static org.junit.Assert.assertThrows;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
+import com.echo.wordsudoku.exceptions.IllegalDimensionException;
+import com.echo.wordsudoku.exceptions.NegativeNumberException;
 import com.echo.wordsudoku.models.dimension.Dimension;
 import com.echo.wordsudoku.models.dimension.PuzzleDimensions;
 import com.echo.wordsudoku.models.language.BoardLanguage;
@@ -43,7 +45,7 @@ public class CellBox2DArrayTest {
     }
 
     @Test
-    public void testConstructorBoxesAndLanguage() {
+    public void testConstructorBoxesAndLanguage() throws NegativeNumberException {
         // Test the first constructor
         CellBox[][] cellBoxes = new CellBox[9][9];
 
@@ -64,7 +66,7 @@ public class CellBox2DArrayTest {
 
 
     @Test
-    public void testConstructorWithBoxesCellsLanguage() {
+    public void testConstructorWithBoxesCellsLanguage() throws NegativeNumberException {
 
         // Create the CellBox2DArray
         CellBox2DArray cellBox2DArray = new CellBox2DArray(this.boxes, this.cells, 0);
@@ -83,7 +85,7 @@ public class CellBox2DArrayTest {
 
 
     @Test
-    void testConstructorWithPuzzleDimensionLanguage(){
+    void testConstructorWithPuzzleDimensionLanguage() throws IllegalDimensionException, NegativeNumberException {
         PuzzleDimensions puzzleDimensions = new PuzzleDimensions(9);
         CellBox2DArray cellBox2DArray = new CellBox2DArray(puzzleDimensions, BoardLanguage.ENGLISH);
 
@@ -100,7 +102,7 @@ public class CellBox2DArrayTest {
 
 
     @Test
-    void testConstructorBoxesCells() {
+    void testConstructorBoxesCells() throws NegativeNumberException {
 
         // Create the CellBox2DArray
         CellBox2DArray cellBox2DArray = new CellBox2DArray(this.boxes, this.cells);
@@ -116,7 +118,7 @@ public class CellBox2DArrayTest {
 
 
     @Test
-    void testConstructorPuzzleDimension() {
+    void testConstructorPuzzleDimension() throws IllegalDimensionException, NegativeNumberException {
         // Create the CellBox2DArray
         PuzzleDimensions puzzleDimensions = new PuzzleDimensions(9);
         CellBox2DArray cellBox2DArray = new CellBox2DArray(puzzleDimensions);
@@ -138,7 +140,7 @@ public class CellBox2DArrayTest {
 
 
     @Test
-    void testConstructorWithCellBox2DArray() {
+    void testConstructorWithCellBox2DArray() throws NegativeNumberException {
         CellBox2DArray cellBox2DArray = new CellBox2DArray(this.boxes, this.cells);
         CellBox2DArray cellBox2DArrayMain = new CellBox2DArray(cellBox2DArray);
         // checked if copied models are equal
@@ -148,7 +150,7 @@ public class CellBox2DArrayTest {
 
 
     @Test
-    void testGetCellBoxes() {
+    void testGetCellBoxes() throws NegativeNumberException {
         CellBox2DArray cellBox2DArray = new CellBox2DArray(this.boxes, this.cells);
         CellBox[][] cellBoxes = cellBox2DArray.getCellBoxes();
         // check if the returned array is not null
@@ -158,7 +160,7 @@ public class CellBox2DArrayTest {
     }
 
     @Test
-    void testSetCellBoxes() {
+    void testSetCellBoxes() throws NegativeNumberException {
         CellBox2DArray cellBox2DArray = new CellBox2DArray(this.boxes, this.cells);
         CellBox[][] cellBoxes = cellBox2DArray.getCellBoxes();
         cellBoxes[0][0] = new CellBox(new WordPair("e", "f"), 3, 3);
@@ -169,7 +171,7 @@ public class CellBox2DArrayTest {
 
 
     @Test
-    void testSetCellBoxesOutOfBound() {
+    void testSetCellBoxesOutOfBound() throws NegativeNumberException {
         this.boxes = new Dimension(12, 12);
         this.cells = new Dimension(12, 12);
         CellBox2DArray cellBox2DArray = new CellBox2DArray(this.boxes, this.cells);
@@ -197,7 +199,7 @@ public class CellBox2DArrayTest {
 
 
     @Test
-    void testGetSetBoxDimension() {
+    void testGetSetBoxDimension() throws NegativeNumberException {
         CellBox2DArray cellBox2DArray = new CellBox2DArray(this.boxes, this.cells);
         Dimension dimension = new Dimension(4, 4);
         cellBox2DArray.setBoxDimensions(dimension);
@@ -205,7 +207,7 @@ public class CellBox2DArrayTest {
     }
 
     @Test
-    void testGetSetCellDimension() {
+    void testGetSetCellDimension() throws NegativeNumberException {
         CellBox2DArray cellBox2DArray = new CellBox2DArray(this.boxes, this.cells);
         Dimension dimension = new Dimension(4, 4);
         cellBox2DArray.setCellDimensions(dimension);
@@ -213,7 +215,7 @@ public class CellBox2DArrayTest {
     }
 
     @Test
-    void testGetCellBox() {
+    void testGetCellBox() throws NegativeNumberException {
         CellBox2DArray cellBox2DArray = new CellBox2DArray(this.boxes, this.cells);
         CellBox cellBox = cellBox2DArray.getCellBox(0, 0);
         assertNotNull(cellBox);
@@ -223,7 +225,7 @@ public class CellBox2DArrayTest {
 
     // test index out of bound exception with get Cell box
     @Test
-    void testGetCellBoxOutOfBound() {
+    void testGetCellBoxOutOfBound() throws NegativeNumberException {
         CellBox2DArray cellBox2DArray = new CellBox2DArray(this.boxes, this.cells);
         assertThrows(ArrayIndexOutOfBoundsException.class, () -> cellBox2DArray.getCellBox(10, 10));
         assertThrows(ArrayIndexOutOfBoundsException.class, () -> cellBox2DArray.getCellBox(11, 11));
@@ -232,7 +234,7 @@ public class CellBox2DArrayTest {
 
 
     @Test
-    void testGetCellBoxWithDimension() {
+    void testGetCellBoxWithDimension() throws NegativeNumberException {
         CellBox2DArray cellBox2DArray = new CellBox2DArray(this.boxes, this.cells);
         CellBox cellBox = cellBox2DArray.getCellBox(new Dimension(1,1));
         assertNotNull(cellBox);
@@ -240,7 +242,7 @@ public class CellBox2DArrayTest {
     }
 
     @Test
-    void testGetCellBoxWithDimensionOutOfBound() {
+    void testGetCellBoxWithDimensionOutOfBound() throws NegativeNumberException {
         CellBox2DArray cellBox2DArray = new CellBox2DArray(this.boxes, this.cells);
         assertThrows(ArrayIndexOutOfBoundsException.class, () -> cellBox2DArray.getCellBox(new Dimension(9, 9)));
         assertThrows(ArrayIndexOutOfBoundsException.class, () -> cellBox2DArray.getCellBox(new Dimension(11, 11)));
@@ -259,7 +261,7 @@ public class CellBox2DArrayTest {
 
 
     @Test
-    void testGetCellFromBigArray() {
+    void testGetCellFromBigArray() throws NegativeNumberException {
         CellBox2DArray cellBox2DArray = new CellBox2DArray(this.boxes, this.cells);
         Cell cellFirst = cellBox2DArray.getCellFromBigArray(0, 0);
         Cell cellLast = cellBox2DArray.getCellFromBigArray(8, 8);
@@ -272,7 +274,7 @@ public class CellBox2DArrayTest {
 
 
     @Test
-    void testGetCellFromBigArrayOutOfBound() {
+    void testGetCellFromBigArrayOutOfBound() throws NegativeNumberException {
         CellBox2DArray cellBox2DArray = new CellBox2DArray(this.boxes, this.cells);
         assertThrows(IndexOutOfBoundsException.class, () -> cellBox2DArray.getCellFromBigArray(81, 81));
         assertThrows(IndexOutOfBoundsException.class, () -> cellBox2DArray.getCellFromBigArray(-1, -1));
@@ -280,7 +282,7 @@ public class CellBox2DArrayTest {
 
 
     @Test
-    void testGetCellsFromBigArrayWithDimension() {
+    void testGetCellsFromBigArrayWithDimension() throws NegativeNumberException {
         CellBox2DArray cellBox2DArray = new CellBox2DArray(this.boxes, this.cells);
         Cell cellFirst = cellBox2DArray.getCellFromBigArray(new Dimension(0, 0));
         Cell cellLast = cellBox2DArray.getCellFromBigArray(new Dimension(8, 8));
@@ -292,7 +294,7 @@ public class CellBox2DArrayTest {
     }
 
     @Test
-    void getCellsFromBigArrayOutOfBound() {
+    void getCellsFromBigArrayOutOfBound() throws NegativeNumberException {
         CellBox2DArray cellBox2DArray = new CellBox2DArray(this.boxes, this.cells);
         assertThrows(IndexOutOfBoundsException.class, () -> cellBox2DArray.getCellFromBigArray(new Dimension(81, 81)));
         assertThrows(IndexOutOfBoundsException.class, () -> cellBox2DArray.getCellFromBigArray(new Dimension(-1, -1)));
@@ -300,7 +302,7 @@ public class CellBox2DArrayTest {
 
 
     @Test
-    void testSetCellsFromBigArray() {
+    void testSetCellsFromBigArray() throws NegativeNumberException {
         CellBox2DArray cellBox2DArray = new CellBox2DArray(this.boxes, this.cells);
         WordPair wordPair = new WordPair("test", "test");
         cellBox2DArray.setCellFromBigArray(0, 0, wordPair);
@@ -308,7 +310,7 @@ public class CellBox2DArrayTest {
     }
 
     @Test
-    void testSetCellFromBigArrayOutOfBound() {
+    void testSetCellFromBigArrayOutOfBound() throws NegativeNumberException {
         CellBox2DArray cellBox2DArray = new CellBox2DArray(this.boxes, this.cells);
         WordPair wordPair = new WordPair("test", "test");
         assertThrows(IndexOutOfBoundsException.class, () -> cellBox2DArray.setCellFromBigArray(81, 81, wordPair));
@@ -317,7 +319,7 @@ public class CellBox2DArrayTest {
 
 
     @Test
-    void testSetCellFromBigArrayWithDimension() {
+    void testSetCellFromBigArrayWithDimension() throws NegativeNumberException {
         CellBox2DArray cellBox2DArray = new CellBox2DArray(this.boxes, this.cells);
         WordPair wordPair = new WordPair("test", "test");
         cellBox2DArray.setCellFromBigArray(new Dimension(0, 0), wordPair);
@@ -326,7 +328,7 @@ public class CellBox2DArrayTest {
 
 
     @Test
-    void testSetCellFromBigArrayWithDimensionOutOfBound() {
+    void testSetCellFromBigArrayWithDimensionOutOfBound() throws NegativeNumberException {
         CellBox2DArray cellBox2DArray = new CellBox2DArray(this.boxes, this.cells);
         WordPair wordPair = new WordPair("test", "test");
         assertThrows(IndexOutOfBoundsException.class, () -> cellBox2DArray.setCellFromBigArray(new Dimension(81, 81), wordPair));
@@ -334,7 +336,7 @@ public class CellBox2DArrayTest {
     }
 
     @Test
-    void testSetCellClearFromBigArray() {
+    void testSetCellClearFromBigArray() throws NegativeNumberException {
         CellBox2DArray cellBox2DArray = new CellBox2DArray(this.boxes, this.cells);
         WordPair wordPair = new WordPair("test", "test");
 
@@ -343,7 +345,7 @@ public class CellBox2DArrayTest {
         assertEquals(wordPair, cellBox2DArray.getCellBoxes()[0][0].getCells()[0][0].getContent());
 
         // clear the cell of the same coordinate
-        cellBox2DArray.setCellFromBigArray(0,0);
+        cellBox2DArray.clearCellFromBigArray(0,0);
 
         // the cell should be like this after clear() is called
         Cell clearedCell = new Cell(null, true, BoardLanguage.ENGLISH, true);
@@ -352,7 +354,7 @@ public class CellBox2DArrayTest {
 
 
     @Test
-    void testSetCellClearFromBigArrayOutOfBound() {
+    void testSetCellClearFromBigArrayOutOfBound() throws NegativeNumberException {
         CellBox2DArray cellBox2DArray = new CellBox2DArray(this.boxes, this.cells);
         WordPair wordPair = new WordPair("test", "test");
 
@@ -360,11 +362,11 @@ public class CellBox2DArrayTest {
         cellBox2DArray.setCellFromBigArray(0, 0, wordPair);
         assertEquals(wordPair, cellBox2DArray.getCellBoxes()[0][0].getCells()[0][0].getContent());
 
-        assertThrows(IndexOutOfBoundsException.class, () -> cellBox2DArray.setCellFromBigArray(81, 81));
-        assertThrows(IndexOutOfBoundsException.class, () -> cellBox2DArray.setCellFromBigArray(-1, -1));
+        assertThrows(IndexOutOfBoundsException.class, () -> cellBox2DArray.clearCellFromBigArray(81, 81));
+        assertThrows(IndexOutOfBoundsException.class, () -> cellBox2DArray.clearCellFromBigArray(-1, -1));
 
         // but now try with valid coordinate
-        cellBox2DArray.setCellFromBigArray(0,0);
+        cellBox2DArray.clearCellFromBigArray(0,0);
 
 
         Cell clearedCell = new Cell(null, true, BoardLanguage.ENGLISH, true);
@@ -374,9 +376,9 @@ public class CellBox2DArrayTest {
 
 
     @Test
-    void testSetCellClearFromBigArrayWhenAlreadyCleared() {
+    void testSetCellClearFromBigArrayWhenAlreadyCleared() throws NegativeNumberException {
         CellBox2DArray cellBox2DArray = new CellBox2DArray(this.boxes, this.cells);
-        cellBox2DArray.setCellFromBigArray(0,0);
+        cellBox2DArray.clearCellFromBigArray(0,0);
         Cell clearedCell = new Cell(null, true, BoardLanguage.ENGLISH, true);
 
         // the cell should be cleared regardless and no change will happen to the content in the cell
@@ -384,7 +386,7 @@ public class CellBox2DArrayTest {
     }
 
     @Test
-    void testGetColumnsRows() {
+    void testGetColumnsRows() throws NegativeNumberException {
         // 9 x 9
         CellBox2DArray cellBox2DArrayNine = new CellBox2DArray(this.boxes, this.cells);
         assertEquals(81,  cellBox2DArrayNine.getColumns());
@@ -408,7 +410,7 @@ public class CellBox2DArrayTest {
 
 
     @Test
-    void testLanguage() {
+    void testLanguage() throws NegativeNumberException {
         CellBox2DArray cellBox2DArrayEnglish = new CellBox2DArray(this.boxes, this.cells);
         assertTrue(checkCellSetAtLanguage(BoardLanguage.ENGLISH, cellBox2DArrayEnglish));
         CellBox2DArray cellBox2DArrayFrench = new CellBox2DArray(this.boxes, this.cells, BoardLanguage.FRENCH);
@@ -430,7 +432,7 @@ public class CellBox2DArrayTest {
 
 
     @Test
-    void testIsFilled() {
+    void testIsFilled() throws NegativeNumberException {
         CellBox2DArray cellBox2DArrayFilled = new CellBox2DArray(this.boxes, this.cells);
         CellBox2DArray cellBox2DArrayNotFilled = new CellBox2DArray(this.boxes, this.cells);
 
@@ -452,7 +454,7 @@ public class CellBox2DArrayTest {
 
 
     @Test
-    void testEquals() {
+    void testEquals() throws NegativeNumberException {
         CellBox2DArray cellBox2DArray = new CellBox2DArray(this.boxes, this.cells);
         CellBox2DArray cellBox2DArrayCopy = new CellBox2DArray(this.boxes, this.cells);
         CellBox2DArray notEqualCellBox2DArray = new CellBox2DArray(this.boxes, this.cells);
