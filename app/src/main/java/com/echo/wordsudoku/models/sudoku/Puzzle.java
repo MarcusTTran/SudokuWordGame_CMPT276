@@ -524,7 +524,7 @@ public class Puzzle implements Writable {
                 );
             }
             Cell cellThatIsGoingToBeRemoved = result.getCellFromBigArray(cellToRemove);
-            cellThatIsGoingToBeRemoved.setLanguage(BoardLanguage.getOtherLanguage(inputLanguage));
+            cellThatIsGoingToBeRemoved.setLanguage(inputLanguage);
             cellThatIsGoingToBeRemoved.clear();
         }
         return result;
