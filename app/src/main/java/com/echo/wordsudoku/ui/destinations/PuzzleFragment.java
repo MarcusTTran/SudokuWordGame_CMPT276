@@ -1,6 +1,7 @@
 package com.echo.wordsudoku.ui.destinations;
 
 import android.os.Bundle;
+import android.speech.tts.TextToSpeech;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -33,14 +34,15 @@ import com.echo.wordsudoku.ui.puzzleParts.PuzzleViewModel;
 
 public class PuzzleFragment extends Fragment {
 
-    private int puzzleDimension;
-    // END CONSTANTS
-
-    private static final String TAG = "PuzzleFragment";
+//    // NEVER USED POSSIBLY DELETE?
+//    private int puzzleDimension;
+//
+//    private static final String TAG = "PuzzleFragment";
 
     private int dictionaryPopupLimit = 0;
 
     private PuzzleViewModel mPuzzleViewModel;
+    private TextToSpeech toSpeech;
 
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -49,6 +51,12 @@ public class PuzzleFragment extends Fragment {
 
         mPuzzleViewModel = new ViewModelProvider(requireActivity()).get(PuzzleViewModel.class);
         SettingsViewModel settingsViewModel = new ViewModelProvider(requireActivity()).get(SettingsViewModel.class);
+        toSpeech = new TextToSpeech(this.getContext(), new TextToSpeech.OnInitListener() {
+            @Override
+            public void onInit(int i) {
+                // TODO: Implement listener
+            }
+        });
 
         View root = inflater.inflate(R.layout.fragment_puzzle, container, false);
         return root;
@@ -66,8 +74,11 @@ public class PuzzleFragment extends Fragment {
             return;
         }
         if (!mPuzzleViewModel.isCellWritable(currentCell)) {
-            Toast.makeText(requireActivity(), R.string.error_insert_in_initial_cell, Toast.LENGTH_SHORT).show();
-            return;
+            if (toSpeech == null) {
+                Toast.makeText(requireActivity(), R.string.error_insert_in_initial_cell, Toast.LENGTH_SHORT).show();
+            } else {
+                // TODO read out text in the cell!
+            }
         }
         else {
             mPuzzleViewModel.insertWord(currentCell, word);
@@ -111,6 +122,7 @@ public class PuzzleFragment extends Fragment {
             Toast.makeText(getActivity(), getString(R.string.error_not_filled_puzzle), Toast.LENGTH_LONG).show();
             return;
         }
+//        toSpeech.shutdown(); // Turn off the text to speech engine
         Navigation.findNavController(getView()).navigate(R.id.submitPuzzleAction);
     }
 
