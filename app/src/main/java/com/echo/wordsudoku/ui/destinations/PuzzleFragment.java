@@ -1,5 +1,8 @@
 package com.echo.wordsudoku.ui.destinations;
 
+import static com.echo.wordsudoku.models.language.BoardLanguage.ENGLISH;
+import static com.echo.wordsudoku.models.language.BoardLanguage.defaultLanguage;
+
 import android.os.Bundle;
 import android.speech.tts.TextToSpeech;
 import android.view.LayoutInflater;
@@ -18,6 +21,7 @@ import androidx.navigation.Navigation;
 
 import com.echo.wordsudoku.R;
 import com.echo.wordsudoku.exceptions.IllegalDimensionException;
+import com.echo.wordsudoku.exceptions.IllegalLanguageException;
 import com.echo.wordsudoku.exceptions.IllegalWordPairException;
 import com.echo.wordsudoku.models.dimension.Dimension;
 import com.echo.wordsudoku.models.words.WordPair;
@@ -27,6 +31,7 @@ import com.echo.wordsudoku.ui.dialogs.DictionaryFragment;
 import com.echo.wordsudoku.ui.dialogs.RulesFragment;
 
 import java.util.List;
+import java.util.Locale;
 
 import com.echo.wordsudoku.ui.dialogs.SaveGameDialog;
 import com.echo.wordsudoku.ui.puzzleParts.PuzzleBoardFragment;
@@ -55,6 +60,15 @@ public class PuzzleFragment extends Fragment {
             @Override
             public void onInit(int i) {
                 // TODO: Implement listener
+                if (i != TextToSpeech.ERROR) {
+                    try {
+                        Locale language = (mPuzzleViewModel.getPuzzleInputLanguage() == ENGLISH) ? Locale.CANADA_FRENCH : Locale.ENGLISH;
+                        toSpeech.setLanguage(language);
+                    } catch (IllegalLanguageException e) {
+                        throw new RuntimeException(e);
+                    }
+//                    toSpeech.setLanguage()
+                }
             }
         });
 
@@ -181,5 +195,10 @@ public class PuzzleFragment extends Fragment {
             }
         };
         requireActivity().getOnBackPressedDispatcher().addCallback(this, callback);
+    }
+
+    // Calls the text-to-speech engine to speak out a given string
+    private void speak(String text) {
+        toSpeech.speak(text, TextToSpeech.QUEUE_FLUSH, null, "");
     }
 }
