@@ -141,4 +141,8 @@ public class PuzzleViewModel extends ViewModel {
     public PuzzleDimensions getPuzzleDimensions() {
         return puzzle.getPuzzleDimensions();
     }
+
+    public Puzzle getPuzzle() {
+        return puzzle;
+    }
 }

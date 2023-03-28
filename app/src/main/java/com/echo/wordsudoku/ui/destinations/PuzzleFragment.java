@@ -24,6 +24,7 @@ import com.echo.wordsudoku.exceptions.IllegalDimensionException;
 import com.echo.wordsudoku.exceptions.IllegalLanguageException;
 import com.echo.wordsudoku.exceptions.IllegalWordPairException;
 import com.echo.wordsudoku.models.dimension.Dimension;
+import com.echo.wordsudoku.models.sudoku.Cell;
 import com.echo.wordsudoku.models.words.WordPair;
 import com.echo.wordsudoku.ui.MainActivity;
 import com.echo.wordsudoku.ui.SettingsViewModel;
@@ -67,7 +68,6 @@ public class PuzzleFragment extends Fragment {
                     } catch (IllegalLanguageException e) {
                         throw new RuntimeException(e);
                     }
-//                    toSpeech.setLanguage()
                 }
             }
         });
@@ -83,7 +83,7 @@ public class PuzzleFragment extends Fragment {
     public void enterWordInBoard(String word) throws IllegalWordPairException, IllegalDimensionException {
         PuzzleBoardFragment puzzleViewFragment = (PuzzleBoardFragment) getChildFragmentManager().findFragmentById(R.id.board);
         Dimension currentCell = puzzleViewFragment.getSelectedCell();
-        if(currentCell.getColumns()==-2 || currentCell.getRows()==-2){
+        if(currentCell.getColumns() == -2 || currentCell.getRows() == -2) {
             Toast.makeText(requireActivity(), R.string.error_no_cell_selected, Toast.LENGTH_SHORT).show();
             return;
         }
@@ -91,7 +91,11 @@ public class PuzzleFragment extends Fragment {
             if (toSpeech == null) {
                 Toast.makeText(requireActivity(), R.string.error_insert_in_initial_cell, Toast.LENGTH_SHORT).show();
             } else {
-                // TODO read out text in the cell!
+                // TODO Speak the word that was chosen here
+                Cell selectedCell = mPuzzleViewModel.getPuzzle().getCellFromViewablePuzzle(currentCell.getRows(), currentCell.getColumns());
+                int languageToSpeak = mPuzzleViewModel.getPuzzle().getLanguage();
+                String wordToSpeak = selectedCell.getContent().getEnglishOrFrench(languageToSpeak);
+                toSpeech.speak(wordToSpeak, TextToSpeech.QUEUE_FLUSH, null, "");
             }
         }
         else {
