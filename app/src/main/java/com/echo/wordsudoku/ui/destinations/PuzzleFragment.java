@@ -93,9 +93,7 @@ public class PuzzleFragment extends Fragment {
             } else {
                 // TODO Speak the word that was chosen here
                 Cell selectedCell = mPuzzleViewModel.getPuzzle().getCellFromViewablePuzzle(currentCell.getRows(), currentCell.getColumns());
-                int languageToSpeak = mPuzzleViewModel.getPuzzle().getLanguage();
-                String wordToSpeak = selectedCell.getContent().getEnglishOrFrench(languageToSpeak);
-                toSpeech.speak(wordToSpeak, TextToSpeech.QUEUE_FLUSH, null, "");
+                speak(selectedCell);
             }
         }
         else {
@@ -123,7 +121,7 @@ public class PuzzleFragment extends Fragment {
         }
 
         //Create new instance of RulesFragment
-        DictionaryFragment dictionaryFragment = DictionaryFragment.newInstance(LanguageList1, LanguageList2,dictionaryPopupLimit);
+        DictionaryFragment dictionaryFragment = DictionaryFragment.newInstance(LanguageList1, LanguageList2, dictionaryPopupLimit);
         dictionaryFragment.show(getActivity().getSupportFragmentManager(), DictionaryFragment.TAG);
         //Increase the dictionary pop up limit (limit is twice per game)
         dictionaryPopupLimit++;
@@ -202,7 +200,9 @@ public class PuzzleFragment extends Fragment {
     }
 
     // Calls the text-to-speech engine to speak out a given string
-    private void speak(String text) {
-        toSpeech.speak(text, TextToSpeech.QUEUE_FLUSH, null, "");
+    private void speak(Cell currentCell) {
+        int languageToSpeak = mPuzzleViewModel.getPuzzle().getLanguage();
+        String wordToSpeak = currentCell.getContent().getEnglishOrFrench(languageToSpeak);
+        toSpeech.speak(wordToSpeak, TextToSpeech.QUEUE_FLUSH, null, "");
     }
 }

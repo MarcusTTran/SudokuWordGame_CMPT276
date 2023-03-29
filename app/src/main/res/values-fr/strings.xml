@@ -80,6 +80,9 @@ tous vos mots en vedette. Mais rappelez-vous, vous ne pouvez accéder à cette t
     <string name="auto_save_on">L’enregistrement automatique est activén (Lorsque l’application se ferme, votre progression sera enregistrée)</string>
     <string name="auto_save_off">L’enregistrement automatique est désactivé</string>
 
+    <!-- TextToSpeech Preferences -->
+    <string name="text_to_speech_on">La Synthèse Vocale est activén.</string>
+    <string name="text_to_speech_off">La Synthèse Vocale est désactivée.</string>
 
     <string name="word_error">Erreur!</string>
     <string name="save_game_error">Echec de l’enregistrement du jeu</string>
