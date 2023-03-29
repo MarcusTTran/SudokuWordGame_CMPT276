@@ -170,6 +170,15 @@ public class MainActivity extends AppCompatActivity implements SaveGameDialog.Sa
 
         boolean autoSave = mPreferences.getBoolean(getString(R.string.puzzle_autosave_preference_key), false);
         mSettingsViewModel.setAutoSave(autoSave);
+
+
+
+        // TODO ADD TTS SETTING IN LOAD AND SAVE METHODS!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        // MARCUSS
+
+
+
+
     }
 
 
