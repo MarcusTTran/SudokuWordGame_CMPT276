@@ -330,7 +330,7 @@ public class Puzzle implements Writable {
                 Cell cell = userBoard.getCellFromBigArray(i,j);
                 if (cell.getContent() != null){
                     if(!cell.isEditable()) {
-                        stringBoard[i][j] = Integer.toString( mWordPairs.indexOf(cell.getContent()) + 1);
+                        stringBoard[i][j] = Integer.toString( mWordPairs.indexOf(cell.getContent()) + 1); // TODO Refactor this to be better
                     } else {
                         stringBoard[i][j] = cell.getContent().getEnglishOrFrench(cell.getLanguage());
                     }
