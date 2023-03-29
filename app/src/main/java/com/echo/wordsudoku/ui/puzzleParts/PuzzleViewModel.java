@@ -29,6 +29,15 @@ public class PuzzleViewModel extends ViewModel {
 
     private final MutableLiveData<Integer> timer = new MutableLiveData<>();
 
+    private boolean textToSpeechStatus;
+    // TODO move later!
+    public boolean isTextToSpeechStatus() {
+        return textToSpeechStatus;
+    }
+
+    public void setTextToSpeechStatus(boolean textToSpeechStatus) {
+        this.textToSpeechStatus = textToSpeechStatus;
+    }
 
     private List<WordPair> customWordPairs;
     private WordPairJsonReader mWordPairJsonReader;
@@ -69,6 +78,7 @@ public class PuzzleViewModel extends ViewModel {
     public void setWordPairReader(WordPairJsonReader wordPairJsonReader) {
         this.mWordPairJsonReader = wordPairJsonReader;
     }
+    // TODO maybe add TTS here?
     public void newPuzzle(int puzzleSize, int boardLanguage, int difficulty) throws JSONException, IllegalLanguageException, TooBigNumberException, NegativeNumberException, IllegalWordPairException, IllegalDimensionException {
        setPuzzle(new Puzzle(mWordPairJsonReader.getRandomWords(puzzleSize),puzzleSize,boardLanguage,Puzzle.NO_NUMBER_OF_START_CELLS_USE_DIFFICULTY,difficulty));
     }

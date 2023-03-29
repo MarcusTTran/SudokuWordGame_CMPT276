@@ -40,16 +40,11 @@ import com.echo.wordsudoku.ui.puzzleParts.PuzzleViewModel;
 
 public class PuzzleFragment extends Fragment {
 
-//    // NEVER USED POSSIBLY DELETE?
-//    private int puzzleDimension;
-//
-//    private static final String TAG = "PuzzleFragment";
-
     private int dictionaryPopupLimit = 0;
 
     private PuzzleViewModel mPuzzleViewModel;
-    private TextToSpeech toSpeech;
 
+//    private TextToSpeech toSpeech;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -57,20 +52,21 @@ public class PuzzleFragment extends Fragment {
 
         mPuzzleViewModel = new ViewModelProvider(requireActivity()).get(PuzzleViewModel.class);
         SettingsViewModel settingsViewModel = new ViewModelProvider(requireActivity()).get(SettingsViewModel.class);
-        toSpeech = new TextToSpeech(this.getContext(), new TextToSpeech.OnInitListener() {
-            @Override
-            public void onInit(int i) {
-                // TODO: Implement listener
-                if (i != TextToSpeech.ERROR) {
-                    try {
-                        Locale language = (mPuzzleViewModel.getPuzzleInputLanguage() == ENGLISH) ? Locale.CANADA_FRENCH : Locale.ENGLISH;
-                        toSpeech.setLanguage(language);
-                    } catch (IllegalLanguageException e) {
-                        throw new RuntimeException(e);
-                    }
-                }
-            }
-        });
+
+        //        toSpeech = new TextToSpeech(this.getContext(), new TextToSpeech.OnInitListener() {
+//            @Override
+//            public void onInit(int i) {
+//                // TODO: Implement listener
+//                if (i != TextToSpeech.ERROR) {
+//                    try {
+//                        Locale language = (mPuzzleViewModel.getPuzzleInputLanguage() == ENGLISH) ? Locale.CANADA_FRENCH : Locale.ENGLISH;
+//                        toSpeech.setLanguage(language);
+//                    } catch (IllegalLanguageException e) {
+//                        throw new RuntimeException(e);
+//                    }
+//                }
+//            }
+//        });
 
         View root = inflater.inflate(R.layout.fragment_puzzle, container, false);
         return root;
@@ -88,13 +84,13 @@ public class PuzzleFragment extends Fragment {
             return;
         }
         if (!mPuzzleViewModel.isCellWritable(currentCell)) {
-            if (toSpeech == null) {
+//            if (toSpeech == null) {
                 Toast.makeText(requireActivity(), R.string.error_insert_in_initial_cell, Toast.LENGTH_SHORT).show();
-            } else {
-                // TODO Speak the word that was chosen here
-                Cell selectedCell = mPuzzleViewModel.getPuzzle().getCellFromViewablePuzzle(currentCell.getRows(), currentCell.getColumns());
-                speak(selectedCell);
-            }
+//            } else {
+//                // TODO delete later
+//                Cell selectedCell = mPuzzleViewModel.getPuzzle().getCellFromViewablePuzzle(currentCell.getRows(), currentCell.getColumns());
+//                speak(selectedCell);
+//            }
         }
         else {
             mPuzzleViewModel.insertWord(currentCell, word);
@@ -199,10 +195,4 @@ public class PuzzleFragment extends Fragment {
         requireActivity().getOnBackPressedDispatcher().addCallback(this, callback);
     }
 
-    // Calls the text-to-speech engine to speak out a given string
-    private void speak(Cell currentCell) {
-        int languageToSpeak = mPuzzleViewModel.getPuzzle().getLanguage();
-        String wordToSpeak = currentCell.getContent().getEnglishOrFrench(languageToSpeak);
-        toSpeech.speak(wordToSpeak, TextToSpeech.QUEUE_FLUSH, null, "");
-    }
 }

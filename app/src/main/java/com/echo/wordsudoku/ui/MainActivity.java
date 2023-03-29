@@ -13,6 +13,8 @@ import androidx.navigation.ui.NavigationUI;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
+import android.widget.AdapterView;
 
 import com.echo.wordsudoku.R;
 import com.echo.wordsudoku.exceptions.IllegalDimensionException;
@@ -21,13 +23,17 @@ import com.echo.wordsudoku.exceptions.IllegalWordPairException;
 import com.echo.wordsudoku.exceptions.NegativeNumberException;
 import com.echo.wordsudoku.exceptions.TooBigNumberException;
 import com.echo.wordsudoku.file.FileUtils;
+import com.echo.wordsudoku.models.dimension.Dimension;
 import com.echo.wordsudoku.models.language.BoardLanguage;
 import com.echo.wordsudoku.models.json.PuzzleJsonReader;
 import com.echo.wordsudoku.models.sudoku.Puzzle;
 import com.echo.wordsudoku.models.json.WordPairJsonReader;
+import com.echo.wordsudoku.ui.destinations.PuzzleFragment;
 import com.echo.wordsudoku.ui.dialogs.ChoosePuzzleSizeFragment;
 import com.echo.wordsudoku.ui.dialogs.SaveGameDialog;
+import com.echo.wordsudoku.ui.puzzleParts.PuzzleBoardFragment;
 import com.echo.wordsudoku.ui.puzzleParts.PuzzleViewModel;
+import com.echo.wordsudoku.views.OnCellTouchListener;
 import com.google.android.material.navigation.NavigationView;
 import org.json.JSONException;
 
@@ -38,7 +44,7 @@ import java.io.InputStream;
 import java.io.PrintWriter;
 import java.util.Arrays;
 
-public class MainActivity extends AppCompatActivity implements SaveGameDialog.SaveGameDialogListener, ChoosePuzzleSizeFragment.OnPuzzleSizeSelectedListener {
+public class MainActivity extends AppCompatActivity implements SaveGameDialog.SaveGameDialogListener, ChoosePuzzleSizeFragment.OnPuzzleSizeSelectedListener, OnCellTouchListener {
 
     private static final String TAG = "Puzzle.MainActivity";
 
@@ -286,4 +292,16 @@ public class MainActivity extends AppCompatActivity implements SaveGameDialog.Sa
         return mPuzzleJsonFile.exists();
     }
 
+    @Override
+    public void onCellTouched(String text, int row, int column) {
+//        PuzzleBoardFragment puzzleBoardFragment = (PuzzleBoardFragment) getSupportFragmentManager().findFragmentById(R.id.board);
+//        puzzleBoardFragment.speakWordInCell(new Dimension(row, column));
+        NavHostFragment navHostFragment =
+                (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment);
+        PuzzleFragment puzzleFragment = (PuzzleFragment) navHostFragment.getChildFragmentManager().getFragments().get(0);
+        PuzzleBoardFragment puzzleBoardFragment = (PuzzleBoardFragment) puzzleFragment.getChildFragmentManager().findFragmentById(R.id.board);
+        puzzleBoardFragment.speakWordInCell(new Dimension(row-1, column-1));
+//        Log.d("Hi","hello");
+
+    }
 }
