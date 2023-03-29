@@ -49,5 +49,8 @@
     </PreferenceCategory>
 
 
+<!--        <SwitchPreferenceCompat app:title-->
+
 
 </PreferenceScreen>
+

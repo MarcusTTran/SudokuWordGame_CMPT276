@@ -101,8 +101,8 @@ public class SettingsFragment extends PreferenceFragmentCompat {
 
 
         SwitchPreferenceCompat textToSpeech = findPreference("textToSpeech");
-        textToSpeech.setChecked(false);
-        // TODO THrows nullpointer exception
+        textToSpeech.setChecked(false); // TODO THrows nullpointer exception
+
         textToSpeech.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
             @Override
             public boolean onPreferenceChange(@NonNull Preference preference, Object textToSpeech) {

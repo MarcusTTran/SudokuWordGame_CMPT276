@@ -328,8 +328,13 @@ public class Puzzle implements Writable {
         for (int i = 0; i < userBoard.getRows(); i++) {
             for (int j = 0; j < userBoard.getColumns(); j++) {
                 Cell cell = userBoard.getCellFromBigArray(i,j);
-                if (cell.getContent() != null)
-                    stringBoard[i][j] = cell.getContent().getEnglishOrFrench(cell.getLanguage());
+                if (cell.getContent() != null){
+                    if(!cell.isEditable()) {
+                        stringBoard[i][j] = Integer.toString( mWordPairs.indexOf(cell.getContent()) + 1);
+                    } else {
+                        stringBoard[i][j] = cell.getContent().getEnglishOrFrench(cell.getLanguage());
+                    }
+                }
                 else
                     stringBoard[i][j] = "";
             }
