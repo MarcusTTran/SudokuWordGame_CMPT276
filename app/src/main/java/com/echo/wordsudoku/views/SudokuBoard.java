@@ -545,8 +545,8 @@ public class SudokuBoard extends View {
         if (board.length != mBoardSize || board[0].length != mBoardSize) {
             return false;
         }
-        for (int r=0; r<mBoardSize; r++) {
-            for (int c=0; c<mBoardSize; c++) {
+        for (int r = 0; r < mBoardSize; r++) {
+            for (int c = 0; c < mBoardSize; c++) {
                 this.board[r][c] = board[r][c];
             }
         }

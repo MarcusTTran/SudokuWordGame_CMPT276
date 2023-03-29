@@ -285,4 +285,5 @@ public class MainActivity extends AppCompatActivity implements SaveGameDialog.Sa
     public boolean doesPuzzleSaveFileExist() {
         return mPuzzleJsonFile.exists();
     }
+
 }

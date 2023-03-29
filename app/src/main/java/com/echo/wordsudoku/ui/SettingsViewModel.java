@@ -8,6 +8,7 @@ public class SettingsViewModel extends ViewModel {
     private final MutableLiveData<Integer> mPuzzleLanguage = new MutableLiveData<>();
     private boolean timer;
 
+    boolean textToSpeech;
     private boolean autoSave;
     private int difficulty;
 
@@ -31,6 +32,10 @@ public class SettingsViewModel extends ViewModel {
     public void setTimer(boolean timer) {
         this.timer = timer;
     }
+
+    public void setTextToSpeech(boolean speech) { this.textToSpeech = speech; }
+
+    public boolean getTextToSpeech() { return this.textToSpeech; }
 
     public boolean isTimer() {
         return timer;
