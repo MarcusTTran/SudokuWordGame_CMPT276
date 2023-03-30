@@ -25,12 +25,13 @@
     <string name="save_puzzle_btn">Save Puzzle</string>
     <string name="reset_puzzle_btn">Reset</string>
 
+    <!-- Preference keys -->
     <string name="preference_file_key">com.echo.wordsudoku.gameOptions</string>
     <string name="puzzle_language_key">com.echo.wordsudoku.puzzleLanguageKey</string>
     <string name="puzzle_difficulty_preference_key">com.echo.wordsudoku.puzzleDifficultyKey</string>
     <string name="puzzle_timer_preference_key">com.echo.wordsudoku.puzzleTimerKey</string>
     <string name="puzzle_autosave_preference_key">com.echo.wordsudoku.autosave</string>
-
+    <string name="text_to_speech_preference_key">com.echo.wordsudoku.textToSpeech</string>
 
     <string name="RulesHeader">Word Sudoku Rules</string>
     <string name="RulesText">When you start a new Word Sudoku game you will be presented with a square grid consisting of a number of cells.
@@ -58,7 +59,6 @@ If you encounter any difficulty translating the words featured in your puzzle, y
     <string name="french_immersion_off">French Immersion Off</string>
     <string name="ui_immersion_header">French UI Immersion</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
     <!-- Timer Preferences -->
     <string name="set_timer_off">Timer is off</string>
     <string name="set_timer_on">Timer is on</string>
@@ -76,6 +76,8 @@ If you encounter any difficulty translating the words featured in your puzzle, y
     <!-- TextToSpeech Preferences -->
     <string name="text_to_speech_on">Text to Speech is on</string>
     <string name="text_to_speech_off">Text to Speech is off</string>
+    <string name="accessibility_category">Accessibility</string>
+    <string name="text_to_speech_title">Text-To-Speech</string>
 
     <string name="word_error">Error!</string>
     <string name="save_game_error">Failed to save the game</string>
