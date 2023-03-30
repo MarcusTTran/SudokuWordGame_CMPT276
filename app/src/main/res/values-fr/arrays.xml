@@ -6,6 +6,7 @@
         <item>Intermédiaire</item>
         <item>Avancé</item>
         <item>Expert</item>
+        <item>Débug/Démo</item>
     </string-array>
 
     <string-array name="difficulty_values">
@@ -14,6 +15,7 @@
         <item>3</item>
         <item>4</item>
         <item>5</item>
+        <item>6</item>
     </string-array>
 
     <string-array name="puzzle_sizes_spinner">

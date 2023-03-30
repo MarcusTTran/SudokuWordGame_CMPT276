@@ -123,7 +123,7 @@ public class Puzzle implements Writable {
 
         if(numberOfStartCells!=NO_NUMBER_OF_START_CELLS_USE_DIFFICULTY)
             numberOfCellsToRemove = solutionBoard.getRows()*solutionBoard.getColumns() - numberOfStartCells;
-        else if(difficulty<=5 && difficulty>0)
+        else if(difficulty<=6 && difficulty>0)
             numberOfCellsToRemove = getCellsToRemoveWithDifficulty(difficulty);
         else
             throw new IllegalArgumentException("Invalid difficulty and number of start cells");
@@ -600,6 +600,9 @@ public class Puzzle implements Writable {
 
 
     private int getCellsToRemoveWithDifficulty(int difficulty) {
+        if (difficulty == 6) {
+            return 1;
+        }
         int size = puzzleDimension.getPuzzleDimension();
         return (difficulty+1)*size*size/8;
     }
