@@ -3,6 +3,7 @@ package com.echo.wordsudoku.ui.puzzleParts;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
+import androidx.navigation.fragment.NavHostFragment;
 
 import com.echo.wordsudoku.exceptions.IllegalDimensionException;
 import com.echo.wordsudoku.exceptions.IllegalLanguageException;
@@ -56,6 +57,10 @@ public class PuzzleViewModel extends ViewModel {
 
     private void setPuzzle(Puzzle puzzle) throws NegativeNumberException {
         this.puzzle = new Puzzle(puzzle);
+
+        // TODO Make PuzzleViewModel tts boolean match the one in SettingsViewModel
+        // Not here though
+
         setPuzzleView(puzzle.toStringArray(textToSpeechStatus));
         postTimer(puzzle.getTimer());
     }
@@ -70,14 +75,14 @@ public class PuzzleViewModel extends ViewModel {
         this.mWordPairJsonReader = wordPairJsonReader;
     }
 
-    // TODO possibly delete if unused
-    public boolean isTextToSpeechStatus() {
-        return textToSpeechStatus;
-    }
-
-    public void setTextToSpeechStatus(boolean textToSpeechStatus) {
-        this.textToSpeechStatus = textToSpeechStatus;
-    }
+//    // TODO possibly delete if unused
+//    public boolean isTextToSpeechStatus() {
+//        return textToSpeechStatus;
+//    }
+//
+//    public void setTextToSpeechStatus(boolean textToSpeechStatus) {
+//        this.textToSpeechStatus = textToSpeechStatus;
+//    }
 
     public void newPuzzle(int puzzleSize, int boardLanguage, int difficulty) throws JSONException, IllegalLanguageException, TooBigNumberException, NegativeNumberException, IllegalWordPairException, IllegalDimensionException {
        setPuzzle(new Puzzle(mWordPairJsonReader.getRandomWords(puzzleSize),puzzleSize,boardLanguage,Puzzle.NO_NUMBER_OF_START_CELLS_USE_DIFFICULTY,difficulty));
