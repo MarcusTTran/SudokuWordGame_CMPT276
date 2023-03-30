@@ -130,4 +130,9 @@ tous vos mots en vedette. Mais rappelez-vous, vous ne pouvez accéder à cette t
     <string name="blank">blanc</string>
     <string name="ok">OK</string>
 
+    <!-- Choose Custom Words SharedPreference Keys-->
+    <string name="custom_words_english_save_key">com.echo.wordsudoku.puzzleCustomWordsEnglishKey</string>
+    <string name="custom_words_french_save_key">com.echo.wordsudoku.puzzleCustomWordsFrenchKey</string>
+
+
 </resources>
