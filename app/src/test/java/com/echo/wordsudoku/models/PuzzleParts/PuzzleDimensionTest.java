@@ -49,8 +49,8 @@ public class PuzzleDimensionTest {
     @Test
     void testConstructorInvalidInput() {
         // Test invalid input
-        assertThrows(IllegalArgumentException.class, () -> new PuzzleDimensions(5));
-        assertThrows(IllegalArgumentException.class, () -> new PuzzleDimensions(7));
+        assertThrows(IllegalDimensionException.class, () -> new PuzzleDimensions(5));
+        assertThrows(IllegalDimensionException.class, () -> new PuzzleDimensions(7));
     }
 
 
@@ -94,8 +94,8 @@ public class PuzzleDimensionTest {
         assertEquals(new Dimension(4, 3), pd.getBoxesInPuzzleDimension());
 
         // Test setting invalid puzzle dimension
-        assertThrows(IllegalArgumentException.class, () -> pd.setPuzzleDimension(5));
-        assertThrows(IllegalArgumentException.class, () -> pd.setPuzzleDimension(7));
+        assertThrows(IllegalDimensionException.class, () -> pd.setPuzzleDimension(5));
+        assertThrows(IllegalDimensionException.class, () -> pd.setPuzzleDimension(7));
     }
 
 

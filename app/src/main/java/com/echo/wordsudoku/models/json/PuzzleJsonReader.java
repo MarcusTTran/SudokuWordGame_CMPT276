@@ -58,6 +58,7 @@ public class PuzzleJsonReader {
             mPuzzleJsonObject = new JSONObject(puzzleJson);
         } catch (JSONException e) {
             e.printStackTrace();
+
         }
     }
 

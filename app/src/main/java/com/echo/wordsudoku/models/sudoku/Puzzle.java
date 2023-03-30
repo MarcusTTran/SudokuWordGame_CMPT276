@@ -647,12 +647,28 @@ public class Puzzle implements Writable {
         boolean solBoardAreEqual = this.solutionBoard.equals(puzzle.solutionBoard);
 
 
-        boolean wordPairsAreEqual = new HashSet<>(this.getWordPairs()).equals(new HashSet<>(puzzle.getWordPairs()));
+//        boolean wordPairsAreEqual = new HashSet<>(this.getWordPairs()).equals(new HashSet<>(puzzle.getWordPairs()));
+        boolean wordPairsAreEqual = areWordPairsEqual(puzzle.getWordPairs(), this.getWordPairs());
         boolean puzzleDimensionIsEqual = this.puzzleDimension.equals(puzzle.puzzleDimension);
 
         return language == puzzle.language && mistakes == puzzle.mistakes &&
                 timer == puzzle.timer && puzzleDimensionIsEqual &&
                 solBoardAreEqual && wordPairsAreEqual;
+    }
+
+    private boolean areWordPairsEqual(List<WordPair> one, List<WordPair> two) {
+
+        if (one.size() != two.size()) {
+            return false;
+        }
+
+        for (int i = 0; i < one.size(); i++) {
+            if (!one.get(i).equals(two.get(i))) {
+                return false;
+            }
+        }
+        return true;
+
     }
 
     public void unlockCells() {
