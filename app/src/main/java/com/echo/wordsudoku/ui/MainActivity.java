@@ -171,10 +171,12 @@ public class MainActivity extends AppCompatActivity implements SaveGameDialog.Sa
         boolean autoSave = mPreferences.getBoolean(getString(R.string.puzzle_autosave_preference_key), false);
         mSettingsViewModel.setAutoSave(autoSave);
 
-
+        boolean textToSpeech = mPreferences.getBoolean(getString(R.string.text_to_speech_preference_key), false);
+        mSettingsViewModel.setTextToSpeech(textToSpeech);
 
         // TODO ADD TTS SETTING IN LOAD AND SAVE METHODS!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         // MARCUSS
+        // I THINK I DID NOW
 
 
 
@@ -190,11 +192,13 @@ public class MainActivity extends AppCompatActivity implements SaveGameDialog.Sa
 
         boolean  mSettingsPuzzleTimer = mSettingsViewModel.isTimer();
         int mSettingsPuzzleDifficulty = mSettingsViewModel.getDifficulty();
+        boolean mTextToSpeechOn = mSettingsViewModel.getTextToSpeech();
 
         editor.putInt(getString(R.string.puzzle_language_key), mSettingsPuzzleLanguage);
         editor.putInt(getString(R.string.puzzle_difficulty_preference_key), mSettingsPuzzleDifficulty);
         editor.putBoolean(getString(R.string.puzzle_timer_preference_key), mSettingsPuzzleTimer);
         editor.putBoolean(getString(R.string.puzzle_autosave_preference_key), mSettingsViewModel.isAutoSave());
+        editor.putBoolean(getString(R.string.text_to_speech_preference_key), mTextToSpeechOn);
         editor.apply();
     }
 
@@ -215,7 +219,7 @@ public class MainActivity extends AppCompatActivity implements SaveGameDialog.Sa
 
     public void savePuzzle(){
         new Thread(() -> {
-            if(mPuzzleViewModel.isPuzzleNonValid()) return;
+            if (mPuzzleViewModel.isPuzzleNonValid()) return;
             try {
                 FileUtils.stringToPrintWriter(new PrintWriter(mPuzzleJsonFile),mPuzzleViewModel.getPuzzleJson().toString(JSON_OUTPUT_WHITESPACE));
                 latestSavedPuzzle = mPuzzleViewModel.getPuzzleView().getValue();
@@ -262,12 +266,13 @@ public class MainActivity extends AppCompatActivity implements SaveGameDialog.Sa
             try{
             // Load the puzzle from the file and update the class members
             Puzzle puzzle;
-            PuzzleJsonReader puzzleJsonReader = new PuzzleJsonReader(FileUtils.inputStreamToString(new FileInputStream(mPuzzleJsonFile)));
+            PuzzleJsonReader puzzleJsonReader = new PuzzleJsonReader(inputStreamToString(new FileInputStream(mPuzzleJsonFile)));
             puzzle = puzzleJsonReader.readPuzzle();
             // Update the PuzzleViewModel
                 if (puzzle != null) {
                     mPuzzleViewModel.loadPuzzle(puzzle);
-                    latestSavedPuzzle = puzzle.toStringArray();
+                    boolean textToSpeechOn = mSettingsViewModel.getTextToSpeech();
+                    latestSavedPuzzle = puzzle.toStringArray(textToSpeechOn);
                 }
             } catch (IOException e) {
                 // run from main thread
@@ -299,14 +304,17 @@ public class MainActivity extends AppCompatActivity implements SaveGameDialog.Sa
 
     @Override
     public void onCellTouched(String text, int row, int column) {
-//        PuzzleBoardFragment puzzleBoardFragment = (PuzzleBoardFragment) getSupportFragmentManager().findFragmentById(R.id.board);
-//        puzzleBoardFragment.speakWordInCell(new Dimension(row, column));
-        NavHostFragment navHostFragment =
-                (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment);
-        PuzzleFragment puzzleFragment = (PuzzleFragment) navHostFragment.getChildFragmentManager().getFragments().get(0);
-        PuzzleBoardFragment puzzleBoardFragment = (PuzzleBoardFragment) puzzleFragment.getChildFragmentManager().findFragmentById(R.id.board);
-        puzzleBoardFragment.speakWordInCell(new Dimension(row-1, column-1));
-//        Log.d("Hi","hello");
+        if (mSettingsViewModel.getTextToSpeech()) {
+            // Get PuzzleBoard Fragment to call text-to-speech method
+            NavHostFragment navHostFragment =
+                    (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment);
+            PuzzleFragment puzzleFragment = (PuzzleFragment) navHostFragment.getChildFragmentManager().getFragments().get(0);
+            PuzzleBoardFragment puzzleBoardFragment = (PuzzleBoardFragment) puzzleFragment.getChildFragmentManager().findFragmentById(R.id.board);
 
+            // Invoke text-to-speech method
+            puzzleBoardFragment.speakWordInCell(new Dimension(row-1, column-1));
+        }
+        // else do nothing
     }
+
 }

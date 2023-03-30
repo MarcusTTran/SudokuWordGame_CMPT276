@@ -11,6 +11,7 @@ import com.echo.wordsudoku.models.dimension.Dimension;
 import com.echo.wordsudoku.models.dimension.PuzzleDimensions;
 import com.echo.wordsudoku.models.utility.MathUtils;
 import com.echo.wordsudoku.models.words.WordPair;
+import com.echo.wordsudoku.ui.SettingsViewModel;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -121,7 +122,7 @@ public class Puzzle implements Writable {
 
         int numberOfCellsToRemove;
 
-        if(numberOfStartCells != NO_NUMBER_OF_START_CELLS_USE_DIFFICULTY)
+        if (numberOfStartCells != NO_NUMBER_OF_START_CELLS_USE_DIFFICULTY)
             numberOfCellsToRemove = solutionBoard.getRows()*solutionBoard.getColumns() - numberOfStartCells;
         else if (difficulty <= 5 && difficulty > 0)
             numberOfCellsToRemove = getCellsToRemoveWithDifficulty(difficulty);
@@ -321,15 +322,16 @@ public class Puzzle implements Writable {
     /* @method
      *  Returns a String[][] representation of the user board
      *  Can be used to update the UI
+     *  Pre-filled cells become numbers if text-to-speech is on
      * @return: a String[][] representation of the user board
      */
-    public String[][] toStringArray() {
+    public String[][] toStringArray(boolean textToSpeechOn) {
         String[][] stringBoard = new String[userBoard.getRows()][userBoard.getColumns()];
         for (int i = 0; i < userBoard.getRows(); i++) {
             for (int j = 0; j < userBoard.getColumns(); j++) {
                 Cell cell = userBoard.getCellFromBigArray(i,j);
                 if (cell.getContent() != null){
-                    if(!cell.isEditable()) {
+                    if((!cell.isEditable()) && textToSpeechOn) {
                         stringBoard[i][j] = Integer.toString( mWordPairs.indexOf(cell.getContent()) + 1); // TODO Refactor this to be better
                     } else {
                         stringBoard[i][j] = cell.getContent().getEnglishOrFrench(cell.getLanguage());
