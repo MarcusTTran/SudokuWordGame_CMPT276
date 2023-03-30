@@ -270,8 +270,9 @@ public class MainActivity extends AppCompatActivity implements SaveGameDialog.Sa
             puzzle = puzzleJsonReader.readPuzzle();
             // Update the PuzzleViewModel
                 if (puzzle != null) {
-                    mPuzzleViewModel.loadPuzzle(puzzle);
                     boolean textToSpeechOn = mSettingsViewModel.getTextToSpeech();
+                    mPuzzleViewModel.loadPuzzle(puzzle);
+//                    boolean textToSpeechOn = mSettingsViewModel.getTextToSpeech();
                     latestSavedPuzzle = puzzle.toStringArray(textToSpeechOn);
                 }
             } catch (IOException e) {

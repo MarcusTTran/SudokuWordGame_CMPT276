@@ -11,7 +11,6 @@ import com.echo.wordsudoku.models.dimension.Dimension;
 import com.echo.wordsudoku.models.dimension.PuzzleDimensions;
 import com.echo.wordsudoku.models.utility.MathUtils;
 import com.echo.wordsudoku.models.words.WordPair;
-import com.echo.wordsudoku.ui.SettingsViewModel;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -330,18 +329,26 @@ public class Puzzle implements Writable {
         for (int i = 0; i < userBoard.getRows(); i++) {
             for (int j = 0; j < userBoard.getColumns(); j++) {
                 Cell cell = userBoard.getCellFromBigArray(i,j);
-                if (cell.getContent() != null){
-                    if((!cell.isEditable()) && textToSpeechOn) {
-                        stringBoard[i][j] = Integer.toString( mWordPairs.indexOf(cell.getContent()) + 1); // TODO Refactor this to be better
-                    } else {
-                        stringBoard[i][j] = cell.getContent().getEnglishOrFrench(cell.getLanguage());
-                    }
+
+                if (cell.getContent() != null) {
+                    stringBoard[i][j] = retrieveWordStringFromCell(textToSpeechOn, cell);
                 }
                 else
                     stringBoard[i][j] = "";
             }
         }
         return stringBoard;
+    }
+
+    private String retrieveWordStringFromCell(boolean textToSpeechOn, Cell cell) {
+        String result;
+        if (!cell.isEditable()) { // && textToSpeechOn
+            if (textToSpeechOn) {
+                return Integer.toString(mWordPairs.indexOf(cell.getContent()) + 1);
+            }
+        }
+        // If its not TTS and one of the original pre-filled, then get the word
+        return cell.getContent().getEnglishOrFrench(cell.getLanguage());
     }
 
 
