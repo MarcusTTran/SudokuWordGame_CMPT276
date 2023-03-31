@@ -1,6 +1,6 @@
 package com.echo.wordsudoku.models.sudoku;
 
-/*
+/**
  * This class represents a 2D array of cells.
  * It is used to represent a box in a sudoku puzzle.
  * It contains the cells (cells: Cell[][]), the number of rows and the number of columns of the 2D array of cells in a Dimension object (dimension: Dimension).
