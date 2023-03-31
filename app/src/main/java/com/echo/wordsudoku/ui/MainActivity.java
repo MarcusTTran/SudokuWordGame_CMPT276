@@ -66,8 +66,6 @@ public class MainActivity extends AppCompatActivity implements SaveGameDialog.Sa
     public SettingsViewModel mSettingsViewModel;
 
     private int mSettingsPuzzleLanguage;
-//    private int mSettingsPuzzleDifficulty;
-//    private boolean mSettingsPuzzleTimer;
 
     private AppBarConfiguration appBarConfiguration;
 
@@ -174,13 +172,6 @@ public class MainActivity extends AppCompatActivity implements SaveGameDialog.Sa
         boolean textToSpeech = mPreferences.getBoolean(getString(R.string.text_to_speech_preference_key), false);
         mSettingsViewModel.setTextToSpeech(textToSpeech);
 
-        // TODO ADD TTS SETTING IN LOAD AND SAVE METHODS!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-        // MARCUSS
-        // I THINK I DID NOW
-
-
-
-
     }
 
 
@@ -272,7 +263,6 @@ public class MainActivity extends AppCompatActivity implements SaveGameDialog.Sa
                 if (puzzle != null) {
                     boolean textToSpeechOn = mSettingsViewModel.getTextToSpeech();
                     mPuzzleViewModel.loadPuzzle(puzzle, textToSpeechOn);
-//                    boolean textToSpeechOn = mSettingsViewModel.getTextToSpeech();
                     if (textToSpeechOn)
                         puzzle.setTextToSpeechOn(true);
                     latestSavedPuzzle = puzzle.toStringArray();

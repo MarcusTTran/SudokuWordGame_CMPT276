@@ -55,10 +55,6 @@ public class PuzzleViewModel extends ViewModel {
 
     private void setPuzzle(Puzzle puzzle) throws NegativeNumberException {
         this.puzzle = new Puzzle(puzzle);
-
-        // TODO Make PuzzleViewModel tts boolean match the one in SettingsViewModel
-        // Not here though
-
         setPuzzleView(puzzle.toStringArray());
         postTimer(puzzle.getTimer());
     }
