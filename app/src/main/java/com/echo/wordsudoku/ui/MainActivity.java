@@ -46,6 +46,7 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -166,13 +167,21 @@ public class MainActivity extends AppCompatActivity implements SaveGameDialog.Sa
     }
 
     private void loadCustomWordPairs() {
-        Set<String> englishCustomWordsSet = mPreferences.getStringSet(getString(R.string.custom_words_english_save_key), null);
-        Set<String> frenchCustomWordsSet = mPreferences.getStringSet(getString(R.string.custom_words_french_save_key), null);
+        String englishCustomWordsString = mPreferences.getString(getString(R.string.custom_words_english_save_key), null);
+        String frenchCustomWordsString = mPreferences.getString(getString(R.string.custom_words_french_save_key), null);
+        Log.d("MAINTEST", "LOADING IN :" + englishCustomWordsString);
 
-        if (englishCustomWordsSet != null && frenchCustomWordsSet != null) {
-//            Log.d("TESTCOM", "Size of Set<String> " + englishCustomWordsSet.size());
-            List<String> englishCustomWordsList = new ArrayList<>(englishCustomWordsSet);
-            List<String> frenchCustomWordsList = new ArrayList<>(frenchCustomWordsSet);
+//        List<String> englishCustomWordsList = new ArrayList<>(englishCustomWordsString);
+//        List<String> frenchCustomWordsList = new ArrayList<>(frenchCustomWordsString);
+
+        if (englishCustomWordsString != null && frenchCustomWordsString != null) {
+            Log.d("MAINTEST", "Load in strings were not empty in sharedpreferences");
+            englishCustomWordsString = englishCustomWordsString.substring(0, englishCustomWordsString.length() - 1);
+            frenchCustomWordsString = frenchCustomWordsString.substring(0, frenchCustomWordsString.length() - 1);
+
+
+            List<String> englishCustomWordsList = new ArrayList<>(Arrays.asList(englishCustomWordsString.split(";")));
+            List<String> frenchCustomWordsList = new ArrayList<>(Arrays.asList(frenchCustomWordsString.split(";")));
 
             List<WordPair> loadedCustomWords = new ArrayList<>();
             for (int i = 0; i < englishCustomWordsList.size(); i++) {
@@ -186,24 +195,28 @@ public class MainActivity extends AppCompatActivity implements SaveGameDialog.Sa
     private void saveCustomWordsPairs() {
         // Save all of the game settings so when the user opens the app again, the settings are the same
         SharedPreferences.Editor editor = mPreferences.edit();
-        List<String> customWordsEnglish = new ArrayList<>();
-        List<String> customWordsFrench = new ArrayList<>();
+
         if (mPuzzleViewModel.getCustomWordPairs() != null) {
+            String customWordsEnglish= "";
+            String customWordsFrench = "";
             for (int i = 0; i < mPuzzleViewModel.getCustomWordPairs().size(); i++) {
-                customWordsEnglish.add(mPuzzleViewModel.getCustomWordPairs().get(i).getEnglish());
-                customWordsFrench.add(mPuzzleViewModel.getCustomWordPairs().get(i).getFrench());
+                customWordsEnglish = customWordsEnglish.concat(mPuzzleViewModel.getCustomWordPairs().get(i).getEnglish() + ";");
+                customWordsFrench = customWordsFrench.concat(mPuzzleViewModel.getCustomWordPairs().get(i).getFrench() + ";");
             }
 
-            Set<String> englishSet = new HashSet<>(customWordsEnglish);
-            Set<String> frenchSet = new HashSet<>(customWordsFrench);
+//            Set<String> englishSet = new LinkedHashSet<>(customWordsEnglish);
+//            Set<String> frenchSet = new LinkedHashSet<>(customWordsFrench);
 
-            editor.putStringSet(getString(R.string.custom_words_english_save_key), englishSet);
-            editor.putStringSet(getString(R.string.custom_words_french_save_key), frenchSet);
+            Log.d("MAINTEST", "NOW SAVING :" + customWordsEnglish);
+
+
+            editor.putString(getString(R.string.custom_words_english_save_key), customWordsEnglish);
+            editor.putString(getString(R.string.custom_words_french_save_key), customWordsFrench);
 
             editor.apply();
         } else {
-            editor.putStringSet(getString(R.string.custom_words_english_save_key), null);
-            editor.putStringSet(getString(R.string.custom_words_french_save_key), null);
+            editor.putString(getString(R.string.custom_words_english_save_key), null);
+            editor.putString(getString(R.string.custom_words_french_save_key), null);
             editor.apply();
         }
 
