@@ -149,10 +149,10 @@ public class PuzzleJsonReaderTest {
             PuzzleJsonReader puzzleJsonReader = new PuzzleJsonReader(null);
             fail("PuzzleJsonReader shouldn't read empty json string");
         } catch (NullPointerException e){
-            //expected
-
+            // expected
+        } catch (JSONException e) {
+            fail("null pointer comes before json exception");
         }
-
     }
 
 

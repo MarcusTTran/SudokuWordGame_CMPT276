@@ -259,6 +259,10 @@ public class MainActivity extends AppCompatActivity implements SaveGameDialog.Sa
                 runOnUiThread(() -> {
                     fatalErrorDialog(getString(R.string.load_game_error));
                 });
+            } catch (JSONException e) {
+                runOnUiThread(() -> {
+                    fatalErrorDialog(getString(R.string.failed_to_convert_to_json));
+                });
             }
         }).start();
     }
