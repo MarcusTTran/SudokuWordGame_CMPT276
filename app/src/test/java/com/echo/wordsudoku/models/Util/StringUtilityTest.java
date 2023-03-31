@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 
 /**
  * Unit test for StringUtility
+ * @author Kousha Amouzesh
  * @version 1.0
  */
 

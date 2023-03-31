@@ -1,7 +1,8 @@
-package com.echo.wordsudoku.models;
+package com.echo.wordsudoku.models.PuzzleParts;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import com.echo.wordsudoku.models.TestUtils;
 import com.echo.wordsudoku.models.words.WordPair;
 
 import org.junit.jupiter.api.Assertions;

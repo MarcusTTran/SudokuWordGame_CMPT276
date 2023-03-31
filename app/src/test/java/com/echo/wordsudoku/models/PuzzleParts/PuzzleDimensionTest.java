@@ -13,6 +13,7 @@ import org.junit.jupiter.api.Test;
 
 /**
  * Unit test for PuzzleDimensions
+ * @author Kousha Amouzesh
  * @version 1.0
  */
 

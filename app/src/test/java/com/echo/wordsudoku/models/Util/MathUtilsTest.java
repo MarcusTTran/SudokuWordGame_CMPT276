@@ -9,8 +9,9 @@ import org.junit.jupiter.api.Test;
 import java.util.List;
 
 /**
-* Unit test for MathUtils
-* @version 1.0
+ * Unit test for MathUtils
+ * @author Kousha Amouzesh
+ * @version 1.0
 */
 
 public class MathUtilsTest {

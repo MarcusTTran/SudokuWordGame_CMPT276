@@ -9,7 +9,7 @@ import com.echo.wordsudoku.exceptions.IllegalWordPairException;
 import com.echo.wordsudoku.exceptions.NegativeNumberException;
 import com.echo.wordsudoku.exceptions.TooBigNumberException;
 import com.echo.wordsudoku.models.TestUtils;
-import com.echo.wordsudoku.models.WordPairTest;
+import com.echo.wordsudoku.models.PuzzleParts.WordPairTest;
 import com.echo.wordsudoku.models.sudoku.Cell;
 import com.echo.wordsudoku.models.sudoku.GameResult;
 import com.echo.wordsudoku.models.sudoku.Puzzle;
@@ -85,7 +85,7 @@ public class PuzzleUtilityTest extends PuzzleTest{
         }
     }
 
-    //TODO : Add test for isSudokuValid
+    //TODO :Add test for isSudokuValid
     //TODO: Add test for isJthColumnValid
     //TODO: Add test for isIthRowValid
     //TODO: Add test for isCellBoxValid

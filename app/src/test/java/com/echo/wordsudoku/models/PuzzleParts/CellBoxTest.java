@@ -14,6 +14,7 @@ import org.junit.jupiter.api.Test;
 
 /**
  * Unit test for CellBox
+ * @author Kousha Amouzesh
  * @version 1.0
  */
 class CellBoxTest {

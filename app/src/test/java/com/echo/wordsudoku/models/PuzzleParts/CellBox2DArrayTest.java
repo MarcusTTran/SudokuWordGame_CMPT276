@@ -478,8 +478,6 @@ public class CellBox2DArrayTest {
 
 
 
-
-
     // helper method for checking whether all cells are empty or not
     boolean areAllCellsAreEmpty(CellBox2DArray cellBox2DArray){
         for (int i = 0; i < cellBox2DArray.getCellBoxes().length; i++) {
