@@ -343,7 +343,7 @@ public class ChooseCustomWordsFragment extends Fragment{
             //Check that the entered word contains no non-characters
             char[] charactersInString = someString.toCharArray();
             for (char someCharacter : charactersInString) {
-                if(!Character.isLetter(someCharacter)) {
+                if(Character.isDigit(someCharacter)) {
                     return false;
                 }
             }
@@ -363,7 +363,7 @@ public class ChooseCustomWordsFragment extends Fragment{
             //Check that the entered word contains no non-characters
             char[] charactersInString = someString.toCharArray();
             for (char someCharacter : charactersInString) {
-                if(!Character.isLetter(someCharacter)) {
+                if(Character.isDigit(someCharacter)) {
                     return false;
                 }
             }
