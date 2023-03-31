@@ -29,8 +29,6 @@ public class PuzzleViewModel extends ViewModel {
     private final MutableLiveData<String[][]> puzzleView = new MutableLiveData<>();
 
     private final MutableLiveData<Integer> timer = new MutableLiveData<>();
-
-    private boolean textToSpeechStatus;
     private List<WordPair> customWordPairs;
     private WordPairJsonReader mWordPairJsonReader;
 
@@ -61,13 +59,14 @@ public class PuzzleViewModel extends ViewModel {
         // TODO Make PuzzleViewModel tts boolean match the one in SettingsViewModel
         // Not here though
 
-        setPuzzleView(puzzle.toStringArray(textToSpeechStatus));
+        setPuzzleView(puzzle.toStringArray());
         postTimer(puzzle.getTimer());
     }
 
-    private void postPuzzle(Puzzle puzzle) {
+    private void postPuzzle(Puzzle puzzle,boolean textToSpeech) {
+        puzzle.setTextToSpeechOn(textToSpeech);
         this.puzzle = new Puzzle(puzzle);
-        puzzleView.postValue(puzzle.toStringArray(textToSpeechStatus));
+        puzzleView.postValue(puzzle.toStringArray());
         timer.postValue(puzzle.getTimer());
     }
 
@@ -75,36 +74,27 @@ public class PuzzleViewModel extends ViewModel {
         this.mWordPairJsonReader = wordPairJsonReader;
     }
 
-//    // TODO possibly delete if unused
-//    public boolean isTextToSpeechStatus() {
-//        return textToSpeechStatus;
-//    }
-//
-//    public void setTextToSpeechStatus(boolean textToSpeechStatus) {
-//        this.textToSpeechStatus = textToSpeechStatus;
-//    }
-
-    public void newPuzzle(int puzzleSize, int boardLanguage, int difficulty) throws JSONException, IllegalLanguageException, TooBigNumberException, NegativeNumberException, IllegalWordPairException, IllegalDimensionException {
-       setPuzzle(new Puzzle(mWordPairJsonReader.getRandomWords(puzzleSize),puzzleSize,boardLanguage,Puzzle.NO_NUMBER_OF_START_CELLS_USE_DIFFICULTY,difficulty));
+    public void newPuzzle(int puzzleSize, int boardLanguage, int difficulty, boolean textToSpeech) throws JSONException, IllegalLanguageException, TooBigNumberException, NegativeNumberException, IllegalWordPairException, IllegalDimensionException {
+       setPuzzle(new Puzzle(mWordPairJsonReader.getRandomWords(puzzleSize),puzzleSize,boardLanguage,Puzzle.NO_NUMBER_OF_START_CELLS_USE_DIFFICULTY,difficulty,textToSpeech));
     }
 
-    public void newCustomPuzzle(int puzzleLanguage, int difficulty) throws IllegalLanguageException, TooBigNumberException, NegativeNumberException, IllegalWordPairException, IllegalDimensionException {
-        setPuzzle(new Puzzle(customWordPairs, customWordPairs.size(),puzzleLanguage,Puzzle.NO_NUMBER_OF_START_CELLS_USE_DIFFICULTY,difficulty));
+    public void newCustomPuzzle(int puzzleLanguage, int difficulty, boolean textToSpeech) throws IllegalLanguageException, TooBigNumberException, NegativeNumberException, IllegalWordPairException, IllegalDimensionException {
+        setPuzzle(new Puzzle(customWordPairs, customWordPairs.size(),puzzleLanguage,Puzzle.NO_NUMBER_OF_START_CELLS_USE_DIFFICULTY,difficulty,textToSpeech));
     }
 
-    public void loadPuzzle(Puzzle puzzle) {
-        postPuzzle(puzzle);
+    public void loadPuzzle(Puzzle puzzle, boolean textToSpeech) {
+        postPuzzle(puzzle,textToSpeech);
     }
 
     public void insertWord(Dimension dimension,String word) throws IllegalWordPairException, IllegalDimensionException {
         puzzle.setCell(dimension, word);
-        setPuzzleView(puzzle.toStringArray(textToSpeechStatus));
+        setPuzzleView(puzzle.toStringArray());
     }
 
     public void resetPuzzle(boolean isRetry) {
         if (!puzzle.isPuzzleBlank()) {
             puzzle.resetPuzzle(isRetry);
-            setPuzzleView(puzzle.toStringArray(textToSpeechStatus));
+            setPuzzleView(puzzle.toStringArray());
         }
     }
 

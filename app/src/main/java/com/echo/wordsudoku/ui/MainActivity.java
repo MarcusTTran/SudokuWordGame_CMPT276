@@ -244,7 +244,7 @@ public class MainActivity extends AppCompatActivity implements SaveGameDialog.Sa
     @Override
     public void onPuzzleSizeSelected(int size) {
         try {
-            mPuzzleViewModel.newPuzzle(size, mSettingsViewModel.getPuzzleLanguage().getValue(),mSettingsViewModel.getDifficulty());
+            mPuzzleViewModel.newPuzzle(size, mSettingsViewModel.getPuzzleLanguage().getValue(),mSettingsViewModel.getDifficulty(),mSettingsViewModel.getTextToSpeech());
         } catch (JSONException e) {
             throw new RuntimeException(e);
         } catch (IllegalLanguageException e) {
@@ -271,9 +271,11 @@ public class MainActivity extends AppCompatActivity implements SaveGameDialog.Sa
             // Update the PuzzleViewModel
                 if (puzzle != null) {
                     boolean textToSpeechOn = mSettingsViewModel.getTextToSpeech();
-                    mPuzzleViewModel.loadPuzzle(puzzle);
+                    mPuzzleViewModel.loadPuzzle(puzzle, textToSpeechOn);
 //                    boolean textToSpeechOn = mSettingsViewModel.getTextToSpeech();
-                    latestSavedPuzzle = puzzle.toStringArray(textToSpeechOn);
+                    if (textToSpeechOn)
+                        puzzle.setTextToSpeechOn(true);
+                    latestSavedPuzzle = puzzle.toStringArray();
                 }
             } catch (IOException e) {
                 // run from main thread

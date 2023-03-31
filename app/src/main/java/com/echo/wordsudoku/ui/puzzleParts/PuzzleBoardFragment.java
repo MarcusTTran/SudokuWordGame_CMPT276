@@ -19,6 +19,7 @@ import com.echo.wordsudoku.exceptions.IllegalLanguageException;
 import com.echo.wordsudoku.models.dimension.Dimension;
 import com.echo.wordsudoku.models.dimension.PuzzleDimensions;
 import com.echo.wordsudoku.models.sudoku.Cell;
+import com.echo.wordsudoku.ui.SettingsViewModel;
 import com.echo.wordsudoku.views.OnCellTouchListener;
 import com.echo.wordsudoku.views.SudokuBoard;
 
@@ -40,20 +41,16 @@ public class PuzzleBoardFragment extends Fragment {
         mSudokuBoard = root.findViewById(R.id.sudoku_board);
         mSudokuBoard.setOnCellTouchListener((OnCellTouchListener)getActivity());
         mPuzzleViewModel = new ViewModelProvider(requireActivity()).get(PuzzleViewModel.class);
-
         // Going to fill the puzzle with loading while the puzzle is being loaded
         loadingScreen();
 
-        toSpeech = new TextToSpeech(this.getContext(), new TextToSpeech.OnInitListener() {
-            @Override
-            public void onInit(int i) {
-                if (i != TextToSpeech.ERROR) {
-                    try {
-                        Locale language = (mPuzzleViewModel.getPuzzleInputLanguage() == ENGLISH) ? Locale.CANADA_FRENCH : Locale.ENGLISH;
-                        toSpeech.setLanguage(language);
-                    } catch (IllegalLanguageException e) {
-                        throw new RuntimeException(e);
-                    }
+        toSpeech = new TextToSpeech(this.getContext(), i -> {
+            if (i != TextToSpeech.ERROR) {
+                try {
+                    Locale language = (mPuzzleViewModel.getPuzzleInputLanguage() == ENGLISH) ? Locale.CANADA_FRENCH : Locale.ENGLISH;
+                    toSpeech.setLanguage(language);
+                } catch (IllegalLanguageException e) {
+                    throw new RuntimeException(e);
                 }
             }
         });
@@ -100,7 +97,8 @@ public class PuzzleBoardFragment extends Fragment {
             throw new IllegalStateException("speakWordInCell called with TTS being null!"); //TODO catch this unchecked exception from where its called
         } else {
             Cell selectedCell = mPuzzleViewModel.getPuzzle().getCellFromViewablePuzzle(currentCellDimension.getRows(), currentCellDimension.getColumns());
-            speak(selectedCell);
+            if (!selectedCell.isEditable())
+                speak(selectedCell);
         }
     }
 

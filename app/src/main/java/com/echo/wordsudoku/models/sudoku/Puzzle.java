@@ -82,6 +82,8 @@ public class Puzzle implements Writable {
 
     private int timer = 0;
 
+    private boolean textToSpeechOn = false;
+
     /* @constructor
      * @param wordPairs: the word pairs that are used in the puzzle. no repetition is allowed
      * @param dimension: the dimension of the puzzle
@@ -155,6 +157,7 @@ public class Puzzle implements Writable {
         this.language = puzzle.getLanguage();
         this.mistakes = puzzle.getMistakes();
         this.timer = puzzle.getTimer();
+        this.setTextToSpeechOn(puzzle.isTextToSpeechOn());
     }
 
     /* @constructor
@@ -176,6 +179,11 @@ public class Puzzle implements Writable {
         this.language = language;
         this.mistakes = mistakes;
         this.timer = timer;
+    }
+
+    public Puzzle(List<WordPair> randomWords, int puzzleSize, int boardLanguage, int noNumberOfStartCellsUseDifficulty, int difficulty, boolean textToSpeech) throws IllegalLanguageException, TooBigNumberException, NegativeNumberException, IllegalWordPairException, IllegalDimensionException {
+        this(randomWords,puzzleSize,boardLanguage,noNumberOfStartCellsUseDifficulty,difficulty);
+        setTextToSpeechOn(textToSpeech);
     }
 
 
@@ -231,6 +239,15 @@ public class Puzzle implements Writable {
             throw new IllegalWordPairException();
         setUserBoard(userBoard);
     }
+
+    public void setTextToSpeechOn(boolean textToSpeechOn) {
+        this.textToSpeechOn = textToSpeechOn;
+    }
+
+    public boolean isTextToSpeechOn() {
+        return textToSpeechOn;
+    }
+
     // End of getters and setters
 
 
@@ -324,7 +341,7 @@ public class Puzzle implements Writable {
      *  Pre-filled cells become numbers if text-to-speech is on
      * @return: a String[][] representation of the user board
      */
-    public String[][] toStringArray(boolean textToSpeechOn) {
+    public String[][] toStringArray() {
         String[][] stringBoard = new String[userBoard.getRows()][userBoard.getColumns()];
         for (int i = 0; i < userBoard.getRows(); i++) {
             for (int j = 0; j < userBoard.getColumns(); j++) {
@@ -341,7 +358,6 @@ public class Puzzle implements Writable {
     }
 
     private String retrieveWordStringFromCell(boolean textToSpeechOn, Cell cell) {
-        String result;
         if (!cell.isEditable()) { // && textToSpeechOn
             if (textToSpeechOn) {
                 return Integer.toString(mWordPairs.indexOf(cell.getContent()) + 1);

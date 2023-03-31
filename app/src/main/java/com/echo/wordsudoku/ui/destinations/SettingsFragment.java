@@ -103,18 +103,15 @@ public class SettingsFragment extends PreferenceFragmentCompat {
         SwitchPreferenceCompat textToSpeech = findPreference("textToSpeech");
         textToSpeech.setChecked(settingsViewModel.getTextToSpeech());
 
-        textToSpeech.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
-            @Override
-            public boolean onPreferenceChange(@NonNull Preference preference, Object textToSpeech) {
-                settingsViewModel.setTextToSpeech((boolean) textToSpeech);
+        textToSpeech.setOnPreferenceChangeListener((preference, textToSpeech1) -> {
+            settingsViewModel.setTextToSpeech((boolean) textToSpeech1);
 
-                if (settingsViewModel.getTextToSpeech()) {
-                    Toast.makeText(getContext(), R.string.text_to_speech_on, Toast.LENGTH_SHORT).show();
-                } else {
-                    Toast.makeText(getContext(), R.string.text_to_speech_off, Toast.LENGTH_SHORT).show();
-                }
-                return true;
+            if (settingsViewModel.getTextToSpeech()) {
+                Toast.makeText(getContext(), R.string.text_to_speech_on, Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(getContext(), R.string.text_to_speech_off, Toast.LENGTH_SHORT).show();
             }
+            return true;
         });
     }
 }
