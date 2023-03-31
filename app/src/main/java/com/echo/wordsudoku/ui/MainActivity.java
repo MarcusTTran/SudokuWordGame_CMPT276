@@ -111,6 +111,8 @@ public class MainActivity extends AppCompatActivity implements SaveGameDialog.Sa
 
         // This is used to load the settings from the shared preferences and update the settings view model and load the program according to these settings
         loadSettings();
+
+        // This is used to load in the custom word pairs into the choose custom words page
         loadCustomWordPairs();
 
         // Setting up the game settings saved in the shared preferences
@@ -194,7 +196,6 @@ public class MainActivity extends AppCompatActivity implements SaveGameDialog.Sa
 
             Set<String> englishSet = new HashSet<>(customWordsEnglish);
             Set<String> frenchSet = new HashSet<>(customWordsFrench);
-
 
             editor.putStringSet(getString(R.string.custom_words_english_save_key), englishSet);
             editor.putStringSet(getString(R.string.custom_words_french_save_key), frenchSet);
