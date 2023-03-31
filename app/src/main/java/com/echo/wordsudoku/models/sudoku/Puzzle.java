@@ -116,7 +116,6 @@ public class Puzzle implements Writable {
 
         // We set the language of the board opposite to the language of the puzzle
         this.solutionBoard = new CellBox2DArray(puzzleDimension,language);
-        // TODO: Make the solution board cells all of them isEditable = false
 
         // First we create a solved board
         SolveBoard(this.solutionBoard,mWordPairs);
@@ -358,7 +357,7 @@ public class Puzzle implements Writable {
     }
 
     private String retrieveWordStringFromCell(boolean textToSpeechOn, Cell cell) {
-        if (!cell.isEditable()) { // && textToSpeechOn
+        if (!cell.isEditable()) {
             if (textToSpeechOn) {
                 return Integer.toString(mWordPairs.indexOf(cell.getContent()) + 1);
             }
