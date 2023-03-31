@@ -44,29 +44,11 @@ public class PuzzleFragment extends Fragment {
 
     private PuzzleViewModel mPuzzleViewModel;
 
-//    private TextToSpeech toSpeech;
-
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         setHasOptionsMenu(true);
 
         mPuzzleViewModel = new ViewModelProvider(requireActivity()).get(PuzzleViewModel.class);
-        SettingsViewModel settingsViewModel = new ViewModelProvider(requireActivity()).get(SettingsViewModel.class);
-
-        //        toSpeech = new TextToSpeech(this.getContext(), new TextToSpeech.OnInitListener() {
-//            @Override
-//            public void onInit(int i) {
-//                // TODO: Implement listener
-//                if (i != TextToSpeech.ERROR) {
-//                    try {
-//                        Locale language = (mPuzzleViewModel.getPuzzleInputLanguage() == ENGLISH) ? Locale.CANADA_FRENCH : Locale.ENGLISH;
-//                        toSpeech.setLanguage(language);
-//                    } catch (IllegalLanguageException e) {
-//                        throw new RuntimeException(e);
-//                    }
-//                }
-//            }
-//        });
 
         View root = inflater.inflate(R.layout.fragment_puzzle, container, false);
         return root;
@@ -84,15 +66,8 @@ public class PuzzleFragment extends Fragment {
             return;
         }
         if (!mPuzzleViewModel.isCellWritable(currentCell)) {
-//            if (toSpeech == null) {
-                Toast.makeText(requireActivity(), R.string.error_insert_in_initial_cell, Toast.LENGTH_SHORT).show();
-//            } else {
-//                // TODO delete later
-//                Cell selectedCell = mPuzzleViewModel.getPuzzle().getCellFromViewablePuzzle(currentCell.getRows(), currentCell.getColumns());
-//                speak(selectedCell);
-//            }
-        }
-        else {
+            Toast.makeText(requireActivity(), R.string.error_insert_in_initial_cell, Toast.LENGTH_SHORT).show();
+        } else {
             mPuzzleViewModel.insertWord(currentCell, word);
         }
     }
