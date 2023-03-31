@@ -59,6 +59,7 @@
         <action
             android:id="@+id/submitPuzzleAction"
             app:destination="@id/puzzleResultFragment"
+            app:popUpTo="@id/mainMenuFragment"
             />
         </fragment>
         <fragment
