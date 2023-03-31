@@ -43,12 +43,29 @@ public class PuzzleFragment extends Fragment {
     private int dictionaryPopupLimit = 0;
 
     private PuzzleViewModel mPuzzleViewModel;
+    private SettingsViewModel settingsViewModel;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         setHasOptionsMenu(true);
 
         mPuzzleViewModel = new ViewModelProvider(requireActivity()).get(PuzzleViewModel.class);
+        settingsViewModel= new ViewModelProvider(requireActivity()).get(SettingsViewModel.class);
+
+        //        toSpeech = new TextToSpeech(this.getContext(), new TextToSpeech.OnInitListener() {
+//            @Override
+//            public void onInit(int i) {
+//                // TODO: Implement listener
+//                if (i != TextToSpeech.ERROR) {
+//                    try {
+//                        Locale language = (mPuzzleViewModel.getPuzzleInputLanguage() == ENGLISH) ? Locale.CANADA_FRENCH : Locale.ENGLISH;
+//                        toSpeech.setLanguage(language);
+//                    } catch (IllegalLanguageException e) {
+//                        throw new RuntimeException(e);
+//                    }
+//                }
+//            }
+//        });
 
         View root = inflater.inflate(R.layout.fragment_puzzle, container, false);
         return root;
@@ -92,7 +109,7 @@ public class PuzzleFragment extends Fragment {
         }
 
         //Create new instance of RulesFragment
-        DictionaryFragment dictionaryFragment = DictionaryFragment.newInstance(LanguageList1, LanguageList2, dictionaryPopupLimit);
+        DictionaryFragment dictionaryFragment = DictionaryFragment.newInstance(LanguageList1, LanguageList2, dictionaryPopupLimit,settingsViewModel.getDifficulty());
         dictionaryFragment.show(getActivity().getSupportFragmentManager(), DictionaryFragment.TAG);
         //Increase the dictionary pop up limit (limit is twice per game)
         dictionaryPopupLimit++;
