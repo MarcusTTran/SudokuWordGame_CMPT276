@@ -21,6 +21,8 @@ import com.echo.wordsudoku.models.words.WordPair;
 import com.echo.wordsudoku.ui.MainActivity;
 import com.echo.wordsudoku.ui.destinations.PuzzleFragment;
 
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 public class PuzzleInputButtonsFragment extends Fragment {
@@ -101,6 +103,7 @@ public class PuzzleInputButtonsFragment extends Fragment {
                 mLinearLayout.addView(linearLayout);
             }
             List<WordPair> wordPairs = mPuzzleViewModel.getWordPairs();
+            Collections.shuffle(wordPairs);
 
             if (buttons.length != wordPairs.size()) {
                 return false;
