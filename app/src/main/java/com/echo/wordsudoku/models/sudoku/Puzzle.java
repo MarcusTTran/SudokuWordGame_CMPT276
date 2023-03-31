@@ -82,6 +82,8 @@ public class Puzzle implements Writable {
 
     private int timer = 0;
 
+    private boolean textToSpeechOn = false;
+
     /* @constructor
      * @param wordPairs: the word pairs that are used in the puzzle. no repetition is allowed
      * @param dimension: the dimension of the puzzle
@@ -114,16 +116,15 @@ public class Puzzle implements Writable {
 
         // We set the language of the board opposite to the language of the puzzle
         this.solutionBoard = new CellBox2DArray(puzzleDimension,language);
-        // TODO: Make the solution board cells all of them isEditable = false
 
         // First we create a solved board
         SolveBoard(this.solutionBoard,mWordPairs);
 
         int numberOfCellsToRemove;
 
-        if(numberOfStartCells!=NO_NUMBER_OF_START_CELLS_USE_DIFFICULTY)
+        if (numberOfStartCells != NO_NUMBER_OF_START_CELLS_USE_DIFFICULTY)
             numberOfCellsToRemove = solutionBoard.getRows()*solutionBoard.getColumns() - numberOfStartCells;
-        else if(difficulty<=5 && difficulty>0)
+        else if (difficulty <= 5 && difficulty > 0)
             numberOfCellsToRemove = getCellsToRemoveWithDifficulty(difficulty);
         else
             throw new IllegalArgumentException("Invalid difficulty and number of start cells");
@@ -155,6 +156,7 @@ public class Puzzle implements Writable {
         this.language = puzzle.getLanguage();
         this.mistakes = puzzle.getMistakes();
         this.timer = puzzle.getTimer();
+        this.setTextToSpeechOn(puzzle.isTextToSpeechOn());
     }
 
     /* @constructor
@@ -176,6 +178,11 @@ public class Puzzle implements Writable {
         this.language = language;
         this.mistakes = mistakes;
         this.timer = timer;
+    }
+
+    public Puzzle(List<WordPair> randomWords, int puzzleSize, int boardLanguage, int noNumberOfStartCellsUseDifficulty, int difficulty, boolean textToSpeech) throws IllegalLanguageException, TooBigNumberException, NegativeNumberException, IllegalWordPairException, IllegalDimensionException {
+        this(randomWords,puzzleSize,boardLanguage,noNumberOfStartCellsUseDifficulty,difficulty);
+        setTextToSpeechOn(textToSpeech);
     }
 
 
@@ -231,6 +238,15 @@ public class Puzzle implements Writable {
             throw new IllegalWordPairException();
         setUserBoard(userBoard);
     }
+
+    public void setTextToSpeechOn(boolean textToSpeechOn) {
+        this.textToSpeechOn = textToSpeechOn;
+    }
+
+    public boolean isTextToSpeechOn() {
+        return textToSpeechOn;
+    }
+
     // End of getters and setters
 
 
@@ -321,6 +337,7 @@ public class Puzzle implements Writable {
     /* @method
      *  Returns a String[][] representation of the user board
      *  Can be used to update the UI
+     *  Pre-filled cells become numbers if text-to-speech is on
      * @return: a String[][] representation of the user board
      */
     public String[][] toStringArray() {
@@ -328,13 +345,25 @@ public class Puzzle implements Writable {
         for (int i = 0; i < userBoard.getRows(); i++) {
             for (int j = 0; j < userBoard.getColumns(); j++) {
                 Cell cell = userBoard.getCellFromBigArray(i,j);
-                if (cell.getContent() != null)
-                    stringBoard[i][j] = cell.getContent().getEnglishOrFrench(cell.getLanguage());
+
+                if (cell.getContent() != null) {
+                    stringBoard[i][j] = retrieveWordStringFromCell(textToSpeechOn, cell);
+                }
                 else
                     stringBoard[i][j] = "";
             }
         }
         return stringBoard;
+    }
+
+    private String retrieveWordStringFromCell(boolean textToSpeechOn, Cell cell) {
+        if (!cell.isEditable()) {
+            if (textToSpeechOn) {
+                return Integer.toString(mWordPairs.indexOf(cell.getContent()) + 1);
+            }
+        }
+        // If its not TTS and one of the original pre-filled, then get the word
+        return cell.getContent().getEnglishOrFrench(cell.getLanguage());
     }
 
 
@@ -696,5 +725,9 @@ public class Puzzle implements Writable {
         return result;
     }
 
+    // Utility method
+    public Cell getCellFromViewablePuzzle(int row, int col) {
+        return userBoard.getCellFromBigArray(row, col);
+    }
 
 }

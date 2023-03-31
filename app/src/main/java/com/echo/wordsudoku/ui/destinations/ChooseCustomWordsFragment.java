@@ -193,7 +193,7 @@ public class ChooseCustomWordsFragment extends Fragment{
                     //Set the PuzzleViewModel to store the WordPair list we made
                     mPuzzleViewModel.setCustomWordPairs(userEnteredWordList);
                     try {
-                        mPuzzleViewModel.newCustomPuzzle(mSettingsViewModel.getPuzzleLanguage().getValue(), mSettingsViewModel.getDifficulty());
+                        mPuzzleViewModel.newCustomPuzzle(mSettingsViewModel.getPuzzleLanguage().getValue(), mSettingsViewModel.getDifficulty(),mSettingsViewModel.getTextToSpeech());
                     } catch (Exception e) {
                         e.printStackTrace();
                     }

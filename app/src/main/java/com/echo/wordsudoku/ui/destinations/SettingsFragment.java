@@ -98,5 +98,20 @@ public class SettingsFragment extends PreferenceFragmentCompat {
                 return true;
             }
         });
+
+
+        SwitchPreferenceCompat textToSpeech = findPreference("textToSpeech");
+        textToSpeech.setChecked(settingsViewModel.getTextToSpeech());
+
+        textToSpeech.setOnPreferenceChangeListener((preference, textToSpeech1) -> {
+            settingsViewModel.setTextToSpeech((boolean) textToSpeech1);
+
+            if (settingsViewModel.getTextToSpeech()) {
+                Toast.makeText(getContext(), R.string.text_to_speech_on, Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(getContext(), R.string.text_to_speech_off, Toast.LENGTH_SHORT).show();
+            }
+            return true;
+        });
     }
 }
