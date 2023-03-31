@@ -171,8 +171,6 @@ public class MainActivity extends AppCompatActivity implements SaveGameDialog.Sa
         String frenchCustomWordsString = mPreferences.getString(getString(R.string.custom_words_french_save_key), null);
         Log.d("MAINTEST", "LOADING IN :" + englishCustomWordsString);
 
-//        List<String> englishCustomWordsList = new ArrayList<>(englishCustomWordsString);
-//        List<String> frenchCustomWordsList = new ArrayList<>(frenchCustomWordsString);
 
         if (englishCustomWordsString != null && frenchCustomWordsString != null) {
             Log.d("MAINTEST", "Load in strings were not empty in sharedpreferences");
