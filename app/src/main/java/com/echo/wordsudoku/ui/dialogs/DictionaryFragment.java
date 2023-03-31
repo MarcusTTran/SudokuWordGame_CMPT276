@@ -30,6 +30,9 @@ public class DictionaryFragment extends DialogFragment {
 
     private static final String ARG_PARAM3 = "param3";
 
+    private static final String ARG_PARAM4 = "param4";
+
+    private int popupLimitCounter;
     private int popupLimit;
 
     private ImageButton exitButton;
@@ -47,12 +50,13 @@ public class DictionaryFragment extends DialogFragment {
 //     this fragment using the provided parameters.
 //
 //     returns a new instance of fragment DictionaryFragment.
-    public static DictionaryFragment newInstance(String[] englishWords, String[] frenchWords, int popupLimit) {
+    public static DictionaryFragment newInstance(String[] englishWords, String[] frenchWords, int popupLimitCounter, int popupLimit) {
         DictionaryFragment fragment = new DictionaryFragment();
         Bundle args = new Bundle();
         args.putStringArray(ARG_PARAM1, englishWords);
         args.putStringArray(ARG_PARAM2, frenchWords);
-        args.putInt(ARG_PARAM3, popupLimit);
+        args.putInt(ARG_PARAM3, popupLimitCounter);
+        args.putInt(ARG_PARAM4, popupLimit);
         fragment.setArguments(args);
         return fragment;
     }
@@ -63,7 +67,8 @@ public class DictionaryFragment extends DialogFragment {
         if (getArguments() != null) {
             englishWords = getArguments().getStringArray(ARG_PARAM1);
             frenchWords = getArguments().getStringArray(ARG_PARAM2);
-            popupLimit = getArguments().getInt(ARG_PARAM3);
+            popupLimitCounter = getArguments().getInt(ARG_PARAM3);
+            popupLimit = getArguments().getInt(ARG_PARAM4);
         }
 
     }
@@ -74,11 +79,12 @@ public class DictionaryFragment extends DialogFragment {
         if (getArguments() != null) {
             englishWords = getArguments().getStringArray(ARG_PARAM1);
             frenchWords = getArguments().getStringArray(ARG_PARAM2);
-            popupLimit = getArguments().getInt(ARG_PARAM3);
+            popupLimitCounter = getArguments().getInt(ARG_PARAM3);
+            popupLimit = getArguments().getInt(ARG_PARAM4);
         }
 
         View view1;
-        if (popupLimit < 2) {
+        if (popupLimitCounter < popupLimit) {
             view1 = inflater.inflate(R.layout.fragment_dictionary, container, false);
 
 
@@ -102,7 +108,7 @@ public class DictionaryFragment extends DialogFragment {
 
             TextView peeksRemaining = view1.findViewById(R.id.peeksRemaining);
             peeksRemaining.setText(R.string.peeks_Remaining);
-            peeksRemaining.append(" " + Integer.toString((1 - popupLimit)));
+            peeksRemaining.append(" " + Integer.toString((popupLimit - popupLimitCounter-1)));
 
         } else {
             view1 = inflater.inflate(R.layout.fragment_dictionary_limit, container, false);
@@ -112,13 +118,10 @@ public class DictionaryFragment extends DialogFragment {
 
         exitButton = view1.findViewById(R.id.dictionaryExitButton);
         //Set listener to exit button to end fragment when tapped
-        exitButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //Log.d("DictionaryFragment", "ImageButton was pressed");
-                //Ends fragment when exit button tapped
-                getActivity().getSupportFragmentManager().beginTransaction().remove(DictionaryFragment.this).commit();
-            }
+        exitButton.setOnClickListener(v -> {
+            //Log.d("DictionaryFragment", "ImageButton was pressed");
+            //Ends fragment when exit button tapped
+            getActivity().getSupportFragmentManager().beginTransaction().remove(DictionaryFragment.this).commit();
         });
 
 
