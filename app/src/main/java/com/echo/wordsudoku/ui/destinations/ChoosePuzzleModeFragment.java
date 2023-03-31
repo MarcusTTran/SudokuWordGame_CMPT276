@@ -57,7 +57,7 @@ public class ChoosePuzzleModeFragment extends Fragment {
         NavController navController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment);
         classicButton.setOnClickListener(v -> {
             try {
-                mPuzzleViewModel.newPuzzle(CLASS_PUZZLE_SIZE,language, difficulty);
+                mPuzzleViewModel.newPuzzle(CLASS_PUZZLE_SIZE,language, difficulty,mSettingsViewModel.getTextToSpeech());
             } catch (JSONException e) {
                 throw new RuntimeException(e);
             } catch (IllegalLanguageException e) {
@@ -91,7 +91,7 @@ public class ChoosePuzzleModeFragment extends Fragment {
                 Toast.makeText(getContext(), R.string.error_enter_custom_words, Toast.LENGTH_SHORT).show();
             } else {
                 try {
-                    mPuzzleViewModel.newCustomPuzzle(language,difficulty);
+                    mPuzzleViewModel.newCustomPuzzle(language,difficulty,mSettingsViewModel.getTextToSpeech());
                 } catch (IllegalLanguageException e) {
                     throw new RuntimeException(e);
                 } catch (TooBigNumberException e) {

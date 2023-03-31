@@ -48,6 +48,18 @@
 
     </PreferenceCategory>
 
+    <PreferenceCategory app:title="Accessibility">
+
+        <SwitchPreferenceCompat
+            app:key="textToSpeech"
+            app:defaultValue="false"
+            app:summaryOff="@string/text_to_speech_off"
+            app:summaryOn="@string/text_to_speech_on"
+            app:title="@string/text_to_speech_title"
+            />
+    </PreferenceCategory>
+
 
 
 </PreferenceScreen>
+

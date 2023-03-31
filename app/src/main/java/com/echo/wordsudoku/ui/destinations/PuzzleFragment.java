@@ -1,6 +1,10 @@
 package com.echo.wordsudoku.ui.destinations;
 
+import static com.echo.wordsudoku.models.language.BoardLanguage.ENGLISH;
+import static com.echo.wordsudoku.models.language.BoardLanguage.defaultLanguage;
+
 import android.os.Bundle;
+import android.speech.tts.TextToSpeech;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -17,8 +21,10 @@ import androidx.navigation.Navigation;
 
 import com.echo.wordsudoku.R;
 import com.echo.wordsudoku.exceptions.IllegalDimensionException;
+import com.echo.wordsudoku.exceptions.IllegalLanguageException;
 import com.echo.wordsudoku.exceptions.IllegalWordPairException;
 import com.echo.wordsudoku.models.dimension.Dimension;
+import com.echo.wordsudoku.models.sudoku.Cell;
 import com.echo.wordsudoku.models.words.WordPair;
 import com.echo.wordsudoku.ui.MainActivity;
 import com.echo.wordsudoku.ui.SettingsViewModel;
@@ -26,6 +32,7 @@ import com.echo.wordsudoku.ui.dialogs.DictionaryFragment;
 import com.echo.wordsudoku.ui.dialogs.RulesFragment;
 
 import java.util.List;
+import java.util.Locale;
 
 import com.echo.wordsudoku.ui.dialogs.SaveGameDialog;
 import com.echo.wordsudoku.ui.puzzleParts.PuzzleBoardFragment;
@@ -33,22 +40,32 @@ import com.echo.wordsudoku.ui.puzzleParts.PuzzleViewModel;
 
 public class PuzzleFragment extends Fragment {
 
-    private int puzzleDimension;
-    // END CONSTANTS
-
-    private static final String TAG = "PuzzleFragment";
-
     private int dictionaryPopupLimit = 0;
 
     private PuzzleViewModel mPuzzleViewModel;
-
+    private SettingsViewModel settingsViewModel;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         setHasOptionsMenu(true);
 
         mPuzzleViewModel = new ViewModelProvider(requireActivity()).get(PuzzleViewModel.class);
-        SettingsViewModel settingsViewModel = new ViewModelProvider(requireActivity()).get(SettingsViewModel.class);
+        settingsViewModel= new ViewModelProvider(requireActivity()).get(SettingsViewModel.class);
+
+        //        toSpeech = new TextToSpeech(this.getContext(), new TextToSpeech.OnInitListener() {
+//            @Override
+//            public void onInit(int i) {
+//                // TODO: Implement listener
+//                if (i != TextToSpeech.ERROR) {
+//                    try {
+//                        Locale language = (mPuzzleViewModel.getPuzzleInputLanguage() == ENGLISH) ? Locale.CANADA_FRENCH : Locale.ENGLISH;
+//                        toSpeech.setLanguage(language);
+//                    } catch (IllegalLanguageException e) {
+//                        throw new RuntimeException(e);
+//                    }
+//                }
+//            }
+//        });
 
         View root = inflater.inflate(R.layout.fragment_puzzle, container, false);
         return root;
@@ -61,15 +78,13 @@ public class PuzzleFragment extends Fragment {
     public void enterWordInBoard(String word) throws IllegalWordPairException, IllegalDimensionException {
         PuzzleBoardFragment puzzleViewFragment = (PuzzleBoardFragment) getChildFragmentManager().findFragmentById(R.id.board);
         Dimension currentCell = puzzleViewFragment.getSelectedCell();
-        if(currentCell.getColumns()==-2 || currentCell.getRows()==-2){
+        if(currentCell.getColumns() == -2 || currentCell.getRows() == -2) {
             Toast.makeText(requireActivity(), R.string.error_no_cell_selected, Toast.LENGTH_SHORT).show();
             return;
         }
         if (!mPuzzleViewModel.isCellWritable(currentCell)) {
             Toast.makeText(requireActivity(), R.string.error_insert_in_initial_cell, Toast.LENGTH_SHORT).show();
-            return;
-        }
-        else {
+        } else {
             mPuzzleViewModel.insertWord(currentCell, word);
         }
     }
@@ -94,7 +109,7 @@ public class PuzzleFragment extends Fragment {
         }
 
         //Create new instance of RulesFragment
-        DictionaryFragment dictionaryFragment = DictionaryFragment.newInstance(LanguageList1, LanguageList2,dictionaryPopupLimit);
+        DictionaryFragment dictionaryFragment = DictionaryFragment.newInstance(LanguageList1, LanguageList2, dictionaryPopupLimit,settingsViewModel.getDifficulty());
         dictionaryFragment.show(getActivity().getSupportFragmentManager(), DictionaryFragment.TAG);
         //Increase the dictionary pop up limit (limit is twice per game)
         dictionaryPopupLimit++;
@@ -111,6 +126,7 @@ public class PuzzleFragment extends Fragment {
             Toast.makeText(getActivity(), getString(R.string.error_not_filled_puzzle), Toast.LENGTH_LONG).show();
             return;
         }
+//        toSpeech.shutdown(); // Turn off the text to speech engine
         Navigation.findNavController(getView()).navigate(R.id.submitPuzzleAction);
     }
 
@@ -170,4 +186,5 @@ public class PuzzleFragment extends Fragment {
         };
         requireActivity().getOnBackPressedDispatcher().addCallback(this, callback);
     }
+
 }

@@ -26,11 +26,13 @@
     <string name="save_puzzle_btn">Sauvegarder</string>
     <string name="reset_puzzle_btn">Remettre</string>
 
+    <!-- Preference keys -->
     <string name="preference_file_key">com.echo.wordsudoku.gameOptions</string>
     <string name="puzzle_language_key">com.echo.wordsudoku.puzzleLanguageKey</string>
     <string name="puzzle_difficulty_preference_key">com.echo.wordsudoku.puzzleDifficultyKey</string>
     <string name="puzzle_timer_preference_key">com.echo.wordsudoku.puzzleTimerKey</string>
     <string name="puzzle_autosave_preference_key">com.echo.wordsudoku.autosave</string>
+    <string name="text_to_speech_preference_key">com.echo.wordsudoku.textToSpeech</string>
 
 
     <string name="RulesHeader">Les Règles</string>
@@ -79,6 +81,12 @@ tous vos mots en vedette. Mais rappelez-vous, vous ne pouvez accéder à cette t
     <string name="auto_save_title">Enregistrement automatique</string>
     <string name="auto_save_on">L’enregistrement automatique est activén (Lorsque l’application se ferme, votre progression sera enregistrée)</string>
     <string name="auto_save_off">L’enregistrement automatique est désactivé</string>
+
+    <!-- TextToSpeech Preferences -->
+    <string name="text_to_speech_on">La Synthèse Vocale est activén.</string>
+    <string name="text_to_speech_off">La Synthèse Vocale est désactivée.</string>
+    <string name="accessibility_category">Accessibilité</string>
+    <string name="text_to_speech_title">La Synthèse Vocale</string>
 
 
     <string name="word_error">Erreur!</string>
