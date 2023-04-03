@@ -100,11 +100,6 @@ public class PuzzleJsonReaderTest {
 
 
     @Test
-    void testInvalidAddress() {
-
-    }
-
-    @Test
     void testNineByNinePuzzle () throws IllegalLanguageException, TooBigNumberException, NegativeNumberException, IllegalWordPairException, IllegalDimensionException {
         try {
             assertTrue(isPuzzleTheReadPuzzleTheSameAfterSave(constructPuzzle(NINE_BY_NINE)));

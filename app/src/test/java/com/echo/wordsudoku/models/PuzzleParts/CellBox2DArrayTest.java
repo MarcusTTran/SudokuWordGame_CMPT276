@@ -83,6 +83,14 @@ public class CellBox2DArrayTest {
         assertTrue(checkCellSetAtLanguage(BoardLanguage.ENGLISH, cellBox2DArray));
     }
 
+    // test the constructor with negative para form dimensions
+    @Test
+    public void testNegativeNumberException() {
+        assertThrows(NegativeNumberException.class, () -> {
+            new CellBox2DArray(new Dimension(-1, 1), new Dimension(1, 1), 0);
+        });
+    }
+
 
     @Test
     void testConstructorWithPuzzleDimensionLanguage() throws IllegalDimensionException, NegativeNumberException {
@@ -249,15 +257,6 @@ public class CellBox2DArrayTest {
         assertThrows(ArrayIndexOutOfBoundsException.class, () -> cellBox2DArray.getCellBox(new Dimension(-1, -1)));
     }
 
-    /*
-    public Cell getCellFromBigArray(int i, int j) {
-        int boxRow = i / cellDimensions.getRows();
-        int boxColumn = j / cellDimensions.getColumns();
-        int inBoxRow = i % cellDimensions.getRows();
-        int inBoxColumn = j % cellDimensions.getColumns();
-        return getCellBox(boxRow, boxColumn).getCell(inBoxRow, inBoxColumn);
-    }
-     */
 
 
     @Test

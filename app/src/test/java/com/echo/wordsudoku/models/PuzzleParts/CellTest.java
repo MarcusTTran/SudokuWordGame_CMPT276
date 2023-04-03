@@ -3,6 +3,7 @@ package com.echo.wordsudoku.models.PuzzleParts;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertThrows;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
@@ -46,13 +47,7 @@ public class CellTest {
     void testContentLanguageConstructor() {
         this.cellWithContentLanguage = new Cell(content, ENGLISH);
 
-        try {
-            Cell cellNoContent = new Cell(null, FRENCH);
-            fail("Null Pointer Exception not thrown");
-        } catch (NullPointerException e) {
-            //expected
-        }
-
+        assertThrows(NullPointerException.class, () -> new Cell(null, ENGLISH));
         assertTrue(this.cellWithContentLanguage.getContent().equals(this.content));
         assertEquals(this.cellWithContentLanguage.getLanguage(), ENGLISH);
         assertFalse(this.cellWithContentLanguage.isEmpty());
@@ -143,12 +138,7 @@ public class CellTest {
         this.cellNoParams.setContent(this.content);
         assertTrue(cellNoParams.getContent().equals(this.content));
 
-        try {
-            this.cellNoParams.setContent(null);
-            fail("null pointer not thrown");
-        } catch (NullPointerException e) {
-            //expected
-        }
+        assertThrows(NullPointerException.class, () -> this.cellNoParams.setContent(null));
     }
 
     @Test
@@ -161,14 +151,10 @@ public class CellTest {
 
     @Test
     void testSetLanguageInvalid() {
-        try {
             this.cellWithContent = new Cell(this.content);
             assertEquals(this.cellWithContent.getLanguage(), ENGLISH);
-            this.cellWithContent.setLanguage(3);
-            fail("IllegalArgumentException not thrown");
-        } catch (IllegalArgumentException e){
-            //expected
-        }
+            assertThrows(IllegalArgumentException.class, () -> this.cellWithContent.setLanguage(3));
+
     }
 
 

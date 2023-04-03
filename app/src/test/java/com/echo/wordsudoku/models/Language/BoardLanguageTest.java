@@ -4,6 +4,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.fail;
 
+import com.echo.wordsudoku.exceptions.IllegalLanguageException;
 import com.echo.wordsudoku.models.language.BoardLanguage;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -30,7 +31,7 @@ public class BoardLanguageTest {
             boardLanguage.getOtherLanguage(3);
             // fail since 3 is not a valid language
             fail("IllegalArgumentException not thrown");
-        } catch (Exception e) {
+        } catch (IllegalLanguageException e) {
             //expected
         }
     }
@@ -71,7 +72,7 @@ public class BoardLanguageTest {
             assertEquals("English", boardLanguage.getLanguageName(BoardLanguage.ENGLISH));
             assertEquals("French", boardLanguage.getLanguageName(BoardLanguage.FRENCH));
 
-        } catch (Exception e) {
+        } catch (IllegalLanguageException e) {
             // fail since both languages are valid
             fail("IllegalArgumentException thrown");
         }

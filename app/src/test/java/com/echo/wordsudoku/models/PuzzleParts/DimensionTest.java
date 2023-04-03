@@ -4,6 +4,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import com.echo.wordsudoku.models.dimension.Dimension;
 import com.echo.wordsudoku.models.utility.MathUtils;
@@ -80,12 +81,10 @@ public class DimensionTest {
         arrayDimension[0] = 4;
         arrayDimension[1] = 5;
         arrayDimension[2] = 6;
-        try {
+
+        assertThrows(IllegalArgumentException.class, () -> {
             Dimension dimension = new Dimension(arrayDimension);
-            fail("IllegalArgumentException should be thrown");
-        } catch (IllegalArgumentException e) {
-            //expected
-        }
+        });
 
     }
 
