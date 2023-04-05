@@ -146,19 +146,16 @@ public class CellBox2DArray implements Writable {
         return cellBoxes;
     }
 
-    public void setCellBoxes(CellBox[][] cellBoxes) {
+    public void setCellBoxes(CellBox[][] cellBoxes) throws IndexOutOfBoundsException{
         int rowsOfBoxes = this.boxDimensions.getRows();
         int columnsOfBoxes = this.boxDimensions.getColumns();
         CellBox[][] puzzle = new CellBox[rowsOfBoxes][columnsOfBoxes];
-        try {
             for (int i = 0; i < rowsOfBoxes; i++) {
                 for (int j = 0; j < columnsOfBoxes; j++) {
                     puzzle[i][j] = new CellBox(cellBoxes[i][j]);
                 }
             }
-        } catch (ArrayIndexOutOfBoundsException e) {
-            e.printStackTrace();
-        }
+
         this.cellBoxes = puzzle;
     }
 

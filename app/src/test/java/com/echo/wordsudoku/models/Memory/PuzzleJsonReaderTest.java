@@ -154,14 +154,10 @@ public class PuzzleJsonReaderTest {
     // test improperly formatted json puzzle
     @Test
     void testInvalidPuzzleJsonObject() {
-        try {
+        assertThrows(JSONException.class, () -> {
             PuzzleJsonReader puzzleJsonReader = new PuzzleJsonReader("{puzzleInvalid} : bad");
             Puzzle puzzle = puzzleJsonReader.readPuzzle();
-        } catch (Exception e){ // JsonException is caught and RunTimeException is Thrown
-            //expected
-            e.printStackTrace();
-
-        }
+        });
 
     }
 

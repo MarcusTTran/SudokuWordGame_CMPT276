@@ -49,6 +49,7 @@ public class DimensionTest {
     }
 
 
+    // test the equal method Override
     @Test
     void testEquals() {
         assertTrue(dimensionWithRowAndColumn.equals(dimensionWithDimension));
@@ -64,6 +65,7 @@ public class DimensionTest {
         assertEquals(4, dimension.getColumns());
     }
 
+    // test constructor with valid param of 2-element array
     @Test
     void setArrayDimension() {
         int[] arrayDimension = new int[2];
@@ -75,6 +77,7 @@ public class DimensionTest {
     }
 
 
+    // test constructor with invalid param of 3-element array
     @Test
     void setInvalidArrayDimension() {
         int[] arrayDimension = new int[3];

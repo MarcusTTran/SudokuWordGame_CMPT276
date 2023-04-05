@@ -195,13 +195,10 @@ public class CellBox2DArrayTest {
                 cellBoxes[i][j] = new CellBox(new WordPair("e", "f"), 3, 3);
             }
         }
-        cellBox2DArray.setCellBoxes(cellBoxes);
-        assertNotNull(cellBox2DArray.getCellBoxes());
+        assertThrows(ArrayIndexOutOfBoundsException.class, () -> {
+            cellBox2DArray.setCellBoxes(cellBoxes);
+        });
 
-        // the cellBox2DArray must throw array out of bound exception however this exception
-        // is caught within the model method and only the cells within the bounds are filled
-        // therefor the cells won't be empty
-        assertFalse(areAllCellsAreEmpty(cellBox2DArray));
 
     }
 
