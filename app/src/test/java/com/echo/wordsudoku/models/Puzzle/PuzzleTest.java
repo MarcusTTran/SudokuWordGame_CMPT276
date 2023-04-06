@@ -1,12 +1,6 @@
 package com.echo.wordsudoku.models.Puzzle;
 
 import com.echo.wordsudoku.exceptions.IllegalDimensionException;
-import com.echo.wordsudoku.exceptions.IllegalLanguageException;
-import com.echo.wordsudoku.exceptions.IllegalWordPairException;
-import com.echo.wordsudoku.exceptions.NegativeNumberException;
-import com.echo.wordsudoku.exceptions.TooBigNumberException;
-import com.echo.wordsudoku.models.TestUtils;
-import com.echo.wordsudoku.models.WordPairTest;
 import com.echo.wordsudoku.models.dimension.Dimension;
 import com.echo.wordsudoku.models.dimension.PuzzleDimensions;
 import com.echo.wordsudoku.models.sudoku.Puzzle;

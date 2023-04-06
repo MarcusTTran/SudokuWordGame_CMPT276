@@ -4,6 +4,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import com.echo.wordsudoku.models.dimension.Dimension;
 import com.echo.wordsudoku.models.utility.MathUtils;
@@ -48,6 +49,7 @@ public class DimensionTest {
     }
 
 
+    // test the equal method Override
     @Test
     void testEquals() {
         assertTrue(dimensionWithRowAndColumn.equals(dimensionWithDimension));
@@ -63,6 +65,7 @@ public class DimensionTest {
         assertEquals(4, dimension.getColumns());
     }
 
+    // test constructor with valid param of 2-element array
     @Test
     void setArrayDimension() {
         int[] arrayDimension = new int[2];
@@ -74,18 +77,17 @@ public class DimensionTest {
     }
 
 
+    // test constructor with invalid param of 3-element array
     @Test
     void setInvalidArrayDimension() {
         int[] arrayDimension = new int[3];
         arrayDimension[0] = 4;
         arrayDimension[1] = 5;
         arrayDimension[2] = 6;
-        try {
+
+        assertThrows(IllegalArgumentException.class, () -> {
             Dimension dimension = new Dimension(arrayDimension);
-            fail("IllegalArgumentException should be thrown");
-        } catch (IllegalArgumentException e) {
-            //expected
-        }
+        });
 
     }
 

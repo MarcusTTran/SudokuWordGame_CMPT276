@@ -52,13 +52,11 @@ public class PuzzleJsonReader {
     private JSONObject mPuzzleJsonObject;
 
 
-    public PuzzleJsonReader(String puzzleJson) {
-
-        try {
-            mPuzzleJsonObject = new JSONObject(puzzleJson);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
+    /** constructor
+     * @param puzzleJson the json string of the puzzle
+     */
+    public PuzzleJsonReader(String puzzleJson) throws JSONException {
+        mPuzzleJsonObject = new JSONObject(puzzleJson);
     }
 
     /**

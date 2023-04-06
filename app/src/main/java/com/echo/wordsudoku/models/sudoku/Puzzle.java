@@ -676,7 +676,8 @@ public class Puzzle implements Writable {
         boolean solBoardAreEqual = this.solutionBoard.equals(puzzle.solutionBoard);
 
 
-        boolean wordPairsAreEqual = new HashSet<>(this.getWordPairs()).equals(new HashSet<>(puzzle.getWordPairs()));
+        //boolean wordPairsAreEqual = new HashSet<>(this.getWordPairs()).equals(new HashSet<>(puzzle.getWordPairs()));
+        boolean wordPairsAreEqual = areWordPairsEqual(puzzle.getWordPairs(), this.getWordPairs());
         boolean puzzleDimensionIsEqual = this.puzzleDimension.equals(puzzle.puzzleDimension);
 
         return language == puzzle.language && mistakes == puzzle.mistakes &&
@@ -684,6 +685,27 @@ public class Puzzle implements Writable {
                 solBoardAreEqual && wordPairsAreEqual;
     }
 
+    // @utility method to compare two wordPair lists
+    // @param one wordPair list
+    // @param two wordPair list
+    // @return true if the two lists are equal, false otherwise
+    private boolean areWordPairsEqual(List<WordPair> one, List<WordPair> two) {
+
+        if (one.size() != two.size()) {
+            return false;
+        }
+
+        for (int i = 0; i < one.size(); i++) {
+            if (!one.get(i).equals(two.get(i))) {
+                return false;
+            }
+        }
+        return true;
+
+    }
+
+
+    // sets cells to Editable
     public void unlockCells() {
         for (int i = 0; i < userBoard.getRows(); i++) {
             for (int j = 0; j < userBoard.getColumns(); j++) {

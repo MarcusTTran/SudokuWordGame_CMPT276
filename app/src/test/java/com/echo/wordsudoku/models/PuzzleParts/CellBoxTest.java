@@ -14,6 +14,7 @@ import org.junit.jupiter.api.Test;
 
 /**
  * Unit test for CellBox
+ * @author Kousha Amouzesh
  * @version 1.0
  */
 class CellBoxTest {
@@ -75,6 +76,14 @@ class CellBoxTest {
     }
 
     @Test
+    public void testNegativeNumberException() {
+
+        assertThrows(NegativeNumberException.class, () -> {
+            new CellBox(this.wordPair, -1, 1);
+        });
+    }
+
+    @Test
     public void testSetCell() throws NegativeNumberException {
         // Initialize a 2x2 CellBox with default language
         CellBox cellBox = new CellBox(new WordPair("eng", "fre"), 2, 2);
@@ -108,15 +117,9 @@ class CellBoxTest {
         };
 
         // Set new cells to CellBox
-        try {
+        assertThrows(IllegalArgumentException.class, () -> {
             cellBox.setCells(newCells2);
-            fail("IllegalArgumentException not thrown");
-            // Check if new cells are set correctly
-            assertArrayEquals(newCells2, cellBox.getCells());
-        } catch (IllegalArgumentException e) {
-            // expected
-        }
-
+        });
 
     }
 

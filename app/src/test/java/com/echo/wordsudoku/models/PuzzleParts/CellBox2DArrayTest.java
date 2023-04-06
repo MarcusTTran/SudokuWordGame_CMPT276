@@ -83,6 +83,14 @@ public class CellBox2DArrayTest {
         assertTrue(checkCellSetAtLanguage(BoardLanguage.ENGLISH, cellBox2DArray));
     }
 
+    // test the constructor with negative para form dimensions
+    @Test
+    public void testNegativeNumberException() {
+        assertThrows(NegativeNumberException.class, () -> {
+            new CellBox2DArray(new Dimension(-1, 1), new Dimension(1, 1), 0);
+        });
+    }
+
 
     @Test
     void testConstructorWithPuzzleDimensionLanguage() throws IllegalDimensionException, NegativeNumberException {
@@ -187,13 +195,10 @@ public class CellBox2DArrayTest {
                 cellBoxes[i][j] = new CellBox(new WordPair("e", "f"), 3, 3);
             }
         }
-        cellBox2DArray.setCellBoxes(cellBoxes);
-        assertNotNull(cellBox2DArray.getCellBoxes());
+        assertThrows(ArrayIndexOutOfBoundsException.class, () -> {
+            cellBox2DArray.setCellBoxes(cellBoxes);
+        });
 
-        // the cellBox2DArray must throw array out of bound exception however this exception
-        // is caught within the model method and only the cells within the bounds are filled
-        // therefor the cells won't be empty
-        assertFalse(areAllCellsAreEmpty(cellBox2DArray));
 
     }
 
@@ -249,15 +254,6 @@ public class CellBox2DArrayTest {
         assertThrows(ArrayIndexOutOfBoundsException.class, () -> cellBox2DArray.getCellBox(new Dimension(-1, -1)));
     }
 
-    /*
-    public Cell getCellFromBigArray(int i, int j) {
-        int boxRow = i / cellDimensions.getRows();
-        int boxColumn = j / cellDimensions.getColumns();
-        int inBoxRow = i % cellDimensions.getRows();
-        int inBoxColumn = j % cellDimensions.getColumns();
-        return getCellBox(boxRow, boxColumn).getCell(inBoxRow, inBoxColumn);
-    }
-     */
 
 
     @Test
@@ -475,8 +471,6 @@ public class CellBox2DArrayTest {
         }
         return cellBox2DArray;
     }
-
-
 
 
 

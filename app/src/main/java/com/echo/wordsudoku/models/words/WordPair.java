@@ -77,6 +77,7 @@ public class WordPair implements Writable {
     }
 
 
+    // return the json object of the word pair
     @Override
     public JSONObject toJson() throws JSONException {
         JSONObject json = new JSONObject();
@@ -85,6 +86,7 @@ public class WordPair implements Writable {
         return json;
     }
 
+    //  returns true if the given object is equal to this WordPair
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

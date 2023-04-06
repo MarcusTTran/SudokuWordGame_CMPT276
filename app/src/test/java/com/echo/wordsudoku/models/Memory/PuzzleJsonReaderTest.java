@@ -79,7 +79,7 @@ public class PuzzleJsonReaderTest {
         }
 
         // construct puzzle
-        Puzzle puzzle = new Puzzle(wordPairs,puzzleDimension,puzzleLanguage,-1,difficulty);
+        Puzzle puzzle = new Puzzle(wordPairs,puzzleDimension,puzzleLanguage,(dimension*dimension)-2,difficulty);
 
         return puzzle;
     }
@@ -98,11 +98,6 @@ public class PuzzleJsonReaderTest {
 
     }
 
-
-    @Test
-    void testInvalidAddress() {
-
-    }
 
     @Test
     void testNineByNinePuzzle () throws IllegalLanguageException, TooBigNumberException, NegativeNumberException, IllegalWordPairException, IllegalDimensionException {
@@ -149,24 +144,20 @@ public class PuzzleJsonReaderTest {
             PuzzleJsonReader puzzleJsonReader = new PuzzleJsonReader(null);
             fail("PuzzleJsonReader shouldn't read empty json string");
         } catch (NullPointerException e){
-            //expected
-
+            // expected
+        } catch (JSONException e) {
+            fail("null pointer comes before json exception");
         }
-
     }
 
 
     // test improperly formatted json puzzle
     @Test
     void testInvalidPuzzleJsonObject() {
-        try {
+        assertThrows(JSONException.class, () -> {
             PuzzleJsonReader puzzleJsonReader = new PuzzleJsonReader("{puzzleInvalid} : bad");
             Puzzle puzzle = puzzleJsonReader.readPuzzle();
-        } catch (Exception e){ // JsonException is caught and RunTimeException is Thrown
-            //expected
-            e.printStackTrace();
-
-        }
+        });
 
     }
 
@@ -191,8 +182,9 @@ public class PuzzleJsonReaderTest {
 
         puzzleSaved = puzzleJsonReader.readPuzzle();
 
+        boolean equal = puzzle.equals(puzzleSaved);
         // the loaded Puzzle must be the same as what was saved
-        return (puzzle.equals(puzzleSaved));
+        return equal;
     }
 
 

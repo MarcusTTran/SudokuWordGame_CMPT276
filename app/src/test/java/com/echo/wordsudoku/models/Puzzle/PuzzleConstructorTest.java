@@ -12,7 +12,7 @@ import com.echo.wordsudoku.exceptions.NegativeNumberException;
 import com.echo.wordsudoku.exceptions.TooBigNumberException;
 import com.echo.wordsudoku.models.PuzzleParts.DimensionTest;
 import com.echo.wordsudoku.models.TestUtils;
-import com.echo.wordsudoku.models.WordPairTest;
+import com.echo.wordsudoku.models.PuzzleParts.WordPairTest;
 import com.echo.wordsudoku.models.dimension.Dimension;
 import com.echo.wordsudoku.models.sudoku.Puzzle;
 import com.echo.wordsudoku.models.utility.MathUtils;
@@ -33,11 +33,15 @@ public class PuzzleConstructorTest extends PuzzleTest{
         for (int i = 0; i < legalPuzzleSizeInt.length; i++) {
             for (int j = 0; j < legalPuzzleDifficulty.length; j++) {
                 int size = legalPuzzleSizeInt[i];
+
                 // Make puzzle with random difficulty
                 puzzle = new Puzzle(WordPairTest.makeRandomWordPairList(size), size, TestUtils.getRandomIntElement(legalPuzzleLanguage), Puzzle.NO_NUMBER_OF_START_CELLS_USE_DIFFICULTY, legalPuzzleDifficulty[j]);
+
                 assertNotNull(puzzle);
+
                 // Make puzzle with random number of initial cells
                 int[] numberOfInitialCellsArray = makeNumberOfStartCellsArray(size,LEGAL_NUMBER_OF_START_CELLS);
+
                 for(int k: numberOfInitialCellsArray) {
                     puzzle = new Puzzle(WordPairTest.makeRandomWordPairList(size), size, TestUtils.getRandomIntElement(legalPuzzleLanguage), k);
                     assertNotNull(puzzle);
