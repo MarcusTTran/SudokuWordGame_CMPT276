@@ -70,7 +70,7 @@ public class PuzzleUtilityTest extends PuzzleTest{
 
     @Test
     public void testToStringArray() {
-        String[][] stringArray = puzzle.toStringArray(false);
+        String[][] stringArray = puzzle.toStringArray();
         int size = puzzle.getPuzzleDimensions().getPuzzleDimension();
         assertTrue(stringArray.length == size);
         assertTrue(stringArray[0].length == size);
