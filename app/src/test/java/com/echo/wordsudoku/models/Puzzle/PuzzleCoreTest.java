@@ -209,4 +209,6 @@ public class PuzzleCoreTest extends PuzzleTest {
         assertEquals(cellsRemoved,cellsToRemove);
     }
 
+
+
 }

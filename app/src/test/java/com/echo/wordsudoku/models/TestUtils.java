@@ -46,4 +46,12 @@ public class TestUtils {
     public static int getRandomIntElement(int[] array) {
         return array[(int) (Math.random() * array.length)];
     }
+
+    public static List<Integer> makeListOfPuzzleSizeInt(int size) {
+        List<Integer> puzzleSizeIntList = new ArrayList<>();
+        for (int i = 0; i < size; i++) {
+            puzzleSizeIntList.add(i);
+        }
+        return puzzleSizeIntList;
+    }
 }
