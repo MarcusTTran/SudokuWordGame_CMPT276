@@ -127,5 +127,9 @@ If you encounter any difficulty translating the words featured in your puzzle, y
     <string name="blank">blank</string>
     <string name="ok">OK</string>
 
+    <!-- Choose Custom Words SharedPreference Keys-->
+    <string name="custom_words_english_save_key">com.echo.wordsudoku.puzzleCustomWordsEnglishKey</string>
+    <string name="custom_words_french_save_key">com.echo.wordsudoku.puzzleCustomWordsFrenchKey</string>
+
 
 </resources>

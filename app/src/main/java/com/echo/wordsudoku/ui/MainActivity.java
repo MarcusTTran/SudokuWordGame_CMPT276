@@ -29,6 +29,7 @@ import com.echo.wordsudoku.models.json.PuzzleJsonReader;
 import com.echo.wordsudoku.models.sudoku.Puzzle;
 import com.echo.wordsudoku.models.json.WordPairJsonReader;
 import com.echo.wordsudoku.ui.destinations.PuzzleFragment;
+import com.echo.wordsudoku.models.words.WordPair;
 import com.echo.wordsudoku.ui.dialogs.ChoosePuzzleSizeFragment;
 import com.echo.wordsudoku.ui.dialogs.SaveGameDialog;
 import com.echo.wordsudoku.ui.puzzleParts.PuzzleBoardFragment;
@@ -42,7 +43,12 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
+import java.util.LinkedHashSet;
+import java.util.List;
+import java.util.Set;
 
 public class MainActivity extends AppCompatActivity implements SaveGameDialog.SaveGameDialogListener, ChoosePuzzleSizeFragment.OnPuzzleSizeSelectedListener, OnCellTouchListener {
 
@@ -107,6 +113,9 @@ public class MainActivity extends AppCompatActivity implements SaveGameDialog.Sa
         // This is used to load the settings from the shared preferences and update the settings view model and load the program according to these settings
         loadSettings();
 
+        // This is used to load in the custom word pairs into the choose custom words page
+        loadCustomWordPairs();
+
         // Setting up the game settings saved in the shared preferences
         // Get the puzzle language from the shared preferences
         mSettingsPuzzleLanguage = mPreferences.getInt(getString(R.string.puzzle_language_key), BoardLanguage.ENGLISH);
@@ -157,6 +166,60 @@ public class MainActivity extends AppCompatActivity implements SaveGameDialog.Sa
         }
     }
 
+    private void loadCustomWordPairs() {
+        String englishCustomWordsString = mPreferences.getString(getString(R.string.custom_words_english_save_key), null);
+        String frenchCustomWordsString = mPreferences.getString(getString(R.string.custom_words_french_save_key), null);
+        Log.d("MAINTEST", "LOADING IN :" + englishCustomWordsString);
+
+
+        if (englishCustomWordsString != null && frenchCustomWordsString != null) {
+            Log.d("MAINTEST", "Load in strings were not empty in sharedpreferences");
+            englishCustomWordsString = englishCustomWordsString.substring(0, englishCustomWordsString.length() - 1);
+            frenchCustomWordsString = frenchCustomWordsString.substring(0, frenchCustomWordsString.length() - 1);
+
+
+            List<String> englishCustomWordsList = new ArrayList<>(Arrays.asList(englishCustomWordsString.split(";")));
+            List<String> frenchCustomWordsList = new ArrayList<>(Arrays.asList(frenchCustomWordsString.split(";")));
+
+            List<WordPair> loadedCustomWords = new ArrayList<>();
+            for (int i = 0; i < englishCustomWordsList.size(); i++) {
+                loadedCustomWords.add(new WordPair(englishCustomWordsList.get(i), frenchCustomWordsList.get(i)));
+            }
+
+            mPuzzleViewModel.setCustomWordPairs(loadedCustomWords);
+        }
+    }
+
+    private void saveCustomWordsPairs() {
+        // Save all of the game settings so when the user opens the app again, the settings are the same
+        SharedPreferences.Editor editor = mPreferences.edit();
+
+        if (mPuzzleViewModel.getCustomWordPairs() != null) {
+            String customWordsEnglish= "";
+            String customWordsFrench = "";
+            for (int i = 0; i < mPuzzleViewModel.getCustomWordPairs().size(); i++) {
+                customWordsEnglish = customWordsEnglish.concat(mPuzzleViewModel.getCustomWordPairs().get(i).getEnglish() + ";");
+                customWordsFrench = customWordsFrench.concat(mPuzzleViewModel.getCustomWordPairs().get(i).getFrench() + ";");
+            }
+
+//            Set<String> englishSet = new LinkedHashSet<>(customWordsEnglish);
+//            Set<String> frenchSet = new LinkedHashSet<>(customWordsFrench);
+
+            Log.d("MAINTEST", "NOW SAVING :" + customWordsEnglish);
+
+
+            editor.putString(getString(R.string.custom_words_english_save_key), customWordsEnglish);
+            editor.putString(getString(R.string.custom_words_french_save_key), customWordsFrench);
+
+            editor.apply();
+        } else {
+            editor.putString(getString(R.string.custom_words_english_save_key), null);
+            editor.putString(getString(R.string.custom_words_french_save_key), null);
+            editor.apply();
+        }
+
+    }
+
     private void loadSettings() {
         // TODO: Load all of the game settings so when the user opens the app again, the settings are the same
         // Load the settings from the shared preferences
@@ -202,6 +265,10 @@ public class MainActivity extends AppCompatActivity implements SaveGameDialog.Sa
         // Save the puzzle to the json file before app closes
         if(mSettingsViewModel.isAutoSave())
             savePuzzle();
+
+
+        saveCustomWordsPairs();
+
     }
 
     public boolean isGameSaved() {
