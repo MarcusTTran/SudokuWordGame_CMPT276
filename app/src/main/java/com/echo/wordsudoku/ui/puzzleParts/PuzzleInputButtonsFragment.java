@@ -118,7 +118,7 @@ public class PuzzleInputButtonsFragment extends Fragment {
                 return false;
             } else {
                 for (int i = 0; i < wordPairs.size(); i++) {
-                    buttons[i].setText(wordPairs.get(i).getEnglishOrFrench(mPuzzleViewModel.getPuzzleInputLanguage()));
+                    buttons[i].setText(wordPairs.get(i).getLang2());
                     buttons[i].setOnClickListener(v -> {
                         PuzzleFragment puzzleFragment = (PuzzleFragment) getParentFragment();
                         Button button = (Button) v;

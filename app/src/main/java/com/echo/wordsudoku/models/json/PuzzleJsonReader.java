@@ -97,16 +97,13 @@ public class PuzzleJsonReader {
             JSONObject puzzleDimensionJSON = (mPuzzleJsonObject.getJSONObject("puzzleDimensions"));
             PuzzleDimensions puzzleDimensions = parsePuzzleDimension(puzzleDimensionJSON);
 
-            // parse language
-            int language = (mPuzzleJsonObject.getInt("language"));
-
             // parse mistakes
             int mistakes = (mPuzzleJsonObject.getInt("mistakes"));
 
             int timer = (mPuzzleJsonObject.getInt("timer"));
 
             // create the puzzle
-            Puzzle puzzle = new Puzzle(userBoard, solutionBoard, wordPairs, puzzleDimensions, language, mistakes,timer);
+            Puzzle puzzle = new Puzzle(userBoard, solutionBoard, wordPairs, puzzleDimensions,mistakes,timer);
 
             //return the puzzle with completely read fields
             return puzzle;
@@ -313,8 +310,8 @@ public class PuzzleJsonReader {
         }
 
         // get the english and french words
-        String eng = wordPairJSON.getString("eng");
-        String fre = wordPairJSON.getString("fre");
+        String eng = wordPairJSON.getString("lang1");
+        String fre = wordPairJSON.getString("lang2");
         // create the word pair object
         WordPair wordPairObject = new WordPair(eng, fre);
 

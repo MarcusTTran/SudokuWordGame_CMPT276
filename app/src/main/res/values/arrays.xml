@@ -25,4 +25,12 @@
         <item>12x12 Puzzle</item>
     </string-array>
 
+    <string-array name="languages">
+        <item>English</item>
+        <item>French</item>
+        <item>Spanish</item>
+        <item>Chinese</item>
+        <item>Arabic</item>
+    </string-array>
+
 </resources>

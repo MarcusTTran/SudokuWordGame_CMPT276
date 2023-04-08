@@ -71,22 +71,15 @@ public class PuzzleGettersTest extends PuzzleTest{
     @Test
     public void checkGetPuzzleDimension() throws IllegalLanguageException, TooBigNumberException, NegativeNumberException, IllegalWordPairException, IllegalDimensionException {
         PuzzleDimensions puzzleDimensions = TestUtils.getRandomElements(Arrays.asList(legalPuzzleSize),1).get(0);
-        Puzzle newPuzzle = new Puzzle(WordPairTest.makeRandomWordPairList(puzzleDimensions.getPuzzleDimension()),puzzleDimensions.getPuzzleDimension(),TestUtils.getRandomIntElement(legalPuzzleLanguage),Puzzle.NO_NUMBER_OF_START_CELLS_USE_DIFFICULTY,TestUtils.getRandomIntElement(legalPuzzleDifficulty));
+        Puzzle newPuzzle = new Puzzle(WordPairTest.makeRandomWordPairList(puzzleDimensions.getPuzzleDimension()),puzzleDimensions.getPuzzleDimension(),Puzzle.NO_NUMBER_OF_START_CELLS_USE_DIFFICULTY,TestUtils.getRandomIntElement(legalPuzzleDifficulty));
         assertEquals(newPuzzle.getPuzzleDimensions(),puzzleDimensions);
-    }
-
-    @Test
-    public void checkGetPuzzleLanguage() throws IllegalLanguageException, TooBigNumberException, NegativeNumberException, IllegalWordPairException, IllegalDimensionException {
-        int language = TestUtils.getRandomIntElement(legalPuzzleLanguage);
-        Puzzle newPuzzle = new Puzzle(WordPairTest.makeRandomWordPairList(puzzle.getPuzzleDimensions().getPuzzleDimension()),puzzle.getPuzzleDimensions().getPuzzleDimension(),language,Puzzle.NO_NUMBER_OF_START_CELLS_USE_DIFFICULTY,TestUtils.getRandomIntElement(legalPuzzleDifficulty));
-        assertEquals(newPuzzle.getLanguage(),language);
     }
 
     @Test
     public void checkGetWordPairs() throws IllegalLanguageException, TooBigNumberException, NegativeNumberException, IllegalWordPairException, IllegalDimensionException {
         int size = TestUtils.getRandomIntElement(legalPuzzleSizeInt);
         List<WordPair> wordPairList = WordPairTest.makeRandomWordPairList(size);
-        Puzzle newPuzzle = new Puzzle(wordPairList,size,TestUtils.getRandomIntElement(legalPuzzleLanguage),Puzzle.NO_NUMBER_OF_START_CELLS_USE_DIFFICULTY,TestUtils.getRandomIntElement(legalPuzzleDifficulty));
+        Puzzle newPuzzle = new Puzzle(wordPairList,size,Puzzle.NO_NUMBER_OF_START_CELLS_USE_DIFFICULTY,TestUtils.getRandomIntElement(legalPuzzleDifficulty));
         assertEquals(newPuzzle.getWordPairs(),wordPairList);
     }
 

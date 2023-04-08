@@ -35,8 +35,8 @@ public class CellTest {
 
     private WordPair content;
 
-    private final int ENGLISH = BoardLanguage.ENGLISH;
-    private final int FRENCH = BoardLanguage.FRENCH;
+    private final int ENGLISH = WordPair.LANG1;
+    private final int FRENCH = WordPair.LANG2;
 
     @BeforeEach
     void setUp () {

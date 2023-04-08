@@ -131,22 +131,22 @@ class CellBoxTest {
         CellBox cellBox = new CellBox(wordPair, 2, 2);
 
         // Set the language to English
-        cellBox.setCellsLanguage(0);
+        cellBox.setCellsLanguage(WordPair.LANG1);
 
         // Assert that all cells have the correct language
         for (int i = 0; i < 2; i++) {
             for (int j = 0; j < 2; j++) {
-                assertEquals(cellBox.getCell(i, j).getLanguage(), 0);
+                assertEquals(cellBox.getCell(i, j).getLanguage(), WordPair.LANG1);
             }
         }
 
         // Set the language to Spanish
-        cellBox.setCellsLanguage(1);
+        cellBox.setCellsLanguage(WordPair.LANG2);
 
         // Assert that all cells have the correct language
         for (int i = 0; i < 2; i++) {
             for (int j = 0; j < 2; j++) {
-                assertEquals(cellBox.getCell(i, j).getLanguage(), 1);
+                assertEquals(cellBox.getCell(i, j).getLanguage(), WordPair.LANG2);
             }
         }
     }

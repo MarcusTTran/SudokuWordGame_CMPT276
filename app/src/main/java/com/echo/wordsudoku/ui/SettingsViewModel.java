@@ -11,6 +11,7 @@ import androidx.lifecycle.ViewModel;
 
 public class SettingsViewModel extends ViewModel {
     private final MutableLiveData<Integer> mPuzzleLanguage = new MutableLiveData<>();
+    private final MutableLiveData<Integer> mButtonInputLanguage = new MutableLiveData<>();
     private boolean timer;
 
     boolean textToSpeech;
@@ -24,6 +25,13 @@ public class SettingsViewModel extends ViewModel {
     }
     public void setPuzzleLanguage(int language) {
         mPuzzleLanguage.setValue(language);
+    }
+
+    public LiveData<Integer> getButtonInputLanguage() {
+        return mButtonInputLanguage;
+    }
+    public void setButtonInputLanguage(int language) {
+        mButtonInputLanguage.setValue(language);
     }
 
     public void setDifficulty(int difficulty) {

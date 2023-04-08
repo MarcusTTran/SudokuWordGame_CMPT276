@@ -58,7 +58,7 @@ public class ChoosePuzzleModeFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        int language = mSettingsViewModel.getPuzzleLanguage().getValue(), difficulty = mSettingsViewModel.getDifficulty();
+        int puzzleLanguage = mSettingsViewModel.getPuzzleLanguage().getValue(),inputLanguage = mSettingsViewModel.getButtonInputLanguage().getValue(), difficulty = mSettingsViewModel.getDifficulty();
 
         // Set up classic puzzle button
         // When clicked, create a new puzzle (9x9) and navigate to the puzzle fragment
@@ -66,7 +66,7 @@ public class ChoosePuzzleModeFragment extends Fragment {
         NavController navController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment);
         classicButton.setOnClickListener(v -> {
             try {
-                mPuzzleViewModel.newPuzzle(CLASS_PUZZLE_SIZE,language, difficulty,mSettingsViewModel.getTextToSpeech());
+                mPuzzleViewModel.newPuzzle(CLASS_PUZZLE_SIZE,puzzleLanguage,inputLanguage,difficulty,mSettingsViewModel.getTextToSpeech());
             } catch (JSONException e) {
                 throw new RuntimeException(e);
             } catch (IllegalLanguageException e) {
@@ -106,7 +106,7 @@ public class ChoosePuzzleModeFragment extends Fragment {
                 Toast.makeText(getContext(), R.string.error_enter_custom_words, Toast.LENGTH_SHORT).show();
             } else {
                 try {
-                    mPuzzleViewModel.newCustomPuzzle(language,difficulty,mSettingsViewModel.getTextToSpeech());
+                    mPuzzleViewModel.newCustomPuzzle(difficulty,mSettingsViewModel.getTextToSpeech());
                 } catch (IllegalLanguageException e) {
                     throw new RuntimeException(e);
                 } catch (TooBigNumberException e) {

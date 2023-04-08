@@ -180,7 +180,7 @@ public class Cell implements Writable {
 
     // setLanguage() throws an IllegalArgumentException if the language is not valid
     public void setLanguage(int language) throws IllegalArgumentException {
-        if (language != BoardLanguage.ENGLISH && language != BoardLanguage.FRENCH) {
+        if (language != WordPair.LANG1 && language != WordPair.LANG2) {
             throw new IllegalArgumentException("Invalid language name");
         }
         this.language = language;
@@ -220,7 +220,7 @@ public class Cell implements Writable {
      */
     @Override
     public String toString() {
-        return content.getEnglishOrFrench(getLanguage());
+        return content.getEitherLanguage(getLanguage());
     }
 
     /* @method to covert the Cell Object and its WordPair into json

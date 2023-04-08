@@ -21,47 +21,51 @@ import java.util.List;
 
 public class WordPair implements Writable {
 
-    private String eng; // english word
-    private String fre; // french word
+
+    public static final int LANG1 = 1;
+    public static final int LANG2 = 2;
+
+    private String lang1; // english word
+    private String lang2; // french word
 
     // constructor
     // EFFECTS: assigns the eng and fre translation of a word
-    public WordPair(String eng, String fre) {
-        setEnglish(eng);
-        setFrench(fre);
+    public WordPair(String lang1, String lang2) {
+        setLang1(lang1);
+        setLang2(lang2);
     }
 
 
     // getters and setters
     // EFFECT: returns the English translation
-    public String getEnglish() {
-        return eng;
+    public String getLang1() {
+        return lang1;
     }
 
     // EFFECT: returns the French translation
-    public String getFrench() {
-        return fre;
+    public String getLang2() {
+        return lang2;
     }
     // EFFECT: sets/changes the English translation
-    public void setEnglish(String eng) {
-        this.eng = eng;
+    public void setLang1(String lang1) {
+        this.lang1 = lang1;
     }
 
     // EFFECT: sets/changes the French translation
-    public void setFrench(String fre) {
-        this.fre = fre;
+    public void setLang2(String lang2) {
+        this.lang2 = lang2;
     }
 
     // EFFECT: returns the desired language translation based on the given language name
-    public String getEnglishOrFrench(int language) {
+    public String getEitherLanguage(int language) {
         // if language is English
-        if (language == BoardLanguage.ENGLISH) {
+        if (language == 1) {
             // get English word
-            return this.getEnglish();
+            return this.getLang1();
         // else if language is English
-        } else if (language == BoardLanguage.FRENCH) {
+        } else if (language == 2) {
             // get the french word
-            return this.getFrench();
+            return this.getLang2();
         } else {
             // else if language is invalid throw invalid language exception
             throw new IllegalArgumentException("Invalid language name");
@@ -69,11 +73,11 @@ public class WordPair implements Writable {
     }
 
     public boolean isEqual(WordPair other) {
-        return this.getEnglish().equals(other.getEnglish()) && this.getFrench().equals(other.getFrench());
+        return this.getLang1().equals(other.getLang1()) && this.getLang2().equals(other.getLang2());
     }
 
     public boolean doesContain(String word) {
-        return this.getEnglish().equals(word) || this.getFrench().equals(word);
+        return this.getLang1().equals(word) || this.getLang2().equals(word);
     }
 
 
@@ -81,8 +85,8 @@ public class WordPair implements Writable {
     @Override
     public JSONObject toJson() throws JSONException {
         JSONObject json = new JSONObject();
-        json.put("eng", this.getEnglish());
-        json.put("fre", this.getFrench());
+        json.put("lang1", this.getLang1());
+        json.put("lang2", this.getLang2());
         return json;
     }
 
@@ -97,7 +101,7 @@ public class WordPair implements Writable {
         if (this == null && wordPair == null) {
             return true;
         }
-        return eng.equals(wordPair.eng) && fre.equals(wordPair.fre);
+        return lang1.equals(wordPair.lang1) && lang2.equals(wordPair.lang2);
     }
 
     public static boolean doesListContainRepeatingWordPairs(List<WordPair> wordPairs) {

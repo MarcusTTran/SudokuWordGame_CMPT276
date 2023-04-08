@@ -69,7 +69,7 @@ public class CellBox2DArrayTest {
     public void testConstructorWithBoxesCellsLanguage() throws NegativeNumberException {
 
         // Create the CellBox2DArray
-        CellBox2DArray cellBox2DArray = new CellBox2DArray(this.boxes, this.cells, 0);
+        CellBox2DArray cellBox2DArray = new CellBox2DArray(this.boxes, this.cells, WordPair.LANG1);
 
         // Check that the dimensions are correct
         assertEquals(this.boxes, cellBox2DArray.getBoxDimensions());
@@ -80,14 +80,14 @@ public class CellBox2DArrayTest {
         assertTrue(areAllCellsAreEmpty(cellBox2DArray));
 
         // check cells language to be English
-        assertTrue(checkCellSetAtLanguage(BoardLanguage.ENGLISH, cellBox2DArray));
+        assertTrue(checkCellSetAtLanguage(WordPair.LANG1, cellBox2DArray));
     }
 
     // test the constructor with negative para form dimensions
     @Test
     public void testNegativeNumberException() {
         assertThrows(NegativeNumberException.class, () -> {
-            new CellBox2DArray(new Dimension(-1, 1), new Dimension(1, 1), 0);
+            new CellBox2DArray(new Dimension(-1, 1), new Dimension(1, 1), WordPair.LANG1);
         });
     }
 
@@ -95,7 +95,7 @@ public class CellBox2DArrayTest {
     @Test
     void testConstructorWithPuzzleDimensionLanguage() throws IllegalDimensionException, NegativeNumberException {
         PuzzleDimensions puzzleDimensions = new PuzzleDimensions(9);
-        CellBox2DArray cellBox2DArray = new CellBox2DArray(puzzleDimensions, BoardLanguage.ENGLISH);
+        CellBox2DArray cellBox2DArray = new CellBox2DArray(puzzleDimensions, WordPair.LANG1);
 
         // Check that the dimensions are correct
         assertEquals(puzzleDimensions.getBoxesInPuzzleDimension(), cellBox2DArray.getBoxDimensions());
@@ -136,7 +136,7 @@ public class CellBox2DArrayTest {
         assertEquals(puzzleDimensions.getEachBoxDimension(), cellBox2DArray.getCellDimensions());
 
         // check puzzle language for one cell the remaining should be the same
-        assertEquals(BoardLanguage.ENGLISH, cellBox2DArray.getCellBox(0, 0).getCell(0,0).getLanguage());
+        assertEquals(WordPair.LANG1, cellBox2DArray.getCellBox(0, 0).getCell(0,0).getLanguage());
 
         // are the cells not null
         assertNotNull(cellBox2DArray.getCellBoxes());
@@ -344,7 +344,7 @@ public class CellBox2DArrayTest {
         cellBox2DArray.clearCellFromBigArray(0,0);
 
         // the cell should be like this after clear() is called
-        Cell clearedCell = new Cell(null, true, BoardLanguage.ENGLISH, true);
+        Cell clearedCell = new Cell(null, true, WordPair.LANG1, true);
         assertEquals(clearedCell, cellBox2DArray.getCellBoxes()[0][0].getCells()[0][0]);
     }
 
@@ -365,7 +365,7 @@ public class CellBox2DArrayTest {
         cellBox2DArray.clearCellFromBigArray(0,0);
 
 
-        Cell clearedCell = new Cell(null, true, BoardLanguage.ENGLISH, true);
+        Cell clearedCell = new Cell(null, true, WordPair.LANG1, true);
         assertEquals(clearedCell, cellBox2DArray.getCellBoxes()[0][0].getCells()[0][0]);
 
     }
@@ -375,7 +375,7 @@ public class CellBox2DArrayTest {
     void testSetCellClearFromBigArrayWhenAlreadyCleared() throws NegativeNumberException {
         CellBox2DArray cellBox2DArray = new CellBox2DArray(this.boxes, this.cells);
         cellBox2DArray.clearCellFromBigArray(0,0);
-        Cell clearedCell = new Cell(null, true, BoardLanguage.ENGLISH, true);
+        Cell clearedCell = new Cell(null, true, WordPair.LANG1, true);
 
         // the cell should be cleared regardless and no change will happen to the content in the cell
         assertEquals(clearedCell, cellBox2DArray.getCellBoxes()[0][0].getCells()[0][0]);
@@ -408,9 +408,9 @@ public class CellBox2DArrayTest {
     @Test
     void testLanguage() throws NegativeNumberException {
         CellBox2DArray cellBox2DArrayEnglish = new CellBox2DArray(this.boxes, this.cells);
-        assertTrue(checkCellSetAtLanguage(BoardLanguage.ENGLISH, cellBox2DArrayEnglish));
-        CellBox2DArray cellBox2DArrayFrench = new CellBox2DArray(this.boxes, this.cells, BoardLanguage.FRENCH);
-        assertTrue(checkCellSetAtLanguage(BoardLanguage.FRENCH, cellBox2DArrayFrench));
+        assertTrue(checkCellSetAtLanguage(WordPair.LANG1, cellBox2DArrayEnglish));
+        CellBox2DArray cellBox2DArrayFrench = new CellBox2DArray(this.boxes, this.cells, WordPair.LANG2);
+        assertTrue(checkCellSetAtLanguage(WordPair.LANG2, cellBox2DArrayFrench));
     }
 
 

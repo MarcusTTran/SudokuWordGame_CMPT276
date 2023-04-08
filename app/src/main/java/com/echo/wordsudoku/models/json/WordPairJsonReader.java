@@ -8,7 +8,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 
 // TODO: Refactor this class to use a remote database instead of a json file
@@ -30,23 +32,33 @@ import java.util.Random;
 
 public class WordPairJsonReader {
     // The list of all word pairs
-    private List<WordPair> mAllWordPairs = new ArrayList<>();
+    private Map<String,List<String>> mAllWords = new HashMap<>();
 
     // Defined as a static variable so it would be only stored once in the memory
     private static JSONObject mJSONObject;
 
+    private int size;
+
     private final String WORD_ARRAY_KEY_IN_JSON_FILE = "words";
 
-    private final String WORD_ENGLISH_ATTRIBUTE_VALUE_IN_JSON_FILE = "translation";
-    private final String WORD_FRENCH_ATTRIBUTE_VALUE_IN_JSON_FILE = "word";
+    private final String WORD_ENGLISH_ATTRIBUTE_VALUE_IN_JSON_FILE = "word";
+    private final String WORD_FRENCH_ATTRIBUTE_VALUE_IN_JSON_FILE = "french";
+
+    private final String WORD_SPANISH_ATTRIBUTE_VALUE_IN_JSON_FILE = "spanish";
+    private final String WORD_CHINESE_ATTRIBUTE_VALUE_IN_JSON_FILE = "chinese";
+    private final String WORD_ARABIC_ATTRIBUTE_VALUE_IN_JSON_FILE = "arabic";
 
     // @constructor WordPairReader
     // @param jsonStr: the json file as a string
     // @throws RuntimeException if the json string is invalid
     // sets the mJSONObject to the json object created from the json string
     // sets the mPuzzleDimension to the given puzzle dimension
-    public WordPairJsonReader(String jsonStr) {
-        try {
+    public WordPairJsonReader(String jsonStr) throws JSONException {
+        List<String> englishWords = new ArrayList<>();
+        List<String> frenchWords = new ArrayList<>();
+        List<String> spanishWords = new ArrayList<>();
+        List<String> chineseWords = new ArrayList<>();
+        List<String> arabicWords = new ArrayList<>();
             // Create a json object from the json string
             JSONObject jsonObject = new JSONObject(jsonStr);
             JSONArray allWordsJson = jsonObject.getJSONArray(WORD_ARRAY_KEY_IN_JSON_FILE);
@@ -55,23 +67,32 @@ public class WordPairJsonReader {
                 // get the JSON Object at the index i that is from the randomIndexesList and add it to the mWordPairs list
                 JSONObject wordPair = allWordsJson.getJSONObject(i);
                 // create a new WordPair object and add it to the mWordPairs list
-                mAllWordPairs.add(new WordPair(wordPair.getString(WORD_ENGLISH_ATTRIBUTE_VALUE_IN_JSON_FILE), wordPair.getString(WORD_FRENCH_ATTRIBUTE_VALUE_IN_JSON_FILE)));
+                englishWords.add(wordPair.getString(WORD_ENGLISH_ATTRIBUTE_VALUE_IN_JSON_FILE));
+                frenchWords.add(wordPair.getString(WORD_FRENCH_ATTRIBUTE_VALUE_IN_JSON_FILE));
+                spanishWords.add(wordPair.getString(WORD_SPANISH_ATTRIBUTE_VALUE_IN_JSON_FILE));
+                chineseWords.add(wordPair.getString(WORD_CHINESE_ATTRIBUTE_VALUE_IN_JSON_FILE));
+                arabicWords.add(wordPair.getString(WORD_ARABIC_ATTRIBUTE_VALUE_IN_JSON_FILE));
             }
-        } catch (JSONException e) {
-            throw new RuntimeException(e);
-        }
+            size = englishWords.size();
+            mAllWords.put(String.valueOf(0),englishWords);
+            mAllWords.put(String.valueOf(1),frenchWords);
+            mAllWords.put(String.valueOf(2),spanishWords);
+            mAllWords.put(String.valueOf(3),chineseWords);
+            mAllWords.put(String.valueOf(4),arabicWords);
     }
 
 
     // @method getWordPairs
     // @return the list of WordPair objects
     // calls the collectWord method to generate a list of WordPair objects
-    public List<WordPair> getRandomWords( int numberOfWords){
-        List<Integer> randomWordPairIndexes = MathUtils.generateRandomIndexes(numberOfWords, mAllWordPairs.size()-1, 0);
+    public List<WordPair> getRandomWords(int numberOfWords,int firstLang,int secondLang){
+        List<Integer> randomWordPairIndexes = MathUtils.generateRandomIndexes(numberOfWords, size-1, 0);
         List<WordPair> randomWordPairs = new ArrayList<>();
+        List<String> firstLangWords = mAllWords.get(String.valueOf(firstLang));
+        List<String> secondLangWords = mAllWords.get(String.valueOf(secondLang));
 
         for (int i = 0; i < numberOfWords; i++) {
-            randomWordPairs.add(mAllWordPairs.get(randomWordPairIndexes.get(i)));
+            randomWordPairs.add(new WordPair(firstLangWords.get(randomWordPairIndexes.get(i)),secondLangWords.get(randomWordPairIndexes.get(i))));
         }
         // Convert the list of WordPair objects to an array of WordPair objects and return it
         return randomWordPairs;

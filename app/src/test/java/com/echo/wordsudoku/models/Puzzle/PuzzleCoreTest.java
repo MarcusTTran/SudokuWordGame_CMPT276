@@ -45,11 +45,11 @@ public class PuzzleCoreTest extends PuzzleTest {
         //Find the first editable cell
         Dimension dimension = puzzle.findEmptyCell(puzzle.getUserBoard());
         assertThrows(IllegalWordPairException.class,()->puzzle.setCell(dimension, DUMMY_WORD_PAIR));
-        assertThrows(IllegalWordPairException.class,()->puzzle.setCell(dimension, DUMMY_WORD_PAIR.getEnglish()));
-        assertThrows(IllegalWordPairException.class,()->puzzle.setCell(dimension, DUMMY_WORD_PAIR.getFrench()));
+        assertThrows(IllegalWordPairException.class,()->puzzle.setCell(dimension, DUMMY_WORD_PAIR.getLang1()));
+        assertThrows(IllegalWordPairException.class,()->puzzle.setCell(dimension, DUMMY_WORD_PAIR.getLang2()));
         assertThrows(IllegalWordPairException.class,()->puzzle.setCell(dimension.getRows(),dimension.getColumns(), DUMMY_WORD_PAIR));
-        assertThrows(IllegalWordPairException.class,()->puzzle.setCell(dimension.getRows(),dimension.getColumns(), DUMMY_WORD_PAIR.getEnglish()));
-        assertThrows(IllegalWordPairException.class,()->puzzle.setCell(dimension.getRows(),dimension.getColumns(), DUMMY_WORD_PAIR.getFrench()));
+        assertThrows(IllegalWordPairException.class,()->puzzle.setCell(dimension.getRows(),dimension.getColumns(), DUMMY_WORD_PAIR.getLang1()));
+        assertThrows(IllegalWordPairException.class,()->puzzle.setCell(dimension.getRows(),dimension.getColumns(), DUMMY_WORD_PAIR.getLang2()));
     }
 
     @Test
@@ -57,15 +57,16 @@ public class PuzzleCoreTest extends PuzzleTest {
         WordPair wordPair = puzzle.getWordPairs().get(0);
         //Find the first editable cell
         assertThrows(IllegalDimensionException.class,()->puzzle.setCell(ILLEGAL_NEGATIVE_ONE_DIMENSION,wordPair ));
-        assertThrows(IllegalDimensionException.class,()->puzzle.setCell(ILLEGAL_NEGATIVE_ONE_DIMENSION,wordPair.getEnglish() ));
-        assertThrows(IllegalDimensionException.class,()->puzzle.setCell(ILLEGAL_NEGATIVE_ONE_DIMENSION,wordPair.getFrench() ));
+        assertThrows(IllegalDimensionException.class,()->puzzle.setCell(ILLEGAL_NEGATIVE_ONE_DIMENSION,wordPair.getLang1() ));
+        assertThrows(IllegalDimensionException.class,()->puzzle.setCell(ILLEGAL_NEGATIVE_ONE_DIMENSION,wordPair.getLang2() ));
         assertThrows(IllegalDimensionException.class,()->puzzle.setCell(ILLEGAL_NEGATIVE_ONE_DIMENSION.getRows(),ILLEGAL_NEGATIVE_ONE_DIMENSION.getColumns(),wordPair ));
-        assertThrows(IllegalDimensionException.class,()->puzzle.setCell(ILLEGAL_NEGATIVE_ONE_DIMENSION.getRows(),ILLEGAL_NEGATIVE_ONE_DIMENSION.getColumns(),wordPair.getEnglish() ));
-        assertThrows(IllegalDimensionException.class,()->puzzle.setCell(ILLEGAL_NEGATIVE_ONE_DIMENSION.getRows(),ILLEGAL_NEGATIVE_ONE_DIMENSION.getColumns(),wordPair.getFrench() ));
+        assertThrows(IllegalDimensionException.class,()->puzzle.setCell(ILLEGAL_NEGATIVE_ONE_DIMENSION.getRows(),ILLEGAL_NEGATIVE_ONE_DIMENSION.getColumns(),wordPair.getLang1() ));
+        assertThrows(IllegalDimensionException.class,()->puzzle.setCell(ILLEGAL_NEGATIVE_ONE_DIMENSION.getRows(),ILLEGAL_NEGATIVE_ONE_DIMENSION.getColumns(),wordPair.getLang2() ));
     }
 
     @Test
     public void testSetCellLockedCell() {
+        puzzle.resetPuzzle(true);
         int size = puzzle.getPuzzleDimensions().getPuzzleDimension();
         WordPair wordPair = puzzle.getWordPairs().get(0);
 
@@ -79,13 +80,15 @@ public class PuzzleCoreTest extends PuzzleTest {
                 }
             }
         }
-        Dimension finalDimension = dimension;
-        assertThrows(IllegalDimensionException.class,()->puzzle.setCell(finalDimension, wordPair));
-        assertThrows(IllegalDimensionException.class,()->puzzle.setCell(finalDimension, wordPair.getEnglish()));
-        assertThrows(IllegalDimensionException.class,()->puzzle.setCell(finalDimension, wordPair.getFrench()));
-        assertThrows(IllegalDimensionException.class,()->puzzle.setCell(finalDimension.getRows(),finalDimension.getColumns(), wordPair));
-        assertThrows(IllegalDimensionException.class,()->puzzle.setCell(finalDimension.getRows(),finalDimension.getColumns(), wordPair.getEnglish()));
-        assertThrows(IllegalDimensionException.class,()->puzzle.setCell(finalDimension.getRows(),finalDimension.getColumns(), wordPair.getFrench()));
+        if(dimension!=null) {
+            Dimension finalDimension = dimension;
+            assertThrows(IllegalDimensionException.class, () -> puzzle.setCell(finalDimension, wordPair));
+            assertThrows(IllegalDimensionException.class, () -> puzzle.setCell(finalDimension, wordPair.getLang1()));
+            assertThrows(IllegalDimensionException.class, () -> puzzle.setCell(finalDimension, wordPair.getLang2()));
+            assertThrows(IllegalDimensionException.class, () -> puzzle.setCell(finalDimension.getRows(), finalDimension.getColumns(), wordPair));
+            assertThrows(IllegalDimensionException.class, () -> puzzle.setCell(finalDimension.getRows(), finalDimension.getColumns(), wordPair.getLang1()));
+            assertThrows(IllegalDimensionException.class, () -> puzzle.setCell(finalDimension.getRows(), finalDimension.getColumns(), wordPair.getLang2()));
+        }
     }
 
     @Test
@@ -95,19 +98,19 @@ public class PuzzleCoreTest extends PuzzleTest {
         puzzle.setCell(dimension, wordPair);
         assertTrue(puzzle.getUserBoard().getCellFromBigArray(dimension.getRows(),dimension.getColumns()).getContent().equals(wordPair));
         resetPuzzle();
-        puzzle.setCell(dimension, wordPair.getEnglish());
+        puzzle.setCell(dimension, wordPair.getLang1());
         assertTrue(puzzle.getUserBoard().getCellFromBigArray(dimension.getRows(),dimension.getColumns()).getContent().equals(wordPair));
         resetPuzzle();
-        puzzle.setCell(dimension, wordPair.getFrench());
+        puzzle.setCell(dimension, wordPair.getLang2());
         assertTrue(puzzle.getUserBoard().getCellFromBigArray(dimension.getRows(),dimension.getColumns()).getContent().equals(wordPair));
         resetPuzzle();
         puzzle.setCell(dimension.getRows(),dimension.getColumns(), wordPair);
         assertTrue(puzzle.getUserBoard().getCellFromBigArray(dimension.getRows(),dimension.getColumns()).getContent().equals(wordPair));
         resetPuzzle();
-        puzzle.setCell(dimension.getRows(),dimension.getColumns(), wordPair.getEnglish());
+        puzzle.setCell(dimension.getRows(),dimension.getColumns(), wordPair.getLang1());
         assertTrue(puzzle.getUserBoard().getCellFromBigArray(dimension.getRows(),dimension.getColumns()).getContent().equals(wordPair));
         resetPuzzle();
-        puzzle.setCell(dimension.getRows(),dimension.getColumns(), wordPair.getFrench());
+        puzzle.setCell(dimension.getRows(),dimension.getColumns(), wordPair.getLang2());
     }
 
     @Test
@@ -171,7 +174,7 @@ public class PuzzleCoreTest extends PuzzleTest {
         for (int i = 0;i<legalPuzzleSize.length;i++) {
             PuzzleDimensions size = legalPuzzleSize[i];
             List<WordPair> wordPairs = WordPairTest.makeRandomWordPairList(size.getPuzzleDimension());
-            board = new CellBox2DArray(size,legalPuzzleLanguage[0]);
+            board = new CellBox2DArray(size,WordPair.LANG1);
             assertTrue(Puzzle.SolveBoard(board,wordPairs));
             assertTrue(Puzzle.isSudokuValid(board,wordPairs));
         }
@@ -179,7 +182,7 @@ public class PuzzleCoreTest extends PuzzleTest {
 
     @Test
     public void testGetTrimmedBoardInvalidCellsToRemove() throws NegativeNumberException, IllegalWordPairException, IllegalDimensionException {
-        CellBox2DArray board = new CellBox2DArray(legalPuzzleSize[0],legalPuzzleLanguage[0]);
+        CellBox2DArray board = new CellBox2DArray(legalPuzzleSize[0],WordPair.LANG1);
         Puzzle.SolveBoard(board,WordPairTest.makeRandomWordPairList(legalPuzzleSize[0].getPuzzleDimension()));
         // Should not accept negative numbers
         assertThrows(NegativeNumberException.class,()->puzzle.getTrimmedBoard(board,illegalPuzzleSizeInt[1],legalPuzzleLanguage[0]));
@@ -191,11 +194,11 @@ public class PuzzleCoreTest extends PuzzleTest {
     public void testGetTrimmedBoardValidCellsToRemove() throws NegativeNumberException, IllegalWordPairException, IllegalDimensionException, IllegalLanguageException, TooBigNumberException {
         // We are going to create a board, solve it, and then remove a random number of cells
         PuzzleDimensions size = TestUtils.getRandomElements(Arrays.asList(legalPuzzleSize),1).get(0);
-        CellBox2DArray board = new CellBox2DArray(size,legalPuzzleLanguage[0]);
+        CellBox2DArray board = new CellBox2DArray(size,WordPair.LANG1);
         List<WordPair> wordPairs = WordPairTest.makeRandomWordPairList(size.getPuzzleDimension());
         Puzzle.SolveBoard(board,wordPairs);
         int cellsToRemove = MathUtils.getRandomNumberBetweenIncluding(0,(int)Math.pow(size.getPuzzleDimension(),2));
-        CellBox2DArray trimmedBoard = puzzle.getTrimmedBoard(board,cellsToRemove,legalPuzzleLanguage[0]);
+        CellBox2DArray trimmedBoard = puzzle.getTrimmedBoard(board,cellsToRemove,WordPair.LANG2);
 
         // Check to see if the correct number of cells were removed
         int cellsRemoved = 0;

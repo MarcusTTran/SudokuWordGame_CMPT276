@@ -9,11 +9,7 @@
 
 package com.echo.wordsudoku.ui.destinations;
 
-import static com.echo.wordsudoku.models.language.BoardLanguage.ENGLISH;
-import static com.echo.wordsudoku.models.language.BoardLanguage.defaultLanguage;
-
 import android.os.Bundle;
-import android.speech.tts.TextToSpeech;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -30,10 +26,8 @@ import androidx.navigation.Navigation;
 
 import com.echo.wordsudoku.R;
 import com.echo.wordsudoku.exceptions.IllegalDimensionException;
-import com.echo.wordsudoku.exceptions.IllegalLanguageException;
 import com.echo.wordsudoku.exceptions.IllegalWordPairException;
 import com.echo.wordsudoku.models.dimension.Dimension;
-import com.echo.wordsudoku.models.sudoku.Cell;
 import com.echo.wordsudoku.models.words.WordPair;
 import com.echo.wordsudoku.ui.MainActivity;
 import com.echo.wordsudoku.ui.SettingsViewModel;
@@ -41,7 +35,6 @@ import com.echo.wordsudoku.ui.dialogs.DictionaryFragment;
 import com.echo.wordsudoku.ui.dialogs.RulesFragment;
 
 import java.util.List;
-import java.util.Locale;
 
 import com.echo.wordsudoku.ui.dialogs.SaveGameDialog;
 import com.echo.wordsudoku.ui.puzzleParts.PuzzleBoardFragment;
@@ -103,10 +96,10 @@ public class PuzzleFragment extends Fragment {
         int size = wordPairs.size();
         String[] LanguageList1 = new String[size],LanguageList2 = new String[size];
         for (int i = 0; i < size; i++) {
-            LanguageList1[i] = wordPairs.get(i).getEnglish();
+            LanguageList1[i] = wordPairs.get(i).getLang1();
         }
         for (int i = 0; i < size; i++) {
-            LanguageList2[i] = wordPairs.get(i).getFrench();
+            LanguageList2[i] = wordPairs.get(i).getLang2();
         }
 
         //Create new instance of RulesFragment
@@ -180,10 +173,14 @@ public class PuzzleFragment extends Fragment {
         OnBackPressedCallback callback = new OnBackPressedCallback(true) {
             @Override
             public void handleOnBackPressed() {
-                if(!((MainActivity)requireActivity()).isGameSaved()) {
+                MainActivity mainActivity = (MainActivity) requireActivity();
+                if(!mainActivity.isGameSaved()) {
                     new SaveGameDialog().show(getChildFragmentManager(), SaveGameDialog.TAG);
                 } else {
-                    ((MainActivity)requireActivity()).mainMenu();
+                    mainActivity.mainMenu();
+                    if (!mPuzzleViewModel.getIsNewGame()) {
+                        mainActivity.saveTimer();
+                    }
                 }
             }
         };

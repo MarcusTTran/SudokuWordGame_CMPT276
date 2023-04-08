@@ -6,6 +6,7 @@ import static org.junit.Assert.fail;
 
 import com.echo.wordsudoku.exceptions.IllegalLanguageException;
 import com.echo.wordsudoku.models.language.BoardLanguage;
+import com.echo.wordsudoku.models.words.WordPair;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -23,41 +24,13 @@ public class BoardLanguageTest {
         this.boardLanguage = new BoardLanguage();
     }
 
-    // test getLanguageName method with invalid input , not 0 or 1
-    @Test
-    void getOtherLanguageInvalidInput() {
-
-        try {
-            boardLanguage.getOtherLanguage(3);
-            // fail since 3 is not a valid language
-            fail("IllegalArgumentException not thrown");
-        } catch (IllegalLanguageException e) {
-            //expected
-        }
-    }
-
-
-    // test getOtherLanguage method with valid input (0, 1)
-    @Test
-    void getOtherLanguageValidInput() {
-
-        try {
-            assertEquals(BoardLanguage.ENGLISH, boardLanguage.getOtherLanguage(BoardLanguage.FRENCH));
-            assertEquals(BoardLanguage.FRENCH, boardLanguage.getOtherLanguage(BoardLanguage.ENGLISH));
-
-        } catch (Exception e) {
-            // fail since both languages are valid
-            fail("IllegalArgumentException thrown");
-        }
-    }
-
 
     // test getLanguageName method with invalid input , not 0 or 1
     @Test
     void getLanguageNameInvalidInput() {
 
         try {
-            boardLanguage.getLanguageName(3);
+            boardLanguage.getLanguageName(7);
             fail("IllegalArgumentException not thrown");
         } catch (Exception e) {
             //expected
@@ -81,8 +54,6 @@ public class BoardLanguageTest {
     // test isValidLanguage method with invalid input , not 0 or 1
     @Test
     void isLanguageValidInvalidLanguage() {
-
-        assertFalse(boardLanguage.isValidLanguage(3));
         assertFalse(boardLanguage.isValidLanguage(-1));
 
     }
@@ -102,7 +73,7 @@ public class BoardLanguageTest {
     @Test
     void defaultLanguage() {
         // default language is English
-        assertEquals(BoardLanguage.ENGLISH, boardLanguage.defaultLanguage());
+        assertEquals(WordPair.LANG1, boardLanguage.defaultLanguage());
     }
 
 }

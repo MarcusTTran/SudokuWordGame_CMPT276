@@ -32,6 +32,8 @@
     <string name="puzzle_timer_preference_key">com.echo.wordsudoku.puzzleTimerKey</string>
     <string name="puzzle_autosave_preference_key">com.echo.wordsudoku.autosave</string>
     <string name="text_to_speech_preference_key">com.echo.wordsudoku.textToSpeech</string>
+    <string name="puzzle_language_preference_key">com.echo.wordsudoku.puzzleLanguage</string>
+    <string name="input_language_preference_key">com.echo.wordsudoku.inputLanguage</string>
 
     <string name="RulesHeader">Word Sudoku Rules</string>
     <string name="RulesText">When you start a new Word Sudoku game you will be presented with a square grid consisting of a number of cells.
@@ -118,8 +120,8 @@ If you encounter any difficulty translating the words featured in your puzzle, y
     <string name="no_button">No</string>
 
     <!-- Choose Custom Words -->
-    <string name="english_custom_words">English Words</string>
-    <string name="french_custom_words">French Words</string>
+    <string name="english_custom_words">Puzzle Words</string>
+    <string name="french_custom_words">Button Words</string>
     <string name="choose_custom_puzzle_size_custom">Select Custom Puzzle Size</string>
     <string name="button_clear_custom_words">Clear</string>
     <string name="error_custom_words_msg">Please fill in all entry boxes and ensure that words contain only characters!</string>
@@ -132,5 +134,11 @@ If you encounter any difficulty translating the words featured in your puzzle, y
     <string name="custom_words_english_save_key">com.echo.wordsudoku.puzzleCustomWordsEnglishKey</string>
     <string name="custom_words_french_save_key">com.echo.wordsudoku.puzzleCustomWordsFrenchKey</string>
 
+    <!-- Choose Language -->
+    <string name="choose_puzzle_language_title">Choose puzzle language</string>
+    <string name="choose_input_language_title">Choose button Input language</string>
+    <string name="set_languages_dialog_button">Change Languages</string>
+    <string name="error_two_languages_same">Please select two different languages</string>
+    <string name="no_languages_set">Not set. Click to change</string>
 
 </resources>

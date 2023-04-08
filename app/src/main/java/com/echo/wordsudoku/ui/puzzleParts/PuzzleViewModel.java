@@ -31,11 +31,22 @@ import java.util.List;
 public class PuzzleViewModel extends ViewModel {
     private Puzzle puzzle;
 
+    private boolean isNewGame = true;
+
+
     private final MutableLiveData<String[][]> puzzleView = new MutableLiveData<>();
 
     private final MutableLiveData<Integer> timer = new MutableLiveData<>();
     private List<WordPair> customWordPairs;
     private WordPairJsonReader mWordPairJsonReader;
+
+    public boolean getIsNewGame() {
+        return isNewGame;
+    }
+
+    public void setIsNewGame(boolean isNewGame) {
+        this.isNewGame = isNewGame;
+    }
 
     // returns the list of wordpairs in the puzzle (useful for creating buttons in PuzzleInputButtonsFragment and so on)
     public List<WordPair> getWordPairs() {
@@ -71,11 +82,12 @@ public class PuzzleViewModel extends ViewModel {
     }
 
     // Thread safe method for posting a puzzle
-    private void postPuzzle(Puzzle puzzle,boolean textToSpeech) {
+    private void postPuzzle(Puzzle puzzle,boolean textToSpeech,boolean updateTimer) {
         puzzle.setTextToSpeechOn(textToSpeech);
         this.puzzle = new Puzzle(puzzle);
         puzzleView.postValue(puzzle.toStringArray());
-        timer.postValue(puzzle.getTimer());
+        if(updateTimer)
+            timer.postValue(puzzle.getTimer());
     }
 
     // sets the word pair reader (used for getting random wordpairs for puzzle generation)
@@ -84,18 +96,21 @@ public class PuzzleViewModel extends ViewModel {
     }
 
     // generates a new puzzle with random wordpairs with the given parameters
-    public void newPuzzle(int puzzleSize, int boardLanguage, int difficulty, boolean textToSpeech) throws JSONException, IllegalLanguageException, TooBigNumberException, NegativeNumberException, IllegalWordPairException, IllegalDimensionException {
-       setPuzzle(new Puzzle(mWordPairJsonReader.getRandomWords(puzzleSize),puzzleSize,boardLanguage,Puzzle.NO_NUMBER_OF_START_CELLS_USE_DIFFICULTY,difficulty,textToSpeech));
+    public void newPuzzle(int puzzleSize, int boardLanguage,int inputLanguage, int difficulty, boolean textToSpeech) throws JSONException, IllegalLanguageException, TooBigNumberException, NegativeNumberException, IllegalWordPairException, IllegalDimensionException {
+       setPuzzle(new Puzzle(mWordPairJsonReader.getRandomWords(puzzleSize,boardLanguage,inputLanguage),puzzleSize,Puzzle.NO_NUMBER_OF_START_CELLS_USE_DIFFICULTY,difficulty,textToSpeech));
+       isNewGame = true;
     }
 
     // generates a new puzzle from user set custom wordpairs with the given parameters
-    public void newCustomPuzzle(int puzzleLanguage, int difficulty, boolean textToSpeech) throws IllegalLanguageException, TooBigNumberException, NegativeNumberException, IllegalWordPairException, IllegalDimensionException {
-        setPuzzle(new Puzzle(customWordPairs, customWordPairs.size(),puzzleLanguage,Puzzle.NO_NUMBER_OF_START_CELLS_USE_DIFFICULTY,difficulty,textToSpeech));
+    public void newCustomPuzzle(int difficulty, boolean textToSpeech) throws IllegalLanguageException, TooBigNumberException, NegativeNumberException, IllegalWordPairException, IllegalDimensionException {
+        setPuzzle(new Puzzle(customWordPairs, customWordPairs.size(),Puzzle.NO_NUMBER_OF_START_CELLS_USE_DIFFICULTY,difficulty,textToSpeech));
+        isNewGame = true;
     }
 
     // this method is used when the user wants to load a puzzle from a json file
-    public void loadPuzzle(Puzzle puzzle, boolean textToSpeech) {
-        postPuzzle(puzzle,textToSpeech);
+    public void loadPuzzle(Puzzle puzzle, boolean textToSpeech, boolean updateTimer) {
+        postPuzzle(puzzle,textToSpeech,updateTimer);
+        isNewGame = false;
     }
 
     // this method inserts a word into the puzzle
@@ -127,14 +142,14 @@ public class PuzzleViewModel extends ViewModel {
         return puzzle.isPuzzleFilled();
     }
 
-    // get the input language of the puzzle
-    public int getPuzzleInputLanguage() throws IllegalLanguageException {
-        return BoardLanguage.getOtherLanguage(puzzle.getLanguage());
-    }
-
     // gets the timer and we can observe it
     public LiveData<Integer> getTimer() {
         return timer;
+    }
+
+    public void setTimer(int seconds) throws NegativeNumberException {
+        puzzle.setTimer(seconds);
+        timer.setValue(seconds);
     }
 
     // gets the timer value of the puzzle

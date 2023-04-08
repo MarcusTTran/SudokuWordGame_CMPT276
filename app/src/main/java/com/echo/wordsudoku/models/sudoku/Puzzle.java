@@ -74,9 +74,6 @@ public class Puzzle implements Writable {
     // The puzzle dimension is the dimension of the puzzle stored in a PuzzleDimensions object which holds all the legal dimensions for the puzzle
     private final PuzzleDimensions puzzleDimension;
 
-    // The language of the puzzle, by default it is set to the default language of English
-    private int language = BoardLanguage.defaultLanguage();
-
     // The number of mistakes the user has made
     private int mistakes = 0;
 
@@ -91,7 +88,7 @@ public class Puzzle implements Writable {
      * @param difficulty: the difficulty of the puzzle (1-5)
      * @param numberOfStartCells: the number of cells that are not removed from the solution board and user starts with them
      */
-    public Puzzle(List<WordPair> wordPairs,int dimension, int language, int numberOfStartCells, int difficulty) throws IllegalDimensionException, IllegalWordPairException, IllegalLanguageException, TooBigNumberException, NegativeNumberException {
+    public Puzzle(List<WordPair> wordPairs,int dimension, int numberOfStartCells, int difficulty) throws IllegalDimensionException, IllegalWordPairException, IllegalLanguageException, TooBigNumberException, NegativeNumberException {
 
         // If the word pairs are null, we throw an exception
         if (wordPairs == null)
@@ -111,11 +108,8 @@ public class Puzzle implements Writable {
 
         // End of setting the puzzle dimension and box dimension
 
-        // Setting the language
-        setLanguage(language);
-
         // We set the language of the board opposite to the language of the puzzle
-        this.solutionBoard = new CellBox2DArray(puzzleDimension,language);
+        this.solutionBoard = new CellBox2DArray(puzzleDimension,WordPair.LANG1);
         // TODO: Make the solution board cells all of them isEditable = false
 
         // First we create a solved board
@@ -132,7 +126,7 @@ public class Puzzle implements Writable {
         // Calculate the number of cells to remove from the solution board
 
         // Then we remove a certain number of cells from the solution board and set the user board to the result
-        CellBox2DArray userBoard = getTrimmedBoard(getSolutionBoard(),numberOfCellsToRemove,BoardLanguage.getOtherLanguage(language));
+        CellBox2DArray userBoard = getTrimmedBoard(getSolutionBoard(),numberOfCellsToRemove,WordPair.LANG2);
         setUserBoard(userBoard);
 
         // We lock the cells that are not empty so the user cannot change them
@@ -142,8 +136,8 @@ public class Puzzle implements Writable {
 
 
 
-    public Puzzle(List<WordPair> wordPairs,int dimension, int language, int numberOfStartCells) throws IllegalWordPairException, IllegalDimensionException, IllegalLanguageException, TooBigNumberException, NegativeNumberException {
-        this(wordPairs,dimension,language,numberOfStartCells,0);
+    public Puzzle(List<WordPair> wordPairs,int dimension, int numberOfStartCells) throws IllegalWordPairException, IllegalDimensionException, IllegalLanguageException, TooBigNumberException, NegativeNumberException {
+        this(wordPairs,dimension,numberOfStartCells,0);
     }
 
     /* @copy constructor
@@ -154,12 +148,10 @@ public class Puzzle implements Writable {
         this.solutionBoard = new CellBox2DArray(puzzle.getSolutionBoard());
         this.mWordPairs = new ArrayList<>(puzzle.getWordPairs());
         this.puzzleDimension = new PuzzleDimensions(puzzle.getPuzzleDimensions());
-        this.language = puzzle.getLanguage();
         this.mistakes = puzzle.getMistakes();
         this.timer = puzzle.getTimer();
         this.setTextToSpeechOn(puzzle.isTextToSpeechOn());
     }
-
     /* @constructor
     a puzzle constructor that directly takes all the fields
     used by JSONReader to create a puzzle from a JSON file and resume the game state
@@ -169,20 +161,19 @@ public class Puzzle implements Writable {
     @param language: the language
     @param mistakes: the number of mistakes
      */
-    public Puzzle(CellBox2DArray userBoard, CellBox2DArray solutionBoard, List<WordPair> wordPairs, PuzzleDimensions puzzleDimension, int language, int mistakes, int timer) throws IllegalDimensionException {
+    public Puzzle(CellBox2DArray userBoard, CellBox2DArray solutionBoard, List<WordPair> wordPairs, PuzzleDimensions puzzleDimension, int mistakes, int timer) throws IllegalDimensionException {
         if (ACCEPTABLE_PUZZLE_DIMENSIONS.contains(puzzleDimension) == false)
             throw new IllegalDimensionException();
         this.userBoard = new CellBox2DArray(userBoard);
         this.solutionBoard = new CellBox2DArray(solutionBoard);
         this.mWordPairs = new ArrayList<>(wordPairs);
         this.puzzleDimension = new PuzzleDimensions(puzzleDimension);
-        this.language = language;
         this.mistakes = mistakes;
         this.timer = timer;
     }
 
-    public Puzzle(List<WordPair> randomWords, int puzzleSize, int boardLanguage, int noNumberOfStartCellsUseDifficulty, int difficulty, boolean textToSpeech) throws IllegalLanguageException, TooBigNumberException, NegativeNumberException, IllegalWordPairException, IllegalDimensionException {
-        this(randomWords,puzzleSize,boardLanguage,noNumberOfStartCellsUseDifficulty,difficulty);
+    public Puzzle(List<WordPair> randomWords, int puzzleSize, int noNumberOfStartCellsUseDifficulty, int difficulty, boolean textToSpeech) throws IllegalLanguageException, TooBigNumberException, NegativeNumberException, IllegalWordPairException, IllegalDimensionException {
+        this(randomWords,puzzleSize,noNumberOfStartCellsUseDifficulty,difficulty);
         setTextToSpeechOn(textToSpeech);
     }
 
@@ -205,22 +196,12 @@ public class Puzzle implements Writable {
         return puzzleDimension;
     }
 
-    public int getLanguage() {
-        return language;
-    }
-
     public List<WordPair> getWordPairs() {
         return mWordPairs;
     }
 
     public int getTimer() {
         return timer;
-    }
-
-    public void setLanguage(int language) throws IllegalArgumentException, IllegalLanguageException {
-        if(!BoardLanguage.isValidLanguage(language))
-            throw new IllegalLanguageException();
-        this.language = language;
     }
 
     public void setTimer(int timer) throws NegativeNumberException {
@@ -364,7 +345,7 @@ public class Puzzle implements Writable {
             }
         }
         // If its not TTS and one of the original pre-filled, then get the word
-        return cell.getContent().getEnglishOrFrench(cell.getLanguage());
+        return cell.getContent().getEitherLanguage(cell.getLanguage());
     }
 
 
@@ -649,7 +630,6 @@ public class Puzzle implements Writable {
         json.put("solutionBoard", this.getSolutionBoard().toJson());
         json.put("wordPairs", convertWordPairsToJson());
         json.put("puzzleDimensions", this.getPuzzleDimensions().toJson());
-        json.put("language", this.getLanguage());
         json.put("mistakes", this.getMistakes());
         json.put("timer", this.getTimer());
 
@@ -684,7 +664,7 @@ public class Puzzle implements Writable {
         boolean wordPairsAreEqual = areWordPairsEqual(puzzle.getWordPairs(), this.getWordPairs());
         boolean puzzleDimensionIsEqual = this.puzzleDimension.equals(puzzle.puzzleDimension);
 
-        return language == puzzle.language && mistakes == puzzle.mistakes &&
+        return mistakes == puzzle.mistakes &&
                 timer == puzzle.timer && puzzleDimensionIsEqual &&
                 solBoardAreEqual && wordPairsAreEqual;
     }
