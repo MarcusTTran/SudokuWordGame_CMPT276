@@ -240,7 +240,7 @@
 
 1. <i>The user navigates to the settings page.</i>
 
-2. <i>User clicks the Text to Speech option. A toast appears notify the user Text to Speech is now on.</i>
+2. <i>User clicks the Text to Speech (Listening Comprehension) option. A toast appears notify the user Text to Speech is now on.</i>
 
 3. <i>User can open a new puzzle or pre-existing puzzle.</i>
 
