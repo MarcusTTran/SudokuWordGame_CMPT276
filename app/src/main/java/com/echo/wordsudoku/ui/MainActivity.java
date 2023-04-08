@@ -136,9 +136,8 @@ public class MainActivity extends AppCompatActivity implements SaveGameDialog.Sa
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
     }
 
-
+    // Load the wordpair reader from the json file
     private void loadJsonDatabase() {
-        // Load the wordpair reader from the json file
         new Thread(() -> {
             try {
                 InputStream jsonFile = getAssets().open(wordPairJsonFile);
@@ -149,6 +148,8 @@ public class MainActivity extends AppCompatActivity implements SaveGameDialog.Sa
         }).start();
     }
 
+    // When the back button is pressed (or user clicks on arrow in the appbar), this method is called
+    // we want to override the default behaviour of the back button to go back to the main menu if the user is in the puzzle fragment (we want to ask the user if they want to save the game by displaying a dialog)
     @Override
     public boolean onSupportNavigateUp() {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
@@ -166,6 +167,7 @@ public class MainActivity extends AppCompatActivity implements SaveGameDialog.Sa
         }
     }
 
+    // Loads the custom word pairs from the shared preferences (this ensures that the custom word pairs are saved even if the app is closed)
     private void loadCustomWordPairs() {
         String englishCustomWordsString = mPreferences.getString(getString(R.string.custom_words_english_save_key), null);
         String frenchCustomWordsString = mPreferences.getString(getString(R.string.custom_words_french_save_key), null);
@@ -190,6 +192,7 @@ public class MainActivity extends AppCompatActivity implements SaveGameDialog.Sa
         }
     }
 
+    // Saves the custom word pairs to the shared preferences (this ensures that the custom word pairs are saved even if the app is closed)
     private void saveCustomWordsPairs() {
         // Save all of the game settings so when the user opens the app again, the settings are the same
         SharedPreferences.Editor editor = mPreferences.edit();
@@ -220,6 +223,7 @@ public class MainActivity extends AppCompatActivity implements SaveGameDialog.Sa
 
     }
 
+    // Loads the settings from the shared preferences (this ensures that the settings are saved even if the app is closed)
     private void loadSettings() {
         // TODO: Load all of the game settings so when the user opens the app again, the settings are the same
         // Load the settings from the shared preferences
@@ -238,7 +242,8 @@ public class MainActivity extends AppCompatActivity implements SaveGameDialog.Sa
     }
 
 
-    // TODO: Add more settings to be saved
+
+    // Saves the settings to the shared preferences (this ensures that the settings are saved even if the app is closed)
     private void saveSettings() {
         // Save all of the game settings so when the user opens the app again, the settings are the same
         SharedPreferences.Editor editor = mPreferences.edit();
@@ -256,6 +261,7 @@ public class MainActivity extends AppCompatActivity implements SaveGameDialog.Sa
         editor.apply();
     }
 
+    // When app is closed, save the settings and the puzzle (if AutoSave is on)
     @Override
     protected void onStop() {
         super.onStop();
@@ -271,10 +277,12 @@ public class MainActivity extends AppCompatActivity implements SaveGameDialog.Sa
 
     }
 
+    // Check to see if the puzzle has been saved used to determine if the user should be prompted to save the game
     public boolean isGameSaved() {
         return Arrays.deepEquals(mPuzzleViewModel.getPuzzleView().getValue(), latestSavedPuzzle);
     }
 
+    // Save the puzzle to the json file (this is done in a separate thread)
     public void savePuzzle(){
         new Thread(() -> {
             if (mPuzzleViewModel.isPuzzleNonValid()) return;
@@ -288,17 +296,20 @@ public class MainActivity extends AppCompatActivity implements SaveGameDialog.Sa
     }
 
 
+    // When user clicks YES on the save dialog, save the puzzle and then go to the main menu
     @Override
     public void onSaveDialogYes() {
         savePuzzle();
         mainMenu();
     }
 
+    // When user clicks NO on the save dialog, go to the main menu
     @Override
     public void onSaveDialogNo() {
         mainMenu();
     }
 
+    // When the user picks a puzzle size, create a new puzzle with the selected size and go to the PuzzleFragment so the user can play the game
     @Override
     public void onPuzzleSizeSelected(int size) {
         try {
@@ -319,6 +330,7 @@ public class MainActivity extends AppCompatActivity implements SaveGameDialog.Sa
         navController.navigate(R.id.startPuzzleModeAction);
     }
 
+    // Load the puzzle from the json file (this is done in a separate thread)
     public void loadPuzzle(){
         new Thread(() -> {
             try{
@@ -347,6 +359,7 @@ public class MainActivity extends AppCompatActivity implements SaveGameDialog.Sa
         }).start();
     }
 
+    // A helper method to display a fatal error dialog
     public void fatalErrorDialog(String message) {
         new AlertDialog.Builder(this)
                 .setTitle(R.string.word_error)
@@ -358,14 +371,17 @@ public class MainActivity extends AppCompatActivity implements SaveGameDialog.Sa
                 .show();
     }
 
+    // Navigate to the main menu from anywhere in the app
     public void mainMenu() {
         Navigation.findNavController(this, R.id.nav_host_fragment).navigate(MAIN_MENU_ACTION);
     }
 
+    // Check to see if the saved puzzle json file exists
     public boolean doesPuzzleSaveFileExist() {
         return mPuzzleJsonFile.exists();
     }
 
+    // This is the listener for the SudokuBoard (called when a cell is touched)
     @Override
     public void onCellTouched(String text, int row, int column) {
         if (mSettingsViewModel.getTextToSpeech()) {

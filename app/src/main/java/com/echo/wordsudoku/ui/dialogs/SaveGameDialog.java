@@ -1,3 +1,10 @@
+/*
+* Description: This class is used to create a dialog that asks the user if they want to save the game before exiting a puzzle.
+* If the user presses yes, then the puzzle is saved and the user is taken to the main menu.
+* If the user presses no, then the puzzle is not saved and the user is taken to the main menu.
+* If the user presses cancel, then the dialog is dismissed and the user is taken back to the puzzle.
+*  */
+
 package com.echo.wordsudoku.ui.dialogs;
 
 import android.app.AlertDialog;

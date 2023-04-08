@@ -500,8 +500,8 @@ public class Puzzle implements Writable {
             throw new IllegalWordPairException("Word pair list size is not equal to board size");
         if (board == null)
             throw new NullPointerException("Board is null");
-        if(board.getRows() != board.getColumns())
-            throw new IllegalDimensionException("Board is not square");
+        if(!new PuzzleDimensions(board.getRows(),board.getCellDimensions(),board.getBoxDimensions()).isValid())
+            throw new IllegalDimensionException("Board doesn't have sudoku dimensions");
         int size = board.getRows();
         boolean valid = true;
         for (int i =0;i<size;i++) {
@@ -738,6 +738,10 @@ public class Puzzle implements Writable {
                 }
             }
         }
+    }
+
+    public Dimension getRandomCellDimension(){
+        return new Dimension(MathUtils.getRandomNumberBetweenIncluding(0,userBoard.getRows()-1),MathUtils.getRandomNumberBetweenIncluding(0,userBoard.getColumns()-1));
     }
 
     public int numberOfFilledCells() {

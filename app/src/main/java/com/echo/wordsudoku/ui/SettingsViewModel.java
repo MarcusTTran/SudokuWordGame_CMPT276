@@ -1,3 +1,8 @@
+/*
+* Description: This class is the ViewModel for the SettingsFragment. It is used to store the settings for the app.
+* Settings include the language of the puzzle, the difficulty of the puzzle, whether the timer is enabled, whether the app should automatically save the game and whether the app should use Listening Comprehension Mode.
+*  */
+
 package com.echo.wordsudoku.ui;
 
 import androidx.lifecycle.LiveData;

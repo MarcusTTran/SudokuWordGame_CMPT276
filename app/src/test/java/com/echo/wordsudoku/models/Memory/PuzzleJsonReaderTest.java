@@ -42,27 +42,6 @@ public class PuzzleJsonReaderTest {
     final static int SIX_BY_SIX = 6;
     final static int FOUR_BY_FOUR = 4;
 
-    private final String PUZZLE_JSON_SAVE_FILENAME = "wsudoku_puzzleTest.json";
-
-    private final int TAB = 4;
-
-    private Context context;
-
-    private File file_saved;
-
-
-    @BeforeEach
-    void setUpContext() {
-        this.context = Mockito.mock(Context.class);
-        // set a temporary directory for testing
-        Mockito.when(context.getFilesDir()).thenReturn(new File("/tmp"));
-
-        // test if the directory is not null
-        assertNotNull(context.getFilesDir());
-
-        // create file
-        this.file_saved = new File(context.getFilesDir(),PUZZLE_JSON_SAVE_FILENAME);
-    }
 
     Puzzle constructPuzzle(int dimension) throws IllegalLanguageException, TooBigNumberException, NegativeNumberException, IllegalWordPairException, IllegalDimensionException {
 
@@ -168,24 +147,15 @@ public class PuzzleJsonReaderTest {
         // create a JsonObject out of puzzle
         JSONObject jsonObject = puzzle.toJson();
 
-        // write the string Object into the file
-        FileUtils.stringToPrintWriter(new PrintWriter(file_saved),jsonObject.toString(TAB));
-
-        // file loaded
-        File file_loaded = new File(context.getFilesDir(),PUZZLE_JSON_SAVE_FILENAME);
-
-        Puzzle puzzleSaved;
-
         // retrieving the saved puzzle
         PuzzleJsonReader puzzleJsonReader =
-                new PuzzleJsonReader(FileUtils.inputStreamToString(new FileInputStream(file_loaded)));
+                new PuzzleJsonReader(jsonObject.toString());
 
-        puzzleSaved = puzzleJsonReader.readPuzzle();
+        Puzzle puzzleSaved = puzzleJsonReader.readPuzzle();
 
         boolean equal = puzzle.equals(puzzleSaved);
         // the loaded Puzzle must be the same as what was saved
         return equal;
     }
-
 
 }

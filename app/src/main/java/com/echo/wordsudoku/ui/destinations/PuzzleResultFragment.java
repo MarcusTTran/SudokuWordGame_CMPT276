@@ -17,7 +17,6 @@ import com.echo.wordsudoku.R;
 import com.echo.wordsudoku.models.sudoku.GameResult;
 import com.echo.wordsudoku.ui.MainActivity;
 import com.echo.wordsudoku.ui.SettingsViewModel;
-import com.echo.wordsudoku.ui.destinations.PuzzleResultFragmentDirections;
 import com.echo.wordsudoku.ui.puzzleParts.PuzzleViewModel;
 
 public class PuzzleResultFragment extends Fragment {

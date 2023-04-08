@@ -41,6 +41,10 @@
         <action
             android:id="@+id/startCustomPuzzleAction"
             app:destination="@id/puzzleFragment"/>
+        <argument
+            android:name="startNewGame"
+            app:argType="boolean"
+            android:defaultValue="false"/>
     </fragment>
     <fragment android:id="@+id/choosePuzzleModeFragment"
         android:name="com.echo.wordsudoku.ui.destinations.ChoosePuzzleModeFragment"
@@ -49,6 +53,9 @@
         <action
             android:id="@+id/startPuzzleModeAction"
             app:destination="@id/puzzleFragment"/>
+        <action
+            android:id="@+id/enterCustomWordsAction"
+            app:destination="@id/chooseCustomWordsFragment"/>
     </fragment>
 
     <fragment

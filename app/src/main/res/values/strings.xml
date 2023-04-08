@@ -74,10 +74,10 @@ If you encounter any difficulty translating the words featured in your puzzle, y
     <string name="auto_save_off">Auto Save is off</string>
 
     <!-- TextToSpeech Preferences -->
-    <string name="text_to_speech_on">Text to Speech is on</string>
-    <string name="text_to_speech_off">Text to Speech is off</string>
+    <string name="text_to_speech_on">Words will be shown as numbers which will be pronounced when you click them</string>
+    <string name="text_to_speech_off">Listening Comprehension mode is off and puzzles will be shown as normal</string>
     <string name="accessibility_category">Accessibility</string>
-    <string name="text_to_speech_title">Text-To-Speech</string>
+    <string name="text_to_speech_title">Listening Comprehension Mode</string>
 
     <string name="word_error">Error!</string>
     <string name="save_game_error">Failed to save the game</string>
@@ -123,6 +123,7 @@ If you encounter any difficulty translating the words featured in your puzzle, y
     <string name="choose_custom_puzzle_size_custom">Select Custom Puzzle Size</string>
     <string name="button_clear_custom_words">Clear</string>
     <string name="error_custom_words_msg">Please fill in all entry boxes and ensure that words contain only characters!</string>
+    <string name="custom_words_saved_successfully">Words for Custom Puzzle have been successfully set.</string>
     <string name="error">Error</string>
     <string name="blank">blank</string>
     <string name="ok">OK</string>

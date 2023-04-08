@@ -1,3 +1,8 @@
+/*
+* Description: This fragment is used to display a dictionary of word pairs to the user when they tap the dictionary button in the puzzleFragment
+* The number of times the dictionary is displayed is limited by the difficulty of the puzzle
+*  */
+
 package com.echo.wordsudoku.ui.dialogs;
 
 import android.os.Bundle;

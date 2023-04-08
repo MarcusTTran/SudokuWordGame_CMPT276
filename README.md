@@ -4,3 +4,7 @@ For best results please run this program on newer devices with newer versions of
 
 # Requirements Document
 [Please click on this link to view our User stories and TDDs](./Requirments.md)
+
+# Documentation
+This page contains a high level description of the code structure and the design of the application.
+[Please click on this link to view our documentation](./Documentation.md)

@@ -166,5 +166,9 @@ public class PuzzleDimensions implements Writable {
         return puzzleDimension == that.puzzleDimension && Objects.equals(eachBoxDimension, that.eachBoxDimension) && Objects.equals(boxesInPuzzleDimension, that.boxesInPuzzleDimension);
     }
 
+    public boolean isValid() {
+        return this.puzzleDimension == this.eachBoxDimension.getRows() * this.eachBoxDimension.getColumns() && this.puzzleDimension == this.boxesInPuzzleDimension.getRows() * this.boxesInPuzzleDimension.getColumns();
+    }
+
 
 }
