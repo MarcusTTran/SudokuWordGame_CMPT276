@@ -205,6 +205,153 @@ public class PuzzleBoardFragmentTest {
         }
     }
 
+    //Test that the board displays all cells
+    @Test
+    public void testBoardDisplaysAllCells() {
+        for (int i = 0; i < puzzleSizes.length; i++) {
+            testBoardDisplaysAllCellsHorizontalHelper(puzzleSizes[i]);
+        }
+    }
+
+    public void testBoardDisplaysAllCellsHelper(int dim) {
+
+        //Start new game
+        UiObject newGameButton = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/new_game_button").className("android.widget.Button"));
+        try {
+            newGameButton.click();
+        } catch (UiObjectNotFoundException e) {
+            fail("New Game button was not displayed on Puzzle size " + dim);
+        }
+
+        //Start custom sized puzzle
+        UiObject customSizePuzzleButton = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/custom_size_button").className("android.widget.Button"));
+        try {
+            customSizePuzzleButton.click();
+        } catch (UiObjectNotFoundException e) {
+            fail("Custom Sized button was not displayed on Puzzle size " + dim);
+        }
+
+        //Choose puzzle size dialog
+        UiObject choosePuzzleSizeDialog = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/size_radio_group").className("android.widget.RadioGroup"));
+        try {
+            UiObject sizeSelection = choosePuzzleSizeDialog.getChild(new UiSelector().textContains(Integer.toString(dim)));
+            sizeSelection.click();
+        } catch (UiObjectNotFoundException e) {
+            fail("Puzzle size selection was not displayed on Puzzle size " + dim);
+        }
+
+        UiObject doneChooseSizeDialog = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/done_button").className("android.widget.Button"));
+        try {
+            doneChooseSizeDialog.click();
+        } catch (UiObjectNotFoundException e) {
+            fail("Done button in Choose size dialog was not displayed on Puzzle size " + dim);
+        }
+
+
+
+        //Test that all cells are displayed
+        UiObject sudokuBoard = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/sudoku_board").className("android.view.View"));
+        if (!sudokuBoard.exists()) {
+            fail("Sudoku Board was not displayed on Puzzle size " + dim);
+        }
+
+        for (int i = 0; i < dim * dim; i++) {
+            try {
+                if (!sudokuBoard.getChild(new UiSelector().instance(i)).exists()) {
+                    fail("All cells not displayed on Puzzle size " + dim);
+                }
+            } catch (UiObjectNotFoundException e) {
+                fail("All cells were not displayed on Puzzle size " + dim);
+            }
+        }
+
+        ourDevice.pressBack();
+
+        UiObject noButton = ourDevice.findObject(new UiSelector().resourceId("android:id/button2").className("android.widget.Button"));
+        try {
+            noButton.click();
+        } catch (UiObjectNotFoundException e) {
+            fail("No button was not displayed on Puzzle size " + dim);
+        }
+    }
+
+
+    //Test that the board displays all cells on horizontal landscape
+    @Test
+    public void testBoardDisplaysHorizontalAllCells() {
+        try {
+            ourDevice.setOrientationLeft();
+            ourDevice.waitForWindowUpdate(null, 3000);
+        } catch (android.os.RemoteException e) {
+            fail();
+        }
+        for (int i = 0; i < puzzleSizes.length; i++) {
+            testBoardDisplaysAllCellsHorizontalHelper(puzzleSizes[i]);
+        }
+    }
+
+    public void testBoardDisplaysAllCellsHorizontalHelper(int dim) {
+
+        //Start new game
+        UiObject newGameButton = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/new_game_button").className("android.widget.Button"));
+        try {
+            newGameButton.click();
+        } catch (UiObjectNotFoundException e) {
+            fail("New Game button was not displayed on Puzzle size " + dim);
+        }
+
+        //Start custom sized puzzle
+        UiObject customSizePuzzleButton = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/custom_size_button").className("android.widget.Button"));
+        try {
+            customSizePuzzleButton.click();
+        } catch (UiObjectNotFoundException e) {
+            fail("Custom Sized button was not displayed on Puzzle size " + dim);
+        }
+
+        //Choose puzzle size dialog
+        UiObject choosePuzzleSizeDialog = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/size_radio_group").className("android.widget.RadioGroup"));
+        try {
+            UiObject sizeSelection = choosePuzzleSizeDialog.getChild(new UiSelector().textContains(Integer.toString(dim)));
+            sizeSelection.click();
+        } catch (UiObjectNotFoundException e) {
+            fail("Puzzle size selection was not displayed on Puzzle size " + dim);
+        }
+
+        UiObject doneChooseSizeDialog = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/done_button").className("android.widget.Button"));
+        try {
+            doneChooseSizeDialog.click();
+        } catch (UiObjectNotFoundException e) {
+            fail("Done button in Choose size dialog was not displayed on Puzzle size " + dim);
+        }
+
+
+
+        //Test that all cells are displayed
+        UiObject sudokuBoard = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/sudoku_board").className("android.view.View"));
+        if (!sudokuBoard.exists()) {
+            fail("Sudoku Board was not displayed on Puzzle size " + dim);
+        }
+
+        for (int i = 0; i < dim * dim; i++) {
+            try {
+                if (!sudokuBoard.getChild(new UiSelector().instance(i)).exists()) {
+                    fail("All cells not displayed on Puzzle size " + dim);
+                }
+            } catch (UiObjectNotFoundException e) {
+                fail("All cells were not displayed on Puzzle size " + dim);
+            }
+        }
+
+        ourDevice.pressBack();
+
+        UiObject noButton = ourDevice.findObject(new UiSelector().resourceId("android:id/button2").className("android.widget.Button"));
+        try {
+            noButton.click();
+        } catch (UiObjectNotFoundException e) {
+            fail("No button was not displayed on Puzzle size " + dim);
+        }
+    }
+
 
 
 

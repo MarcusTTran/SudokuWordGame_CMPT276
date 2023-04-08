@@ -19,6 +19,7 @@ import static org.junit.Assert.*;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 
 /**
  * Instrumented test, which will execute on an Android device.
@@ -151,6 +152,172 @@ public class PuzzleInputButtonsFragmentTest {
             fail("No button was not displayed");
         }
     }
+
+
+    //Test that all input buttons are displayed in the puzzle fragment
+//    @Ignore("Working test")
+    @Test
+    public void testInputButtonsDisplaysAllSizes() {
+        for (int i = 0; i < puzzleSizes.length; i++) {
+            testInputButtonsDisplayedHelper(puzzleSizes[i]);
+        }
+    }
+
+
+
+    public void testInputButtonsDisplayedHelper(int dim) {
+        //Start new game
+        UiObject newGameButton = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/new_game_button").className("android.widget.Button"));
+        try {
+            newGameButton.click();
+        } catch (UiObjectNotFoundException e) {
+            fail("New Game button was not displayed on Puzzle size " + dim);
+        }
+
+        //Start custom sized puzzle
+        UiObject customSizePuzzleButton = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/custom_size_button").className("android.widget.Button"));
+        try {
+            customSizePuzzleButton.click();
+        } catch (UiObjectNotFoundException e) {
+            fail("Custom Sized button was not displayed on Puzzle size " + dim);
+        }
+
+        //Choose puzzle size dialog
+        UiObject choosePuzzleSizeDialog = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/size_radio_group").className("android.widget.RadioGroup"));
+        try {
+            UiObject sizeSelection = choosePuzzleSizeDialog.getChild(new UiSelector().textContains(Integer.toString(dim)));
+            sizeSelection.click();
+        } catch (UiObjectNotFoundException e) {
+            fail("Puzzle size selection was not displayed on Puzzle size " + dim);
+        }
+
+        UiObject doneChooseSizeDialog = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/done_button").className("android.widget.Button"));
+        try {
+            doneChooseSizeDialog.click();
+        } catch (UiObjectNotFoundException e) {
+            fail("Done button in Choose size dialog was not displayed on Puzzle size " + dim);
+        }
+
+        int totalButtonLayouts = 0;
+        int eachInputButtons = 0;
+        UiObject inputButtons = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/board_input_buttons").className("android.widget.LinearLayout"));
+        try {
+            for(int i = 0; i < inputButtons.getChildCount(); i++) {
+                UiObject buttonLayouts = inputButtons.getChild(new UiSelector().instance(i));
+                totalButtonLayouts = inputButtons.getChildCount();
+
+                for (int z = 0; z < buttonLayouts.getChildCount(); z++) {
+                    eachInputButtons = buttonLayouts.getChildCount();
+                }
+                if (!buttonLayouts.exists()) {
+                    fail("All buttons layouts are not displayed on Puzzle size " + dim);
+                }
+
+            }
+        } catch (UiObjectNotFoundException e) {
+            fail("Input buttons are not displayed on Puzzle size " + dim);
+        }
+
+        if (totalButtonLayouts * eachInputButtons != dim) {
+            Log.d(INSTRUTEST, "DIM: " + dim + " totalButtonCount: " + totalButtonLayouts * eachInputButtons);
+            fail("Not all buttons were displayed");
+        }
+
+        ourDevice.pressBack();
+
+        UiObject noButton = ourDevice.findObject(new UiSelector().resourceId("android:id/button2").className("android.widget.Button"));
+        try {
+            noButton.click();
+        } catch (UiObjectNotFoundException e) {
+            fail("No button was not displayed on Puzzle size " + dim);
+        }
+    }
+
+    //Test that all input buttons are displayed in the puzzle fragment
+//    @Ignore("Working test")
+    @Test
+    public void testInputButtonsDisplaysHorizontalAllSizes() {
+        try {
+            ourDevice.setOrientationLeft();
+            ourDevice.waitForWindowUpdate(null, 3000);
+        } catch (android.os.RemoteException e) {
+            fail();
+        }
+        for (int i = 0; i < puzzleSizes.length; i++) {
+            testInputButtonsDisplayedHelper(puzzleSizes[i]);
+        }
+    }
+
+
+
+    public void testInputButtonsDisplayedHorizontalHelper(int dim) {
+        //Start new game
+        UiObject newGameButton = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/new_game_button").className("android.widget.Button"));
+        try {
+            newGameButton.click();
+        } catch (UiObjectNotFoundException e) {
+            fail("New Game button was not displayed on Puzzle size " + dim);
+        }
+
+        //Start custom sized puzzle
+        UiObject customSizePuzzleButton = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/custom_size_button").className("android.widget.Button"));
+        try {
+            customSizePuzzleButton.click();
+        } catch (UiObjectNotFoundException e) {
+            fail("Custom Sized button was not displayed on Puzzle size " + dim);
+        }
+
+        //Choose puzzle size dialog
+        UiObject choosePuzzleSizeDialog = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/size_radio_group").className("android.widget.RadioGroup"));
+        try {
+            UiObject sizeSelection = choosePuzzleSizeDialog.getChild(new UiSelector().textContains(Integer.toString(dim)));
+            sizeSelection.click();
+        } catch (UiObjectNotFoundException e) {
+            fail("Puzzle size selection was not displayed on Puzzle size " + dim);
+        }
+
+        UiObject doneChooseSizeDialog = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/done_button").className("android.widget.Button"));
+        try {
+            doneChooseSizeDialog.click();
+        } catch (UiObjectNotFoundException e) {
+            fail("Done button in Choose size dialog was not displayed on Puzzle size " + dim);
+        }
+
+        int totalButtonLayouts = 0;
+        int eachInputButtons = 0;
+        UiObject inputButtons = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/board_input_buttons").className("android.widget.LinearLayout"));
+        try {
+            for(int i = 0; i < inputButtons.getChildCount(); i++) {
+                UiObject buttonLayouts = inputButtons.getChild(new UiSelector().instance(i));
+                totalButtonLayouts = inputButtons.getChildCount();
+
+                for (int z = 0; z < buttonLayouts.getChildCount(); z++) {
+                    eachInputButtons = buttonLayouts.getChildCount();
+                }
+                if (!buttonLayouts.exists()) {
+                    fail("All buttons layouts are not displayed on Puzzle size " + dim);
+                }
+
+            }
+        } catch (UiObjectNotFoundException e) {
+            fail("Input buttons are not displayed on Puzzle size " + dim);
+        }
+
+        if (totalButtonLayouts * eachInputButtons != dim) {
+            Log.d(INSTRUTEST, "DIM: " + dim + " totalButtonCount: " + totalButtonLayouts * eachInputButtons);
+            fail("Not all buttons were displayed");
+        }
+
+        ourDevice.pressBack();
+
+        UiObject noButton = ourDevice.findObject(new UiSelector().resourceId("android:id/button2").className("android.widget.Button"));
+        try {
+            noButton.click();
+        } catch (UiObjectNotFoundException e) {
+            fail("No button was not displayed on Puzzle size " + dim);
+        }
+    }
+
 
 
 
