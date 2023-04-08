@@ -28,7 +28,6 @@
 - UI immersion mode to set UI language to French
 - Auto-save puzzles
 - Kebab menu on puzzle page for quick app navigation
-- Load in user entered words on custom words page for quick modifications
 
 <b><b>{+Iteration 4 quick list of implemented features: +}</b> </b><br/>
 - Listening Comprehension mode for French
@@ -36,7 +35,7 @@
 - Listening Comprehension mode support for user entered custom words
 - Listening Comprehension mode for all puzzle sizes
 - Dynamically limit Dictionary peeks depending on difficulty set
-- Allow for quick edits of custom words by loading in currently entered custom words on Choose Custom Words page
+- Load in user entered words on custom words page for quick modifications
 - Save custom words on app exit and load the words in on app open
 - Support for entry of custom words with accents or accent characters
 - Demo/Debug difficulty for game demonstrations
