@@ -96,10 +96,13 @@
 
 <h2>Expert User:</h2>
 <h3>User Story</h3>
-<ul>
-<li><b>{+IMPLEMENTED: +}</b> As an expert user, I want my unfinished puzzle to be savable so that I can finish more difficult time-consuming puzzles over several sessions without losing my progress. </li>
-<li><b>{+IMPLEMENTED: +}</b> As an expert user, I want my puzzles to be timed so that I can improve my puzzle-solving performance under time constraints.</li>
-</ul>
+
+<b>{+IMPLEMENTED: +}</b> As an expert user, I want my unfinished puzzle to be savable so that I can finish more difficult time-consuming puzzles over several sessions without losing my progress. 
+
+<b>{+IMPLEMENTED: +}</b> As an expert user, I want my puzzles to be timed so that I can improve my puzzle-solving performance under time constraints.
+
+<b>{+IMPLEMENTED: +}</b> As an expert user, I want the dictionary peek limit to be dynamically set so I can get a little more help when solving more difficult puzzles.
+
 
 <h3>TDD</h3>
 
@@ -157,6 +160,30 @@
 
 2. <i>Loading the saved game will continue their timer where they left off.</i>
    <br/>
+
+
+- <b>{+IMPLEMENTED: +}</b>  When the user sets the puzzle difficulty in the Set Puzzle Difficulty option in the Settings page. The number of dictionary peeks given per game will be dependent on the puzzles set difficulty. The more difficult the user set puzzle difficulty, the more peeks the user will receive.
+
+<img src="https://i.imgur.com/0xXJk5D.png"  width="24%">
+<img src="https://i.imgur.com/e89tQa5.png"  width="24%">
+<img src="https://i.imgur.com/r1G86aS.png"  width="24%">
+<img src="https://i.imgur.com/4oQx8Mv.png"  width="24%">
+
+1. <i>User clicks on the Settings button on the Main Menu page.</i>
+
+2. <i>User clicks the Set Puzzle Difficulty option in the Settings page.</i>
+
+3. <i>User selects Expert difficulty.</i>
+
+4. <i>User starts a New Game of any type.</i> 
+
+<img src="https://i.imgur.com/x0CfZKc.png"  width="24%">
+
+5. <i>User now has 5 Dictionary peeks per game.</i> 
+
+
+
+
    <h2>Beginner Language Learners:</h2>
    <h3>User Story</h3>
 
@@ -169,7 +196,7 @@
 
 <h3>TDD</h3>
 
-- <b>{+IMPLEMENTED: +}</b> When the user taps the Book button which is located next to the Help button (the button labeled (?) that shows a short description of the game rules) a pop-up must open and show a table with two columns and with a list of words. This table lists all the word pairs used in the current puzzle. The number of times the user can open this table is determined by the user selected difficulty.
+- <b>{+IMPLEMENTED: +}</b> When the user taps the Flag button which is located next to the Help button (the button labeled (?) that shows a short description of the game rules) a pop-up must open and show a table with two columns and with a list of words. This table lists all the word pairs used in the current puzzle. The number of times the user can open this table is determined by the user selected difficulty.
 
 
 <img src="https://i.imgur.com/AEoJwxW.png"  width="24%">
@@ -185,8 +212,6 @@
 3. <i>User can check the words and their translations and close the pop-up by tapping X.</i>
 
 4. <i>If the user taps the 🏳️ button to check the Dictionary table twice in a single game they will be presented with a pop-up explaining that they have hit the limit of peeks.</i>
-   <br/>
-
 
 - <b>{+IMPLEMENTED: +}</b> When the user has filled in all cells in the puzzle and taps the FINISH button the user will be taken to a results screen to see whether their solution to the puzzle was valid. If the user's solution to the puzzle was not valid the number of mistakes will be listed.
 
@@ -394,9 +419,11 @@
 
 - <b>{+IMPLEMENTED: +}</b>  As a French teacher, I want to be able to select the word pairs that will be used to generate the Sudoku puzzle so that I can use the app to teach my students any of the specified words that I choose.
 
-- <b>{+IMPLEMENTED: +}</b>  As a French teacher of elementary and junior high school children, I want scaled versions of Sudoku that use 4x4 and 6x6 grids. In the 6x6 grid version, the overall grid should be divided into rectangles of six cells each (2x3 or 3x2).
+- <b>{+IMPLEMENTED: +}</b>  As a French teacher of elementary school children, I want scaled versions of Sudoku that use 4x4 and 6x6 grids. In the 6x6 grid version, the overall grid should be divided into rectangles of six cells each (2x3 or 3x2).
 
-- <b>{+IMPLEMENTED: +}</b>  As a French teacher in highschool, I want to be able to select the difficulty of my puzzles so I can give easier on harder puzzles depending on the age and grade of my students.
+- <b>{+IMPLEMENTED: +}</b>  As a French teacher of highschool children, I want to be able to select the difficulty of my puzzles so I can give easier on harder puzzles depending on the age and grade of my students.
+
+- <b>{+IMPLEMENTED: +}</b>  As a French teacher of elementary school children, I want a demo difficulty for puzzles so I can showcase the logic of Sudoku games and explain how the game works.
 
 
 <h3>TDD</h3>
@@ -449,6 +476,28 @@
 
 4. <i>The difficulty is displayed on the puzzle page.</i>
    <br>
+
+
+- <b>{+IMPLEMENTED: +}</b> In the main menu of the app, the user can tap on SETTINGS and then Set Puzzle Difficulty. The user can then select Debug/Demo. When the user generates any new puzzle, the puzzle will have only one empty cell.
+
+  <img src="https://i.imgur.com/f1vZdWD.png"  width="24%">
+  <img src="https://i.imgur.com/Y9u3gqY.png"  width="24%">
+  <img src="https://i.imgur.com/mkv24vv.png"  width="24%">
+  <img src="https://i.imgur.com/BhvyeKP.png"  width="24%">
+  <br>
+
+1. <i>Teacher clicks SETTINGS from Main Menu</i>
+
+2. <i>Teacher selects Set Puzzle Difficulty.</i>
+
+3. <i>Teacher selects Debug/Demo difficulty.</i>
+
+4. <i>The teacher creates a New Game.</i>
+<img src="https://i.imgur.com/ZgYmxap.png"  width="24%">
+
+5. <i>The puzzle generated has only one empty cell.</i>
+
+   <br>   
 
 <!-- - <b>{+IMPLEMENTED: +}</b>  When the user taps on the “custom” difficulty button they will brought to a screen that asks the user to enter the dimension of the "custom" difficulty puzzle. Users can create custom sized puzzle with rows and columns of any value between 1 and 12, which is noted in the entry boxes. A button located at the bottom of the screen will say “Start Game”. When the user taps this after entering valid dimensions for the sudoku board, it will start the game. If incorrect values are entered, it will prompt the user to retry through a pop-up message.
 
