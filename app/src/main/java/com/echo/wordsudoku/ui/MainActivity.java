@@ -336,6 +336,16 @@ public class MainActivity extends AppCompatActivity implements SaveGameDialog.Sa
         savePuzzle();
     }
 
+    public void updateViewModelWithLoadedPuzzle(boolean updateTimer) {
+        if (latestLoadedPuzzle != null) {
+            boolean textToSpeechOn = mSettingsViewModel.getTextToSpeech();
+            mPuzzleViewModel.loadPuzzle(latestLoadedPuzzle, textToSpeechOn,updateTimer);
+            if (textToSpeechOn)
+                latestLoadedPuzzle.setTextToSpeechOn(true);
+            latestSavedPuzzle = latestLoadedPuzzle.toStringArray();
+        }
+    }
+
     // When the user picks a puzzle size, create a new puzzle with the selected size and go to the PuzzleFragment so the user can play the game
     @Override
     public void onPuzzleSizeSelected(int size) {
@@ -383,16 +393,6 @@ public class MainActivity extends AppCompatActivity implements SaveGameDialog.Sa
     public void deleteSavedPuzzle() {
         if (mPuzzleJsonFile.exists()) {
             mPuzzleJsonFile.delete();
-        }
-    }
-
-    public void updateViewModelWithLoadedPuzzle(boolean updateTimer) {
-        if (latestLoadedPuzzle != null) {
-            boolean textToSpeechOn = mSettingsViewModel.getTextToSpeech();
-            mPuzzleViewModel.loadPuzzle(latestLoadedPuzzle, textToSpeechOn,updateTimer);
-            if (textToSpeechOn)
-                latestLoadedPuzzle.setTextToSpeechOn(true);
-            latestSavedPuzzle = latestLoadedPuzzle.toStringArray();
         }
     }
 

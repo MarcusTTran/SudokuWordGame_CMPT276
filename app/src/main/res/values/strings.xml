@@ -24,6 +24,7 @@
     <string name="puzzle_dictionary_btn">Dictionary</string>
     <string name="save_puzzle_btn">Save Puzzle</string>
     <string name="reset_puzzle_btn">Reset</string>
+    <string name="clear_puzzle_btn">Clear</string>
 
     <!-- Preference keys -->
     <string name="preference_file_key">com.echo.wordsudoku.gameOptions</string>

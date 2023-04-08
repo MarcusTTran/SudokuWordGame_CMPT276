@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/options_finish_button"
         android:title="@string/done_btn" />
@@ -13,11 +14,18 @@
         android:title="@string/puzzle_dictionary_btn" />
 
     <item android:id="@+id/options_save_game_button"
-        android:title="@string/save_puzzle_btn" />
+        android:icon="@drawable/icons_save"
+        app:showAsAction="ifRoom"
+        android:title="@string/save_puzzle_btn"/>
 
     <item android:id="@+id/options_main_menu_button"
         android:title="@string/menu_main_menu_btn" />
 
     <item android:id="@+id/options_exit_button"
         android:title="@string/menu_exit_btn" />
+
+    <item android:id="@+id/options_clear_button"
+        android:icon="@drawable/icons_erase"
+        android:title="@string/clear_puzzle_btn"
+        app:showAsAction="ifRoom"/>
 </menu>

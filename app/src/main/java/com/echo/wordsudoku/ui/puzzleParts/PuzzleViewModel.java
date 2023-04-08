@@ -119,10 +119,16 @@ public class PuzzleViewModel extends ViewModel {
         setPuzzleView(puzzle.toStringArray());
     }
 
+    public void clearCell(Dimension dimension) throws IllegalDimensionException {
+        puzzle.clearCell(dimension);
+        setPuzzleView(puzzle.toStringArray());
+    }
+
     // resets the puzzle
     public void resetPuzzle(boolean isRetry) {
         if (!puzzle.isPuzzleBlank()) {
-            isNewGame = true;
+            if(isRetry)
+                isNewGame = true;
             puzzle.resetPuzzle(isRetry);
             setPuzzleView(puzzle.toStringArray());
         }

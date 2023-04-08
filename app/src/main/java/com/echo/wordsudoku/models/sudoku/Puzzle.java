@@ -267,11 +267,21 @@ public class Puzzle implements Writable {
             result.setResult(true);
         else {
             result.setResult(false);
-            result.setMistakes(mistakes);
+            result.setMistakes(countMistakes());
         }
         return result;
     }
 
+    public int countMistakes() {
+        int mistakes = 0;
+        for (int i = 0; i < userBoard.getRows(); i++) {
+            for (int j = 0; j < userBoard.getColumns(); j++) {
+                if (!solutionBoard.getCellFromBigArray(i,j).isContentEqual(userBoard.getCellFromBigArray(i,j)))
+                    mistakes++;
+            }
+        }
+        return mistakes;
+    }
 
     /* @method
      * Inserts a word pair in a cell that is not locked into the userBoard and increments the number of mistakes if the word pair is not equal to the corresponding one in the solution board
@@ -287,9 +297,10 @@ public class Puzzle implements Writable {
             throw new IllegalDimensionException("Invalid cell coordinates");
         if (!userBoard.getCellFromBigArray(i,j).isEditable())
             throw new IllegalDimensionException("Trying to change a locked cell");
+        if (solutionBoard.getCellFromBigArray(i,j).isContentEqual(userBoard.getCellFromBigArray(i,j)))
+            if (solutionBoard.getCellFromBigArray(i,j).isContentEqual(new Cell(word)) == false)
+                 mistakes++;
         userBoard.setCellFromBigArray(i,j,word);
-        if (solutionBoard.getCellFromBigArray(i,j).isContentEqual(new Cell(word)) == false)
-            mistakes++;
     }
 
     public void setCell(int i, int j, String word) throws IllegalWordPairException, IllegalDimensionException {
@@ -300,6 +311,12 @@ public class Puzzle implements Writable {
             }
         }
         throw new IllegalWordPairException("Word pair not found in the list of word pairs");
+    }
+
+    public void clearCell(int i, int j) {
+        Dimension dimension = new Dimension(i,j);
+        if(isWritableCell(dimension))
+            userBoard.getCellFromBigArray(dimension).clear();
     }
 
     public void setCell(Dimension dimension, String word) throws IllegalWordPairException, IllegalDimensionException {
@@ -740,4 +757,7 @@ public class Puzzle implements Writable {
         return userBoard.getCellFromBigArray(row, col);
     }
 
+    public void clearCell(Dimension dimension) {
+        clearCell(dimension.getRows(),dimension.getColumns());
+    }
 }

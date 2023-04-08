@@ -148,6 +148,19 @@ public class PuzzleFragment extends Fragment {
                 MainActivity activity = (MainActivity) requireActivity();
                 activity.savePuzzle();
                 return true;
+            case R.id.options_clear_button:
+                PuzzleBoardFragment puzzleViewFragment = (PuzzleBoardFragment) getChildFragmentManager().findFragmentById(R.id.board);
+                Dimension currentCell = puzzleViewFragment.getSelectedCell();
+                if(currentCell.getColumns() == -2 || currentCell.getRows() == -2) {
+                    Toast.makeText(requireActivity(), R.string.error_no_cell_selected, Toast.LENGTH_SHORT).show();
+                    return true;
+                }
+                try {
+                    mPuzzleViewModel.clearCell(currentCell);
+                } catch (IllegalDimensionException e) {
+                    throw new RuntimeException(e);
+                }
+                return true;
             case R.id.options_main_menu_button:
                 //discardGame();
                 if(!((MainActivity)requireActivity()).isGameSaved())
