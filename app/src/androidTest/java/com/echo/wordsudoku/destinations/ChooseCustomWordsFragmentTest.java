@@ -663,26 +663,12 @@ public class ChooseCustomWordsFragmentTest {
             fail("Confirm button not found");
         }
 
-        UiObject puzzleFragment = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/puzzle_fragment"));
-        if (!puzzleFragment.exists()) {
-            fail("Puzzle fragment did not appear after entering valid custom words");
+        UiObject chooseCustomWordsFragment = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/chooseCustomWordsFragment"));
+        if (!chooseCustomWordsFragment.exists()) {
+            fail("Choose Custom Words fragment did not appear after entering valid custom words");
         }
 
         //Clear the custom words for other tests to work
-        ourDevice.pressBack();
-        UiObject noButton = ourDevice.findObject(new UiSelector().resourceId("android:id/button2"));
-        try {
-            noButton.click();
-        } catch (UiObjectNotFoundException e) {
-            fail("No button not found");
-        }
-
-        try {
-            chooseCustomWordsButton.click();
-        } catch (UiObjectNotFoundException e) {
-            fail("Choose custom words button not found");
-        }
-
         UiObject clearButton = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/buttonClearCustomWords"));
         try {
             clearButton.click();
