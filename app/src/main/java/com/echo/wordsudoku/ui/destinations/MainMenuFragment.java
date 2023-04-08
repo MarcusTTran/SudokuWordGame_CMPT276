@@ -99,17 +99,10 @@ public class MainMenuFragment extends Fragment {
         mChangeLanguageButton = root.findViewById(R.id.change_language_button);
 
         mSettingsViewModel.getPuzzleLanguage().observe(getViewLifecycleOwner(), language -> {
-            String changeLanguageButtonText = getString(R.string.no_languages_set);
-            Integer inputLanguage = mSettingsViewModel.getButtonInputLanguage().getValue();
-            if(!(language == null || inputLanguage ==null) && language!=inputLanguage){
-                try {
-                    changeLanguageButtonText = "( " + BoardLanguage.getLanguageName(language) + " - "+BoardLanguage.getLanguageName(inputLanguage)
-                            +" )";
-                } catch (IllegalLanguageException e) {
-                    throw new RuntimeException(e);
-                }
-            }
-            mChangeLanguageButton.setText(changeLanguageButtonText);
+            updateLanguageButtonLabel();
+        });
+        mSettingsViewModel.getButtonInputLanguage().observe(getViewLifecycleOwner(), language -> {
+            updateLanguageButtonLabel();
         });
 
         mChangeLanguageButton.setOnClickListener(v -> {
@@ -134,5 +127,19 @@ public class MainMenuFragment extends Fragment {
             navController.navigate(R.id.startCustomWordsAction);
         });
         return root;
+    }
+
+    private void updateLanguageButtonLabel(){
+        String changeLanguageButtonText = getString(R.string.no_languages_set);
+        Integer inputLanguage = mSettingsViewModel.getButtonInputLanguage().getValue(), language = mSettingsViewModel.getPuzzleLanguage().getValue();
+        if(!(language == null || inputLanguage ==null) && language!=inputLanguage){
+            try {
+                changeLanguageButtonText = "( " + BoardLanguage.getLanguageName(language) + " - "+BoardLanguage.getLanguageName(inputLanguage)
+                        +" )";
+            } catch (IllegalLanguageException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        mChangeLanguageButton.setText(changeLanguageButtonText);
     }
 }
