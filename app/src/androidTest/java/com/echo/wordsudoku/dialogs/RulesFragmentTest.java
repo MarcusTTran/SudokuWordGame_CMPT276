@@ -72,9 +72,6 @@ public class RulesFragmentTest {
         ourDevice.wait(Until.hasObject(By.pkg(WORDSUDOKU_PACKAGE).depth(0)), TIMEOUT_TIME);
     }
 
-
-
-
     //Test that the rules popup display correctly shows all information
 //    @Ignore("Working test")
     @Test

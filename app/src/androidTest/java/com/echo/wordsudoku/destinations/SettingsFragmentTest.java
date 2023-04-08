@@ -74,16 +74,6 @@ public class SettingsFragmentTest {
 
 
 
-
-
-
-
-
-
-
-
-
-
     //Test that clicking the timer switch in the settings correctly updates the subtext below Timer Puzzle
     // header
 //    @Ignore("Working test")

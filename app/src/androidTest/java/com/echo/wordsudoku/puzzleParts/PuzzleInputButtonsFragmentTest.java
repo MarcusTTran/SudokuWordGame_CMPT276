@@ -73,7 +73,7 @@ public class PuzzleInputButtonsFragmentTest {
 
 
 
-    //Test that all buttons are displayed correctly in a puzzle in a horizontal orientation and that clicking
+    //Test that all buttons are displayed correctly in a puzzle and that clicking
     // them displays the correct button text in an empty cell
 //    @Ignore("Working test")
     @Test
@@ -240,7 +240,7 @@ public class PuzzleInputButtonsFragmentTest {
     }
 
 
-    //Test that all input buttons are displayed in the puzzle fragment
+    //Test that all input buttons are displayed in the puzzle fragment in all puzzle sizes
 //    @Ignore("Working test")
     @Test
     public void testInputButtonsDisplaysAllSizes() {
@@ -319,7 +319,7 @@ public class PuzzleInputButtonsFragmentTest {
         }
     }
 
-    //Test that all input buttons are displayed in the puzzle fragment
+    //Test that all input buttons are displayed in the puzzle fragment in all puzzle sizes horizontally
 //    @Ignore("Working test")
     @Test
     public void testInputButtonsDisplaysHorizontalAllSizes() {

@@ -397,12 +397,6 @@ public class PuzzleFragmentTest {
 
 
 
-
-
-
-
-
-
     //Test that clicking on the 3 dots (kebab button) opens up a dialog options
 //    @Ignore("Working test")
     @Test

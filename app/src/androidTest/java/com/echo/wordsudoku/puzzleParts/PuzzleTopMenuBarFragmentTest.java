@@ -153,7 +153,7 @@ public class PuzzleTopMenuBarFragmentTest {
 
 
 
-    //Test that rules dialog is correctly displayed on click
+    //Test that dictionary dialog is correctly displayed on click
     @Test
     public void testDictionaryButtonNavigation() {
         //Start new game

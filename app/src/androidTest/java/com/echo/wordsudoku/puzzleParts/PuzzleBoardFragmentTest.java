@@ -120,7 +120,7 @@ public class PuzzleBoardFragmentTest {
         }
     }
 
-    //Test that cells are overridable
+    //Test that empty cells are overridable
     @Test
     public void testCellOverridable() {
         int totalCells = 9 * 9;

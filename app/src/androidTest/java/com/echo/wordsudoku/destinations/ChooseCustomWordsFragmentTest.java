@@ -37,7 +37,7 @@ import java.util.List;
 @RunWith(AndroidJUnit4.class)
 public class ChooseCustomWordsFragmentTest {
 
-    //Warning: These tests take up to 10 minutes to complete
+    //Warning: These tests class take up to 7 minutes to complete
 
     int[] puzzleSizes = new int[] {4, 6, 9, 12};
 
@@ -83,6 +83,28 @@ public class ChooseCustomWordsFragmentTest {
         } catch (UiObjectNotFoundException e) {
             fail("Choose custom words button not found");
         }
+
+        UiObject clearButton = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/buttonClearCustomWords"));
+        try {
+            clearButton.click();
+        } catch (UiObjectNotFoundException e) {
+            fail("Clear button not found");
+        }
+
+        UiObject puzzleSizeDropdown = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/puzzleSizeCustomDropdown"));
+        try {
+            puzzleSizeDropdown.click();
+        } catch (UiObjectNotFoundException e) {
+            fail("Puzzle size dropdown was not displayed");
+        }
+
+        UiObject dropdownOptions = ourDevice.findObject(new UiSelector().className("android.widget.ListView"));
+        try {
+            dropdownOptions.getChild(new UiSelector().index(0)).click();
+        } catch (UiObjectNotFoundException e) {
+            fail("Dropdown options was not displayed");
+        }
+
 
         UiObject entryBox1 = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/buttonLanguageEntries"));
 
@@ -134,6 +156,27 @@ public class ChooseCustomWordsFragmentTest {
             fail("Choose custom words button not found");
         }
 
+        UiObject clearButton = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/buttonClearCustomWords"));
+        try {
+            clearButton.click();
+        } catch (UiObjectNotFoundException e) {
+            fail("Clear button not found");
+        }
+
+        UiObject puzzleSizeDropdown = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/puzzleSizeCustomDropdown"));
+        try {
+            puzzleSizeDropdown.click();
+        } catch (UiObjectNotFoundException e) {
+            fail("Puzzle size dropdown was not displayed");
+        }
+
+        UiObject dropdownOptions = ourDevice.findObject(new UiSelector().className("android.widget.ListView"));
+        try {
+            dropdownOptions.getChild(new UiSelector().index(0)).click();
+        } catch (UiObjectNotFoundException e) {
+            fail("Dropdown options was not displayed");
+        }
+
         UiObject confirmButton = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/buttonConfirmCustomWords"));
 
         try {
@@ -177,6 +220,27 @@ public class ChooseCustomWordsFragmentTest {
             fail("Choose custom words button not found");
         }
 
+        UiObject clearButton = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/buttonClearCustomWords"));
+        try {
+            clearButton.click();
+        } catch (UiObjectNotFoundException e) {
+            fail("Clear button not found");
+        }
+
+        UiObject puzzleSizeDropdown = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/puzzleSizeCustomDropdown"));
+        try {
+            puzzleSizeDropdown.click();
+        } catch (UiObjectNotFoundException e) {
+            fail("Puzzle size dropdown was not displayed");
+        }
+
+        UiObject dropdownOptions = ourDevice.findObject(new UiSelector().className("android.widget.ListView"));
+        try {
+            dropdownOptions.getChild(new UiSelector().index(0)).click();
+        } catch (UiObjectNotFoundException e) {
+            fail("Dropdown options was not displayed");
+        }
+
         UiObject entryBox1 = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/buttonLanguageEntries"));
 
         try {
@@ -190,6 +254,13 @@ public class ChooseCustomWordsFragmentTest {
 
         } catch (UiObjectNotFoundException e) {
             fail("EditTexts were not all displayed");
+        }
+
+
+        try {
+            clearButton.click();
+        } catch (UiObjectNotFoundException e) {
+            fail("Clear button not found");
         }
 
     }
