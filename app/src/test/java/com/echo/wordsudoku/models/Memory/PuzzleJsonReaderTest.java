@@ -42,10 +42,6 @@ public class PuzzleJsonReaderTest {
     final static int SIX_BY_SIX = 6;
     final static int FOUR_BY_FOUR = 4;
 
-    private final String PUZZLE_JSON_SAVE_FILENAME = "wsudoku_puzzleTest.json";
-
-    private final int TAB = 4;
-
 
     Puzzle constructPuzzle(int dimension) throws IllegalLanguageException, TooBigNumberException, NegativeNumberException, IllegalWordPairException, IllegalDimensionException {
 

@@ -13,6 +13,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -66,13 +67,14 @@ public class ChooseCustomWordsFragment extends Fragment{
     private int loadedEntryBox1Counter = 0;
     private int loadedEntryBox2Counter = 0;
 
+    private boolean startNewGame = false;
+
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         Log.d(CC_WORDS_DEBUG_KEY,"onCreate called");
 
         super.onCreate(savedInstanceState);
-
         //If Bundle not empty; Load any of the previously filled EditTexts into the current existing ones
         if (savedInstanceState != null) {
             Log.d(CC_WORDS_DEBUG_KEY, "Loading previously saved bundle" );
@@ -108,6 +110,7 @@ public class ChooseCustomWordsFragment extends Fragment{
                              ViewGroup container, Bundle savedInstanceState) {
 
         Log.d(CC_WORDS_DEBUG_KEY,"onCreateView called");
+        startNewGame = ChooseCustomWordsFragmentArgs.fromBundle(getArguments()).getStartNewGame();
 
         View root = inflater.inflate(R.layout.fragment_choose_custom_words, container, false);
 
@@ -169,44 +172,43 @@ public class ChooseCustomWordsFragment extends Fragment{
         });
 
         Button confirmButton = root.findViewById(R.id.buttonConfirmCustomWords);
-        confirmButton.setOnClickListener(new View.OnClickListener() {
+        //On Confirm button click
+        confirmButton.setOnClickListener(v -> {
 
-            //On Confirm button click
-            @Override
-            public void onClick(View v) {
+            //Check if all EntryBoxes are full
+            if (isEntryBoxesFull(root)) {
+                Log.d(CC_WORDS_DEBUG_KEY, "clicked on Confirm");
+                //Take all words entered in the EntryBoxes and use them to make a WordPair List
+                List<WordPair> userEnteredWordList = new ArrayList<>();
+                for (int i = 0; i < currentSize; i++) {
+                    //Entry Boxes under Board Language are first argument in WordPair
+                    EditText someEntryBox1 = root.findViewById(idEnglishWords.get(i));
+                    //Entry Boxes under Button Language are second argument in WordPair
+                    EditText someEntryBox2 = root.findViewById(idFrenchWords.get(i));
 
-                //Check if all EntryBoxes are full
-                if (isEntryBoxesFull(root)) {
-                    Log.d(CC_WORDS_DEBUG_KEY, "clicked on Confirm");
-                    //Take all words entered in the EntryBoxes and use them to make a WordPair List
-                    List<WordPair> userEnteredWordList = new ArrayList<>();
-                    for (int i = 0; i < currentSize; i++) {
-                        //Entry Boxes under Board Language are first argument in WordPair
-                        EditText someEntryBox1 = root.findViewById(idEnglishWords.get(i));
-                        //Entry Boxes under Button Language are second argument in WordPair
-                        EditText someEntryBox2 = root.findViewById(idFrenchWords.get(i));
+                    //Add in each word to WordPair list
+                    userEnteredWordList.add(new WordPair(someEntryBox1.getText().toString(), someEntryBox2.getText().toString()));
+                }
 
-                        //Add in each word to WordPair list
-                        userEnteredWordList.add(new WordPair(someEntryBox1.getText().toString(), someEntryBox2.getText().toString()));
-                    }
-
-                    //Set the PuzzleViewModel to store the WordPair list we made
-                    mPuzzleViewModel.setCustomWordPairs(userEnteredWordList);
-                    try {
-                        mPuzzleViewModel.newCustomPuzzle(mSettingsViewModel.getPuzzleLanguage().getValue(), mSettingsViewModel.getDifficulty(),mSettingsViewModel.getTextToSpeech());
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-
+                //Set the PuzzleViewModel to store the WordPair list we made
+                mPuzzleViewModel.setCustomWordPairs(userEnteredWordList);
+                try {
+                    mPuzzleViewModel.newCustomPuzzle(mSettingsViewModel.getPuzzleLanguage().getValue(), mSettingsViewModel.getDifficulty(),mSettingsViewModel.getTextToSpeech());
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                //Navigate to the Custom Puzzle Fragment
+                if (startNewGame)
                     Navigation.findNavController(root).navigate(R.id.startCustomPuzzleAction);
-                    //Toast.makeText(getContext(), "Words for Custom Puzzle have been successfully set.", Toast.LENGTH_LONG).show();
+                else
+                    Toast.makeText(getContext(), getString(R.string.custom_words_saved_successfully), Toast.LENGTH_LONG).show();
+                //Toast.makeText(getContext(), "Words for Custom Puzzle have been successfully set.", Toast.LENGTH_LONG).show();
 
-                } else {
+            } else {
 //                    ChooseCustomWordsDialog errorFragment = ChooseCustomWordsDialog.newInstance(getString(R.string.error_custom_words_msg), getString(R.string.error));
 //                    errorFragment.show(getActivity().getSupportFragmentManager(), "Error Dialog");
-                    WarningDialog errorFragment = WarningDialog.newInstance(getString(R.string.error), getString(R.string.error_custom_words_msg), getString(R.string.ok));
-                    errorFragment.show(getActivity().getSupportFragmentManager(), "Error Dialog");
-                }
+                WarningDialog errorFragment = WarningDialog.newInstance(getString(R.string.error), getString(R.string.error_custom_words_msg), getString(R.string.ok));
+                errorFragment.show(getActivity().getSupportFragmentManager(), "Error Dialog");
             }
         });
 
