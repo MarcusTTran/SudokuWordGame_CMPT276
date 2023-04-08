@@ -1,6 +1,7 @@
 <b>{+Identification of the implementation of specific user stories and TDDs listed in iteration 1 and 2 will be found in the "User Stories and TDDs:" section marked with IMPLEMENTED: +}</b><br/>
 
-<b>Previously implemented features: Iteration 2 quick list of implemented features:</b><br/>
+<b>Previously implemented features: Iteration 2 and 3 quick list of implemented features:</b><br/>
+<!-- <b>Previously implemented features: Iteration 3 quick list of implemented features:</b><br/> -->
 
 - App randomly generates 9x9 Sudoku word puzzles.
 - App prevents users from overriding generated puzzles pre-filled cells.
@@ -16,8 +17,6 @@
 - Users can open the rules window to read the rules of Word Sudoku.
 - App highlights user-selected cell.
 - App highlights the cells in the row and column of the user-selected cell.
-
-<b><b>{+Iteration 3 quick list of implemented features: +}</b> </b><br/>
 - Create puzzles of sizes of 4x4, 6x6, 12x12
 - 4x4, 6x6, 12x12 puzzles are randomly generated
 - App supports layouts for tablets
@@ -31,7 +30,17 @@
 - Kebab menu on puzzle page for quick app navigation
 - Load in user entered words on custom words page for quick modifications
 
-
+<b><b>{+Iteration 4 quick list of implemented features: +}</b> </b><br/>
+- Listening Comprehension mode for French
+- Listening Comprehension mode for English
+- Listening Comprehension mode support for user entered custom words
+- Listening Comprehension mode for all puzzle sizes
+- Dynamically limit Dictionary peeks depending on difficulty set
+- Allow for quick edits of custom words by loading in currently entered custom words on Choose Custom Words page
+- Save custom words on app exit and load the words in on app open
+- Support for entry of custom words with accents or accent characters
+- Demo/Debug difficulty for game demonstrations
+- Plus, Code Refactoring to improve efficiency and remove bugs
 
 <h1>User Stories and TDDs:</h1>
 
@@ -156,12 +165,12 @@
 
 - <b>{+IMPLEMENTED: +}</b> As a beginner language learner, I want to be able to view the number of mistakes I made at the end of a game, so I can determine how well I did on the puzzle.
 
-
+- <b>{+IMPLEMENTED: +}</b> As a beginner language learner who wants to practice my understanding of spoken words in the language that I am learning, I want a listening comprehension mode where numbers will appear in the prefilled cells and be read out to me on click, so I can test my listening comprehension.
 
 
 <h3>TDD</h3>
 
-- <b>{+IMPLEMENTED: +}</b> When the user taps the Book button which is located next to the Help button (the button labeled (?) that shows a short description of the game rules) a pop-up must open and show a table with two columns and ten rows (the first row will be the headings). This table lists all the word pairs used in the current puzzle. The number of times the user can open this table is limited to twice per game.
+- <b>{+IMPLEMENTED: +}</b> When the user taps the Book button which is located next to the Help button (the button labeled (?) that shows a short description of the game rules) a pop-up must open and show a table with two columns and with a list of words. This table lists all the word pairs used in the current puzzle. The number of times the user can open this table is determined by the user selected difficulty.
 
 
 <img src="https://i.imgur.com/AEoJwxW.png"  width="24%">
@@ -172,7 +181,7 @@
 
 1. <i>User taps the 🏳️ button to open the Dictionary table.</i>
 
-2. <i>User can check the number of peeks they have left (2 per game).</i>
+2. <i>User can check the number of peeks they have left (peeks are determined dynamically by difficulty).</i>
 
 3. <i>User can check the words and their translations and close the pop-up by tapping X.</i>
 
@@ -194,6 +203,29 @@
 3. <i>User is taken to a results page where the number of mistakes is displayed.</i>
    <br/>
 
+
+
+
+- <b>{+IMPLEMENTED: +}</b> When the user turns on the Text to Speech option in the Settings page, all puzzles will have their prefilled cells replaced with numbers. Each number correspond to a word in the Sudoku board. When these numbers are clicked by the user, the word matching the corresponding number in the cell is read out by a text to speech engine. Only the prefilled cells appear as numbers, the other enterable cells are unaffected.
+
+<img src="https://i.imgur.com/f1vZdWD.png"  width="24%">
+<img src="https://i.imgur.com/O6oEcLs.png"  width="24%">
+<img src="https://i.imgur.com/QOtcczq.png"  width="24%">
+<img src="https://i.imgur.com/LWC09p9.png"  width="24%">
+<br/>
+
+1. <i>The user navigates to the settings page.</i>
+
+2. <i>User clicks the Text to Speech option. A toast appears notify the user Text to Speech is now on.</i>
+
+3. <i>User can open a new puzzle or pre-existing puzzle.</i>
+
+4. <i>User clicks on an prefilled cell and the corresponding word for the number is be read out to them.</i>
+
+<img src="https://i.imgur.com/6fiNdWv.png"  width="24%">
+
+5. <i>The other cells remain unaffected by the Text to Speech numbering.</i>
+<br/>
 
 <h2>Intermediate Language Learners:</h2>
 <h3>User Story</h3>
