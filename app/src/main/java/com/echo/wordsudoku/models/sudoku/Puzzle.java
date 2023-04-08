@@ -116,15 +116,16 @@ public class Puzzle implements Writable {
 
         // We set the language of the board opposite to the language of the puzzle
         this.solutionBoard = new CellBox2DArray(puzzleDimension,language);
+        // TODO: Make the solution board cells all of them isEditable = false
 
         // First we create a solved board
         SolveBoard(this.solutionBoard,mWordPairs);
 
         int numberOfCellsToRemove;
 
-        if (numberOfStartCells != NO_NUMBER_OF_START_CELLS_USE_DIFFICULTY)
+        if(numberOfStartCells!=NO_NUMBER_OF_START_CELLS_USE_DIFFICULTY)
             numberOfCellsToRemove = solutionBoard.getRows()*solutionBoard.getColumns() - numberOfStartCells;
-        else if (difficulty <= 5 && difficulty > 0)
+        else if(difficulty<=6 && difficulty>0)
             numberOfCellsToRemove = getCellsToRemoveWithDifficulty(difficulty);
         else
             throw new IllegalArgumentException("Invalid difficulty and number of start cells");
@@ -629,6 +630,9 @@ public class Puzzle implements Writable {
 
 
     private int getCellsToRemoveWithDifficulty(int difficulty) {
+        if (difficulty == 6) {
+            return 1;
+        }
         int size = puzzleDimension.getPuzzleDimension();
         return (difficulty+1)*size*size/8;
     }
