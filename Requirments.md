@@ -33,7 +33,7 @@
 - Listening Comprehension mode for French
 - Listening Comprehension mode for English
 - Listening Comprehension mode support for user entered custom words
-- Listening Comprehension mode for all puzzle sizes
+- Listening Comprehension mode support for all puzzle sizes
 - Dynamically limit Dictionary peeks depending on difficulty set
 - Load in user entered words on custom words page for quick modifications
 - Save custom words on app exit and load the words in on app open
