@@ -1,3 +1,12 @@
+/*
+* Description: This class is the fragment that contains the puzzle board and the puzzle buttons
+* It is the main fragment that the user interacts with when playing the game
+* It contains the puzzle board and the puzzle buttons
+* It contains the logic for the puzzle buttons
+* It contains the logic for the puzzle board
+* It contains the logic for the puzzle timer
+* */
+
 package com.echo.wordsudoku.ui.destinations;
 
 import static com.echo.wordsudoku.models.language.BoardLanguage.ENGLISH;
@@ -52,29 +61,20 @@ public class PuzzleFragment extends Fragment {
         mPuzzleViewModel = new ViewModelProvider(requireActivity()).get(PuzzleViewModel.class);
         settingsViewModel= new ViewModelProvider(requireActivity()).get(SettingsViewModel.class);
 
-        //        toSpeech = new TextToSpeech(this.getContext(), new TextToSpeech.OnInitListener() {
-//            @Override
-//            public void onInit(int i) {
-//                // TODO: Implement listener
-//                if (i != TextToSpeech.ERROR) {
-//                    try {
-//                        Locale language = (mPuzzleViewModel.getPuzzleInputLanguage() == ENGLISH) ? Locale.CANADA_FRENCH : Locale.ENGLISH;
-//                        toSpeech.setLanguage(language);
-//                    } catch (IllegalLanguageException e) {
-//                        throw new RuntimeException(e);
-//                    }
-//                }
-//            }
-//        });
-
         View root = inflater.inflate(R.layout.fragment_puzzle, container, false);
         return root;
     }
 
+    //@method
+    //This method resets the puzzle to its initial state
     public void resetGame() {
         mPuzzleViewModel.resetPuzzle(false);
     }
 
+    //@method
+    //Adds a word to the puzzle object
+    //args: word - the word to be added
+    //It automatically adds the word in the selected cell which we get from the puzzleViewFragment
     public void enterWordInBoard(String word) throws IllegalWordPairException, IllegalDimensionException {
         PuzzleBoardFragment puzzleViewFragment = (PuzzleBoardFragment) getChildFragmentManager().findFragmentById(R.id.board);
         Dimension currentCell = puzzleViewFragment.getSelectedCell();
@@ -96,6 +96,7 @@ public class PuzzleFragment extends Fragment {
         rulesFragment.show(getActivity().getSupportFragmentManager(), RulesFragment.TAG);
     }
 
+    //When the user presses the dictionary button to see a table of all the words in the puzzle and their translations
     public void dictionaryButtonPressed() {
         //Toast.makeText(this, "Dictionary Button pressed", Toast.LENGTH_LONG).show();
         List<WordPair> wordPairs = mPuzzleViewModel.getWordPairs();
@@ -130,12 +131,14 @@ public class PuzzleFragment extends Fragment {
         Navigation.findNavController(getView()).navigate(R.id.submitPuzzleAction);
     }
 
+    // Sandwich menu
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.puzzle_menu, menu);
         super.onCreateOptionsMenu(menu, inflater);
     }
 
+    // When the user presses a button in the sandwich menu
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {

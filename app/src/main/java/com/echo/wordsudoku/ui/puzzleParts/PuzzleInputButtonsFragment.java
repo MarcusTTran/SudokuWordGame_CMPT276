@@ -1,3 +1,8 @@
+/*
+* Description: This fragment is used to display the word buttons that the user can click to enter words into the puzzle.
+* It is dynamically created based on the dimensions of the puzzle and the words that are to be entered from Puzzle.getWordPairs().
+* */
+
 package com.echo.wordsudoku.ui.puzzleParts;
 
 import android.content.res.TypedArray;
@@ -43,6 +48,7 @@ public class PuzzleInputButtonsFragment extends Fragment {
 
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        // If the puzzle has already been loaded, create the buttons
         if (mPuzzleViewModel.getWordPairs()!=null) {
             try {
                 if (!createButtons())
@@ -51,6 +57,7 @@ public class PuzzleInputButtonsFragment extends Fragment {
                 throw new RuntimeException(e);
             }
         } else {
+            // If the puzzle has not been loaded, wait for it to be loaded and then create the buttons
             mPuzzleViewModel.getPuzzleView().observe(getViewLifecycleOwner(), puzzleView -> {
                 if (puzzleView != null) {
                     try {
@@ -64,6 +71,8 @@ public class PuzzleInputButtonsFragment extends Fragment {
         }
     }
 
+    // Create the buttons for the puzzle
+    // Returns true if successful, false otherwise
     public boolean createButtons() throws IllegalLanguageException {
         PuzzleDimensions puzzleDimension = mPuzzleViewModel.getPuzzleDimensions();
         if (puzzleDimension != null) {

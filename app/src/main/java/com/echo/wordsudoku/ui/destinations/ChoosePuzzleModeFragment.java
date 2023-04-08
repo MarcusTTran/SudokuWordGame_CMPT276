@@ -1,3 +1,11 @@
+/*
+* Description:
+* This fragment is the first fragment that the user sees when they click the "New Game" button.
+* It allows the user to choose between a classic puzzle (9x9) and a custom puzzle (any size) or a custom words puzzle.
+* When the user clicks on Custom Sized Puzzle, a dialog fragment is displayed to allow the user to choose the size of the puzzle.
+* When the user clicks on Custom Words Puzzle, if they have not set the custom words, they will be navigated to the ChooseCustomWordsFragment.
+*  */
+
 package com.echo.wordsudoku.ui.destinations;
 
 import android.os.Bundle;

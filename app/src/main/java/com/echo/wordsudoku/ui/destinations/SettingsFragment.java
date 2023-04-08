@@ -1,3 +1,8 @@
+/*
+* Description: This class is the fragment that is used to display the settings page
+* It contains a list of settings that the user can change, such as the app language, the level of difficulty.
+*  */
+
 package com.echo.wordsudoku.ui.destinations;
 
 import android.app.LocaleManager;

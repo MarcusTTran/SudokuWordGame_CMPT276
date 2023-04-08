@@ -1,3 +1,8 @@
+/*
+* Description: This fragment is the top menu bar that contains the timer, the help button, the dictionary button, and the done button.
+* It is used in the PuzzleFragment.
+* */
+
 package com.echo.wordsudoku.ui.puzzleParts;
 
 import static com.echo.wordsudoku.models.utility.StringUtility.secondsToTimerLabel;
@@ -44,27 +49,34 @@ public class PuzzleTopMenuBarFragment extends Fragment {
 
         isGameTimed = mSettingsViewModel.isTimer();
 
+        // The difficulty levels that are displayed in the timer label if the game is not timed otherwise the timer in seconds is displayed
         String[] difficultyLevels = getResources().getStringArray(R.array.difficulty_entries);
         // The label that displays the timer
         timerLabel = view.findViewById(R.id.timer_text_view);
         timerLabel.setText(difficultyLevels[mSettingsViewModel.getDifficulty()-1]);
 
+        // The button that is used to finish the puzzle
         Button doneButton = view.findViewById(R.id.options_finish_button);
         doneButton.setOnClickListener(v -> {
             PuzzleFragment puzzleFragment = (PuzzleFragment) getParentFragment();
             puzzleFragment.finishButtonPressed();
         });
+
+        // The button that is used to display the rules of the game
         ImageButton helpButton = view.findViewById(R.id.help_button);
         helpButton.setOnClickListener(v -> {
             PuzzleFragment puzzleFragment = (PuzzleFragment) getParentFragment();
             puzzleFragment.rulesButtonPressed();
         });
+
+        // The button that is used to display the dictionary
         ImageButton dictionaryButton = view.findViewById(R.id.options_dictionary_help_button);
         dictionaryButton.setOnClickListener(v -> {
             PuzzleFragment puzzleFragment = (PuzzleFragment) getParentFragment();
             puzzleFragment.dictionaryButtonPressed();
         });
 
+        // The button that is used to reset the puzzle
         Button restartButton = view.findViewById(R.id.options_reset_puzzle_button);
         restartButton.setOnClickListener(v -> {
             PuzzleFragment puzzleFragment = (PuzzleFragment) getParentFragment();
@@ -86,6 +98,7 @@ public class PuzzleTopMenuBarFragment extends Fragment {
         }
     }
 
+    // This method is used to start the timer which runs as a background thread and updates the timer label every second
     public void startTiming() {
         Timer timerThread = new Timer();
         timerThread.scheduleAtFixedRate(new TimerTask() {
@@ -104,6 +117,7 @@ public class PuzzleTopMenuBarFragment extends Fragment {
         }, 0, 1000);
     }
 
+    // These methods are used to pause and resume the timer when the app is paused and resumed (so that the timer does not keep running in the background)
     @Override
     public void onPause() {
         super.onPause();

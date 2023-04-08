@@ -1,3 +1,7 @@
+/*
+* Description: This class is used to display a warning dialog to the user.
+*  */
+
 package com.echo.wordsudoku.ui.dialogs;
 
 import android.os.Bundle;

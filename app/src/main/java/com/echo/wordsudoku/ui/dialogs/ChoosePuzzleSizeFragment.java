@@ -1,3 +1,8 @@
+/*
+* Description: This dialog fragment is used to allow the user to choose the size of the puzzle they want to play.
+* Currently, the user can choose between 4x4, 6x6, 9x9, and 12x12 puzzles.
+* */
+
 package com.echo.wordsudoku.ui.dialogs;
 
 import android.content.Context;
@@ -11,12 +16,8 @@ import android.widget.RadioGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
-import androidx.navigation.NavController;
-import androidx.navigation.fragment.NavHostFragment;
 
 import com.echo.wordsudoku.R;
-import com.echo.wordsudoku.ui.destinations.ChoosePuzzleModeFragment;
-import com.echo.wordsudoku.ui.destinations.ChoosePuzzleModeFragmentDirections;
 
 public class ChoosePuzzleSizeFragment extends DialogFragment {
 

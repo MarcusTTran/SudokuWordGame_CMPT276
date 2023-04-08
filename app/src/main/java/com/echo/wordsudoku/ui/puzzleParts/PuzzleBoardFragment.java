@@ -1,3 +1,8 @@
+/*
+* This is a component of the PuzzleFragment
+* This is the fragment that contains the puzzle board view (as a SudokuBoard)
+* */
+
 package com.echo.wordsudoku.ui.puzzleParts;
 
 import static com.echo.wordsudoku.models.language.BoardLanguage.ENGLISH;
@@ -33,6 +38,8 @@ public class PuzzleBoardFragment extends Fragment {
     private SudokuBoard mSudokuBoard;
     private PuzzleViewModel mPuzzleViewModel;
 
+    private final String LOADING_TEXT = "loading";
+
     private TextToSpeech toSpeech;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -44,6 +51,7 @@ public class PuzzleBoardFragment extends Fragment {
         // Going to fill the puzzle with loading while the puzzle is being loaded
         loadingScreen();
 
+        // This is used for the listening comprehension mode
         toSpeech = new TextToSpeech(this.getContext(), i -> {
             if (i != TextToSpeech.ERROR) {
                 try {
@@ -61,6 +69,8 @@ public class PuzzleBoardFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        // This is used to update the puzzle view when the puzzle view changes
         mPuzzleViewModel.getPuzzleView().observe(getViewLifecycleOwner(), puzzleView -> {
             if (puzzleView != null) {
                 if(!updateView(puzzleView)) {
@@ -71,27 +81,35 @@ public class PuzzleBoardFragment extends Fragment {
         });
     }
 
+    // This is used to update the puzzle view
+    // Changes both the immutability of the cells and the content of the cells
     private boolean updateView(String[][] puzzleView) {
         return mSudokuBoard.setImmutability(mPuzzleViewModel.getImmutableCells()) &&
             mSudokuBoard.setBoard(puzzleView);
     }
 
+    // This is used to fill the puzzle with loading while the puzzle is being loaded
     public void loadingScreen() {
         for (int i = 0; i < mSudokuBoard.getBoardSize(); i++) {
             for (int j = 0; j < mSudokuBoard.getBoardSize(); j++) {
-                mSudokuBoard.setWordOfCell(i+1, j+1, "loading");
+                mSudokuBoard.setWordOfCell(i+1, j+1, LOADING_TEXT);
             }
         }
     }
 
+    // This is used to set the size of the puzzle board
+    // Resets the puzzle board and clears everything
     public void setPuzzleViewSize(PuzzleDimensions puzzleDimensions) {
         mSudokuBoard.setNewPuzzleDimensions(puzzleDimensions.getPuzzleDimension(), puzzleDimensions.getEachBoxDimension().getRows(), puzzleDimensions.getEachBoxDimension().getColumns());
     }
 
+    // Returns the selected cell in the puzzle board
+    // 0-indexed
     public Dimension getSelectedCell() {
         return new Dimension(mSudokuBoard.getCurrentCellRow()-1, mSudokuBoard.getCurrentCellColumn()-1);
     }
 
+    // This is used to text-to-speech the word in the selected cell
     public void speakWordInCell(Dimension currentCellDimension) {
         if (toSpeech == null) {
             throw new IllegalStateException("speakWordInCell called with TTS being null!"); //TODO catch this unchecked exception from where its called

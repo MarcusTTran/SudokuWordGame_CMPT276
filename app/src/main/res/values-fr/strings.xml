@@ -83,10 +83,10 @@ tous vos mots en vedette. Mais rappelez-vous, vous ne pouvez accéder à cette t
     <string name="auto_save_off">L’enregistrement automatique est désactivé</string>
 
     <!-- TextToSpeech Preferences -->
-    <string name="text_to_speech_on">La Synthèse Vocale est activén.</string>
-    <string name="text_to_speech_off">La Synthèse Vocale est désactivée.</string>
+    <string name="text_to_speech_on">Les mots seront affichés sous forme de nombres qui seront prononcés lorsque vous cliquerez dessus</string>
+    <string name="text_to_speech_off">Le mode de compréhension orale est désactivé et les puzzles seront affichés comme d’habitude</string>
     <string name="accessibility_category">Accessibilité</string>
-    <string name="text_to_speech_title">La Synthèse Vocale</string>
+    <string name="text_to_speech_title">Mode de compréhension orale</string>
 
 
     <string name="word_error">Erreur!</string>

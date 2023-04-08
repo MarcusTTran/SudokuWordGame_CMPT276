@@ -1,3 +1,8 @@
+/*
+* Description: This is the main menu fragment. It is the first fragment that is loaded when the app is opened.
+* It contains buttons that allow the user to start a new game, load a saved game, change the language, tweak the settings, enter their own custom words for puzzles and exit the app.
+* */
+
 package com.echo.wordsudoku.ui.destinations;
 
 import android.os.Bundle;
@@ -56,11 +61,14 @@ public class MainMenuFragment extends Fragment {
         // This is used to navigate to the different fragments
         NavController navController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment);
 
+
+        // if user pressed new game button, then load the choose puzzle mode fragment where they can choose the puzzle mode they wish to play
         mNewGameButton = root.findViewById(R.id.new_game_button);
         mNewGameButton.setOnClickListener(v -> {
             navController.navigate(R.id.choosePuzzleModeFragment);
         });
 
+        // if user pressed load game button, then load the load puzzle fragment where they can load a saved puzzle
         mLoadGameButton = root.findViewById(R.id.load_game_button);
         mLoadGameButton.setOnClickListener(v -> {
             if (!((MainActivity)requireActivity()).doesPuzzleSaveFileExist()) {
@@ -79,6 +87,8 @@ public class MainMenuFragment extends Fragment {
         mExitButton = root.findViewById(R.id.exit_button);
         mExitButton.setOnClickListener(v -> getActivity().finish());
 
+
+        // The puzzle change language button
         mChangeLanguageButton = root.findViewById(R.id.change_language_button);
 
         mSettingsViewModel.getPuzzleLanguage().observe(getViewLifecycleOwner(), language -> {
@@ -101,11 +111,13 @@ public class MainMenuFragment extends Fragment {
             }
         });
 
+        // The settings button
         mSettingsButton = root.findViewById(R.id.settings_button);
         mSettingsButton.setOnClickListener(v -> {
             navController.navigate(R.id.startSettingsAction);
         });
 
+        // The choose custom words button
         mChooseCustomWordsButton = root.findViewById(R.id.custom_words_button);
         mChooseCustomWordsButton.setOnClickListener(v -> {
             navController.navigate(R.id.startCustomWordsAction);

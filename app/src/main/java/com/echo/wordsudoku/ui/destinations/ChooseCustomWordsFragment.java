@@ -1,3 +1,11 @@
+/* Description:
+* This fragment allows the user to enter their own words to be used in the puzzle
+* It is shown when the user clicks the "Pencil" button in the MainMenuFragment
+* Or when the user wants to start a new custom words game from ChoosePuzzleModeFragment
+* */
+
+
+
 package com.echo.wordsudoku.ui.destinations;
 
 import android.os.Bundle;

@@ -1,3 +1,7 @@
+/*
+* Description: This class is the fragment that displays the rules of the word sudoku game to the user
+*  */
+
 package com.echo.wordsudoku.ui.dialogs;
 
 import android.os.Bundle;
