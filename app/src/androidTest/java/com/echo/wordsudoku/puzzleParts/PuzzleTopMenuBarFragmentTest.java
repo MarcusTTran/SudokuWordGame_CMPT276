@@ -108,7 +108,7 @@ public class PuzzleTopMenuBarFragmentTest {
     //Test that the timer is correctly displayed on top menu bar of puzzle fragment
 //    @Ignore("Working test")
     @Test
-    public void testTimerDisplay() {
+    public void testTimerDifficultyDisplay() {
         UiObject settingsButton = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/settings_button"));
         try {
             settingsButton.click();

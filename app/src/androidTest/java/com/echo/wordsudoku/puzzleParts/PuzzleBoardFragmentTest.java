@@ -120,6 +120,69 @@ public class PuzzleBoardFragmentTest {
         }
     }
 
+    //Test that cells are overridable
+    @Test
+    public void testCellOverridable() {
+        int totalCells = 9 * 9;
+
+        UiObject newGameButton = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/new_game_button").className("android.widget.Button"));
+        try {
+            newGameButton.click();
+        } catch (UiObjectNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        UiObject classicPuzzleButton = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/classic_puzzle_button").className("android.widget.Button"));
+        try {
+            classicPuzzleButton.click();
+        } catch (UiObjectNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        UiObject sudokuBoard = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/sudoku_board").className("android.view.View"));
+
+        int emptyCellIndex = -1;
+
+        for (int i = 0; i < totalCells; i++) {
+            try {
+                UiObject someCell = sudokuBoard.getChild(new UiSelector().instance(i));
+                if (someCell.getText().equals("EMPTYCELL")) {
+                    emptyCellIndex = i;
+                }
+            } catch (UiObjectNotFoundException e) {
+                fail("All cells not found");
+            }
+        }
+
+        try {
+            UiObject emptyCell = sudokuBoard.getChild(new UiSelector().instance(emptyCellIndex));
+            emptyCell.click();
+        } catch (UiObjectNotFoundException e) {
+            fail("No empty cell found");
+        }
+
+        UiObject button1 = ourDevice.findObject(new UiSelector().className("android.widget.Button").resourceId("com.echo.wordsudoku:id/id1"));
+
+        String inputButtonString = "";
+        try {
+            inputButtonString = button1.getText();
+            button1.click();
+        } catch (UiObjectNotFoundException e) {
+            fail("No input button found");
+        }
+
+        ourDevice.pressBack();
+        ourDevice.pressBack();
+
+        try {
+            UiObject emptyCell = sudokuBoard.getChild(new UiSelector().instance(emptyCellIndex));
+
+            assertTrue(emptyCell.getText().equals(inputButtonString.toLowerCase()));
+        } catch (UiObjectNotFoundException e) {
+            fail("Empty cell text did not match inputted button string");
+        }
+    }
+
 
     // Test that Save Game button correctly loads in previously entered words when user
     // clicks Load Game option
@@ -278,7 +341,7 @@ public class PuzzleBoardFragmentTest {
 
     //Test that the board displays all cells on horizontal landscape
     @Test
-    public void testBoardDisplaysHorizontalAllCells() {
+    public void testPuzzleBoardFragmentDisplaysHorizontalAllCells() {
         try {
             ourDevice.setOrientationLeft();
             ourDevice.waitForWindowUpdate(null, 3000);
@@ -351,8 +414,6 @@ public class PuzzleBoardFragmentTest {
             fail("No button was not displayed on Puzzle size " + dim);
         }
     }
-
-
 
 
 

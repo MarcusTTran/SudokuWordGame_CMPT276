@@ -511,6 +511,117 @@ public class PuzzleFragmentTest {
 
     }
 
+    //Test that the kebab menu keeps users on the puzzle fragment page if the user tries to complete with
+    // an unfilled board
+    @Test
+    public void testKebabDoneButtonUnfilledBoard() {
+        //Start new game
+        UiObject newGameButton = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/new_game_button").className("android.widget.Button"));
+        try {
+            newGameButton.click();
+        } catch (UiObjectNotFoundException e) {
+            fail("New game button not found");
+        }
+
+        //Start classic puzzle
+        UiObject classicPuzzleButton = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/classic_puzzle_button").className("android.widget.Button"));
+        try {
+            classicPuzzleButton.click();
+        } catch (UiObjectNotFoundException e) {
+            fail("Classic puzzle button not found");
+        }
+
+        UiObject kebabButton = ourDevice.findObject(new UiSelector().descriptionContains("More options").className("android.widget.ImageView"));
+        try {
+            kebabButton.click();
+        } catch (UiObjectNotFoundException e) {
+            fail("kebab button not found");
+        }
+
+        UiObject doneButton = ourDevice.findObject(new UiSelector().textContains("Done").className("android.widget.TextView"));
+        try {
+            doneButton.click();
+        } catch (UiObjectNotFoundException e) {
+            fail("Done button not found");
+        }
+
+        UiObject puzzleFragment = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/puzzle_fragment"));
+        if (!puzzleFragment.exists()) {
+            fail("Puzzle fragment did not appear after user pressed done through kebab menu on unfilled board");
+        }
+
+    }
+
+    //Test that the kebab menu keeps user to the puzzle results page after clicking done on
+    // completely filled board
+    @Test
+    public void testKebabDoneButtonFilledBoard() {
+        int dim = 4 * 4;
+        //Start new game
+        UiObject newGameButton = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/new_game_button").className("android.widget.Button"));
+        try {
+            newGameButton.click();
+        } catch (UiObjectNotFoundException e) {
+            fail("New game button not found");
+        }
+
+        //Start custom sized puzzle
+        UiObject customSizedButton = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/custom_size_button").className("android.widget.Button"));
+        try {
+            customSizedButton.click();
+        } catch (UiObjectNotFoundException e) {
+            fail("Custom size puzzle button not found");
+        }
+
+        UiObject puzzleSize4x4 = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/choose_4x4_button").className("android.widget.RadioButton"));
+        try {
+            puzzleSize4x4.click();
+        } catch (UiObjectNotFoundException e) {
+            fail("4x4 size puzzle button not found");
+        }
+
+        UiObject doneMenuButton = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/done_button").className("android.widget.Button"));
+        try {
+            doneMenuButton.click();
+        } catch (UiObjectNotFoundException e) {
+            fail("Done button not found");
+        }
+
+        UiObject sudokuBoard = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/sudoku_board").className("android.view.View"));
+        for (int i = 0; i < dim; i++) {
+            try {
+                UiObject someCell = sudokuBoard.getChild(new UiSelector().instance(i));
+                if (someCell.getText().equals("EMPTYCELL")) {
+                    someCell.click();
+                    UiObject entryButton = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/id1").className("android.widget.Button"));
+                    entryButton.click();
+                }
+            } catch (UiObjectNotFoundException e) {
+                fail("Cell not found at index " + i);
+            }
+        }
+
+        UiObject kebabButton = ourDevice.findObject(new UiSelector().descriptionContains("More options").className("android.widget.ImageView"));
+        try {
+            kebabButton.click();
+        } catch (UiObjectNotFoundException e) {
+            fail("kebab button not found");
+        }
+
+        UiObject doneButton = ourDevice.findObject(new UiSelector().textContains("Done").className("android.widget.TextView"));
+        try {
+            doneButton.click();
+        } catch (UiObjectNotFoundException e) {
+            fail("Done button not found");
+        }
+
+        UiObject puzzleResultsFragment = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/ResultsFragmentPage"));
+        if (!puzzleResultsFragment.exists()) {
+            fail("Puzzle results fragment did not appear after user pressed done through kebab menu on completely filled board");
+        }
+
+    }
+
     //Test that the dictionary pop up is correctly displayed from Kebab menu option
 //    @Ignore("Working test")
     @Test

@@ -77,7 +77,93 @@ public class PuzzleInputButtonsFragmentTest {
     // them displays the correct button text in an empty cell
 //    @Ignore("Working test")
     @Test
-    public void testWordInsertCellDisplayMatch() {
+    public void testAllInputButtonCellDisplayMatch() {
+        int dim = 4;
+
+        //Start new game
+        UiObject newGameButton = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/new_game_button").className("android.widget.Button"));
+        try {
+            newGameButton.click();
+        } catch (UiObjectNotFoundException e) {
+            fail("New Game button was not displayed");
+        }
+
+        //Start custom sized puzzle
+        UiObject customSizePuzzleButton = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/custom_size_button").className("android.widget.Button"));
+        try {
+            customSizePuzzleButton.click();
+        } catch (UiObjectNotFoundException e) {
+            fail("Custom Sized button was not displayed");
+        }
+
+        //Choose puzzle size dialog
+        UiObject choosePuzzleSizeDialog = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/size_radio_group").className("android.widget.RadioGroup"));
+        try {
+            UiObject sizeSelection = choosePuzzleSizeDialog.getChild(new UiSelector().textContains(Integer.toString(dim)));
+            sizeSelection.click();
+        } catch (UiObjectNotFoundException e) {
+            fail("Puzzle size selection was not found");
+        }
+
+        UiObject doneChooseSizeDialog = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/done_button").className("android.widget.Button"));
+        try {
+            doneChooseSizeDialog.click();
+        } catch (UiObjectNotFoundException e) {
+            fail("Done button in Choose size dialog was not found");
+        }
+
+        //Find SudokuBoard
+        UiObject sudokuBoard = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/sudoku_board"));
+
+        int iterateThroughButtons = 1;
+        for (int i = 0; i < dim * dim; i++) {
+            try {
+                UiObject someCell = sudokuBoard.getChild(new UiSelector().instance(i));
+                if (someCell.getText().equals("EMPTYCELL")) {
+                    someCell.click();
+                    UiObject someInputButton = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/id" + iterateThroughButtons));
+                    someInputButton.click();
+
+                    ourDevice.pressBack();
+                    UiObject cancelButton = ourDevice.findObject(new UiSelector().resourceId("android:id/button3").className("android.widget.Button"));
+                    try {
+                        cancelButton.click();
+                    } catch (UiObjectNotFoundException e) {
+                        fail("Cancel button was not displayed");
+                    }
+
+                    if(!someCell.getText().equals(someInputButton.getText().toLowerCase())) {
+                        fail("Cell display and inserted word did not match: " + someCell.getText() + " " + someInputButton.getText());
+                    }
+
+                }
+            } catch (UiObjectNotFoundException e) {
+                fail("Not all cells or buttons were displayed: " + iterateThroughButtons);
+            }
+            iterateThroughButtons = (iterateThroughButtons % dim) + 1;
+        }
+
+
+        ourDevice.pressBack();
+        UiObject noButton = ourDevice.findObject(new UiSelector().resourceId("android:id/button2").className("android.widget.Button"));
+        try {
+            noButton.click();
+        } catch (UiObjectNotFoundException e) {
+            fail("No button was not displayed");
+        }
+    }
+
+    //Test that all buttons are displayed correctly in a puzzle in a horizontal orientation and that clicking
+    // them displays the correct button text in an empty cell
+//    @Ignore("Working test")
+    @Test
+    public void testAllInputButtonCellDisplayMatchHorizontal() {
+        try {
+            ourDevice.setOrientationLeft();
+            ourDevice.waitForWindowUpdate(null, 3000);
+        } catch (android.os.RemoteException e) {
+            fail("Horizontal orientation failed");
+        }
         int dim = 4;
 
         //Start new game
@@ -241,7 +327,7 @@ public class PuzzleInputButtonsFragmentTest {
             ourDevice.setOrientationLeft();
             ourDevice.waitForWindowUpdate(null, 3000);
         } catch (android.os.RemoteException e) {
-            fail();
+            fail("Horizontal orientation failed");
         }
         for (int i = 0; i < puzzleSizes.length; i++) {
             testInputButtonsDisplayedHelper(puzzleSizes[i]);
