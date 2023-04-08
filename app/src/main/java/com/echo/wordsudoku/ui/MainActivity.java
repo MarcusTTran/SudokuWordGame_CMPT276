@@ -380,6 +380,11 @@ public class MainActivity extends AppCompatActivity implements SaveGameDialog.Sa
         }).start();
     }
 
+    public void deleteSavedPuzzle() {
+        if (mPuzzleJsonFile.exists()) {
+            mPuzzleJsonFile.delete();
+        }
+    }
 
     public void updateViewModelWithLoadedPuzzle(boolean updateTimer) {
         if (latestLoadedPuzzle != null) {

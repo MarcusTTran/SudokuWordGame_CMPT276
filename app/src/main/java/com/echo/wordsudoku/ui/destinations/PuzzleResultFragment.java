@@ -71,6 +71,9 @@ public class PuzzleResultFragment extends Fragment {
             timerMessage = "Difficulty: " + getResources().getStringArray(R.array.difficulty_entries)[mSettingsViewModel.getDifficulty()-1];
         }
 
+        if(!mPuzzleViewModel.getIsNewGame())
+            ((MainActivity) requireActivity()).deleteSavedPuzzle();
+
         TextView puzzleResultTextView = view.findViewById(R.id.puzzle_result_message_text_view);
         TextView puzzleTimerTextView = view.findViewById(R.id.puzzle_result_timer_text_view);
         ImageView resultImageView = view.findViewById(R.id.result_image_view);

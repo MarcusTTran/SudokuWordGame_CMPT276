@@ -122,6 +122,7 @@ public class PuzzleViewModel extends ViewModel {
     // resets the puzzle
     public void resetPuzzle(boolean isRetry) {
         if (!puzzle.isPuzzleBlank()) {
+            isNewGame = true;
             puzzle.resetPuzzle(isRetry);
             setPuzzleView(puzzle.toStringArray());
         }

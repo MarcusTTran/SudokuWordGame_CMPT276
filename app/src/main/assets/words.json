@@ -294,6 +294,189 @@
         "spanish": "barba",
         "arabic": "لحية",
         "category": "noun"
-        }
-  ]
+        },
+        {
+        "word": "bear",
+        "french": "ours",
+        "chinese": "熊",
+        "spanish": "oso",
+        "arabic": "دب",
+        "category": "noun"
+        },
+        {
+        "word": "beautiful",
+        "french": "beau",
+        "chinese": "美丽的",
+        "spanish": "hermoso",
+        "arabic": "جميل",
+        "category": "adjective"
+        },
+        {
+        "word": "beauty",
+        "french": "beauté",
+        "chinese": "美丽",
+        "spanish": "belleza",
+        "arabic": "جمال",
+        "category": "noun"
+        },
+        {
+        "word": "bed",
+        "french": "lit",
+        "chinese": "床",
+        "spanish": "cama",
+        "arabic": "سرير",
+        "category": "noun"
+        },
+        {
+        "word": "bee",
+        "french": "abeille",
+        "chinese": "蜜蜂",
+        "spanish": "abeja",
+        "arabic": "نحلة",
+        "category": "noun"
+        },
+        {
+        "word": "beer",
+        "french": "bière",
+        "chinese": "啤酒",
+        "spanish": "cerveza",
+        "arabic": "بيرة",
+        "category": "noun"
+        },
+        {
+        "word": "beef",
+        "french": "bœuf",
+        "chinese": "牛肉",
+        "spanish": "carne de res",
+        "arabic": "لحم البقر",
+        "category": "noun"
+        },
+        {
+        "word": "beet",
+        "french": "betterave",
+        "chinese": "甜菜",
+        "spanish": "remolacha",
+        "arabic": "باذنجان",
+        "category": "noun"
+        },
+        {
+        "word": "beetle",
+        "french": "scarabée",
+        "chinese": "甲虫",
+        "spanish": "escarabajo",
+        "arabic": "دودة",
+        "category": "noun"
+        },
+        {
+        "word": "before",
+"french": "avant",
+        "chinese": "之前",
+        "spanish": "antes",
+        "arabic": "قبل",
+        "category": "adverb"
+        },
+        {
+        "word": "beg",
+        "french": "supplier",
+        "chinese": "乞讨",
+        "spanish": "implorar",
+        "arabic": "يطلب",
+        "category": "verb"
+        },
+        {
+        "word": "begin",
+        "french": "commencer",
+        "chinese": "开始",
+        "spanish": "comenzar",
+        "arabic": "يبدأ",
+        "category": "verb"
+        },
+        {
+        "word": "beginner",
+        "french": "débutant",
+        "chinese": "初学者",
+        "spanish": "principiante",
+        "arabic": "مبتدئ",
+        "category": "noun"
+        },
+        {
+        "word": "beginning",
+        "french": "début",
+        "chinese": "开始",
+        "spanish": "comienzo",
+        "arabic": "بداية",
+        "category": "noun"
+        },
+        {
+        "word": "beggar",
+        "french": "mendiant",
+        "chinese": "乞丐",
+        "spanish": "mendigo",
+        "arabic": "يتعاطف",
+        "category": "noun"
+        },
+        {
+        "word": "begging",
+        "french": "supplication",
+        "chinese": "乞讨",
+        "spanish": "imploración",
+        "arabic": "يطلب",
+        "category": "noun"
+        },
+        {
+        "word": "behavior",
+        "french": "comportement",
+        "chinese": "行为",
+        "spanish": "comportamiento",
+        "arabic": "سلوك",
+        "category": "noun"
+        },
+        {
+        "word": "behind",
+        "french": "derrière",
+        "chinese": "在后面",
+        "spanish": "detrás",
+        "arabic": "خلف",
+        "category": "adverb"
+        },
+        {
+        "word": "being",
+        "french": "être",
+        "chinese": "存在",
+        "spanish": "ser",
+        "arabic": "يكون",
+        "category": "verb"
+        },
+        {
+        "word": "belief",
+        "french": "croyance",
+        "chinese": "信念",
+        "spanish": "creencia",
+        "arabic": "اعتقاد",
+        "category": "noun"
+        },
+        {
+        "word": "believe",
+        "french": "croire",
+        "chinese": "相信",
+        "spanish": "creer",
+        "arabic": "يعتقد",
+        "category": "verb"
+        },
+        {
+        "word": "bell",
+        "french": "cloche",
+        "chinese": "钟",
+        "spanish": "campana",
+        "arabic": "جرس",
+        "category": "noun"
+        },
+        {
+        "word": "belly",
+        "french": "ventre",
+        "chinese": "肚子",
+        "spanish": "panza",
+        "arabic": "بطن",
+        "category": "noun"
+        }]
 }
