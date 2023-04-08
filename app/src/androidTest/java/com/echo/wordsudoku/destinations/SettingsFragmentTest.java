@@ -308,13 +308,13 @@ public class SettingsFragmentTest {
 
             if (ttsSwitch.isChecked()) {
                 ttsSwitch.click();
-                UiObject ttsSwitchOff = ourDevice.findObject(new UiSelector().textContains("Text to Speech is off").resourceId("android:id/summary"));
+                UiObject ttsSwitchOff = ourDevice.findObject(new UiSelector().textContains("Listening Comprehension mode is off").resourceId("android:id/summary"));
                 if (!ttsSwitchOff.exists()) {
                     fail("Switch did not update display to off");
                 }
             } else {
                 ttsSwitch.click();
-                UiObject ttsSwitchOn = ourDevice.findObject(new UiSelector().textContains("Text to Speech is on").resourceId("android:id/summary"));
+                UiObject ttsSwitchOn = ourDevice.findObject(new UiSelector().textContains("Words will be shown as numbers which will be pronounced when you click them").resourceId("android:id/summary"));
                 if (!ttsSwitchOn.exists()) {
                     fail("Switch did not update display to on");
                 }
