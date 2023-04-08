@@ -140,5 +140,6 @@ If you encounter any difficulty translating the words featured in your puzzle, y
     <string name="set_languages_dialog_button">Change Languages</string>
     <string name="error_two_languages_same">Please select two different languages</string>
     <string name="no_languages_set">Not set. Click to change</string>
+    <string name="error_no_language_selected">Please set the puzzle language</string>
 
 </resources>

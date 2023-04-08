@@ -34,6 +34,8 @@ public class ChoosePuzzleLanguage extends DialogFragment {
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         puzzle_language_spinner.setAdapter(adapter);
         button_input_language_spinner.setAdapter(adapter);
+        Button cancel = v.findViewById(R.id.cancel_set_languages_button);
+        cancel.setOnClickListener(v1 -> dismiss());
         Button submit = v.findViewById(R.id.set_languages_button);
         submit.setOnClickListener(v1 -> {
             int puzzle_language = puzzle_language_spinner.getSelectedItemPosition(), button_input_language = button_input_language_spinner.getSelectedItemPosition();

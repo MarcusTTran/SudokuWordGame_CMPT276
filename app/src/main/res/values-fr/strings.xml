@@ -149,6 +149,7 @@ tous vos mots en vedette. Mais rappelez-vous, vous ne pouvez accéder à cette t
     <string name="no_languages_set">Non défini. Cliquez pour changer</string>
     <string name="puzzle_language_preference_key">com.echo.wordsudoku.puzzleLanguage</string>
     <string name="input_language_preference_key">com.echo.wordsudoku.inputLanguage</string>
+    <string name="error_no_language_selected">S’il vous plaît définir la langue du puzzle</string>
 
 
 </resources>

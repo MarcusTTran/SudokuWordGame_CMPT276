@@ -69,7 +69,7 @@ public class MainMenuFragment extends Fragment {
             Integer inputLanguage = mSettingsViewModel.getButtonInputLanguage().getValue();
             Integer puzzleLanguage = mSettingsViewModel.getPuzzleLanguage().getValue();
             if (inputLanguage == null || puzzleLanguage == null) {
-                Toast.makeText(getContext(), "Please set the puzzle language", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), getString(R.string.error_no_language_selected), Toast.LENGTH_SHORT).show();
                 return;
             }
             navController.navigate(R.id.choosePuzzleModeFragment);
