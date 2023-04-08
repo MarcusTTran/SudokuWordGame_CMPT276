@@ -75,10 +75,10 @@ public class RulesFragmentTest {
 
 
 
-    //Test that clicking the rules button in puzzle page displays the rules pops up and displays instructions
+    //Test that the rules popup display correctly shows all information
 //    @Ignore("Working test")
     @Test
-    public void testRulesPopUpDialog() {
+    public void testRulesDialogDisplays() {
         UiObject newGameButton = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/new_game_button").className("android.widget.Button"));
         try {
             newGameButton.click();
@@ -103,19 +103,89 @@ public class RulesFragmentTest {
 
         UiObject rulesInfoText = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/PopUp_Rules"));
         if (!rulesInfoText.exists()) {
-            fail("Rules dialog properly open");
+            fail("Rules pop up box not displayed");
         }
+
+        UiObject rulesHeader = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/RulesHeader"));
+        if (!rulesHeader.exists()) {
+            fail("Rules header not shown on pop up");
+        }
+
+
 
         UiObject rulesInfo = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/RulesInformation"));
         if (!rulesInfo.exists()) {
-            fail("Rules are not being displayed");
+            fail("Rules information not shown on pop up");
+        }
+
+        UiObject rulesExitButton = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/rulesExitButton"));
+        if (!rulesExitButton.exists()) {
+            fail("Rules exit button not shown on pop up");
+        }
+
+
+    }
+
+    //Test that the rules popup display correctly shows all information
+//    @Ignore("Working test")
+    @Test
+    public void testRulesDialogDisplaysHorizontal() {
+        try {
+            ourDevice.setOrientationLeft();
+            ourDevice.waitForWindowUpdate(null, 3000);
+        } catch (android.os.RemoteException e) {
+            fail();
+        }
+
+        UiObject newGameButton = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/new_game_button").className("android.widget.Button"));
+        try {
+            newGameButton.click();
+        } catch (UiObjectNotFoundException e) {
+            fail("New Game Button not found");
+        }
+
+        //Start classic puzzle
+        UiObject classicPuzzleButton = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/classic_puzzle_button").className("android.widget.Button"));
+        try {
+            classicPuzzleButton.click();
+        } catch (UiObjectNotFoundException e) {
+            fail("Classic Puzzles Button not found");
+        }
+
+        UiObject rulesButton = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/help_button"));
+        try {
+            rulesButton.click();
+        } catch (UiObjectNotFoundException e) {
+            fail("Rules Button not found");
+        }
+
+        UiObject rulesInfoText = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/PopUp_Rules"));
+        if (!rulesInfoText.exists()) {
+            fail("Rules pop up box not displayed");
+        }
+
+        UiObject rulesHeader = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/RulesHeader"));
+        if (!rulesHeader.exists()) {
+            fail("Rules header not shown on pop up");
+        }
+
+
+
+        UiObject rulesInfo = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/RulesInformation"));
+        if (!rulesInfo.exists()) {
+            fail("Rules information not shown on pop up");
+        }
+
+        UiObject rulesExitButton = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/rulesExitButton"));
+        if (!rulesExitButton.exists()) {
+            fail("Rules exit button not shown on pop up");
         }
 
 
     }
 
 
-    //Test that the rules dialog exit button correctly closes rules dialog
+    //Test that the rules dialog exit button correctly closes rules pop up dialog
 //    @Ignore("Working test")
     @Test
     public void testRulesDialogExitButton() {
@@ -148,8 +218,8 @@ public class RulesFragmentTest {
             fail("Rules button does not exist");
         }
 
-        UiObject rulesInfoText = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/PopUp_Rules"));
-        if (rulesInfoText.exists()) {
+        UiObject rulesPopupBox = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/PopUp_Rules"));
+        if (rulesPopupBox.exists()) {
             fail("Rules dialog did not properly close");
         }
 

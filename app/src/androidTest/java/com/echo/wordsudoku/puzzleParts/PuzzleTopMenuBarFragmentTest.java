@@ -74,7 +74,44 @@ public class PuzzleTopMenuBarFragmentTest {
 
 
 
+    //Test that clicking the rules button in puzzle page displays the rules pops up and displays instructions
+//    @Ignore("Working test")
+    @Test
+    public void testRulesPopUpDialog() {
+        UiObject newGameButton = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/new_game_button").className("android.widget.Button"));
+        try {
+            newGameButton.click();
+        } catch (UiObjectNotFoundException e) {
+            fail("New Game Button not found");
+        }
 
+        //Start classic puzzle
+        UiObject classicPuzzleButton = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/classic_puzzle_button").className("android.widget.Button"));
+        try {
+            classicPuzzleButton.click();
+        } catch (UiObjectNotFoundException e) {
+            fail("Classic Puzzles Button not found");
+        }
+
+        UiObject rulesButton = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/help_button"));
+        try {
+            rulesButton.click();
+        } catch (UiObjectNotFoundException e) {
+            fail("Rules Button not found");
+        }
+
+        UiObject rulesInfoText = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/PopUp_Rules"));
+        if (!rulesInfoText.exists()) {
+            fail("Rules dialog properly open");
+        }
+
+        UiObject rulesInfo = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/RulesInformation"));
+        if (!rulesInfo.exists()) {
+            fail("Rules are not being displayed");
+        }
+
+
+    }
 
 
 

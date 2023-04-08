@@ -69,131 +69,167 @@ public class ChoosePuzzleSizeFragmentTest {
 
 
 
-
-
-
-
-    //Check that the puzzle page displays all necessary buttons and TextViews to the user
+    //Test that the cancel button on the Custom sized puzzle selection dialog cancels the dialog
 //    @Ignore("Working test")
     @Test
-    public void testPuzzlePageDisplayAllPuzzleSizes() {
-        for (int i = 0; i < puzzleSizes.length; i++) {
-            testPuzzlePageDisplayHelper(puzzleSizes[i]);
+    public void testCustomSizedDialogDisplays() {
+        //Start new game
+        UiObject newGameButton = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/new_game_button").className("android.widget.Button"));
+        try {
+            newGameButton.click();
+        } catch (UiObjectNotFoundException e) {
+            fail("New game button not found");
         }
+
+        //Click custom size button
+        UiObject customSizedButton = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/custom_size_button").className("android.widget.Button"));
+        try {
+            customSizedButton.click();
+        } catch (UiObjectNotFoundException e) {
+            fail("Custom size puzzle button not found");
+        }
+
+        UiObject choosepuzzleSizeFragment = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/customPuzzleSizeSelect"));
+        if (!choosepuzzleSizeFragment.exists()) {
+            fail("Choose Puzzle Size Dialog Fragment not displayed");
+        }
+
+        UiObject doneButton = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/done_button"));
+        if (!doneButton.exists()) {
+            fail("Choose Puzzle Size Dialog Fragment Done button not displayed");
+        }
+
+        UiObject cancelButton = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/cancel_button"));
+        if (!cancelButton.exists()) {
+            fail("Choose Puzzle Size Dialog Fragment Cancel button not displayed");
+        }
+
+        UiObject puzzleSize4x4Button = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/choose_4x4_button"));
+        if (!puzzleSize4x4Button.exists()) {
+            fail("Puzzle size 4x4 button was not displayed");
+        }
+
+        UiObject puzzleSize6x6Button = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/choose_6x6_button"));
+        if (!puzzleSize6x6Button.exists()) {
+            fail("Puzzle size 6x6 button was not displayed");
+        }
+
+        UiObject puzzleSize9x9Button = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/choose_9x9_puzzle"));
+        if (!puzzleSize9x9Button.exists()) {
+            fail("Puzzle size 9x9 button was not displayed");
+        }
+
+        UiObject puzzleSize12x12Button = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/choose_12x12_puzzle"));
+        if (!puzzleSize12x12Button.exists()) {
+            fail("Puzzle size 12x12 button was not displayed");
+        }
+
+
     }
 
-    public void testPuzzlePageDisplayHelper(int dim) {
+    //Test that the cancel button on the Custom sized puzzle selection dialog cancels the dialog
+//    @Ignore("Working test")
+    @Test
+    public void testCustomSizedDialogDisplaysHorizontal() {
+        try {
+            ourDevice.setOrientationLeft();
+            ourDevice.waitForWindowUpdate(null, 3000);
+        } catch (android.os.RemoteException e) {
+            fail();
+        }
 
         //Start new game
         UiObject newGameButton = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/new_game_button").className("android.widget.Button"));
         try {
             newGameButton.click();
         } catch (UiObjectNotFoundException e) {
-            fail("New Game button was not displayed");
+            fail("New game button not found");
         }
 
-        //Start custom sized puzzle
-        UiObject customSizePuzzleButton = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/custom_size_button").className("android.widget.Button"));
+        //Click custom size button
+        UiObject customSizedButton = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/custom_size_button").className("android.widget.Button"));
         try {
-            customSizePuzzleButton.click();
+            customSizedButton.click();
         } catch (UiObjectNotFoundException e) {
-            fail("Custom Sized button was not displayed on Puzzle size " + dim);
+            fail("Custom size puzzle button not found");
         }
 
-        //Choose puzzle size dialog
-        UiObject choosePuzzleSizeDialog = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/size_radio_group").className("android.widget.RadioGroup"));
-        try {
-            UiObject sizeSelection = choosePuzzleSizeDialog.getChild(new UiSelector().textContains(Integer.toString(dim)));
-            sizeSelection.click();
-        } catch (UiObjectNotFoundException e) {
-            fail("Puzzle size selection was not displayed on Puzzle size " + dim);
+        UiObject choosepuzzleSizeFragment = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/customPuzzleSizeSelect"));
+        if (!choosepuzzleSizeFragment.exists()) {
+            fail("Choose Puzzle Size Dialog Fragment not displayed");
         }
 
-        UiObject doneChooseSizeDialog = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/done_button").className("android.widget.Button"));
-        try {
-            doneChooseSizeDialog.click();
-        } catch (UiObjectNotFoundException e) {
-            fail("Done button in Choose size dialog was not displayed on Puzzle size " + dim);
-        }
-
-        UiObject doneButton = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/options_finish_button").className("android.widget.Button"));
+        UiObject doneButton = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/done_button"));
         if (!doneButton.exists()) {
-            fail("Done Button was not displayed on Puzzle size " + dim);
+            fail("Choose Puzzle Size Dialog Fragment Done button not displayed");
         }
 
-        UiObject resetButton = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/options_reset_puzzle_button").className("android.widget.Button"));
-        if (!resetButton.exists()) {
-            fail("Reset Button was not displayed on Puzzle size " + dim);
+        UiObject cancelButton = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/cancel_button"));
+        if (!cancelButton.exists()) {
+            fail("Choose Puzzle Size Dialog Fragment Cancel button not displayed");
         }
 
-        UiObject dictionaryButton = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/options_dictionary_help_button").className("android.widget.ImageButton"));
-        if (!dictionaryButton.exists()) {
-            fail("Dictionary Button was not displayed on Puzzle size " + dim);
+        UiObject puzzleSize4x4Button = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/choose_4x4_button"));
+        if (!puzzleSize4x4Button.exists()) {
+            fail("Puzzle size 4x4 button was not displayed");
         }
 
-        UiObject helpButton = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/help_button").className("android.widget.ImageButton"));
-        if (!helpButton.exists()) {
-            fail("Help Button was not displayed on Puzzle size " + dim);
+        UiObject puzzleSize6x6Button = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/choose_6x6_button"));
+        if (!puzzleSize6x6Button.exists()) {
+            fail("Puzzle size 6x6 button was not displayed");
         }
 
-        UiObject inputButtons = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/board_input_buttons").className("android.widget.LinearLayout"));
-        try {
-            for(int i = 0; i < inputButtons.getChildCount(); i++) {
-                UiObject buttonLayouts = inputButtons.getChild(new UiSelector().instance(i));
-                if (!buttonLayouts.exists()) {
-                    fail("All buttons are not displayed on Puzzle size " + dim);
-                }
-            }
-        } catch (UiObjectNotFoundException e) {
-            fail("Input buttons are not displayed on Puzzle size " + dim);
+        UiObject puzzleSize9x9Button = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/choose_9x9_puzzle"));
+        if (!puzzleSize9x9Button.exists()) {
+            fail("Puzzle size 9x9 button was not displayed");
+        }
+
+        UiObject puzzleSize12x12Button = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/choose_12x12_puzzle"));
+        if (!puzzleSize12x12Button.exists()) {
+            fail("Puzzle size 12x12 button was not displayed");
         }
 
 
-
-        UiObject timerDisplay = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/timer_text_view").className("android.widget.TextView"));
-        if (!timerDisplay.exists()) {
-            fail("Timer/Difficulty was not displayed on Puzzle size " + dim);
-        }
-
-        //Test that all cells are displayed
-        UiObject sudokuBoard = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/sudoku_board").className("android.view.View"));
-        if (!sudokuBoard.exists()) {
-            fail("Sudoku Board was not displayed on Puzzle size " + dim);
-        }
-
-        for (int i = 0; i < dim * dim; i++) {
-            try {
-                if (!sudokuBoard.getChild(new UiSelector().instance(i)).exists()) {
-                    fail("All cells not displayed on Puzzle size " + dim);
-                }
-            } catch (UiObjectNotFoundException e) {
-                fail("All cells not displayed on Puzzle size " + dim);
-            }
-        }
-
-        UiObject actionBar = ourDevice.findObject(new UiSelector().className("android.widget.FrameLayout"));
-        try {
-            UiObject backButton = actionBar.getChild(new UiSelector().index(1));
-            UiObject kebabButton = actionBar.getChild(new UiSelector().index(3));
-            if (!backButton.exists()) {
-                fail("Back button was not displayed on Puzzle size " + dim);
-            }
-            if (!kebabButton.exists()) {
-                fail("Kebab button was not displayed on Puzzle size " + dim);
-            }
-        } catch (UiObjectNotFoundException e) {
-            fail();
-        }
-
-        ourDevice.pressBack();
-
-        UiObject noButton = ourDevice.findObject(new UiSelector().resourceId("android:id/button2").className("android.widget.Button"));
-        try {
-            noButton.click();
-        } catch (UiObjectNotFoundException e) {
-            fail("No button was not displayed on Puzzle size " + dim);
-        }
     }
+
+    //Test that the cancel button on the Custom sized puzzle selection dialog cancels the dialog
+//    @Ignore("Working test")
+    @Test
+    public void testCustomSizedDialogDoneButton() {
+//Start new game
+        UiObject newGameButton = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/new_game_button").className("android.widget.Button"));
+        try {
+            newGameButton.click();
+        } catch (UiObjectNotFoundException e) {
+            fail("New game button not found");
+        }
+
+        //Click custom size button
+        UiObject customSizedButton = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/custom_size_button").className("android.widget.Button"));
+        try {
+            customSizedButton.click();
+        } catch (UiObjectNotFoundException e) {
+            fail("Custom size puzzle button not found");
+        }
+
+        //Click cancel button in dialog
+        UiObject doneButton = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/done_button"));
+        try {
+            doneButton.click();
+        } catch (UiObjectNotFoundException e) {
+            fail("Choose Puzzle Size Dialog Fragment Done button not displayed");
+        }
+
+        UiObject puzzleFragment = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/puzzle_fragment"));
+        if (!puzzleFragment.exists()) {
+            fail("Puzzle Fragment was not displayed after clicking Done");
+        }
+
+
+    }
+
+
+
 
 
     //Test that the cancel button on the Custom sized puzzle selection dialog cancels the dialog
@@ -208,7 +244,7 @@ public class ChoosePuzzleSizeFragmentTest {
             fail("New game button not found");
         }
 
-        //Start custom sized puzzle
+        //Click custom size button
         UiObject customSizedButton = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/custom_size_button").className("android.widget.Button"));
         try {
             customSizedButton.click();
@@ -216,7 +252,7 @@ public class ChoosePuzzleSizeFragmentTest {
             fail("Custom size puzzle button not found");
         }
 
-        //Start custom sized puzzle
+        //Click cancel button in dialog
         UiObject customSizedCancelButton = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/cancel_button").className("android.widget.Button"));
         try {
             customSizedCancelButton.click();
