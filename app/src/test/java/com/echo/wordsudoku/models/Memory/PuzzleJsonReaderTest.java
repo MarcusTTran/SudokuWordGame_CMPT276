@@ -58,7 +58,7 @@ public class PuzzleJsonReaderTest {
         }
 
         // construct puzzle
-        Puzzle puzzle = new Puzzle(wordPairs,puzzleDimension,puzzleLanguage,(dimension*dimension)-2,difficulty);
+        Puzzle puzzle = new Puzzle(wordPairs,puzzleDimension,(dimension*dimension)-2,difficulty);
 
         return puzzle;
     }

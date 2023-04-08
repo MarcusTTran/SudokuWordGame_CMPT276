@@ -25,53 +25,29 @@ public class WordPairTest {
     void getEnglish() {
         String englishWord = "Water";
         WordPair testWordPair = new WordPair(englishWord, "Aqua");
-        assertEquals(englishWord, testWordPair.getEnglish());
+        assertEquals(englishWord, testWordPair.getLang1());
     }
 
     @Test
     void getFrench() {
         String frenchWord = "Aqua";
         WordPair testWordPair = new WordPair("Water", frenchWord);
-        assertEquals(frenchWord, testWordPair.getFrench());
-    }
-
-    @Test
-    void getEnglishOrFrenchEnglish() {
-        String englishWord = "Black";
-        WordPair testWordPair = new WordPair(englishWord, "Noire");
-        assertEquals(englishWord, testWordPair.getEnglishOrFrench(0));
-    }
-
-    @Test
-    void getEnglishOrFrenchFrench() {
-        String frenchWord = "Jaune";
-        WordPair testWordPair = new WordPair("Yellow", frenchWord);
-        assertEquals(frenchWord, testWordPair.getEnglishOrFrench(1));
-        assertEquals("Yellow", testWordPair.getEnglishOrFrench(0));
-    }
-
-    //Test for IllegalArgumentException thrown when requesting translation in non support language
-    @Test
-    void getEnglishOrFrenchException() {
-        IllegalArgumentException thrownException = Assertions.assertThrows(IllegalArgumentException.class, () -> {
-            WordPair testWordPair = new WordPair("Yellow", "Jaune");
-            testWordPair.getEnglishOrFrench(2);
-        });
+        assertEquals(frenchWord, testWordPair.getLang2());
     }
 
     @Test
     void setEnglish() {
         WordPair testWordPair = new WordPair("Black", "Rouge");
         String correctEnglishWord = "Red";
-        testWordPair.setEnglish("Red");
-        assertEquals(correctEnglishWord, testWordPair.getEnglish());
+        testWordPair.setLang1("Red");
+        assertEquals(correctEnglishWord, testWordPair.getLang1());
     }
 
     @Test
     void setFrench() {
         WordPair testWordPair = new WordPair("Red", "Noire");
         String correctFrenchWord = "Rouge";
-        testWordPair.setFrench("Rouge");
-        assertEquals(correctFrenchWord, testWordPair.getFrench());
+        testWordPair.setLang2("Rouge");
+        assertEquals(correctFrenchWord, testWordPair.getLang2());
     }
 }

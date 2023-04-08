@@ -5,7 +5,10 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.fail;
 import com.echo.wordsudoku.models.json.WordPairJsonReader;
+import com.echo.wordsudoku.models.language.BoardLanguage;
 import com.echo.wordsudoku.models.words.WordPair;
+
+import org.json.JSONException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import java.io.ByteArrayInputStream;
@@ -33,15 +36,15 @@ public class WordPairReaderTest {
 
         //give readable value to jsonString
         this.jsonString = "{\"words\":["
-                + "{\"word\":\"eng1\",\"translation\":\"fre1\"},"
-                + "{\"word\":\"eng2\",\"translation\":\"fre2\"},"
-                + "{\"word\":\"eng3\",\"translation\":\"fre3\"},"
-                + "{\"word\":\"eng4\",\"translation\":\"fre4\"},"
-                + "{\"word\":\"eng5\",\"translation\":\"fre5\"},"
-                + "{\"word\":\"eng6\",\"translation\":\"fre6\"},"
-                + "{\"word\":\"eng7\",\"translation\":\"fre7\"},"
-                + "{\"word\":\"eng8\",\"translation\":\"fre8\"},"
-                + "{\"word\":\"eng9\",\"translation\":\"fre9\"}]}";
+                + "{\"word\":\"eng1\",\"french\":\"fre1\",\"chinese\":\"ch1\",\"spanish\":\"sp1\",\"arabic\":\"ar1\"},"
+                + "{\"word\":\"eng2\",\"french\":\"fre2\",\"chinese\":\"ch2\",\"spanish\":\"sp2\",\"arabic\":\"ar2\"},"
+                + "{\"word\":\"eng3\",\"french\":\"fre3\",\"chinese\":\"ch3\",\"spanish\":\"sp3\",\"arabic\":\"ar3\"},"
+                + "{\"word\":\"eng4\",\"french\":\"fre4\",\"chinese\":\"ch4\",\"spanish\":\"sp4\",\"arabic\":\"ar4\"},"
+                + "{\"word\":\"eng5\",\"french\":\"fre5\",\"chinese\":\"ch5\",\"spanish\":\"sp5\",\"arabic\":\"ar5\"},"
+                + "{\"word\":\"eng6\",\"french\":\"fre6\",\"chinese\":\"ch6\",\"spanish\":\"sp6\",\"arabic\":\"ar6\"},"
+                + "{\"word\":\"eng7\",\"french\":\"fre7\",\"chinese\":\"ch7\",\"spanish\":\"sp7\",\"arabic\":\"ar7\"},"
+                + "{\"word\":\"eng8\",\"french\":\"fre8\",\"chinese\":\"ch8\",\"spanish\":\"sp8\",\"arabic\":\"ar8\"},"
+                + "{\"word\":\"eng9\",\"french\":\"fre9\",\"chinese\":\"ch9\",\"spanish\":\"sp9\",\"arabic\":\"ar9\"}]}";
 
         try {
             // set up a sample file
@@ -54,6 +57,8 @@ public class WordPairReaderTest {
             //catch the IOException (should not happen)
         } catch (IOException e) {
             e.printStackTrace();
+        } catch (JSONException e) {
+            throw new RuntimeException(e);
         }
     }
 
@@ -62,7 +67,7 @@ public class WordPairReaderTest {
     @Test
     void testGetRandomWords() {
         int numberOfWords = 7;
-        List<WordPair> wordPairs = this.wordPairJsonReader.getRandomWords(numberOfWords);
+        List<WordPair> wordPairs = this.wordPairJsonReader.getRandomWords(numberOfWords, BoardLanguage.ENGLISH, BoardLanguage.FRENCH);
         assertNotNull(wordPairs);
         assertEquals(numberOfWords, wordPairs.size());
     }
@@ -82,7 +87,7 @@ public class WordPairReaderTest {
         }
 
         int numberOfWords = 2;
-        List<WordPair> wordPairs = this.wordPairJsonReader.getRandomWords(numberOfWords);
+        List<WordPair> wordPairs = this.wordPairJsonReader.getRandomWords(numberOfWords, BoardLanguage.ENGLISH, BoardLanguage.FRENCH);
         assertNotNull(wordPairs);
         assertEquals(numberOfWords, wordPairs.size());
     }

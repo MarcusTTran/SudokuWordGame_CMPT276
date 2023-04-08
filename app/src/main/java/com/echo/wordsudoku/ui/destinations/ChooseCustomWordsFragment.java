@@ -201,7 +201,7 @@ public class ChooseCustomWordsFragment extends Fragment{
                 //Set the PuzzleViewModel to store the WordPair list we made
                 mPuzzleViewModel.setCustomWordPairs(userEnteredWordList);
                 try {
-                    mPuzzleViewModel.newCustomPuzzle(mSettingsViewModel.getPuzzleLanguage().getValue(), mSettingsViewModel.getDifficulty(),mSettingsViewModel.getTextToSpeech());
+                    mPuzzleViewModel.newCustomPuzzle( mSettingsViewModel.getDifficulty(),mSettingsViewModel.getTextToSpeech());
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -284,7 +284,7 @@ public class ChooseCustomWordsFragment extends Fragment{
             //If stored custom words exist and we have still have unloaded words, fill them in
             if (isStoredCustomWords && loadedEntryBox1Counter < CustomWordPairsFromViewModel.size()) {
 //                Log.d(CC_WORDS_DEBUG_KEY, "loadedWordsEntryBox1: " + loadedEntryBox1Counter);
-                someEntryBox.setText(CustomWordPairsFromViewModel.get(loadedEntryBox1Counter).getEnglish());
+                someEntryBox.setText(CustomWordPairsFromViewModel.get(loadedEntryBox1Counter).getLang1());
                 loadedEntryBox1Counter++;
             } else if (!isInitialize) {
                 someEntryBox.setText("");
@@ -311,7 +311,7 @@ public class ChooseCustomWordsFragment extends Fragment{
             //If stored custom words exist and we have still have unloaded words, fill them in
             if (isStoredCustomWords && loadedEntryBox2Counter < CustomWordPairsFromViewModel.size()) {
 //                Log.d(CC_WORDS_DEBUG_KEY, "loadedWordsEntryBox2: " + loadedEntryBox2Counter);
-                someEntryBox.setText(CustomWordPairsFromViewModel.get(loadedEntryBox2Counter).getFrench());
+                someEntryBox.setText(CustomWordPairsFromViewModel.get(loadedEntryBox2Counter).getLang2());
                 loadedEntryBox2Counter++;
             } else if (!isInitialize) {
                 someEntryBox.setText("");

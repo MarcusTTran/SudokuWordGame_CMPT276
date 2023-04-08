@@ -24,6 +24,7 @@ import com.echo.wordsudoku.models.language.BoardLanguage;
 import com.echo.wordsudoku.models.json.PuzzleJsonReader;
 import com.echo.wordsudoku.ui.MainActivity;
 import com.echo.wordsudoku.ui.SettingsViewModel;
+import com.echo.wordsudoku.ui.dialogs.ChoosePuzzleLanguage;
 import com.echo.wordsudoku.ui.puzzleParts.PuzzleViewModel;
 
 public class MainMenuFragment extends Fragment {
@@ -65,6 +66,12 @@ public class MainMenuFragment extends Fragment {
         // if user pressed new game button, then load the choose puzzle mode fragment where they can choose the puzzle mode they wish to play
         mNewGameButton = root.findViewById(R.id.new_game_button);
         mNewGameButton.setOnClickListener(v -> {
+            Integer inputLanguage = mSettingsViewModel.getButtonInputLanguage().getValue();
+            Integer puzzleLanguage = mSettingsViewModel.getPuzzleLanguage().getValue();
+            if (inputLanguage == null || puzzleLanguage == null) {
+                Toast.makeText(getContext(), getString(R.string.error_no_language_selected), Toast.LENGTH_SHORT).show();
+                return;
+            }
             navController.navigate(R.id.choosePuzzleModeFragment);
         });
 
@@ -92,23 +99,20 @@ public class MainMenuFragment extends Fragment {
         mChangeLanguageButton = root.findViewById(R.id.change_language_button);
 
         mSettingsViewModel.getPuzzleLanguage().observe(getViewLifecycleOwner(), language -> {
-            mSettingsPuzzleLanguage = language;
-            String changeLanguageButtonText = null;
-            try {
-                changeLanguageButtonText = "Puzzle Language : " + BoardLanguage.getLanguageName(mSettingsPuzzleLanguage);
-            } catch (IllegalLanguageException e) {
-                throw new RuntimeException(e);
-            }
-            mChangeLanguageButton.setText(changeLanguageButtonText);
+            updateLanguageButtonLabel();
+        });
+        mSettingsViewModel.getButtonInputLanguage().observe(getViewLifecycleOwner(), language -> {
+            updateLanguageButtonLabel();
         });
 
         mChangeLanguageButton.setOnClickListener(v -> {
-            try {
-                mSettingsPuzzleLanguage = BoardLanguage.getOtherLanguage(mSettingsPuzzleLanguage);
-                mSettingsViewModel.setPuzzleLanguage(mSettingsPuzzleLanguage);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+            new ChoosePuzzleLanguage().show(getChildFragmentManager(), ChoosePuzzleLanguage.TAG);
+//            try {
+//                mSettingsPuzzleLanguage = BoardLanguage.getOtherLanguage(mSettingsPuzzleLanguage);
+//                mSettingsViewModel.setPuzzleLanguage(mSettingsPuzzleLanguage);
+//            } catch (Exception e) {
+//                e.printStackTrace();
+//            }
         });
 
         // The settings button
@@ -123,5 +127,19 @@ public class MainMenuFragment extends Fragment {
             navController.navigate(R.id.startCustomWordsAction);
         });
         return root;
+    }
+
+    private void updateLanguageButtonLabel(){
+        String changeLanguageButtonText = getString(R.string.no_languages_set);
+        Integer inputLanguage = mSettingsViewModel.getButtonInputLanguage().getValue(), language = mSettingsViewModel.getPuzzleLanguage().getValue();
+        if(!(language == null || inputLanguage ==null) && language!=inputLanguage){
+            try {
+                changeLanguageButtonText = "( " + BoardLanguage.getLanguageName(language) + " - "+BoardLanguage.getLanguageName(inputLanguage)
+                        +" )";
+            } catch (IllegalLanguageException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        mChangeLanguageButton.setText(changeLanguageButtonText);
     }
 }

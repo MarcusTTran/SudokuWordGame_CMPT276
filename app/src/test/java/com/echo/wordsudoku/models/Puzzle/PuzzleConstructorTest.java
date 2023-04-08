@@ -35,7 +35,7 @@ public class PuzzleConstructorTest extends PuzzleTest{
                 int size = legalPuzzleSizeInt[i];
 
                 // Make puzzle with random difficulty
-                puzzle = new Puzzle(WordPairTest.makeRandomWordPairList(size), size, TestUtils.getRandomIntElement(legalPuzzleLanguage), Puzzle.NO_NUMBER_OF_START_CELLS_USE_DIFFICULTY, legalPuzzleDifficulty[j]);
+                puzzle = new Puzzle(WordPairTest.makeRandomWordPairList(size), size, Puzzle.NO_NUMBER_OF_START_CELLS_USE_DIFFICULTY, legalPuzzleDifficulty[j]);
 
                 assertNotNull(puzzle);
 
@@ -55,7 +55,7 @@ public class PuzzleConstructorTest extends PuzzleTest{
     void checkInitialCellsArrayZero() throws IllegalLanguageException, TooBigNumberException, NegativeNumberException, IllegalWordPairException, IllegalDimensionException {
         int size = TestUtils.getRandomIntElement(legalPuzzleSizeInt);
         // Make puzzle with random difficulty
-        puzzle = new Puzzle(WordPairTest.makeRandomWordPairList(size), size, TestUtils.getRandomIntElement(legalPuzzleLanguage), size*size);
+        puzzle = new Puzzle(WordPairTest.makeRandomWordPairList(size), size, size*size);
         assertTrue(puzzle.getGameResult().getResult());
     }
 
@@ -64,7 +64,7 @@ public class PuzzleConstructorTest extends PuzzleTest{
     @Test
     void makeNewNullWordPairListPuzzle() {
         int size = TestUtils.getRandomIntElement(legalPuzzleSizeInt);
-        assertThrows(IllegalWordPairException.class,()->new Puzzle(null, size , TestUtils.getRandomIntElement(legalPuzzleLanguage), Puzzle.NO_NUMBER_OF_START_CELLS_USE_DIFFICULTY, TestUtils.getRandomIntElement(legalPuzzleDifficulty)));
+        assertThrows(IllegalWordPairException.class,()->new Puzzle(null, size , Puzzle.NO_NUMBER_OF_START_CELLS_USE_DIFFICULTY, TestUtils.getRandomIntElement(legalPuzzleDifficulty)));
     }
 
     @Test
@@ -72,7 +72,7 @@ public class PuzzleConstructorTest extends PuzzleTest{
         int size = TestUtils.getRandomIntElement(legalPuzzleSizeInt);
         List<WordPair> wordPairList = WordPairTest.makeRandomWordPairList(size-1);
         wordPairList.add(wordPairList.get(0));
-        assertThrows(IllegalWordPairException.class,()->new Puzzle(wordPairList, size , TestUtils.getRandomIntElement(legalPuzzleLanguage), Puzzle.NO_NUMBER_OF_START_CELLS_USE_DIFFICULTY, TestUtils.getRandomIntElement(legalPuzzleDifficulty)));
+        assertThrows(IllegalWordPairException.class,()->new Puzzle(wordPairList, size , Puzzle.NO_NUMBER_OF_START_CELLS_USE_DIFFICULTY, TestUtils.getRandomIntElement(legalPuzzleDifficulty)));
     }
 
     // Makes a new puzzle with **too small word pairs**, random size, random language, random number of initial cells and random difficulty
@@ -80,7 +80,7 @@ public class PuzzleConstructorTest extends PuzzleTest{
     @Test
     void makeNewTooSmallWordPairListPuzzle() {
         int size = TestUtils.getRandomIntElement(legalPuzzleSizeInt);
-        assertThrows(IllegalWordPairException.class,()->new Puzzle(WordPairTest.makeRandomWordPairList(size- MathUtils.getRandomNumberBetweenIncluding(1,4)), size, TestUtils.getRandomIntElement(legalPuzzleLanguage), Puzzle.NO_NUMBER_OF_START_CELLS_USE_DIFFICULTY, TestUtils.getRandomIntElement(legalPuzzleDifficulty)));
+        assertThrows(IllegalWordPairException.class,()->new Puzzle(WordPairTest.makeRandomWordPairList(size- MathUtils.getRandomNumberBetweenIncluding(1,4)), size, Puzzle.NO_NUMBER_OF_START_CELLS_USE_DIFFICULTY, TestUtils.getRandomIntElement(legalPuzzleDifficulty)));
     }
 
     /* Broken test
@@ -93,20 +93,12 @@ public class PuzzleConstructorTest extends PuzzleTest{
     }
      */
 
-    // Makes a new puzzle with random word pairs, random size, **illegal language**, random number of initial cells and random difficulty
-    // Should throw IllegalArgumentException
-    @Test
-    void makeNewIllegalLanguagePuzzle() {
-        int language = illegalPuzzleLanguage;
-        int size = TestUtils.getRandomIntElement(legalPuzzleSizeInt);
-        assertThrows(IllegalLanguageException.class,()->new Puzzle(WordPairTest.makeRandomWordPairList(size), size, language, Puzzle.NO_NUMBER_OF_START_CELLS_USE_DIFFICULTY, TestUtils.getRandomIntElement(legalPuzzleDifficulty)));
-    }
 
     @Test
     void makeNewIllegalPuzzleDifficulty() {
         int size = TestUtils.getRandomIntElement(legalPuzzleSizeInt);
         int difficulty = TestUtils.getRandomIntElement(illegalPuzzleDifficulty);
-        assertThrows(IllegalArgumentException.class,()->new Puzzle(WordPairTest.makeRandomWordPairList(size), size, TestUtils.getRandomIntElement(legalPuzzleLanguage), Puzzle.NO_NUMBER_OF_START_CELLS_USE_DIFFICULTY, difficulty));
+        assertThrows(IllegalArgumentException.class,()->new Puzzle(WordPairTest.makeRandomWordPairList(size), size, Puzzle.NO_NUMBER_OF_START_CELLS_USE_DIFFICULTY, difficulty));
     }
 
     // Makes a new puzzle with random word pairs, random size, random language, **illegal number of initial cells**, random difficulty
@@ -116,9 +108,9 @@ public class PuzzleConstructorTest extends PuzzleTest{
     void makeNewIllegalNumberOfInitialCellsPuzzle() {
         int size = TestUtils.getRandomIntElement(legalPuzzleSizeInt);
         int[] numberOfInitialCellsArray = makeNumberOfStartCellsArray(size,ILLEGAL_NUMBER_OF_START_CELLS);
-        assertThrows(TooBigNumberException.class,()->new Puzzle(WordPairTest.makeRandomWordPairList(size), size, TestUtils.getRandomIntElement(legalPuzzleLanguage), numberOfInitialCellsArray[0]));
-        assertThrows(NegativeNumberException.class,()->new Puzzle(WordPairTest.makeRandomWordPairList(size), size, TestUtils.getRandomIntElement(legalPuzzleLanguage), numberOfInitialCellsArray[1]));
-        assertThrows(NegativeNumberException.class,()->new Puzzle(WordPairTest.makeRandomWordPairList(size), size, TestUtils.getRandomIntElement(legalPuzzleLanguage), numberOfInitialCellsArray[2]));
+        assertThrows(TooBigNumberException.class,()->new Puzzle(WordPairTest.makeRandomWordPairList(size), size, numberOfInitialCellsArray[0]));
+        assertThrows(NegativeNumberException.class,()->new Puzzle(WordPairTest.makeRandomWordPairList(size), size,numberOfInitialCellsArray[1]));
+        assertThrows(NegativeNumberException.class,()->new Puzzle(WordPairTest.makeRandomWordPairList(size), size, numberOfInitialCellsArray[2]));
     }
 
 
@@ -127,11 +119,11 @@ public class PuzzleConstructorTest extends PuzzleTest{
     void testCopyConstructorMakesDeepCopy() throws IllegalLanguageException, TooBigNumberException, NegativeNumberException, IllegalWordPairException, IllegalDimensionException {
         int size = TestUtils.getRandomIntElement(legalPuzzleSizeInt);
         List<WordPair> wordPairList = WordPairTest.makeRandomWordPairList(size);
-        Puzzle puzzle = new Puzzle(wordPairList, size, TestUtils.getRandomIntElement(legalPuzzleLanguage), Puzzle.NO_NUMBER_OF_START_CELLS_USE_DIFFICULTY, TestUtils.getRandomIntElement(legalPuzzleDifficulty));
+        Puzzle puzzle = new Puzzle(wordPairList, size, Puzzle.NO_NUMBER_OF_START_CELLS_USE_DIFFICULTY, TestUtils.getRandomIntElement(legalPuzzleDifficulty));
         Puzzle puzzleCopy = new Puzzle(puzzle);
         puzzle.unlockCells(); // Make the puzzle editable
         Dimension cellToInsertIn = DimensionTest.makeRandomDimension(size);
-        puzzle.setCell(cellToInsertIn, TestUtils.getRandomElements(wordPairList,1).get(0).getEnglish());
+        puzzle.setCell(cellToInsertIn, TestUtils.getRandomElements(wordPairList,1).get(0).getLang1());
         assertNotEquals(puzzle.getUserBoard().getCellFromBigArray(cellToInsertIn), puzzleCopy.getUserBoard().getCellFromBigArray(cellToInsertIn));
     }
 
@@ -141,16 +133,16 @@ public class PuzzleConstructorTest extends PuzzleTest{
     void checkBareBonesConstructorMakesValidPuzzle() throws IllegalLanguageException, TooBigNumberException, NegativeNumberException, IllegalWordPairException, IllegalDimensionException {
         int size = TestUtils.getRandomIntElement(legalPuzzleSizeInt);
         List<WordPair> wordPairList = WordPairTest.makeRandomWordPairList(size);
-        Puzzle puzzle = new Puzzle(wordPairList, size, TestUtils.getRandomIntElement(legalPuzzleLanguage), Puzzle.NO_NUMBER_OF_START_CELLS_USE_DIFFICULTY, TestUtils.getRandomIntElement(legalPuzzleDifficulty));
-        Puzzle puzzleCopy = new Puzzle(puzzle.getUserBoard(),puzzle.getSolutionBoard(),puzzle.getWordPairs(),puzzle.getPuzzleDimensions(),puzzle.getLanguage(),puzzle.getMistakes(),puzzle.getTimer());
+        Puzzle puzzle = new Puzzle(wordPairList, size, Puzzle.NO_NUMBER_OF_START_CELLS_USE_DIFFICULTY, TestUtils.getRandomIntElement(legalPuzzleDifficulty));
+        Puzzle puzzleCopy = new Puzzle(puzzle.getUserBoard(),puzzle.getSolutionBoard(),puzzle.getWordPairs(),puzzle.getPuzzleDimensions(),puzzle.getMistakes(),puzzle.getTimer());
         assertTrue(puzzle.equals(puzzleCopy));
         Dimension cellToInsertIn = DimensionTest.makeRandomDimension(size);
         puzzle.unlockCells(); // Make the puzzle editable
-        puzzle.setCell(cellToInsertIn, TestUtils.getRandomElements(wordPairList,1).get(0).getEnglish());
+        puzzle.setCell(cellToInsertIn, TestUtils.getRandomElements(wordPairList,1).get(0).getLang1());
         assertNotEquals(puzzle.getUserBoard().getCellFromBigArray(cellToInsertIn), puzzleCopy.getUserBoard().getCellFromBigArray(cellToInsertIn));
 
         // Try to make a puzzle with invalid dimension and everything else valid
-        assertThrows(IllegalDimensionException.class,()->new Puzzle(puzzle.getUserBoard(),puzzle.getSolutionBoard(),puzzle.getWordPairs(),illegalPuzzleSize[0],puzzle.getLanguage(),puzzle.getMistakes(),puzzle.getTimer()));
+        assertThrows(IllegalDimensionException.class,()->new Puzzle(puzzle.getUserBoard(),puzzle.getSolutionBoard(),puzzle.getWordPairs(),illegalPuzzleSize[0],puzzle.getMistakes(),puzzle.getTimer()));
     }
 
 

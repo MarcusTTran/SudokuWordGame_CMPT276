@@ -154,7 +154,7 @@ public class PuzzleUtilityTest extends PuzzleTest{
         for (Integer i : rowsToInvalidate) {
             WordPair wordPair = puzzle.getWordPairs().get(i);
             for (int j = 0; j < size; j++) {
-                puzzle.setCell(i,j,wordPair.getEnglish());
+                puzzle.setCell(i,j,wordPair.getLang1());
             }
         }
     }
@@ -166,7 +166,7 @@ public class PuzzleUtilityTest extends PuzzleTest{
         for (Integer i : columnsToInvalidate) {
             WordPair wordPair = puzzle.getWordPairs().get(i);
             for (int j = 0; j < size; j++) {
-                puzzle.setCell(j,i,wordPair.getEnglish());
+                puzzle.setCell(j,i,wordPair.getLang1());
             }
         }
     }
@@ -180,7 +180,7 @@ public class PuzzleUtilityTest extends PuzzleTest{
             for (int j = 0; j < size; j++) {
                 Dimension boxesDimension= puzzle.getPuzzleDimensions().getBoxesInPuzzleDimension();
                 Dimension cellsDimension = puzzle.getPuzzleDimensions().getEachBoxDimension();
-                puzzle.setCell((i/boxesDimension.getColumns())*cellsDimension.getRows()+j/cellsDimension.getColumns(),i/boxesDimension.getRows()+j%cellsDimension.getColumns(),wordPair.getEnglish());
+                puzzle.setCell((i/boxesDimension.getColumns())*cellsDimension.getRows()+j/cellsDimension.getColumns(),i/boxesDimension.getRows()+j%cellsDimension.getColumns(),wordPair.getLang1());
             }
         }
     }
@@ -198,7 +198,7 @@ public class PuzzleUtilityTest extends PuzzleTest{
         else
             column = j;
         WordPair wordPair = puzzle.getUserBoard().getCellFromBigArray(row,(column+1)%size).getContent();
-        puzzle.setCell(row,column,wordPair.getEnglish());
+        puzzle.setCell(row,column,wordPair.getLang1());
     }
 
     @Test

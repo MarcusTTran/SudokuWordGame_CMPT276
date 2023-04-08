@@ -90,19 +90,6 @@ public class PuzzleSettersTest extends PuzzleTest{
     */
 
     @Test
-    void setLanguageInvalidLanguage() {
-        assertThrows(IllegalLanguageException.class, () -> puzzle.setLanguage(illegalPuzzleLanguage));
-    }
-
-    @Test
-    void setLanguageValidLanguage() throws IllegalLanguageException {
-        for (int i : legalPuzzleLanguage) {
-            puzzle.setLanguage(i);
-            assertEquals(puzzle.getLanguage(),i);
-        }
-    }
-
-    @Test
     void setTimerNegativeTime() {
         assertThrows(NegativeNumberException.class, () -> puzzle.setTimer(-1));
     }

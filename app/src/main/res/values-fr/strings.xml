@@ -25,6 +25,7 @@
     <string name="puzzle_dictionary_btn">Dictionnaire</string>
     <string name="save_puzzle_btn">Sauvegarder</string>
     <string name="reset_puzzle_btn">Remettre</string>
+    <string name="clear_puzzle_btn">Effacer</string>
 
     <!-- Preference keys -->
     <string name="preference_file_key">com.echo.wordsudoku.gameOptions</string>
@@ -129,8 +130,8 @@ tous vos mots en vedette. Mais rappelez-vous, vous ne pouvez accéder à cette t
     <string name="no_button">Non</string>
 
     <!-- Choose Custom Words -->
-    <string name="english_custom_words">Mots anglais</string>
-    <string name="french_custom_words">Mots français</string>
+    <string name="english_custom_words">Mots de puzzle</string>
+    <string name="french_custom_words">Mots de bouton</string>
     <string name="choose_custom_puzzle_size_custom">Sélectionner la taille du puzzle</string>
     <string name="button_clear_custom_words">Clair</string>
     <string name="error_custom_words_msg">Veuillez remplir toutes les cases de saisie et vous assurer que les mots ne contiennent que des caractères !</string>
@@ -142,6 +143,14 @@ tous vos mots en vedette. Mais rappelez-vous, vous ne pouvez accéder à cette t
     <!-- Choose Custom Words SharedPreference Keys-->
     <string name="custom_words_english_save_key">com.echo.wordsudoku.puzzleCustomWordsEnglishKey</string>
     <string name="custom_words_french_save_key">com.echo.wordsudoku.puzzleCustomWordsFrenchKey</string>
+    <string name="choose_puzzle_language_title">Choisissez le langage du puzzle</string>
+    <string name="choose_input_language_title">Choisir le bouton Langue d’entrée</string>
+    <string name="set_languages_dialog_button">Changer de langue</string>
+    <string name="error_two_languages_same">Veuillez sélectionner deux langues différentes</string>
+    <string name="no_languages_set">Non défini. Cliquez pour changer</string>
+    <string name="puzzle_language_preference_key">com.echo.wordsudoku.puzzleLanguage</string>
+    <string name="input_language_preference_key">com.echo.wordsudoku.inputLanguage</string>
+    <string name="error_no_language_selected">S’il vous plaît définir la langue du puzzle</string>
 
 
 </resources>

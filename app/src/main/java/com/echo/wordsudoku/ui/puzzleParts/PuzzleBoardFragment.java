@@ -6,13 +6,14 @@
 package com.echo.wordsudoku.ui.puzzleParts;
 
 import static com.echo.wordsudoku.models.language.BoardLanguage.ENGLISH;
+import static com.echo.wordsudoku.models.language.BoardLanguage.FRENCH;
+import static com.echo.wordsudoku.models.language.BoardLanguage.defaultLanguage;
 
 import android.os.Bundle;
 import android.speech.tts.TextToSpeech;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -23,6 +24,7 @@ import com.echo.wordsudoku.R;
 import com.echo.wordsudoku.exceptions.IllegalLanguageException;
 import com.echo.wordsudoku.models.dimension.Dimension;
 import com.echo.wordsudoku.models.dimension.PuzzleDimensions;
+import com.echo.wordsudoku.models.language.BoardLanguage;
 import com.echo.wordsudoku.models.sudoku.Cell;
 import com.echo.wordsudoku.ui.SettingsViewModel;
 import com.echo.wordsudoku.views.OnCellTouchListener;
@@ -37,6 +39,7 @@ public class PuzzleBoardFragment extends Fragment {
 
     private SudokuBoard mSudokuBoard;
     private PuzzleViewModel mPuzzleViewModel;
+    private SettingsViewModel mSettingsViewModel;
 
     private final String LOADING_TEXT = "loading";
 
@@ -48,17 +51,32 @@ public class PuzzleBoardFragment extends Fragment {
         mSudokuBoard = root.findViewById(R.id.sudoku_board);
         mSudokuBoard.setOnCellTouchListener((OnCellTouchListener)getActivity());
         mPuzzleViewModel = new ViewModelProvider(requireActivity()).get(PuzzleViewModel.class);
+        mSettingsViewModel = new ViewModelProvider(requireActivity()).get(SettingsViewModel.class);
+
         // Going to fill the puzzle with loading while the puzzle is being loaded
         loadingScreen();
 
         // This is used for the listening comprehension mode
         toSpeech = new TextToSpeech(this.getContext(), i -> {
             if (i != TextToSpeech.ERROR) {
-                try {
-                    Locale language = (mPuzzleViewModel.getPuzzleInputLanguage() == ENGLISH) ? Locale.CANADA_FRENCH : Locale.ENGLISH;
-                    toSpeech.setLanguage(language);
-                } catch (IllegalLanguageException e) {
-                    throw new RuntimeException(e);
+                switch (mSettingsViewModel.getPuzzleLanguage().getValue()) {
+                    case BoardLanguage.ENGLISH:
+                        toSpeech.setLanguage(Locale.ENGLISH);
+                        break;
+                    case FRENCH:
+                        toSpeech.setLanguage(Locale.CANADA_FRENCH);
+                        break;
+                    case BoardLanguage.SPANISH:
+                        toSpeech.setLanguage(new Locale("spa", "ESP"));
+                        break;
+                    case BoardLanguage.CHINESE:
+                        toSpeech.setLanguage(Locale.CHINA);
+                        break;
+                    case BoardLanguage.ARABIC:
+                        toSpeech.setLanguage(new Locale("ara", "EGY"));
+                        break;
+                    default:
+                        toSpeech.setLanguage(Locale.ENGLISH);
                 }
             }
         });
@@ -125,8 +143,7 @@ public class PuzzleBoardFragment extends Fragment {
         if(currentCell.isEmpty()) {
             return;
         }
-        int languageToSpeak = mPuzzleViewModel.getPuzzle().getLanguage();
-        String wordToSpeak = currentCell.getContent().getEnglishOrFrench(languageToSpeak);
+        String wordToSpeak = currentCell.getContent().getLang1();
         toSpeech.speak(wordToSpeak, TextToSpeech.QUEUE_FLUSH, null, "");
     }
 }

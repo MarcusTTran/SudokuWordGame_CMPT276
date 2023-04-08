@@ -27,6 +27,7 @@ package com.echo.wordsudoku.models.language;
 *  */
 
 import com.echo.wordsudoku.exceptions.IllegalLanguageException;
+import com.echo.wordsudoku.models.words.WordPair;
 
 public class BoardLanguage {
     // The language names
@@ -34,20 +35,9 @@ public class BoardLanguage {
     public static final int ENGLISH = 0;
     public static final int FRENCH = 1;
 
-    // @utility method
-    // Returns the other language name based on the given language name
-    // @param language: the language name
-    // @return the other language name
-    // @throws IllegalArgumentException if the given language name is invalid
-    public static int getOtherLanguage(int language) throws IllegalLanguageException {
-        if (language == ENGLISH) {
-            return FRENCH;
-        } else if (language == FRENCH) {
-            return ENGLISH;
-        } else {
-            throw new IllegalLanguageException();
-        }
-    }
+    public static final int SPANISH = 2;
+    public static final int CHINESE = 3;
+    public static final int ARABIC = 4;
 
     // @utility method
     // Returns the language name based on the given language name
@@ -55,12 +45,19 @@ public class BoardLanguage {
     // @return the language name
     // @throws IllegalArgumentException if the given language name is invalid
     public static String getLanguageName(int language) throws IllegalLanguageException {
-        if (language == ENGLISH) {
-            return "English";
-        } else if (language == FRENCH) {
-            return "French";
-        } else {
-            throw new IllegalLanguageException();
+        switch (language) {
+            case ENGLISH:
+                return "English";
+            case FRENCH:
+                return "French";
+            case SPANISH:
+                return "Spanish";
+            case CHINESE:
+                return "Chinese";
+            case ARABIC:
+                return "Arabic";
+            default:
+                throw new IllegalLanguageException();
         }
     }
 
@@ -69,7 +66,7 @@ public class BoardLanguage {
     // @param language: the language
     // @return whether the given language name is valid or not
     public static boolean isValidLanguage(int language) {
-        return language == ENGLISH || language == FRENCH;
+        return language == ENGLISH || language == FRENCH || language == SPANISH || language == CHINESE || language == ARABIC;
     }
 
 
@@ -77,7 +74,7 @@ public class BoardLanguage {
     // Returns the default language name (which is ENGLISH)
     // @return the default language name
     public static int defaultLanguage() {
-        return ENGLISH;
+        return WordPair.LANG1;
     }
 
 

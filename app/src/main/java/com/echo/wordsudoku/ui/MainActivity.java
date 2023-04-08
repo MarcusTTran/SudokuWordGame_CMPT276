@@ -14,7 +14,6 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
-import android.widget.AdapterView;
 
 import com.echo.wordsudoku.R;
 import com.echo.wordsudoku.exceptions.IllegalDimensionException;
@@ -45,10 +44,7 @@ import java.io.InputStream;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashSet;
-import java.util.LinkedHashSet;
 import java.util.List;
-import java.util.Set;
 
 public class MainActivity extends AppCompatActivity implements SaveGameDialog.SaveGameDialogListener, ChoosePuzzleSizeFragment.OnPuzzleSizeSelectedListener, OnCellTouchListener {
 
@@ -80,6 +76,8 @@ public class MainActivity extends AppCompatActivity implements SaveGameDialog.Sa
     private File mPuzzleJsonFile;
 
     private String[][] latestSavedPuzzle;
+
+    Puzzle latestLoadedPuzzle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -144,6 +142,8 @@ public class MainActivity extends AppCompatActivity implements SaveGameDialog.Sa
                 mPuzzleViewModel.setWordPairReader(new WordPairJsonReader(inputStreamToString(jsonFile)));
             } catch (IOException e) {
                 fatalErrorDialog(getString(R.string.error_load_wordpair_database));
+            } catch (JSONException e) {
+                throw new RuntimeException(e);
             }
         }).start();
     }
@@ -159,6 +159,9 @@ public class MainActivity extends AppCompatActivity implements SaveGameDialog.Sa
                 new SaveGameDialog().show(getSupportFragmentManager(), SaveGameDialog.TAG);
             } else {
                 mainMenu();
+                if (!mPuzzleViewModel.getIsNewGame()) {
+                    saveTimer();
+                }
             }
             return true;
         } else {
@@ -201,8 +204,8 @@ public class MainActivity extends AppCompatActivity implements SaveGameDialog.Sa
             String customWordsEnglish= "";
             String customWordsFrench = "";
             for (int i = 0; i < mPuzzleViewModel.getCustomWordPairs().size(); i++) {
-                customWordsEnglish = customWordsEnglish.concat(mPuzzleViewModel.getCustomWordPairs().get(i).getEnglish() + ";");
-                customWordsFrench = customWordsFrench.concat(mPuzzleViewModel.getCustomWordPairs().get(i).getFrench() + ";");
+                customWordsEnglish = customWordsEnglish.concat(mPuzzleViewModel.getCustomWordPairs().get(i).getLang1() + ";");
+                customWordsFrench = customWordsFrench.concat(mPuzzleViewModel.getCustomWordPairs().get(i).getLang2() + ";");
             }
 
 //            Set<String> englishSet = new LinkedHashSet<>(customWordsEnglish);
@@ -231,7 +234,7 @@ public class MainActivity extends AppCompatActivity implements SaveGameDialog.Sa
         mSettingsViewModel.setDifficulty(difficulty);
 
         boolean timer = mPreferences.getBoolean(getString(R.string.puzzle_timer_preference_key), false);
-         mSettingsViewModel.setTimer(timer);
+        mSettingsViewModel.setTimer(timer);
 
         boolean autoSave = mPreferences.getBoolean(getString(R.string.puzzle_autosave_preference_key), false);
         mSettingsViewModel.setAutoSave(autoSave);
@@ -239,6 +242,11 @@ public class MainActivity extends AppCompatActivity implements SaveGameDialog.Sa
         boolean textToSpeech = mPreferences.getBoolean(getString(R.string.text_to_speech_preference_key), false);
         mSettingsViewModel.setTextToSpeech(textToSpeech);
 
+        int language = mPreferences.getInt(getString(R.string.puzzle_language_key), BoardLanguage.ENGLISH);
+        mSettingsViewModel.setPuzzleLanguage(language);
+
+        int buttonLanguage = mPreferences.getInt(getString(R.string.input_language_preference_key), BoardLanguage.FRENCH);
+        mSettingsViewModel.setButtonInputLanguage(buttonLanguage);
     }
 
 
@@ -258,6 +266,8 @@ public class MainActivity extends AppCompatActivity implements SaveGameDialog.Sa
         editor.putBoolean(getString(R.string.puzzle_timer_preference_key), mSettingsPuzzleTimer);
         editor.putBoolean(getString(R.string.puzzle_autosave_preference_key), mSettingsViewModel.isAutoSave());
         editor.putBoolean(getString(R.string.text_to_speech_preference_key), mTextToSpeechOn);
+        editor.putInt(getString(R.string.puzzle_language_key), mSettingsPuzzleLanguage);
+        editor.putInt(getString(R.string.input_language_preference_key), mSettingsViewModel.getButtonInputLanguage().getValue());
         editor.apply();
     }
 
@@ -272,7 +282,9 @@ public class MainActivity extends AppCompatActivity implements SaveGameDialog.Sa
         if(mSettingsViewModel.isAutoSave())
             savePuzzle();
 
-
+        if (!mPuzzleViewModel.getIsNewGame()) {
+            saveTimer();
+        }
         saveCustomWordsPairs();
 
     }
@@ -307,13 +319,38 @@ public class MainActivity extends AppCompatActivity implements SaveGameDialog.Sa
     @Override
     public void onSaveDialogNo() {
         mainMenu();
+        if (!mPuzzleViewModel.getIsNewGame()) {
+            saveTimer();
+        }
+    }
+
+    public void saveTimer() {
+        int timer = mPuzzleViewModel.getTimer().getValue();
+        if(!isGameSaved())
+            updateViewModelWithLoadedPuzzle(false);
+        try {
+            mPuzzleViewModel.setTimer(timer);
+        } catch (NegativeNumberException e) {
+            throw new RuntimeException(e);
+        }
+        savePuzzle();
+    }
+
+    public void updateViewModelWithLoadedPuzzle(boolean updateTimer) {
+        if (latestLoadedPuzzle != null) {
+            boolean textToSpeechOn = mSettingsViewModel.getTextToSpeech();
+            mPuzzleViewModel.loadPuzzle(latestLoadedPuzzle, textToSpeechOn,updateTimer);
+            if (textToSpeechOn)
+                latestLoadedPuzzle.setTextToSpeechOn(true);
+            latestSavedPuzzle = latestLoadedPuzzle.toStringArray();
+        }
     }
 
     // When the user picks a puzzle size, create a new puzzle with the selected size and go to the PuzzleFragment so the user can play the game
     @Override
     public void onPuzzleSizeSelected(int size) {
         try {
-            mPuzzleViewModel.newPuzzle(size, mSettingsViewModel.getPuzzleLanguage().getValue(),mSettingsViewModel.getDifficulty(),mSettingsViewModel.getTextToSpeech());
+            mPuzzleViewModel.newPuzzle(size, mSettingsViewModel.getPuzzleLanguage().getValue(),mSettingsViewModel.getButtonInputLanguage().getValue(),mSettingsViewModel.getDifficulty(),mSettingsViewModel.getTextToSpeech());
         } catch (JSONException e) {
             throw new RuntimeException(e);
         } catch (IllegalLanguageException e) {
@@ -335,17 +372,11 @@ public class MainActivity extends AppCompatActivity implements SaveGameDialog.Sa
         new Thread(() -> {
             try{
             // Load the puzzle from the file and update the class members
-            Puzzle puzzle;
+
             PuzzleJsonReader puzzleJsonReader = new PuzzleJsonReader(inputStreamToString(new FileInputStream(mPuzzleJsonFile)));
-            puzzle = puzzleJsonReader.readPuzzle();
+            latestLoadedPuzzle = puzzleJsonReader.readPuzzle();
             // Update the PuzzleViewModel
-                if (puzzle != null) {
-                    boolean textToSpeechOn = mSettingsViewModel.getTextToSpeech();
-                    mPuzzleViewModel.loadPuzzle(puzzle, textToSpeechOn);
-                    if (textToSpeechOn)
-                        puzzle.setTextToSpeechOn(true);
-                    latestSavedPuzzle = puzzle.toStringArray();
-                }
+            updateViewModelWithLoadedPuzzle(true);
             } catch (IOException e) {
                 // run from main thread
                 runOnUiThread(() -> {
@@ -357,6 +388,12 @@ public class MainActivity extends AppCompatActivity implements SaveGameDialog.Sa
                 });
             }
         }).start();
+    }
+
+    public void deleteSavedPuzzle() {
+        if (mPuzzleJsonFile.exists()) {
+            mPuzzleJsonFile.delete();
+        }
     }
 
     // A helper method to display a fatal error dialog
