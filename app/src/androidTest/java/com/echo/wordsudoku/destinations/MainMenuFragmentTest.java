@@ -75,7 +75,7 @@ public class MainMenuFragmentTest {
     //Test that all options buttons are correctly displayed on the main menu
 //    @Ignore("Working test")
     @Test
-    public void testAllOptionsButtonsDisplayedMainMenu() {
+    public void testMainMenuDisplays() {
         UiObject newGameButton = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/new_game_button"));
         if (!newGameButton.exists()) {
             fail("New game button does not appear");
@@ -111,7 +111,7 @@ public class MainMenuFragmentTest {
     //Test that all main menu buttons are correctly displayed in a horizontal orientation
 //    @Ignore("Working test")
     @Test
-    public void testAllButtonsDisplayedMainMenuHorizontal() {
+    public void testMainMenuDisplaysHorizontal() {
         try {
             ourDevice.setOrientationLeft();
         } catch (android.os.RemoteException e) {
@@ -184,7 +184,7 @@ public class MainMenuFragmentTest {
     //Test that Clicking the Choose custom words button takes us to the Choose custom words fragment
 //    @Ignore("Working test")
     @Test
-    public void testChooseCustomWordsButtonNavigation() {
+    public void testMainMenuChooseCustomWordsButtonNavigation() {
         UiObject customWordsButton = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/custom_words_button").className("android.widget.Button"));
         try {
             customWordsButton.click();
@@ -201,7 +201,7 @@ public class MainMenuFragmentTest {
     //Test that clicking the new game button takes you to the Choose puzzle mode fragment
     //    @Ignore("Working test")
     @Test
-    public void testNewGameButtonNavigation() {
+    public void testMainMenuNewGameButtonNavigation() {
         //Start new game
         UiObject newGameButton = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/new_game_button").className("android.widget.Button"));
         try {
@@ -240,7 +240,7 @@ public class MainMenuFragmentTest {
     //language it has been set to
 //    @Ignore("Working test")
     @Test
-    public void testPuzzleLanguageButtonUpdate() {
+    public void testMainMenuPuzzleLanguageButtonUpdate() {
         UiObject puzzleLanguageButton = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/change_language_button"));
         String s = "";
         try {

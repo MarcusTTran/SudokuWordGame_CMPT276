@@ -1,5 +1,6 @@
 package com.echo.wordsudoku.destinations;
 
+import static android.os.SystemClock.sleep;
 import static androidx.test.platform.app.InstrumentationRegistry.getInstrumentation;
 
 import android.content.Context;
@@ -21,6 +22,8 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import static org.junit.Assert.*;
+
+import java.util.Set;
 
 /**
  * Instrumented test, which will execute on an Android device.
@@ -103,6 +106,7 @@ public class SettingsFragmentTest {
                 if (!timerDisplay.exists()) {
                     fail("Timer display did not correctly update");
                 }
+                switchWidget.click();
             } else {
                 UiObject timerDisplay = ourDevice.findObject(new UiSelector().textContains("Timer is off"));
                 if (!timerDisplay.exists()) {
@@ -184,7 +188,7 @@ public class SettingsFragmentTest {
     //Test that the difficulty Text correctly displays difficulty selected in Settings page on the
     // Puzzle page
     @Test
-    public void testDifficultyButtonDisplay() {
+    public void testSetDifficultyDisplaysOnPuzzleFragment() {
         UiObject settingsButton = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/settings_button"));
         try {
             settingsButton.click();
@@ -246,7 +250,211 @@ public class SettingsFragmentTest {
     }
 
 
+    //Test that clicking the auto save button in the settings correctly updates the subtext below Auto Save
+    // header
+//    @Ignore("Working test")
+    @Test
+    public void testSettingsAutoSaveDisplay() {
+        UiObject settingsButton = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/settings_button"));
+        try {
+            settingsButton.click();
+        } catch (UiObjectNotFoundException e) {
+            fail("Settings Button not found");
+        }
 
+        try {
+            UiObject settingsView = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/recycler_view").className("androidx.recyclerview.widget.RecyclerView"));
+            UiObject autoSave = settingsView.getChild(new UiSelector().index(7));
+            UiObject switchCase = autoSave.getChild(new UiSelector().instance(1));
+            UiObject autoSaveSwitch = switchCase.getChild(new UiSelector().instance(0));
+
+            Log.d(INSTRUTEST, Boolean.toString(autoSaveSwitch.isChecked()));
+
+            if (autoSaveSwitch.isChecked()) {
+                autoSaveSwitch.click();
+                UiObject autoSaveSwitchOff = ourDevice.findObject(new UiSelector().textContains("Auto Save is off").resourceId("android:id/summary"));
+                if (!autoSaveSwitchOff.exists()) {
+                    fail("Switch did not update display to off");
+                }
+            } else {
+                autoSaveSwitch.click();
+                UiObject autoSaveSwitchOn = ourDevice.findObject(new UiSelector().textContains("Auto Save is on").resourceId("android:id/summary"));
+                if (!autoSaveSwitchOn.exists()) {
+                    fail("Switch did not update display to on");
+                }
+                autoSaveSwitch.click();
+            }
+
+
+        } catch (UiObjectNotFoundException e) {
+            fail("Settings fragment was not correctly displayed");
+        }
+
+        ourDevice.pressBack();
+        ourDevice.pressBack();
+
+
+    }
+
+    //Test that clicking the text to speech switch correctly updates the display below text to speech
+    // header
+//    @Ignore("Working test")
+    @Test
+    public void testSettingsTextToSpeechDisplay() {
+        UiObject settingsButton = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/settings_button"));
+        try {
+            settingsButton.click();
+        } catch (UiObjectNotFoundException e) {
+            fail("Settings Button not found");
+        }
+
+        try {
+            UiObject settingsView = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/recycler_view").className("androidx.recyclerview.widget.RecyclerView"));
+            UiObject ttsOption = settingsView.getChild(new UiSelector().index(9));
+            UiObject switchCase = ttsOption.getChild(new UiSelector().instance(1));
+            UiObject ttsSwitch = switchCase.getChild(new UiSelector().instance(0));
+
+            Log.d(INSTRUTEST, Boolean.toString(ttsSwitch.isChecked()));
+
+            if (ttsSwitch.isChecked()) {
+                ttsSwitch.click();
+                UiObject ttsSwitchOff = ourDevice.findObject(new UiSelector().textContains("Text to Speech is off").resourceId("android:id/summary"));
+                if (!ttsSwitchOff.exists()) {
+                    fail("Switch did not update display to off");
+                }
+            } else {
+                ttsSwitch.click();
+                UiObject ttsSwitchOn = ourDevice.findObject(new UiSelector().textContains("Text to Speech is on").resourceId("android:id/summary"));
+                if (!ttsSwitchOn.exists()) {
+                    fail("Switch did not update display to on");
+                }
+                ttsSwitch.click();
+            }
+
+
+        } catch (UiObjectNotFoundException e) {
+            fail("Settings fragment was not correctly displayed");
+        }
+
+        ourDevice.pressBack();
+        ourDevice.pressBack();
+
+
+    }
+
+
+    //Test that clicking the puzzle difficulty displays a puzzle difficulty dialog
+    // header
+//    @Ignore("Working test")
+    @Test
+    public void testSettingsDifficultyDialogDisplay() {
+        UiObject settingsButton = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/settings_button"));
+        try {
+            settingsButton.click();
+        } catch (UiObjectNotFoundException e) {
+            fail("Settings Button not found");
+        }
+
+        try {
+            UiObject settingsView = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/recycler_view").className("androidx.recyclerview.widget.RecyclerView"));
+            UiObject difficultyButton = settingsView.getChild(new UiSelector().index(3));
+            try {
+                difficultyButton.click();
+
+            } catch (UiObjectNotFoundException e) {
+                fail("Difficulty button was not display");
+            }
+
+            UiObject difficultyDialog = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/parentPanel"));
+            if (!difficultyDialog.exists()) {
+                fail("Select Puzzle Difficulty Dialog did not display");
+            }
+
+        } catch (UiObjectNotFoundException e) {
+            fail("Settings fragment was not correctly displayed");
+        }
+
+        ourDevice.pressBack();
+        ourDevice.pressBack();
+
+
+    }
+
+
+    //Test that clicking the puzzle difficulty displays a puzzle difficulty dialog
+    // header
+//    @Ignore("Working test")
+    @Test
+    public void testSettingsDifficultyButtonDisplay() {
+        UiObject settingsButton = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/settings_button"));
+        try {
+            settingsButton.click();
+        } catch (UiObjectNotFoundException e) {
+            fail("Settings Button not found");
+        }
+
+        String difficulty = "";
+
+        try {
+            UiObject settingsView = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/recycler_view").className("androidx.recyclerview.widget.RecyclerView"));
+            UiObject difficultyButton = settingsView.getChild(new UiSelector().index(3));
+            try {
+                difficultyButton.click();
+
+            } catch (UiObjectNotFoundException e) {
+                fail("Difficulty button was not display");
+            }
+
+            UiObject difficultyOption1 = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/select_dialog_listview"));
+            try {
+                difficulty = difficultyOption1.getChild(new UiSelector().index(5)).getText();
+                difficultyOption1.getChild(new UiSelector().index(5)).click();
+            } catch (UiObjectNotFoundException e) {
+                fail("Difficulty option was not found");
+            }
+
+
+
+        } catch (UiObjectNotFoundException e) {
+            fail("Settings fragment was not correctly displayed");
+        }
+
+        UiObject difficultyOption1 = ourDevice.findObject(new UiSelector().textContains(difficulty));
+        if (!difficultyOption1.exists()) {
+            fail("Difficulty display was not updated");
+        }
+
+
+
+        try {
+            UiObject settingsView = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/recycler_view").className("androidx.recyclerview.widget.RecyclerView"));
+            UiObject difficultyButton = settingsView.getChild(new UiSelector().index(3));
+            try {
+                difficultyButton.click();
+
+            } catch (UiObjectNotFoundException e) {
+                fail("Difficulty button was not display");
+            }
+
+            UiObject difficultyOption2 = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/select_dialog_listview"));
+            try {
+                difficultyOption2.getChild(new UiSelector().index(0)).click();
+            } catch (UiObjectNotFoundException e) {
+                fail("Difficulty option was not found");
+            }
+
+
+
+        } catch (UiObjectNotFoundException e) {
+            fail("Settings fragment was not correctly displayed");
+        }
+
+
+        ourDevice.pressBack();
+        ourDevice.pressBack();
+
+
+    }
 
 
 

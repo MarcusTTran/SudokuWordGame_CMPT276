@@ -122,10 +122,10 @@ public class PuzzleFragmentTest {
     }
 
 
-    //Test that the puzzle page displays all necessary buttons and TextViews to the user
+    //Test that the puzzle page displays all necessary buttons and TextViews to the user horizontally
 //    @Ignore("Working test")
     @Test
-    public void testPuzzlePageDisplayHorizontalAllPuzzleSizes() {
+    public void testPuzzleFragmentDisplaysHorizontalAllPuzzleSizes() {
         try {
             ourDevice.setOrientationLeft();
             ourDevice.waitForWindowUpdate(null, 3000);
@@ -254,7 +254,7 @@ public class PuzzleFragmentTest {
     //Test that the Puzzle Results win display is correctly shown on correct solution
 //    @Ignore("Working test")
     @Test
-    public void testPuzzleResultsWinDisplay() {
+    public void testPuzzleResultsWinNavigation() {
         int dim = 4 * 4;
 
         //Start new game
@@ -319,7 +319,7 @@ public class PuzzleFragmentTest {
     //Test that puzzle results loss page is correctly displayed on puzzle loss
 //    @Ignore("Working test")
     @Test
-    public void testPuzzleResultsLossDisplay() {
+    public void testPuzzleResultsLossNavigation() {
         int dim = 4 * 4;
 
         //Start new game
@@ -382,7 +382,7 @@ public class PuzzleFragmentTest {
     //Test that puzzle results are displayed correctly in horizontal orientation
 //    @Ignore("Working test")
     @Test
-    public void testPuzzleResultsDisplayHorizontal() {
+    public void testPuzzleResultsDisplayHorizontalNavigation() {
         int dim = 4 * 4;
 
         try {
@@ -449,12 +449,78 @@ public class PuzzleFragmentTest {
         }
     }
 
+    //Test that rules dialog is correctly displayed on click
+    @Test
+    public void testRulesButtonNavigation() {
+        UiObject newGameButton = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/new_game_button").className("android.widget.Button"));
+        try {
+            newGameButton.click();
+        } catch (UiObjectNotFoundException e) {
+            fail("New Game Button not found");
+        }
+
+        //Start classic puzzle
+        UiObject classicPuzzleButton = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/classic_puzzle_button").className("android.widget.Button"));
+        try {
+            classicPuzzleButton.click();
+        } catch (UiObjectNotFoundException e) {
+            fail("Classic Puzzles Button not found");
+        }
+
+        UiObject rulesButton = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/help_button"));
+        try {
+            rulesButton.click();
+        } catch (UiObjectNotFoundException e) {
+            fail("Rules Button not found");
+        }
+
+        UiObject rulesPopUpDialog = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/PopUp_Rules"));
+        if (!rulesPopUpDialog.exists()) {
+            fail("Rules pop up box was not displayed");
+        }
+    }
+
+    //Test that rules dialog is correctly displayed on click
+    @Test
+    public void testDictionaryButtonNavigation() {
+        //Start new game
+        UiObject newGameButton = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/new_game_button").className("android.widget.Button"));
+        try {
+            newGameButton.click();
+        } catch (UiObjectNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        //Start classic puzzle
+        UiObject classicPuzzleButton = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/classic_puzzle_button").className("android.widget.Button"));
+        try {
+            classicPuzzleButton.click();
+        } catch (UiObjectNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        UiObject dictionaryButton = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/options_dictionary_help_button").className("android.widget.ImageButton"));
+        try {
+            dictionaryButton.click();
+        } catch (UiObjectNotFoundException e) {
+            fail("Dictionary button was not displayed");
+        }
+
+        UiObject dictionaryPopup = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/PopUp_DictionaryBox"));
+        if (!dictionaryPopup.exists()) {
+            fail("Dictionary pop up box was not displayed");
+        }
+
+    }
+
+
+
 
 
     //Test that clicking on the 3 dots (kebab button) opens up a dialog options
 //    @Ignore("Working test")
     @Test
-    public void testKebabButtonInPuzzleFragmentDisplaysOptions() {
+    public void testKebabButtonPuzzleFragmentDisplays() {
         //Start new game
         UiObject newGameButton = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/new_game_button").className("android.widget.Button"));
         try {
@@ -606,16 +672,6 @@ public class PuzzleFragmentTest {
 
 
 
-
-
-
-
-
-
-
-
-
-
     //Test selecting exit option in the kebab menu on puzzle page closes the app
 //    @Ignore("Working test")
     @Test
@@ -703,7 +759,7 @@ public class PuzzleFragmentTest {
     //Check that the puzzle page displays all necessary buttons and TextViews to the user
 //    @Ignore("Working test")
     @Test
-    public void testPuzzlePageDisplayAllPuzzleSizes() {
+    public void testPuzzleFragmentDisplayAllPuzzleSizes() {
         for (int i = 0; i < puzzleSizes.length; i++) {
             testPuzzlePageDisplayHelper(puzzleSizes[i]);
         }

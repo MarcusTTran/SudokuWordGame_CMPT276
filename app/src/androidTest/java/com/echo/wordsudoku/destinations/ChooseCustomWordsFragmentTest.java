@@ -199,7 +199,7 @@ public class ChooseCustomWordsFragmentTest {
     // are displayed in the custom word fragments puzzle size options dropdown
 //    @Ignore("Working test")
     @Test
-    public void testSelectCustomSizedPuzzlesDialogDisplayed() {
+    public void testSelectCustomSizedPuzzlesDropdownDisplayed() {
 
         //Start new game
         UiObject newGameButton = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/new_game_button").className("android.widget.Button"));
@@ -422,6 +422,208 @@ public class ChooseCustomWordsFragmentTest {
         }
 
     }
+
+    @Test
+    public void testCustomWordsPageBackButton() {
+
+        UiObject chooseCustomWordsButton = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/custom_words_button"));
+        try {
+            chooseCustomWordsButton.click();
+        } catch (UiObjectNotFoundException e) {
+            fail("Choose custom words button not found");
+        }
+
+        UiObject backButton = ourDevice.findObject(new UiSelector().className("android.widget.ImageButton"));
+        try {
+            backButton.click();
+        } catch (UiObjectNotFoundException e) {
+            fail("Choose custom words back button not found");
+        }
+
+        UiObject mainMenu = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/mainMenuScreen"));
+        if (!mainMenu.exists()) {
+            fail("Back button did not return user to the main menu");
+        }
+
+    }
+
+    //Test that Choose custom words clear button is working
+//    @Ignore("Working test")
+    @Test
+    public void testCustomWordsClearButton() {
+        String[] sampleFrenchWords = new String[] {"Mal", "Bon", "Il", "Elle"};
+        String[] sampleEnglishWords = new String[] {"Bad", "Good", "He", "She"};
+
+
+        UiObject chooseCustomWordsButton = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/custom_words_button"));
+        try {
+            chooseCustomWordsButton.click();
+        } catch (UiObjectNotFoundException e) {
+            fail("Choose custom words button not found");
+        }
+
+        UiObject puzzleSizeDropdown = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/puzzleSizeCustomDropdown"));
+        try {
+            puzzleSizeDropdown.click();
+        } catch (UiObjectNotFoundException e) {
+            fail("Puzzle size dropdown was not displayed");
+        }
+
+        UiObject puzzleSize4x4 = ourDevice.findObject(new UiSelector().resourceId("android:id/text1"));
+        try {
+            puzzleSize4x4.click();
+        } catch (UiObjectNotFoundException e) {
+            fail("Puzzle size dropdown was not displayed");
+        }
+
+        UiObject customWordsEntries1 = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/buttonLanguageEntries"));
+        try {
+            for (int i = 0; i < customWordsEntries1.getChildCount() - 1; i++) {
+                UiObject someEntryBox = customWordsEntries1.getChild(new UiSelector().instance(i + 1));
+                someEntryBox.click();
+                someEntryBox.setText(sampleFrenchWords[i]);
+            }
+        } catch (UiObjectNotFoundException e) {
+            fail("Entry boxes not found");
+        }
+
+        UiObject customWordsEntries2 = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/boardLanguageEntries"));
+        try {
+            for (int i = 0; i < customWordsEntries2.getChildCount() - 1; i++) {
+                UiObject someEntryBox = customWordsEntries2.getChild(new UiSelector().instance(i + 1));
+                someEntryBox.click();
+                someEntryBox.setText(sampleEnglishWords[i]);
+            }
+        } catch (UiObjectNotFoundException e) {
+            fail("Entry boxes not found");
+        }
+
+        UiObject clearButton = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/buttonClearCustomWords"));
+        try {
+            clearButton.click();
+        } catch (UiObjectNotFoundException e) {
+            fail("Clear button not found");
+        }
+
+
+        try {
+            for (int i = 0; i < customWordsEntries1.getChildCount() - 1; i++) {
+                UiObject someEntryBox = customWordsEntries1.getChild(new UiSelector().instance(i + 1));
+                someEntryBox.click();
+                if (!someEntryBox.getText().equals("")) {
+                    fail("Entry boxes weren't cleared");
+                }
+            }
+        } catch (UiObjectNotFoundException e) {
+            fail("Entry boxes not found");
+        }
+
+        try {
+            for (int i = 0; i < customWordsEntries2.getChildCount() - 1; i++) {
+                UiObject someEntryBox = customWordsEntries2.getChild(new UiSelector().instance(i + 1));
+                someEntryBox.click();
+                if (!someEntryBox.getText().equals("")) {
+                    fail("Entry boxes weren't cleared");
+                }
+            }
+        } catch (UiObjectNotFoundException e) {
+            fail("Entry boxes not found");
+        }
+
+
+    }
+
+
+    //Test that entering valid custom words and clicking confirm takes user to puzzle fragment page
+//    @Ignore("Working test")
+    @Test
+    public void testCustomWordsConfirmButton() {
+        String[] sampleFrenchWords = new String[] {"Mal", "Bon", "Il", "Elle"};
+        String[] sampleEnglishWords = new String[] {"Bad", "Good", "He", "She"};
+
+
+        UiObject chooseCustomWordsButton = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/custom_words_button"));
+        try {
+            chooseCustomWordsButton.click();
+        } catch (UiObjectNotFoundException e) {
+            fail("Choose custom words button not found");
+        }
+
+        UiObject puzzleSizeDropdown = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/puzzleSizeCustomDropdown"));
+        try {
+            puzzleSizeDropdown.click();
+        } catch (UiObjectNotFoundException e) {
+            fail("Puzzle size dropdown was not displayed");
+        }
+
+        UiObject puzzleSize4x4 = ourDevice.findObject(new UiSelector().resourceId("android:id/text1"));
+        try {
+            puzzleSize4x4.click();
+        } catch (UiObjectNotFoundException e) {
+            fail("Puzzle size dropdown was not displayed");
+        }
+
+        UiObject customWordsEntries1 = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/buttonLanguageEntries"));
+        try {
+            for (int i = 0; i < customWordsEntries1.getChildCount() - 1; i++) {
+                UiObject someEntryBox = customWordsEntries1.getChild(new UiSelector().instance(i + 1));
+                someEntryBox.click();
+                someEntryBox.setText(sampleFrenchWords[i]);
+            }
+        } catch (UiObjectNotFoundException e) {
+            fail("Entry boxes not found");
+        }
+
+        UiObject customWordsEntries2 = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/boardLanguageEntries"));
+        try {
+            for (int i = 0; i < customWordsEntries2.getChildCount() - 1; i++) {
+                UiObject someEntryBox = customWordsEntries2.getChild(new UiSelector().instance(i + 1));
+                someEntryBox.click();
+                someEntryBox.setText(sampleEnglishWords[i]);
+            }
+        } catch (UiObjectNotFoundException e) {
+            fail("Entry boxes not found");
+        }
+
+        UiObject confirmButton = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/buttonConfirmCustomWords"));
+        try {
+            confirmButton.click();
+        } catch (UiObjectNotFoundException e) {
+            fail("Confirm button not found");
+        }
+
+        UiObject puzzleFragment = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/puzzle_fragment"));
+        if (!puzzleFragment.exists()) {
+            fail("Puzzle fragment did not appear after entering valid custom words");
+        }
+
+        //Clear the custom words for other tests to work
+        ourDevice.pressBack();
+        UiObject noButton = ourDevice.findObject(new UiSelector().resourceId("android:id/button2"));
+        try {
+            noButton.click();
+        } catch (UiObjectNotFoundException e) {
+            fail("No button not found");
+        }
+
+        try {
+            chooseCustomWordsButton.click();
+        } catch (UiObjectNotFoundException e) {
+            fail("Choose custom words button not found");
+        }
+
+        UiObject clearButton = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/buttonClearCustomWords"));
+        try {
+            clearButton.click();
+        } catch (UiObjectNotFoundException e) {
+            fail("Clear button not found");
+        }
+
+
+
+    }
+
+
 
 
 

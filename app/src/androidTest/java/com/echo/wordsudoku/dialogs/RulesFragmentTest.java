@@ -101,8 +101,8 @@ public class RulesFragmentTest {
             fail("Rules Button not found");
         }
 
-        UiObject rulesInfoText = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/PopUp_Rules"));
-        if (!rulesInfoText.exists()) {
+        UiObject rulesPopUpDialog = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/PopUp_Rules"));
+        if (!rulesPopUpDialog.exists()) {
             fail("Rules pop up box not displayed");
         }
 

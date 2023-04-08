@@ -77,7 +77,24 @@ public class ChoosePuzzleModeFragmentTest {
     //entered, correctly navigates the user to the Choose Custom Words page
 //    @Ignore("Working test")
     @Test
-    public void testCustomWordsNoEnteredCustomWordsNavigation() {
+    public void testChoosePuzzleModeCustomWordsButton() {
+        UiObject chooseCustomWordsButton = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/custom_words_button"));
+        try {
+            chooseCustomWordsButton.click();
+        } catch (UiObjectNotFoundException e) {
+            fail("Choose custom words button not found");
+        }
+
+        UiObject clearButton = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/buttonClearCustomWords"));
+        try {
+            clearButton.click();
+        } catch (UiObjectNotFoundException e) {
+            fail("Clear button not found");
+        }
+
+        ourDevice.pressBack();
+
+
         //Start new game
         UiObject newGameButton = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/new_game_button").className("android.widget.Button"));
         try {
@@ -105,7 +122,7 @@ public class ChoosePuzzleModeFragmentTest {
     //Test that all options buttons are displayed in the Choose Puzzle Mode page
 //    @Ignore("Working test")
     @Test
-    public void testChoosePuzzleModeAllButtonsDisplayed() {
+    public void testChoosePuzzleModeDisplays() {
         //Start new game
         UiObject newGameButton = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/new_game_button").className("android.widget.Button"));
         try {
@@ -135,7 +152,7 @@ public class ChoosePuzzleModeFragmentTest {
     //Test that all options buttons are displayed in the Choose Puzzle Mode page in a horizontal orientation
 //    @Ignore("Working test")
     @Test
-    public void testChoosePuzzleModeAllButtonsDisplayedHorizontal() {
+    public void testChoosePuzzleModeDisplaysHorizontal() {
         try {
             ourDevice.setOrientationLeft();
             ourDevice.waitForWindowUpdate(null, 3000);
@@ -169,10 +186,10 @@ public class ChoosePuzzleModeFragmentTest {
     }
 
 
-    //Test that when clicking Custom Words button the user is correctly taken to Choose custom words page
+    //Test that Custom Sized puzzle selection dialog opens when clicking Custom Sized puzzle button
 //    @Ignore("Working test")
     @Test
-    public void testCustomWordsButtonNavigation() {
+    public void testChoosePuzzleModeCustomSizedButton() {
         //Start new game
         UiObject newGameButton = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/new_game_button").className("android.widget.Button"));
         try {
@@ -181,20 +198,53 @@ public class ChoosePuzzleModeFragmentTest {
             fail("New Game button was not displayed");
         }
 
-        //Click custom words button
-        UiObject customWordsButton = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/custom_words_button").className("android.widget.Button"));
-        try {
-            customWordsButton.click();
-        } catch (UiObjectNotFoundException e) {
-            fail("Custom Words button was not displayed");
+        UiObject classicPuzzleButton = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/classic_puzzle_button").className("android.widget.Button"));
+        if (!classicPuzzleButton.exists()) {
+            fail("Classic Puzzle button was not displayed");
         }
 
-        //Check if chooseCustomWordsFragment is being displayed
-        UiObject chooseCustomWordsFragment = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/chooseCustomWordsFragment").className("android.view.ViewGroup"));
-        if (!chooseCustomWordsFragment.exists()) {
-            fail("Choose custom words fragment was not displayed");
+        UiObject customSizedButton = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/custom_size_button").className("android.widget.Button"));
+        try {
+            customSizedButton.click();
+        } catch (UiObjectNotFoundException e) {
+            fail("Custom sized button did not exist");
         }
+
+        UiObject chooseSizePuzzles = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/customPuzzleSizeSelect"));
+        if (!chooseSizePuzzles.exists()) {
+            fail("Choose Size puzzles selection dialog");
+        }
+
     }
+
+
+    //Test that Custom Sized puzzle selection dialog opens when clicking Custom Sized puzzle button
+//    @Ignore("Working test")
+    @Test
+    public void testChoosePuzzleModeClassicPuzzleButton() {
+        //Start new game
+        UiObject newGameButton = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/new_game_button").className("android.widget.Button"));
+        try {
+            newGameButton.click();
+        } catch (UiObjectNotFoundException e) {
+            fail("New Game button was not displayed");
+        }
+
+        UiObject classicPuzzleButton = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/classic_puzzle_button").className("android.widget.Button"));
+        try {
+            classicPuzzleButton.click();
+        } catch (UiObjectNotFoundException e) {
+            fail("Classic Puzzle button did not appear");
+        }
+
+        UiObject puzzleFragment = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/puzzle_fragment"));
+        if (!puzzleFragment.exists()) {
+            fail("Classic puzzle button did not take user to puzzle fragment page");
+        }
+
+    }
+
+
 
 
 
