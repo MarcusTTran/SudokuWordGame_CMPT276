@@ -21,10 +21,15 @@ To download an apk file for installing the app on:   [Wsudoku APK](https://csil-
 
 # Requirements Document
 
-Requirements document is by far the most important document for any software project.
-To view our Requirements document and the changes it went through over the iterations please check ```Requirements.md```
-[View our User stories and TDDs](./Requirments.md)
+The requirements document is by far the most important document for any software project.
+
+<b>{+To view our Requirements document (which includes the changes we made over each iteration), please head over to: +}</b> ```Requirements.md```
 <br>
+<b>[Or, CLICK HERE for a direct link to Requirements.md to view all our User stories and TDDs](./Requirments.md)</b>
+<br>
+
+
+
 A high level overview:<br><br><br>
 <img src="./app-resources/high-level-requirements.md.png">
 
