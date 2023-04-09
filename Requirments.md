@@ -30,13 +30,14 @@
 - Kebab menu on puzzle page for quick app navigation
 
 <b><b>{+Iteration 4 quick list of implemented features: +}</b> </b><br/>
-- Listening Comprehension mode for French
-- Listening Comprehension mode for English
+- Puzzle support for additional 3 Languages (Spanish, Arabic, Chinese))
+- Listening Comprehension mode for 5 Languages (English, French, Spanish, Arabic, Chinese)
 - Listening Comprehension mode support for user entered custom words
 - Listening Comprehension mode support for all puzzle sizes
+- Garbage Button to erase user entered words in cells
 - Dynamically limit Dictionary peeks depending on difficulty set
 - Load in user entered words on custom words page for quick modifications
-- Save custom words on app exit and load the words in on app open
+- Save user entered custom words on app exit and load the words in on app open
 - Support for entry of custom words with accents or accent characters
 - Demo/Debug difficulty for game demonstrations
 - Plus, Code Refactoring to improve efficiency and remove bugs
@@ -50,6 +51,9 @@
   <br/>
 
 - <b>{+IMPLEMENTED: +}</b> As a novice player of sudoku, I want the column and row of my currently selected cell to be highlighted so that I can remember to check for any conflicting entries when I decide to enter a word in a cell.
+  <br/>
+
+- <b>{+IMPLEMENTED: +}</b> As a novice player of sudoku, I want there to be an erase entered word button so that I can erase any of the mistakes I might make while trying to solve a puzzle.
   <br/>
 
 <h3>TDD</h3>
@@ -91,7 +95,17 @@
 3. <i>User taps another cell and the selected cell's column and row are also highlighted in green.</i>
    <br/>
 
+- <b>{+IMPLEMENTED: +}</b> When the user is on the puzzle-solving screen and taps the garbage bin button located on the top right of the display, the selected cell's entered word will be erased. 
 
+<img src="https://i.imgur.com/Ag21OLO.png"  width="24%">
+<img src="https://i.imgur.com/bubynqp.png"  width="24%">
+<img src="https://i.imgur.com/EDwt7u6.png"  width="24%"><br/>
+
+1. <i>User accidentally enters a word into the puzzle they wish to remove.</i>
+
+2. <i>User clicks the Garbage Bin button.</i>
+
+3. <i>The selected cell is now empty.</i><br/>
 
 
 <h2>Expert User:</h2>
@@ -337,6 +351,8 @@
 
 - <b>{+IMPLEMENTED: +}</b>  As an advanced language learner who lives an active life, I want the app to auto-save my work so that I don't have to worry about manually saving my progress as I go about my day.
 
+- <b>{+IMPLEMENTED: +}</b>  As an advanced language learner, I want the app to support more languages than just French, so that I can try learning other languages.
+
 
 <h3>TDD</h3>
 
@@ -413,6 +429,36 @@
 6. <i>The user opens the app again and taps Load Saved Game.</i>
 
 7. <i>The user's saved game is loaded along with their progress.</i>
+
+
+- <b>{+IMPLEMENTED: +}</b>  If the user clicks on the Puzzle Language button in the main menu. A dialog will open allowing the user to select the button and board language of his puzzles. The user can select Change Language to confirm their language selections and every new puzzle generated will use the selected languages choosen.
+  <br>
+
+<br>
+<img src="https://i.imgur.com/eDMxDtH.png"  width="24%">
+<img src="https://i.imgur.com/WglvdDl.png"  width="24%">
+<img src="https://i.imgur.com/qdliVDJ.png"  width="24%">
+<img src="https://i.imgur.com/R2WNLq8.png"  width="24%">
+<br>
+
+1. <i>The user clicks Puzzle Language button in the main menu.</i>
+
+2. <i>The user can click on any of the dropdowns to change the language of the buttons and puzzle board.</i>
+
+3. <i>The user clicks on the button input Arabic option. This sets the input language to be Arabic.</i>
+
+4. <i>The user clicks the Change Language button.</i>
+
+<br>
+<img src="https://i.imgur.com/N6jSkkv.png"  width="24%">
+<img src="https://i.imgur.com/smat7jF.png"  width="24%">
+<br>
+
+5. <i>The user clicks on the New Game button and generates a new puzzle.</i>
+
+6. <i>The puzzle board is generated with Arabic words as the button input language.</i>
+
+
 
 <h2>French teacher:</h2>
 <h3>User Story</h3>
