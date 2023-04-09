@@ -32,6 +32,9 @@ import java.util.List;
  * @see <a href="http://d.android.com/tools/testing">Testing documentation</a>
  */
 
+// UI Test class for the RulesFragment Dialog class
+
+
 //For more information: https://developer.android.com/training/testing/other-components/ui-automator
 
 @RunWith(AndroidJUnit4.class)

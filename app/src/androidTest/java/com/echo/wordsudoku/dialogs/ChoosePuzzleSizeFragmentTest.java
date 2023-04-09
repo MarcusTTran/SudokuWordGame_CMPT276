@@ -26,6 +26,9 @@ import static org.junit.Assert.*;
  * @see <a href="http://d.android.com/tools/testing">Testing documentation</a>
  */
 
+// UI Test class for the ChoosePuzzleSizeFragment Dialog class
+
+
 //For more information: https://developer.android.com/training/testing/other-components/ui-automator
 
 @RunWith(AndroidJUnit4.class)

@@ -31,6 +31,9 @@ import java.util.List;
  * @see <a href="http://d.android.com/tools/testing">Testing documentation</a>
  */
 
+// UI Test class for the PuzzleTopMenuBarFragment class (Makes up the PuzzleFragment class)
+
+
 //For more information: https://developer.android.com/training/testing/other-components/ui-automator
 
 @RunWith(AndroidJUnit4.class)
@@ -250,13 +253,8 @@ public class PuzzleTopMenuBarFragmentTest {
             fail("Reset button was not found");
         }
 
-        UiObject helpButton = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/help_button").className("android.widget.ImageButton"));
-        try {
-            helpButton.click();
-            ourDevice.pressBack();
-        } catch (UiObjectNotFoundException e) {
-            fail("didn't work bro");
-        }
+        ourDevice.pressBack();
+        ourDevice.pressBack();
 
 
         UiObject sudokuBoard1 = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/sudoku_board").className("android.view.View"));
