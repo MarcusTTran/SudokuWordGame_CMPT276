@@ -434,4 +434,9 @@ public class MainActivity extends AppCompatActivity implements SaveGameDialog.Sa
         // else do nothing
     }
 
+    public void clearLatestLoadedPuzzle() {
+        latestLoadedPuzzle = null;
+        latestSavedPuzzle = null;
+    }
+
 }

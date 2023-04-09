@@ -44,6 +44,8 @@ public class PuzzleResultFragment extends Fragment {
             Navigation.findNavController(v).navigate(RETRY_PUZZLE_ACTION);
         });
 
+        ((MainActivity) requireActivity()).clearLatestLoadedPuzzle();
+
         return root;
     }
 
