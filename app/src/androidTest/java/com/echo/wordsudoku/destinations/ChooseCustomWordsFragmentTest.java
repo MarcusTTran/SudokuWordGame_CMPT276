@@ -34,10 +34,12 @@ import java.util.List;
 
 //For more information: https://developer.android.com/training/testing/other-components/ui-automator
 
+// UI Test class for the ChooseCustomWordsFragment class
+
 @RunWith(AndroidJUnit4.class)
 public class ChooseCustomWordsFragmentTest {
 
-    //Warning: These tests class take up to 7 minutes to complete
+    //Warning: These tests class can take up to 7 minutes to complete
 
     int[] puzzleSizes = new int[] {4, 6, 9, 12};
 

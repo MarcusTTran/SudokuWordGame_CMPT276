@@ -32,6 +32,9 @@ import java.util.List;
  * @see <a href="http://d.android.com/tools/testing">Testing documentation</a>
  */
 
+// UI Test class for the MainMenuFragment class
+
+
 //For more information: https://developer.android.com/training/testing/other-components/ui-automator
 
 @RunWith(AndroidJUnit4.class)
@@ -236,39 +239,163 @@ public class MainMenuFragmentTest {
 
 
 
-    //Test that when users click the puzzle language button on the main menu, the button text displays the
-    //language it has been set to
+    //Test that when users click the puzzle language button on the main menu, the puzzle
+    // language select dialog correctly appears
 //    @Ignore("Working test")
     @Test
-    public void testMainMenuPuzzleLanguageButtonUpdate() {
+    public void testMainMenuPuzzleLanguageButtonNavigation() {
         UiObject puzzleLanguageButton = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/change_language_button"));
-        String s = "";
         try {
-            s = puzzleLanguageButton.getText();
             puzzleLanguageButton.click();
         } catch (UiObjectNotFoundException e) {
             fail("Puzzle language button not found");
         }
 
-        UiObject puzzleLanguageUpdateText = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/change_language_button"));
-        try {
-            if (s.contains("French")) {
-                if (!puzzleLanguageUpdateText.getText().equals("Puzzle Language : English")) {
-                    fail("Puzzle Language Button did not display set language correctly");
-                }
-            } else {
-                if (!puzzleLanguageUpdateText.getText().equals("Puzzle Language : French")) {
-                    fail("Puzzle Language Button did not display set language correctly");
-                }
-            }
-
-        } catch (UiObjectNotFoundException e) {
-            fail("Puzzle Language Button text did not update on click");
+        UiObject puzzleLanguageDialog = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/Language_Select_Dialog"));
+        if (!puzzleLanguageDialog.exists()) {
+            fail("Puzzle Language Select Dialog failed to appear");
         }
 
     }
 
+    //Test that the puzzle language dialog correctly displays all UI elements
+//    @Ignore("Working test")
+    @Test
+    public void testMainMenuPuzzleLanguageDisplays() {
+        UiObject puzzleLanguageButton = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/change_language_button"));
+        try {
+            puzzleLanguageButton.click();
+        } catch (UiObjectNotFoundException e) {
+            fail("Puzzle language button not found");
+        }
 
+        UiObject puzzleLanguageDialog = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/Language_Select_Dialog"));
+        if (!puzzleLanguageDialog.exists()) {
+            fail("Puzzle Language Select Dialog failed to appear");
+        }
+
+        UiObject cancelButton = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/cancel_set_languages_button"));
+        if (!cancelButton.exists()) {
+            fail("Puzzle Language Select Dialog failed to appear");
+        }
+
+        UiObject changeLanguagesButton = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/set_languages_button"));
+        if (!changeLanguagesButton.exists()) {
+            fail("Puzzle Language Select Dialog failed to appear");
+        }
+
+
+        UiObject buttonInputDropdown = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/button_input_language_spinner"));
+        if (!buttonInputDropdown.exists()) {
+            fail("Puzzle Language Select Dialog failed to appear");
+        }
+
+        UiObject puzzleLanguageDropdown = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/puzzle_language_spinner"));
+        if (!puzzleLanguageDropdown.exists()) {
+            fail("Puzzle Language Select Dialog failed to appear");
+        }
+
+    }
+
+    //Test that the puzzle language dialog correctly displays all UI elements horizontal orientation
+//    @Ignore("Working test")
+    @Test
+    public void testMainMenuPuzzleLanguageDisplaysHorizontal() {
+        try {
+            ourDevice.setOrientationLeft();
+            ourDevice.waitForWindowUpdate(null, 3000);
+        } catch (android.os.RemoteException e) {
+            fail();
+        }
+
+        UiObject puzzleLanguageButton = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/change_language_button"));
+        try {
+            puzzleLanguageButton.click();
+        } catch (UiObjectNotFoundException e) {
+            fail("Puzzle language button not found");
+        }
+
+        UiObject puzzleLanguageDialog = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/Language_Select_Dialog"));
+        if (!puzzleLanguageDialog.exists()) {
+            fail("Puzzle Language Select Dialog failed to appear");
+        }
+
+        UiObject cancelButton = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/cancel_set_languages_button"));
+        if (!cancelButton.exists()) {
+            fail("Puzzle Language Select Dialog failed to appear");
+        }
+
+        UiObject changeLanguagesButton = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/set_languages_button"));
+        if (!changeLanguagesButton.exists()) {
+            fail("Puzzle Language Select Dialog failed to appear");
+        }
+
+
+        UiObject buttonInputDropdown = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/button_input_language_spinner"));
+        if (!buttonInputDropdown.exists()) {
+            fail("Puzzle Language Select Dialog failed to appear");
+        }
+
+        UiObject puzzleLanguageDropdown = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/puzzle_language_spinner"));
+        if (!puzzleLanguageDropdown.exists()) {
+            fail("Puzzle Language Select Dialog failed to appear");
+        }
+
+    }
+
+    //Test that the puzzle language dialog correctly exits when cancel button is clicked
+//    @Ignore("Working test")
+    @Test
+    public void testMainMenuPuzzleLanguageDialogCancelNavigation() {
+        UiObject puzzleLanguageButton = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/change_language_button"));
+        try {
+            puzzleLanguageButton.click();
+        } catch (UiObjectNotFoundException e) {
+            fail("Puzzle language button not found");
+        }
+
+        UiObject cancelButton = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/cancel_set_languages_button"));
+        try {
+            cancelButton.click();
+        } catch (UiObjectNotFoundException e) {
+            fail("Cancel button was not displayed in Puzzle language dialog");
+        }
+
+        UiObject puzzleLanguageDialog = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/Language_Select_Dialog"));
+        if (puzzleLanguageDialog.exists()) {
+            fail("Cancel button failed to remove Puzzle Language Select Dialog from display");
+        }
+
+
+
+    }
+
+    //Test that the puzzle language dialog correctly exits when Change Language button is clicked
+//    @Ignore("Working test")
+    @Test
+    public void testMainMenuPuzzleLanguageDialogChangeLanguagesNavigation() {
+        UiObject puzzleLanguageButton = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/change_language_button"));
+        try {
+            puzzleLanguageButton.click();
+        } catch (UiObjectNotFoundException e) {
+            fail("Puzzle language button not found");
+        }
+
+        UiObject changeLanguagesButton = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/set_languages_button"));
+        try {
+            changeLanguagesButton.click();
+        } catch (UiObjectNotFoundException e) {
+            fail("Change Language button did not appear on Puzzle Language Select Dialog");
+        }
+
+        UiObject puzzleLanguageDialog = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/Language_Select_Dialog"));
+        if (puzzleLanguageDialog.exists()) {
+            fail("Cancel button failed to remove Puzzle Language Select Dialog from display");
+        }
+
+
+
+    }
 
 
 

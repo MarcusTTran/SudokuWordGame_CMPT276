@@ -32,12 +32,15 @@ import java.util.List;
  * @see <a href="http://d.android.com/tools/testing">Testing documentation</a>
  */
 
+// UI Test class for the WarningDialog Dialog class
+
+
 //For more information: https://developer.android.com/training/testing/other-components/ui-automator
 
 @RunWith(AndroidJUnit4.class)
 public class WarningDialogTest {
 
-    //Warning: These tests take up to 10 minutes to complete
+    //Warning: These tests take up to 7 minutes to complete
 
     int[] puzzleSizes = new int[] {4, 6, 9, 12};
 

@@ -32,6 +32,9 @@ import java.util.List;
  * @see <a href="http://d.android.com/tools/testing">Testing documentation</a>
  */
 
+// UI Test class for the PuzzleFragment class
+
+
 //For more information: https://developer.android.com/training/testing/other-components/ui-automator
 
 @RunWith(AndroidJUnit4.class)
@@ -395,9 +398,109 @@ public class PuzzleFragmentTest {
         }
     }
 
+    //Test that the garbage button correctly clears a cell in the puzzle fragment page
+    @Test
+    public void testGarbageButtonErasesCell() {
+        int totalCells = 4 * 4;
+
+        UiObject newGameButton = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/new_game_button").className("android.widget.Button"));
+        try {
+            newGameButton.click();
+        } catch (UiObjectNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        //Start custom sized puzzle
+        UiObject customSizedButton = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/custom_size_button").className("android.widget.Button"));
+        try {
+            customSizedButton.click();
+        } catch (UiObjectNotFoundException e) {
+            fail("Custom size puzzle button not found");
+        }
+
+        UiObject puzzleSize4x4 = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/choose_4x4_button").className("android.widget.RadioButton"));
+        try {
+            puzzleSize4x4.click();
+        } catch (UiObjectNotFoundException e) {
+            fail("4x4 size puzzle button not found");
+        }
+
+        UiObject doneMenuButton = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/done_button").className("android.widget.Button"));
+        try {
+            doneMenuButton.click();
+        } catch (UiObjectNotFoundException e) {
+            fail("Done button not found");
+        }
+
+        UiObject sudokuBoard = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/sudoku_board").className("android.view.View"));
+
+        int emptyCellIndex = -1;
+
+        for (int i = 0; i < totalCells; i++) {
+            try {
+                UiObject someCell = sudokuBoard.getChild(new UiSelector().instance(i));
+                if (someCell.getText().equals("EMPTYCELL")) {
+                    emptyCellIndex = i;
+                }
+            } catch (UiObjectNotFoundException e) {
+                fail("All cells not found");
+            }
+        }
+
+        //Click on an empty cell
+        try {
+            UiObject emptyCell = sudokuBoard.getChild(new UiSelector().instance(emptyCellIndex));
+            emptyCell.click();
+        } catch (UiObjectNotFoundException e) {
+            fail("No empty cell found");
+        }
+
+        //Click to enter word
+        UiObject button1 = ourDevice.findObject(new UiSelector().className("android.widget.Button").resourceId("com.echo.wordsudoku:id/id1"));
+        try {
+            button1.click();
+        } catch (UiObjectNotFoundException e) {
+            fail("No input button found");
+        }
+
+        ourDevice.pressBack();
+        ourDevice.pressBack();
+
+        //Cell should not be empty
+        try {
+            UiObject emptyCellNowFilled = sudokuBoard.getChild(new UiSelector().instance(emptyCellIndex));
+            if (emptyCellNowFilled.getText().equals("EMPTYCELL")) {
+                fail("Cell did not fill with word");
+            }
+        } catch (UiObjectNotFoundException e) {
+            fail("Empty cell that we filled was not found");
+        }
+
+        //Click erase button
+        UiObject garbageButton = ourDevice.findObject(new UiSelector().resourceId("com.echo.wordsudoku:id/options_clear_button"));
+        try {
+            garbageButton.click();
+        } catch (UiObjectNotFoundException e) {
+            fail("No garbage button found");
+        }
+
+        ourDevice.pressBack();
+        ourDevice.pressBack();
+
+        //Cell should now be empty
+        try {
+            UiObject emptyCellNowFilled = sudokuBoard.getChild(new UiSelector().instance(emptyCellIndex));
+            if (!emptyCellNowFilled.getText().equals("EMPTYCELL")) {
+                fail("Garbage button did not erase word from cell");
+            }
+        } catch (UiObjectNotFoundException e) {
+            fail("Empty cell that we filled was not found");
+        }
+
+    }
 
 
-    //Test that clicking on the 3 dots (kebab button) opens up a dialog options
+        //Test that clicking on the 3 dots (kebab button) opens up a dialog options
 //    @Ignore("Working test")
     @Test
     public void testKebabButtonPuzzleFragmentDisplays() {
@@ -433,7 +536,6 @@ public class PuzzleFragmentTest {
         UiObject doneButton = ourDevice.findObject(new UiSelector().text("Done").className("android.widget.TextView"));
         UiObject rulesButton = ourDevice.findObject(new UiSelector().text("Rules").className("android.widget.TextView"));
         UiObject dictionaryButton = ourDevice.findObject(new UiSelector().text("Dictionary").className("android.widget.TextView"));
-        UiObject savePuzzleButton = ourDevice.findObject(new UiSelector().text("Save Puzzle").className("android.widget.TextView"));
         UiObject mainMenuButton = ourDevice.findObject(new UiSelector().text("Main Menu").className("android.widget.TextView"));
         UiObject exitButton = ourDevice.findObject(new UiSelector().text("Exit").className("android.widget.TextView"));
 
@@ -445,9 +547,6 @@ public class PuzzleFragmentTest {
         }
         if (!dictionaryButton.exists()) {
             fail("Dictionary button not displayed");
-        }
-        if (!savePuzzleButton.exists()) {
-            fail("Save Puzzle button not displayed");
         }
         if (!mainMenuButton.exists()) {
             fail("Main Menu not displayed");
