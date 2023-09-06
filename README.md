@@ -2,7 +2,7 @@
 
 <img src="./app-resources/echo_logo.png" width="200" height="200"/>
 
-Echo's Wsudoku is an interactive game suitable for users of all ages who wish to learn a new language or improve their efficiency. It supports devices of any screen size and runs offline. Currently, we support 5 languages (English, French, Spanish, Chinese and Arabic)
+Echo's Word Sudoku is an interactive game suitable for users of all ages who wish to learn a new language or improve their efficiency. It supports devices of any screen size and runs offline. Currently, we support 5 languages (English, French, Spanish, Chinese and Arabic)
 <br>
 
 Some of the unique features of Wsudoku include but not limited to:
