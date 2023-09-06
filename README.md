@@ -13,7 +13,7 @@ Some of the unique features of Wsudoku include but not limited to:
 - Listening Comprehension Mode
 - Support of French UI
 - Minimal and user-friendly design
-- ...
+- Text-to-speech mode for the visually impaired and those who wish to improve their oral comprehension
 
 # APK Release
 
