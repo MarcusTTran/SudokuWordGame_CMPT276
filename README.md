@@ -2,10 +2,10 @@
 
 <img src="./app-resources/echo_logo.png" width="200" height="200"/>
 
-Echo's Word Sudoku is an interactive game suitable for users of all ages who wish to learn a new language or improve their efficiency. It supports devices of any screen size and runs offline. Currently, we support 5 languages (English, French, Spanish, Chinese and Arabic)
+Word Sudoku is an interactive twist on the classic Sudoku puzzle that is suitable for users of all ages who wish to learn a new language or improve their vocabulary. It supports devices of any screen size and runs offline. Currently, we support 5 languages (English, French, Spanish, Chinese, and Arabic). Although, French and English are the main supported languages.
 <br>
 
-Some of the unique features of Wsudoku include but not limited to:
+Some of the unique features of Word Sudoku include but are not limited to:
 
 - Timing games
 - Five levels of difficulty for sudoku games (Beginner, Novice, Intermediate, Advanced, Expert)
